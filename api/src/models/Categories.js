@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const { conn } = require('./db.js');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 
@@ -15,20 +14,9 @@ const { conn } = require('./db.js');
     description: {
         type: DataTypes.TEXT
     }
+
 }
 )};
-
-var Perros =  Categories.create({
-    name: "Perros"
-});
-
-var Gatos =  Categories.create({
-    name: "Gatos"
-});
-
-var Roedores =  Categories.create({
-    name: "Roedores"
-});
 
 
 
