@@ -5,7 +5,9 @@ const { conn } = require('./db.js');
 
   // defino el modelo
 
-const User = conn.define('user', {
+  module.exports = (sequelize) => {
+    // defino el modelo
+     sequelize.define('user', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -22,10 +24,8 @@ const User = conn.define('user', {
         type: Sequelize.STRING,
         allowNull: false
     }
-});
-
-
-
-module.exports = {
-    User
 }
+)};
+
+
+

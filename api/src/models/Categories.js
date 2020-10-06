@@ -5,7 +5,9 @@ const { conn } = require('./db.js');
 
   // defino el modelo
 
-const Categories = conn.define('categories', {
+  module.exports = (sequelize) => {
+    // defino el modelo
+     sequelize.define('category', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -13,7 +15,8 @@ const Categories = conn.define('categories', {
     description: {
         type: DataTypes.TEXT
     }
-});
+}
+)};
 
 var Perros =  Categories.create({
     name: "Perros"
@@ -29,6 +32,3 @@ var Roedores =  Categories.create({
 
 
 
-module.exports = {
-    Categories
-}

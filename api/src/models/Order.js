@@ -5,7 +5,9 @@ const { conn } = require('./db.js');
 
   // defino el modelo
 
-const Order = conn.define('order', {
+  module.exports = (sequelize) => {
+    // defino el modelo
+     sequelize.define('order', {
     price: {
         type: DataTypes.INTEGER,
         defaultValue: "0"
@@ -14,10 +16,8 @@ const Order = conn.define('order', {
         type: DataTypes.INTEGER,
         defaultValue: "1"
     }
-});
+  }
+ )};
 
 
 
-module.exports = {
-    Order
-}

@@ -5,12 +5,11 @@ const { conn } = require('./db.js');
 
   // defino el modelo
 
-const Review = conn.define('review', {
+  module.exports = (sequelize) => {
+    // defino el modelo
+     sequelize.define('review', {
     text: DataTypes.TEXT
-});
+     }
+)};
 
 
-
-module.exports = {
-    Review
-}
