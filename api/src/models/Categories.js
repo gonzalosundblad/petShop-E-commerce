@@ -14,19 +14,9 @@ const { DataTypes } = require('sequelize');
     description: {
         type: DataTypes.TEXT
     }
-  }
-  )};
 
-var Perros =  Categories.create({
-    name: "Perros"
-});
+}
+)};
 
-var Gatos =  Categories.create({
-    name: "Gatos"
-});
-
-var Roedores =  Categories.create({
-    name: "Roedores"
-});
 
 

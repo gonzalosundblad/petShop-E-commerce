@@ -9,7 +9,6 @@ const { DataTypes } = require('sequelize');
      sequelize.define('review', {
     text: DataTypes.TEXT
      }
+
      )};
-
-
 

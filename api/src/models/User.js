@@ -24,7 +24,10 @@ const { conn } = require('./db.js');
         type: Sequelize.STRING,
         allowNull: false
     }
-  }
+
+}
+
+
 )};
 
 
