@@ -1,24 +1,18 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Product from './Components/Product'
+import ProductCard from './Components/ProductCard'
+import Catalogo from './Containers/Catalogo';
+//import Catalogo from './Containers/Catalogo'
+var products = [{name: "alejafjei", price: "200"},{name: "llllll", price: "300"},{name: "dddddd", price: "250"}]
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Product/>
+      <ProductCard name="jeakja"/>
+      <Catalogo products={products}/>
     </div>
   );
 }
