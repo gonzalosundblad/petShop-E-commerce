@@ -3,10 +3,30 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('product', {
+   sequelize.define('product', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    descripcion: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    precio: {
+      type: DataTypes.DECIMAL,
+      defaultValue: '0'
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      defaultValue: '0'
+    },
+    // image: {
+    //   type: DataTypes.BLOB,
+    //   allowNull: false
+    // //como poner placeholder de default.
+    // }
   });
 };
+
+// Product.belongsToMany(Category, {through: ProductCategory})
+// Category.belongsToMany(Product, {through: ProductCategory})
