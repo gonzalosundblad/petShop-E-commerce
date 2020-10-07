@@ -4,11 +4,11 @@ const { DataTypes } = require('sequelize');
 
   // defino el modelo
 
-  module.exports = (sequelize) => {
+module.exports = (sequelize) => {
     // defino el modelo
      sequelize.define('review', {
     text: DataTypes.TEXT
      }
 
-     )};
+)};
 

@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 
   // defino el modelo
 
-  module.exports = (sequelize) => {
+module.exports = (sequelize) => {
     // defino el modelo
      sequelize.define('category', {
     name: {
@@ -14,9 +14,6 @@ const { DataTypes } = require('sequelize');
     description: {
         type: DataTypes.TEXT
     }
-
-     
-
 }
 )};
 
