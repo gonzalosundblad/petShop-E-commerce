@@ -38,6 +38,9 @@ function App() {
         <Route path="/products" render={() => 
           <Catalogo products={products} categ={categ} />}
         />
+        <Route path="/products/:Categoria" render={() => 
+          <Catalogo products={products} categ={categ} />}
+        />
               
       </BrowserRouter>  
     </div>
