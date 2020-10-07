@@ -4,10 +4,10 @@ const { DataTypes } = require('sequelize');
 
   // defino el modelo
 
-  module.exports = (sequelize) => {
-    // defino el modelo
-    sequelize.define('review', {
-      text: DataTypes.TEXT(255)
-    }
-  )};
+module.exports = (sequelize) => {
+  // defino el modelo
+  sequelize.define('review', {
+    text: DataTypes.TEXT(255)
+  }
+)};
 
