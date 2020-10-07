@@ -23,7 +23,7 @@ function App() {
         {/* <Switch> */}
             <Route exact path="/">
               <ProductCard name="jeakja"/> 
-            </Route> 
+            </Route>  
             <Route path="/products" render={() => 
               <Catalogo products={products} categ={categ} />}
             />

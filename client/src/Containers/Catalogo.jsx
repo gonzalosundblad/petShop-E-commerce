@@ -17,7 +17,7 @@ export default function Catalogo({products, categ}){
       {products.map(p => 
         <ProductCard 
           key = {p.id} //Agregado BranchRoute porque cada componente debe tener key
-          imagen= {p.imagen}
+          imagen= {p.imagen} 
           name= {p.name}
           price= {p.price}
         />
