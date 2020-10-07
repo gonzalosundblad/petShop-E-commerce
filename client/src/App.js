@@ -9,6 +9,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import SearchBar from './Components/SearchBar';
 var productos = [
   {cat: 'perros', id:1,name: "Eukanuba Small", price: "$850", imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},
   {cat: 'gatos', id:2,name: "CatChow", price: "$750", imagen: "https://www.chedraui.com.mx/medias/7501072202246-00-CH1200Wx1200H?context=bWFzdGVyfHJvb3R8MTQ4NjIzfGltYWdlL2pwZWd8aDk2L2hmYi85ODk1MTk1NzM4MTQyLmpwZ3xjMGM5ZjEwYjI2ODg3ZThhOGYyZGEzNWQ3ZWZhMDNmMzk5MDgyZmM5ZmRlNjVmM2Y2YzZhZjczMDJlYzZkYjk0"},
@@ -29,6 +30,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         {/* <Switch> */}
+        <Route path="/" component={SearchBar}></Route>
         <Route exact path="/">
           <li>
             <Link to="/products"> Catalogo </Link>

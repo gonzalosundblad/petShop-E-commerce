@@ -17,7 +17,7 @@ export default function Catalogo({ products, categ}){
 
   function filtrarCategoria(event, products) {
     // event.preventDefault();
-    console.log(products)
+    
     const arrayCat = products.filter( product => product.cat === event.value)
     
     setProd(arrayCat);
