@@ -4,15 +4,32 @@ import './App.css';
 import Product from './Components/Product';
 import ProductCard from './Components/ProductCard';
 import Catalogo from './Containers/Catalogo';
+import {
+  BrowserRouter,
+  Route,
+  Link
+} from "react-router-dom";
 
-var products = [{name: "Eukanuba Small", price: "$850", imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},{name: "llllll", price: "300"},{name: "dddddd", price: "250"}]
+var products = [{id:1, name: "Eukanuba Small", price: "$850", imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},{id:2,name: "llllll", price: "300"},{id:3,name: "dddddd", price: "250"}]
 
 function App() {
   return (
     <div className="App">
-      {/* <Product/>
-      <ProductCard name="jeakja"/> */}
-      <Catalogo products={products}/>
+      <BrowserRouter>
+        <li>
+          <Link to="/products"> Catalogo </Link>
+        </li>
+        {/* <Switch> */}
+            <Route exact path="/">
+              <ProductCard name="jeakja"/> 
+            </Route> 
+            <Route path="/products" render={() => 
+              <Catalogo products={products}/>}
+            />
+           
+      </BrowserRouter>
+      
+      
     </div>
   );
 }
