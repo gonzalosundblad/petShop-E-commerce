@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 
 var products = [{id:1, name: "Eukanuba Small", price: "$850", imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},{id:2,name: "llllll", price: "300"},{id:3,name: "dddddd", price: "250"}]
+var categ = ['perros', 'gatos']
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
               <ProductCard name="jeakja"/> 
             </Route> 
             <Route path="/products" render={() => 
-              <Catalogo products={products}/>}
+              <Catalogo products={products} categ={categ} />}
             />
            
       </BrowserRouter>
