@@ -26,5 +26,4 @@ module.exports = (sequelize) => {
   });
 };
 
-// Product.belongsToMany(Category, {through: ProductCategory})
-// Category.belongsToMany(Product, {through: ProductCategory})
+ 

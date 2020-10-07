@@ -15,4 +15,4 @@ export default function ProductCard ({name, price, imagen}){
       <hr/>
   </div>
   )
-}
+} 
