@@ -10,17 +10,22 @@ export default function Catalogo({ products, categ}){
   const [prod, setProd] = useState(products);
   // const [categories, setCategories] = useState(categ);
 
+  // useEffect(() => {
+
+  // })
+
+
   function filtrarCategoria(event, products) {
     // event.preventDefault();
-  
+    console.log(products)
     const arrayCat = products.filter( product => product.cat === event.value)
-    console.log(arrayCat);
+    
     setProd(arrayCat);
     
   }
   return(
     <div>
-      <select onChange={e =>filtrarCategoria(e.target, prod)}>
+      <select onChange={e =>filtrarCategoria(e.target, products)}>
         {categ.map((c, i) => ( <option key={i}> {c} </option> ))}
       </select>
       {/* {console.log(arrayCat)} */}
