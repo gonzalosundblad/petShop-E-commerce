@@ -20,16 +20,13 @@ function App() {
           <Link to="/products"> Catalogo </Link>
         </li>
         {/* <Switch> */}
-            <Route exact path="/">
-              <ProductCard name="jeakja"/> 
-            </Route> 
-            <Route path="/products" render={() => 
-              <Catalogo products={products}/>}
-            />
-           
-      </BrowserRouter>
-      
-      
+        <Route exact path="/">
+          <ProductCard name="jeakja"/> 
+        </Route> 
+        <Route path="/products" render={() => 
+          <Catalogo products={products}/>}
+        />   
+      </BrowserRouter>      
     </div>
   );
 }
