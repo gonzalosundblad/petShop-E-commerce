@@ -13,7 +13,7 @@ export default function Product ({ name, description, price, stock, imagen }){
     </figure>
     <h1>Name:{name}</h1>
     <p>Description:{description}</p>
-    <ul>
+    <ul> 
       <li>Price:{price}</li>
       <li>Stock: {stock}</li>
     </ul>
