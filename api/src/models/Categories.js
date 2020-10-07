@@ -4,18 +4,17 @@ const { DataTypes } = require('sequelize');
 
   // defino el modelo
 
-module.exports = (sequelize) => {
+module.exports = (sequelize, create) => {
     // defino el modelo
-     sequelize.define('category', {
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    description: {
-        type: DataTypes.TEXT
+    sequelize.define('category', {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.TEXT
+        }
     }
-}
 )};
-
 
 
