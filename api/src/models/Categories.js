@@ -15,6 +15,8 @@ const { DataTypes } = require('sequelize');
         type: DataTypes.TEXT
     }
 
+    
+
 }
 )};
 
