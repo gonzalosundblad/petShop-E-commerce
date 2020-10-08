@@ -1,25 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProductCard from '../Components/ProductCard';
+ 
 
 
 
-function filtrarCategoria(event, products) {
-  // event.preventDefault();
 
-  const arrayCat = products.filter( product => product.cat === event.value)
- console.log(arrayCat)
-}
+export default function Catalogo({ products, categ}){
+  
+  const [prod, setProd] = useState(products);
+  // const [categories, setCategories] = useState(categ);
+  // useEffect(() => {
+  // })
 
-export default function Catalogo({products, categ}){
+
+  function filtrarCategoria(event, products) {
+    // event.preventDefault();
+    const arrayCat = products.filter( product => product.cat === event.value)
+    setProd(arrayCat);
+  }
   return(
     <div>
       <select onChange={e =>filtrarCategoria(e.target, products)}>
         {categ.map((c, i) => ( <option key={i}> {c} </option> ))}
       </select>
-      {/* {console.log(arrayCat)} */}
-      {products.map(p => 
+      {prod.map(p => 
         <ProductCard 
-          key = {p.id} //Agregado BranchRoute porque cada componente debe tener key
+          key = {p.id} 
           imagen= {p.imagen} 
           name= {p.name}
           price= {p.price}
