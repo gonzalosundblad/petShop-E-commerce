@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import SearchBar from './Components/SearchBar';
+import CrudProduct from './Components/crudProduct';
 
 var productos = [
   {cat: 'perros', id:1,name: "Eukanuba Small", price: "$850", stock: '100',imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},
@@ -28,6 +29,7 @@ function App() {
       <BrowserRouter>
         {/* <Switch> */}
         <Route path="/" component={SearchBar}></Route>
+        <Route path="/" component={CrudProduct}></Route>
         <Route exact path="/">
           <li>
             <Link to="/products"> Catalogo </Link>
@@ -37,9 +39,7 @@ function App() {
         <Route path="/products" render={() => 
           <Catalogo products={products} categ={categ} />}
         />
-        
-        
-              
+
       </BrowserRouter>  
     </div>
   );
