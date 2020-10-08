@@ -32,4 +32,26 @@ server.get('/category/:nombreCat', (req, res, next) => {
 	})	
 })
 
+server.get('/:id', (req, res) => {
+
+	var promiseProduct = Product.findByPk(req.params.id)
+	var promiseCategory = Category.findAll();
+
+	Promise.all([promiseProduct, promiseCategory])
+		.then(function(values){
+	  		var product = values[0];
+	  		var lista = values[1];
+		  	var ele = lista.find(element => element.id === product.categoryId);
+		  	var objeto = {
+			  	name : product.name,
+				description : product.description,
+				price: product.price,
+				stock: product.stock,
+			  	categoria : ele.name,
+		  	}
+		res.json(objeto)
+	}).catch(err => res.send('Producto no encontrado'))
+})
+
+
 module.exports = server;
