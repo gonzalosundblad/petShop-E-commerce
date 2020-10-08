@@ -14,9 +14,6 @@ export default function SearchBar (){
                 onChange={e => setText(e.target.value)}>
             </input> 
             <input type="submit" value="BUSCAR" />
-            
-
-            
         </form>
     )
 }
