@@ -32,49 +32,26 @@ server.get('/category/:nombreCat', (req, res, next) => {
 	})	
 })
 
-
-// server.get('/:id', (req, res) => {
-
-
-// 	Product.findAll({
-// 		where: {
-// 			id: req.params.id
-// 		}
-// 		// include: {
-// 		//   model: Category,
-// 		// //   required: true
-// 		// }
-// 	  }).then(hola => {
-// 		  console.log(hola)})
-// 	//   }).then(info => {
-// 	// 	res.json({
-// 	// 		name: info.name,
-// 	// 		description: info.description,
-// 	// 		price: info.price,
-// 	// 		stock: info.stock,
-// 	// 		category: info.categoryId
-// 	// 	})
-// 	// })
-// })
-
-
-
 server.get('/:id', (req, res) => {
 
+	var promiseProduct = Product.findByPk(req.params.id)
+	var promiseCategory = Category.findAll();
 
-	Product.findOne({
-		where: {
-			id: req.params.id
-		}
-	}).then(info => {
-		res.json({
-			name: info.name,
-			description: info.description,
-			price: info.price,
-			stock: info.stock,
-			category: info.categoryId
-		})
-	})
+	Promise.all([promiseProduct, promiseCategory])
+		.then(function(values){
+	  		var product = values[0];
+	  		var lista = values[1];
+		  	var ele = lista.find(element => element.id === product.categoryId);
+		  	var objeto = {
+			  	name : product.name,
+				description : product.description,
+				price: product.price,
+				stock: product.stock,
+			  	categoria : ele.name,
+		  	}
+		res.json(objeto)
+	}).catch(err => res.send('Producto no encontrado'))
 })
+
 
 module.exports = server;
