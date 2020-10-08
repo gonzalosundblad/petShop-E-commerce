@@ -8,11 +8,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    descripcion: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    precio: {
+    price: {
       type: DataTypes.DECIMAL,
       defaultValue: '0'
     },

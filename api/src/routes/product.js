@@ -10,28 +10,27 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
-// server.get('/category/:nombreCat', (req, res, next) => {
-// 	let nombreCat = req.params.nombreCat
-// 	Category.findAll()
-// 		.then(cat => {
-// 			res.json(cat)
-// 		})
-// 		.catch(next);
-// });
 
+server.get('/category/:nombreCat', (req, res, next) => {
 
-server.get('/categorias/:nombreCat', (req, res, next) => {
-	Product.findAll({
+	Category.findOne({
 		where: {
-			category: req.params.nombreCat
+			name: req.params.nombreCat
 		}
-	})
-		.then(cat => {
-			res.send(cat)
+	}).then(cat => {
+		return cat.id
+	}).then(loquellega => {
+		Product.findAll({
+		where: {
+			categoryId: loquellega
+		}
+	}).then(cat => {
+		res.json(cat)
+	}).catch(function(err){
+		res.status(500)
+		res.json(err)
 		})
-		.catch(function(err){
-			console.log(err)
-		})
+	})	
 })
 
 module.exports = server;

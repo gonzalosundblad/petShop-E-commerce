@@ -19,8 +19,51 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { Category } = require('./src/db');
+const { Category, Product } = require('./src/db');
 
+var arrayProductosPerros = [{
+  name: "Eukanuba Small",
+  description: "comida para el perrito",
+  price: 750, 
+  stock: 100,
+  categoryId: 1
+}, {
+  name: "Dog Chow BIG",
+  description: "comida para el PERROTE",
+  price: 780, 
+  stock: 100,
+  categoryId: 1
+}, {
+  name: "Pedigree MEDIUM",
+  description: "comida para el perrito",
+  price: 150, 
+  stock: 100,
+  categoryId: 1
+}];
+
+
+var arrayProductosGatos = [{
+  name: "Cat Chow",
+  description: "comida para el michi",
+  price: 750, 
+  stock: 100,
+  categoryId: 2
+},
+{
+  name: "Fideos con tuco de anoche",
+  description: "comida para el michi",
+  price: 555, 
+  stock: 100,
+  categoryId: 2
+},
+{
+  name: "WHISKAS",
+  description: "comida para el michi",
+  price: 600, 
+  stock: 100,
+  categoryId: 2
+}
+]
 
 // Syncing all the models at once.
 const force = true;
@@ -42,10 +85,24 @@ conn.sync({ force }).then(() => {
       name: "Aves",
       description: "Categoria que habla sobre aves"
     });
+
+    var AlimentoPerro = arrayProductosPerros.map(e => {
+          Product.create(e);
+    })
+
+    var AlimentoGato = arrayProductosGatos.map(e => {
+      Product.create(e);
+})
   
-    Promise.all([Perros, Gatos, Aves])
+    Promise.all([Perros, Gatos, Aves, AlimentoGato, AlimentoPerro])
       .then(res => {
-        console.log("Categorías precargadas");
+        console.log("Categorías y producto precargades");
       });
-  });
+    });
+
+
+
+
+
+
 });
