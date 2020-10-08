@@ -2,6 +2,7 @@ const server = require('express').Router();
 const { Product, Category } = require('../db.js');
 
 server.get('/', (req, res, next) => {
+
 	Product.findAll()
 		.then(products => {
 			res.json(products);
