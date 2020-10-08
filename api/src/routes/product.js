@@ -10,7 +10,6 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
-
 server.get('/category/:nombreCat', (req, res, next) => {
 
 	Category.findOne({

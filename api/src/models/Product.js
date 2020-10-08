@@ -19,12 +19,7 @@ module.exports = (sequelize) => {
     stock: {
       type: DataTypes.INTEGER,
       defaultValue: '0'
-    },
-    // image: {
-    //   type: DataTypes.BLOB,
-    //   allowNull: false
-    // //como poner placeholder de default.
-    // }
+    }
   });
 };
 

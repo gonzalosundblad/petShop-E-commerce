@@ -27,13 +27,13 @@ var arrayProductosPerros = [{
   price: 750, 
   stock: 100,
   categoryId: 1
-}, {
+},{
   name: "Dog Chow BIG",
   description: "comida para el PERROTE",
   price: 780, 
   stock: 100,
   categoryId: 1
-}, {
+},{
   name: "Pedigree MEDIUM",
   description: "comida para el perrito",
   price: 150, 
@@ -41,29 +41,25 @@ var arrayProductosPerros = [{
   categoryId: 1
 }];
 
-
 var arrayProductosGatos = [{
   name: "Cat Chow",
-  description: "comida para el michi",
+  description: "comida para el michi de la ciudad",
   price: 750, 
   stock: 100,
   categoryId: 2
-},
-{
+},{
   name: "Fideos con tuco de anoche",
-  description: "comida para el michi",
+  description: "comida para el michi del barrio",
   price: 555, 
   stock: 100,
   categoryId: 2
-},
-{
+},{
   name: "WHISKAS",
-  description: "comida para el michi",
+  description: "comida para el michi cheto",
   price: 600, 
   stock: 100,
   categoryId: 2
-}
-]
+}]
 
 // Syncing all the models at once.
 const force = true;
@@ -74,7 +70,7 @@ conn.sync({ force }).then(() => {
     var Perros =  Category.create({
       name: "Perros",
       description: "Categoria que habla sobre perros"
-      });
+    });
   
     var Gatos =  Category.create({
       name: "Gatos",
@@ -87,22 +83,16 @@ conn.sync({ force }).then(() => {
     });
 
     var AlimentoPerro = arrayProductosPerros.map(e => {
-          Product.create(e);
+      Product.create(e);
     })
 
     var AlimentoGato = arrayProductosGatos.map(e => {
       Product.create(e);
-})
+    })
   
     Promise.all([Perros, Gatos, Aves, AlimentoGato, AlimentoPerro])
       .then(res => {
         console.log("Categorías y producto precargades");
       });
-    });
-
-
-
-
-
-
+  });
 });
