@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [33mcommit 4526b870ba32cf4aed79bc548a9f43b2548b996e[m[33m ([m[1;36mHEAD -> [m[1;32mRutasBE[m[33m)[m
 Author: unknown <sundbladgonzalo@gmail.com>
 Date:   Wed Oct 7 22:27:51 2020 -0300
@@ -16,6 +17,13 @@ Author: Eric <eric.gomez.unq@gmail.com>
 Date:   Wed Oct 7 19:19:20 2020 -0300
 
     Rutas
+=======
+[33mcommit 61b55c9def90ac98773105e85efb1ee763d24a69[m[33m ([m[1;36mHEAD -> [m[1;32mRutasBE[m[33m)[m
+Author: Eric <eric.gomez.unq@gmail.com>
+Date:   Wed Oct 7 19:54:29 2020 -0300
+
+    Eric
+>>>>>>> fcd115066ba755f0e526b1c2b1aa5df7a2055de6
 
 [33mcommit 9a831a61ecfe8dda5be7535b855e0b27cf1c75be[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/RutasBE[m[33m, [m[1;31morigin/HEAD[m[33m)[m
 Merge: 91ece23 22d5be7
@@ -98,7 +106,11 @@ Date:   Wed Oct 7 11:26:34 2020 -0300
 
     tipeo
 
+<<<<<<< HEAD
 [33mcommit 8924125a5528cd3c71b5fd766414c11078f82334[m[33m ([m[1;32mmaster[m[33m)[m
+=======
+[33mcommit 8924125a5528cd3c71b5fd766414c11078f82334[m
+>>>>>>> fcd115066ba755f0e526b1c2b1aa5df7a2055de6
 Author: unknown <sundbladgonzalo@gmail.com>
 Date:   Wed Oct 7 11:16:48 2020 -0300
 
@@ -144,13 +156,21 @@ Date:   Wed Oct 7 09:34:50 2020 -0300
     
     Route Product/Products key=ProductCard
 
+<<<<<<< HEAD
 [33mcommit 8ef977831d95b642f71c6fca9629462d7b3c0d18[m[33m ([m[1;31morigin/RouteBranch[m[33m)[m
+=======
+[33mcommit 8ef977831d95b642f71c6fca9629462d7b3c0d18[m[33m ([m[1;31morigin/RouteBranch[m[33m, [m[1;32mRouteBranch[m[33m)[m
+>>>>>>> fcd115066ba755f0e526b1c2b1aa5df7a2055de6
 Author: facundo-santacruz <facugs2090@gmail.com>
 Date:   Wed Oct 7 01:05:59 2020 -0300
 
     Route Product/Products key=ProductCard
 
+<<<<<<< HEAD
 [33mcommit a643857fd76b15454fe298b9a649e3a40566ccda[m
+=======
+[33mcommit a643857fd76b15454fe298b9a649e3a40566ccda[m[33m ([m[1;32mcomponentes[m[33m)[m
+>>>>>>> fcd115066ba755f0e526b1c2b1aa5df7a2055de6
 Merge: c031a5f 4132ce3
 Author: EricGomez29 <eric.gomez.unq@gmail.com>
 Date:   Tue Oct 6 19:21:38 2020 -0300
@@ -159,7 +179,11 @@ Date:   Tue Oct 6 19:21:38 2020 -0300
     
     componente catalogo
 
+<<<<<<< HEAD
 [33mcommit 4132ce3b79e29b0b19aef8330ee172e0d1c46612[m[33m ([m[1;31morigin/componentes[m[33m, [m[1;32mcomponentes[m[33m)[m
+=======
+[33mcommit 4132ce3b79e29b0b19aef8330ee172e0d1c46612[m[33m ([m[1;31morigin/componentes[m[33m)[m
+>>>>>>> fcd115066ba755f0e526b1c2b1aa5df7a2055de6
 Author: Eric <eric.gomez.unq@gmail.com>
 Date:   Tue Oct 6 19:19:31 2020 -0300
 
@@ -174,7 +198,11 @@ Date:   Tue Oct 6 18:22:28 2020 -0300
     
     modelo de Base de Datos actualizada
 
+<<<<<<< HEAD
 [33mcommit d27b000205f38bcc705e847333f28f04779b0490[m[33m ([m[1;32mDATABASE[m[33m)[m
+=======
+[33mcommit d27b000205f38bcc705e847333f28f04779b0490[m
+>>>>>>> fcd115066ba755f0e526b1c2b1aa5df7a2055de6
 Merge: 40fe452 f776575
 Author: gabbies86 <65744976+gabbies86@users.noreply.github.com>
 Date:   Tue Oct 6 18:21:58 2020 -0300
