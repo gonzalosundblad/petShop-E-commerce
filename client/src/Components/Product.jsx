@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+
 import './product.css'
 
 
@@ -8,9 +9,11 @@ export default function Product ({ product }){
  const [producto, setProduct] = useState(product)
  
 
+
   return (
   <div className="producto">
     <figure>
+
       <img className="producto-img-top" src={product.imagen} alt="imagen de perro"/>
     </figure>
     <h1 className="producto-title">{product.name}</h1>

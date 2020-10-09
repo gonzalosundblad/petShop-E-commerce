@@ -49,8 +49,11 @@ function App() {
           <div className="pedigree">
           <ProductCard name="Gatos" imagen={gatos}/>
           </div>
+
         
         </Route>
+
+ 
           </div>
           <div className="product">
         {/* <Route exact path="/products" render={() => 
