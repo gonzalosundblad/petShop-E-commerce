@@ -11,10 +11,13 @@ import { Link } from 'react-router-dom';
 import './productCard.css'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ad6d63aa01503dc9a76c1a1a75aafa6c5abcabd1
 =======
 >>>>>>> 1394c187fde51c90a834f9a0d33ac9053a22071c
 
+=======
+>>>>>>> 133698546ac9ea8ed27aa7ae5adff2bfe6a0ada9
 export default function ProductCard ({id, name, price, imagen}){
   const [card, setCard] = useState()
   return(

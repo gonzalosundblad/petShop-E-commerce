@@ -70,6 +70,7 @@ function App() {
           <ProductCard name="Gatos" imagen={gatos}/>
           </div>
         </Route>  
+
           </div>
           <div className="product">
         <Route exact path="/products" render={() => 
@@ -109,8 +110,12 @@ function App() {
 >>>>>>> ad6d63aa01503dc9a76c1a1a75aafa6c5abcabd1
 =======
         </div> 
+<<<<<<< HEAD
 e
 >>>>>>> 1394c187fde51c90a834f9a0d33ac9053a22071c
+=======
+
+>>>>>>> 133698546ac9ea8ed27aa7ae5adff2bfe6a0ada9
       </BrowserRouter>  
     </div>
   );
