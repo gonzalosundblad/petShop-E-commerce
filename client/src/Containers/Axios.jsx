@@ -20,14 +20,10 @@
      }
      return (
          <div>
-            
-             <button onClick= {catalogoo}>Catalogo</button>
-            
-             <div>
+          {catalogoo()}
                  {
                  prod.map(p => <ProductCard key = {p.id} imagen= {p.imagen} name= {p.name}price= {p.price}/>)
                  }
              </div>
-         </div>
     
      )};

@@ -8,7 +8,6 @@ export default function ProductCard ({id, name, price, imagen}){
   return(
     <Link to={`/products/:${id}`}>
     
-
     <div className="card">
 
       <figure>

@@ -6,7 +6,19 @@ import { Link } from 'react-router-dom'
 
 
 export default function SearchBar (){
-    const [text, setText] = useState();
+    const [text, setText] = useState([]);
+    const [producto, setProducto] = useState([])
+
+  //   function modificar (){
+  //     axios.get(`http://localhost:3001/search?products=${text}`)
+  //     .then(r =>{
+  //         const array = r.data;
+  //         console.log(array)
+  //         setText(array);
+          
+  //     })
+  // }
+
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
