@@ -19,6 +19,10 @@ module.exports = (sequelize) => {
     stock: {
       type: DataTypes.INTEGER,
       defaultValue: '0'
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   });
 };

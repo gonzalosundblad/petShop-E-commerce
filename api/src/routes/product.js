@@ -50,8 +50,73 @@ server.get('/:id', (req, res) => {
 			  	categoria : ele.name,
 		  	}
 		res.json(objeto)
-	}).catch(err => res.send('Producto no encontrado'))
+	}).catch(err => res.status(404).send('Producto no encontrado'))
 })
+
+server.post('/', (req, res) => {
+
+	const {name, description, price, stock, categoryId } = req.body;
+
+	if( !name || !description || !categoryId ){
+		return res.status(400).send("Campos requeridos")
+	} else {
+		Product.create({
+				name,
+				description,
+				price,
+				stock,
+				categoryId
+				})
+		.then(function(product){
+			res.json(product).status(201)
+		})
+	}
+})
+
+server.put('/:id', function(req, res, next) {
+
+	const {name, description, price, stock, categoryId } = req.body;
+
+	Product.update({
+		name,
+		description,
+		price,
+		stock,
+		categoryId
+	},{
+		returning: true,
+		where: {
+			id: req.params.id
+		}
+	})/*.then(function(updated) {
+		console.log(updated)
+		res.status(200);
+		res.send(updated)*/
+	.then(function(product) {
+		res.status(200).json(product)
+	}).catch(err => {
+		console.log('Error: ', err)
+	})
+});
+
+server.delete('/:id', (req, res) => {
+
+	var productId = req.params.id;
+
+	if(!productId){
+		res.status(404).send('Debes ingresar un ID')
+	} else {
+		Product.findByPk(productId)
+			.then(value => {
+				value.destroy()
+			}).then(value2 => {
+				res.status(200).send('Borrado exitosamente');
+			}).catch(err => {
+				res.status(404).send('Este producto nunca exitió');
+			})
+	}
+})
+
 
 
 module.exports = server;
