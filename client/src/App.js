@@ -48,6 +48,7 @@ function App() {
           <ProductCard name="Gatos" imagen={gatos}/>
           </div>
         </Route>  
+
           </div>
           <div className="product">
         <Route exact path="/products" render={() => 
@@ -62,7 +63,7 @@ function App() {
         <Product product={products.find(p => p.id === parseInt(match.params.id))}/>
         }/>
         </div> 
-e
+
       </BrowserRouter>  
     </div>
   );
