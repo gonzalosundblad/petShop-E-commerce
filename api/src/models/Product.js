@@ -8,23 +8,18 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    descripcion: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    precio: {
+    price: {
       type: DataTypes.DECIMAL,
       defaultValue: '0'
     },
     stock: {
       type: DataTypes.INTEGER,
       defaultValue: '0'
-    },
-    // image: {
-    //   type: DataTypes.BLOB,
-    //   allowNull: false
-    // //como poner placeholder de default.
-    // }
+    }
   });
 };
 

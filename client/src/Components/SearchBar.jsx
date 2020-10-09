@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-
+    
 export default function SearchBar (){
     const [text, setText] = useState();
     return (
         <form onSubmit={(e) => {
-            // e.preventDefault();
+            e.preventDefault();
             // onSearch(text);
             setText("");
         }}>
