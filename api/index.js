@@ -64,8 +64,9 @@ var arrayProductosGatos = [{
 // Syncing all the models at once.
 const force = true;
 conn.sync({ force }).then(() => {
-  server.listen(3000, () => {
-    console.log('%s listening at 3000'); // eslint-disable-line no-console
+  server.listen(3001, () => {            //MODIFIQUE EL PUERTO EN EL QUE SE ESCUCHA EL SERVIDOR PARA PODER TENER FRONT Y BACK ABIERTOS
+    
+    console.log('%s listening at 3001'); // eslint-disable-line no-console    
 
     var Perros =  Category.create({
       name: "Perros",
