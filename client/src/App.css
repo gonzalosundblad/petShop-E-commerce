@@ -1,38 +1,61 @@
-.App {
+.App{
   text-align: center;
+  height: 100%;
+  background-color: rgb(172, 196, 202);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App li{
+  list-style: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.liProducts{
+  width: max-content;
+  display: inline-block;
+  padding-bottom: 15px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App li a {
+  margin-top: 25px;
+  border-radius: 5px;
+  border: 1px solid #2f6b68;
+  background-color: rgb(226, 219, 219);
+  color: #2f6b68;
+  text-decoration: none;
+}
+
+.searchBar{
+
+  height: 150px;
+  background-color: #2f6b68;
+}
+/* 
+.product {
+  border: none;
+}
+
+.searchBar form{
+  display: inline-block;
+  text-align: center;
+  width: 40%;
+} */
+
+.productoSolo,
+.pedigree{
+  height: 520px;
+  background-color: rgb(172, 196, 202);
+}
+
+.product{
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 300px;;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo{
+border-radius: 50%;
+width: 110px;
+height: 110px;
 }

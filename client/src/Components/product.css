@@ -1,0 +1,41 @@
+.producto{
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 15px;
+  display: inline-block;
+  text-align: center;
+  margin-top: 25px ;
+  width: 18rem
+}
+
+.producto figure{
+  display: inline-block;
+}
+
+ul{
+  margin-top: 0;
+}
+
+.producto-title{
+  color: rgb(121, 113, 113);
+  border-top: 1px solid gray;
+  padding-top: 20px;
+}
+
+.producto-text{
+  text-align: start;
+  color: gray;
+  padding-right: 50px;
+}
+
+.producto-texto{
+  color: gray;
+  margin-bottom: 0;
+}
+
+.producto-img-top{
+  display: inline-block;
+  text-align: center;
+  width: 200px;
+  height: 200px;
+} 

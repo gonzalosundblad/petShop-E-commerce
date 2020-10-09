@@ -1,4 +1,8 @@
 import React, {useState} from 'react';
+import './searchbar.css'
+import logo from '../imagenes/logo.jpeg';    
+import { Link } from 'react-router-dom'
+
 
 
 export default function SearchBar (){
@@ -9,12 +13,17 @@ export default function SearchBar (){
             // onSearch(text);
             setText("");
         }}>
-            <input type="text"
+          <Link exact to="/">
+          <img className="logo" src={logo} alt=""/>
+          </Link>
+          <div>
+            <input className="barra" type="text"
                 placeholder="Ingresar Producto"
                 value={text} 
                 onChange={e => setText(e.target.value)}>
             </input> 
-            <input type="submit" value="BUSCAR" />
+            <input className="boton" type="submit" value="BUSCAR" />
+            </div>
         </form>
     )
 }
