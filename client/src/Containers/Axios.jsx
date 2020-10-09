@@ -20,9 +20,9 @@ export default function Cate (){
     }
     return (
         <div>
-            
-            <button onClick= {catalogoo}>Catalogo</button>
-            
+          <Link to='/products'> 
+                <button onClick= {catalogoo}>Catalogo</button>
+            </Link>
             <div>
                 {
                 prod.map(p => <ProductCard key = {p.id} imagen= {p.imagen} name= {p.name}price= {p.price}/>)

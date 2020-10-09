@@ -37,32 +37,33 @@ function App() {
         <div className="searchBar">
         
         <Route  path="/" component={SearchBar}></Route>
+        
+        
+        <Route path="/" render={() => 
+          <Cate/>}
+        />
         <Route exact path="/">
-          <li className="liProducts">
-            <Link to="/products"> Catalogo </Link>
-          </li>
           <div className="pedigree">
           <ProductCard name="Perros" imagen={perros}/>
           </div>
           <div className="pedigree">
           <ProductCard name="Gatos" imagen={gatos}/>
           </div>
-        </Route>  
+        
+        </Route>
           </div>
           <div className="product">
-        <Route exact path="/products" render={() => 
+        {/* <Route exact path="/products" render={() => 
           <Catalogo products={products} categ={categ} />}
-        />
-        <Route exact path="/products" render={() => 
-          <Cate/>}
-        />
+        /> */}
+       
         </div>
         <div className="productoSolo">
         <Route exact path='/products/:id' render={({ match }) => 
         <Product product={products.find(p => p.id === parseInt(match.params.id))}/>
         }/>
         </div> 
-e
+
       </BrowserRouter>  
     </div>
   );
