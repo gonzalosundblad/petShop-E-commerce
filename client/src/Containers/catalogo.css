@@ -1,0 +1,12 @@
+select{
+  margin-top: 15px;
+  border-radius: 7px;
+  border: 1px solid #2f6b68;
+  width: 90px;
+  height: 30px;
+  background-color: rgb(172, 171, 171);
+}
+
+.opciones{
+  background-color: rgb(172, 171, 171);
+}
