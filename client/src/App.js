@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+
+import perros from './imagenes/perros.jpg'
+import gatos from './imagenes/gatos.jpg'
+// import perro from './imagenes/dogChowPerro.jpg'
+// import gato from './imagenes/razaGatos.jpg'
+// import comida from './imagenes/comida.jpg'
 import './App.css';
 import Product from './Components/Product';
 import ProductCard from './Components/ProductCard';
@@ -10,6 +15,8 @@ import {
   Link
 } from "react-router-dom";
 import SearchBar from './Components/SearchBar';
+import Cate from './Containers/Axios';
+// import CrudProduct from './Components/crudProduct'; 
 
 var productos = [
   {cat: 'perros', id:1,name: "Eukanuba Small", description: "Hola soy un perro" , price: "$850", stock:"60", imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},
@@ -26,25 +33,50 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {/* <Switch> */}
-        <Route path="/" component={SearchBar}></Route>
+       
+        <div className="searchBar">
+        
+        <Route  path="/" component={SearchBar}></Route>
         <Route exact path="/">
-          <li>
+          <li className="liProducts">
             <Link to="/products"> Catalogo </Link>
           </li>
-          <ProductCard name="jeakja"/> 
+          <div className="pedigree">
+          <ProductCard name="Perros" imagen={perros}/>
+          </div>
+          <div className="pedigree">
+          <ProductCard name="Gatos" imagen={gatos}/>
+          </div>
         </Route>  
+
+          </div>
+          <div className="product">
         <Route exact path="/products" render={() => 
           <Catalogo products={products} categ={categ} />}
         />
-
+        <Route exact path="/products" render={() => 
+          <Cate/>}
+        />
+        </div>
+        <div className="productoSolo">
         <Route exact path='/products/:id' render={({ match }) => 
         <Product product={products.find(p => p.id === parseInt(match.params.id))}/>
         }/>
+        </div> 
 
       </BrowserRouter>  
     </div>
   );
 }
+
+// Axios({
+//   method: "GET",
+//   url: "http://localhost:5000/",
+//   headers: {
+//     "Content-Type": "application/json"
+//   }
+// }).then(res => {
+//   console.log(res.data.message);
+// });
 
 export default App;

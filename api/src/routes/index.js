@@ -10,7 +10,7 @@ var router = Router();
 // i.e: router.use('/auth', authRouter);
 // router.use('/auth', authRouter);
 router.use('/products', productRouter);
-router.use('/search', searchRouter);
+router.use('/search', searchRouter);    //AGREGAMOS RUTA /search
 
 
 module.exports = router;

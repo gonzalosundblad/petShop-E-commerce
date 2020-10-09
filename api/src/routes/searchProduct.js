@@ -5,7 +5,7 @@ const {or, and, gt, lt} = Sequelize.Op;
 
 
 
-server.get('/', function(req, res) {
+server.get('/', function(req, res) {    //UN SEARCH PARA BUSCAR TODOS LOS PRODUCTOS QUE MATCHEEN CON EL QUERY PARAMS
 
     Product.findAll({
         where: {
@@ -13,7 +13,7 @@ server.get('/', function(req, res) {
                 {name: {
                     [Sequelize.Op.iLike] : '%' + req.query.products + '%'}},
                 {description: {
-                    [Sequelize.Op.substring] : req.query.products}}
+                    [Sequelize.Op.iLike] : '%' + req.query.products + '%'}}
                 ] 
             }
     }).then(rta => {
