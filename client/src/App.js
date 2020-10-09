@@ -15,6 +15,7 @@ import {
   Link
 } from "react-router-dom";
 import SearchBar from './Components/SearchBar';
+import CrudProduct from './Components/crudProduct';
 
 var productos = [
   {cat: 'perros', id:1,name: "Eukanuba Small", description: "Hola, soy un perro" , price: "$850", stock: '100',imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},
