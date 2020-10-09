@@ -5,7 +5,12 @@
   display: inline-block;
   text-align: center;
   margin-top: 25px ;
-  width: 18rem
+  width: 18rem;
+  margin-right: 10px;
+  ;
+}
+.card:hover{
+  box-shadow: 2px 2px 5px rgb(22, 22, 22);
 }
 
 .card figure{
@@ -13,6 +18,7 @@
 }
 
 .card-title{
+  font-size: 20px;
   color: rgb(121, 113, 113);
   border-top: 1px solid gray;
   padding-top: 20px;
