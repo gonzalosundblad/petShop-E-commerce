@@ -10,6 +10,7 @@ import {
   Link
 } from "react-router-dom";
 import SearchBar from './Components/SearchBar';
+import Cate from './Components/Axios';
 
 var productos = [
   {cat: 'perros', id:1,name: "Eukanuba Small", description: "Hola soy un perro" , price: "$850", stock:"60", imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},
@@ -28,14 +29,18 @@ function App() {
       <BrowserRouter>
         {/* <Switch> */}
         <Route path="/" component={SearchBar}></Route>
+        <Route path="/" component={Cate}></Route>
         <Route exact path="/">
           <li>
-            <Link to="/products"> Catalogo </Link>
+            <Link to="/category"> Catalogo </Link>
           </li>
-          <ProductCard name="jeakja"/> 
+          {/* <ProductCard name="jeakja"/>  */}
         </Route>  
-        <Route exact path="/products" render={() => 
+        <Route exact path="/category" render={() => 
           <Catalogo products={products} categ={categ} />}
+        />
+        <Route exact path="/products" render={() => 
+          <Cate/>}
         />
 
         <Route exact path='/products/:id' render={({ match }) => 
