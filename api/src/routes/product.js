@@ -32,4 +32,49 @@ server.get('/category/:nombreCat', (req, res, next) => {
 	})	
 })
 
+
+// server.get('/:id', (req, res) => {
+
+
+// 	Product.findAll({
+// 		where: {
+// 			id: req.params.id
+// 		}
+// 		// include: {
+// 		//   model: Category,
+// 		// //   required: true
+// 		// }
+// 	  }).then(hola => {
+// 		  console.log(hola)})
+// 	//   }).then(info => {
+// 	// 	res.json({
+// 	// 		name: info.name,
+// 	// 		description: info.description,
+// 	// 		price: info.price,
+// 	// 		stock: info.stock,
+// 	// 		category: info.categoryId
+// 	// 	})
+// 	// })
+// })
+
+
+
+server.get('/:id', (req, res) => {
+
+
+	Product.findOne({
+		where: {
+			id: req.params.id
+		}
+	}).then(info => {
+		res.json({
+			name: info.name,
+			description: info.description,
+			price: info.price,
+			stock: info.stock,
+			category: info.categoryId
+		})
+	})
+})
+
 module.exports = server;
