@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import './searchbar.css'
 import logo from '../imagenes/logo.jpeg';    
+import { Link } from 'react-router-dom'
+
 
 export default function SearchBar (){
     const [text, setText] = useState();
@@ -10,7 +12,9 @@ export default function SearchBar (){
             // onSearch(text);
             setText("");
         }}>
+          <Link exact to="/">
           <img className="logo" src={logo} alt=""/>
+          </Link>
           <div>
             <input className="barra" type="text"
                 placeholder="Ingresar Producto"

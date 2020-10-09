@@ -54,3 +54,8 @@
   width: 300px;;
 }
 
+.logo{
+border-radius: 50%;
+width: 110px;
+height: 110px;
+}

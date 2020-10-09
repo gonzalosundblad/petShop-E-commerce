@@ -33,6 +33,7 @@ function App() {
       <BrowserRouter>
         {/* <Switch> */}
         <div className="searchBar">
+        
         <Route  path="/" component={SearchBar}></Route>
         <Route exact path="/">
           <li className="liProducts">
@@ -60,5 +61,15 @@ function App() {
     </div>
   );
 }
+
+// Axios({
+//   method: "GET",
+//   url: "http://localhost:5000/",
+//   headers: {
+//     "Content-Type": "application/json"
+//   }
+// }).then(res => {
+//   console.log(res.data.message);
+// });
 
 export default App;
