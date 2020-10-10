@@ -20,9 +20,11 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       defaultValue: '0'
     },
-    categoryId: {               //AGREGANIS "categoryId" al modelo PARA QUE SEA allowNull
-      type: DataTypes.INTEGER,
-      allowNull: false
+    image: {
+      type: DataTypes.BLOB
+    },
+    categoryId: {
+      type: DataTypes.INTEGER
     }
   });
 };

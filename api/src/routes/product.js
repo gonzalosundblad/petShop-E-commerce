@@ -26,8 +26,8 @@ server.get('/category/:nombreCat', (req, res, next) => {  //TRAE TODOS LOS PRODU
 	}).then(cat => {
 		res.json(cat)
 	}).catch(function(err){
-		res.status(500)
-		res.json(err)
+		res.send('error')
+		console.log('error: ', err)
 		})
 	})	
 })
@@ -89,23 +89,39 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 })
 
 server.post('/:idProducto/category/:idCategoria', (req, res) => {	//AGREGA CATEGORIA AL PRODUCTO
-
 	const { idProducto, idCategoria } = req.params;
-
 	var product;
-	var cat;
-	var promesaPro = Product.findByPk(idProducto);
-	var promesaCat = Category.findByPk(idCategoria);
-
-	Promise.all([promesaPro, promesaCat])
-		.then(function(data){//return product.setCategory(cat)
-			product = data[0];
-			cat = data[1].id;
-			return product.setCategory(cat)
-		.then(function(newProduct){
-			res.send("Categoria Asignada")
-		})
+	var category;
+	Product.findByPk(idProducto)
+	.then(function(data){
+		product = data
+		return Category.findByPk(idCategoria)
 	})
+	.then(function(dataC){
+		category = dataC
+		return product.addCategory(category.id)
+	})
+	.then(function(){
+		res.send('realizsozzzzzzzzzzzzzzozozozozo');
+	})
+	.catch(err => console.log(err))
+})
+
+server.delete('/:idProducto/category/:idCategoria', (req, res) => {	//AGREGA CATEGORIA AL PRODUCTO
+	const { idProducto, idCategoria } = req.params;
+	var product;
+	var category;
+	Product.findOne({
+			where: {
+				id : idProducto,
+				categoryId: idCategoria
+			}
+		})
+		.then(function(a){
+			console.log(a)
+			Product.addCategory
+		})
+		.catch(err => console.log(err))
 })
 
 server.put('/:id', function(req, res, next) {		//MODIFICA UN PRODUCTO SEGUN SU ID
