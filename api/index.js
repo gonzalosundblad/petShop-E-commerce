@@ -59,7 +59,23 @@ var arrayProductosGatos = [{
   price: 600, 
   stock: 100,
   categoryId: 2
+},{
+  name: "BOQUITA",
+  description: "comida para el michi cheto",
+  price: 600, 
+  stock: 100,
+  categoryId: 2
+},{
+  name: "birrita",
+  description: "comida para el michi cheto",
+  price: 600, 
+  stock: 100,
+  categoryId: 2
 }]
+
+Product.addHook('beforeValidate', (product, options) => {
+  product.name = product.name.toUpperCase() + ' jejejeje'.toUpperCase();
+})
 
 // Syncing all the models at once.
 const force = true;

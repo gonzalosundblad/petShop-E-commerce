@@ -13,7 +13,7 @@ server.get('/', function(req, res) {
                 {name: {
                     [Sequelize.Op.iLike] : '%' + req.query.products + '%'}},
                 {description: {
-                    [Sequelize.Op.substring] : req.query.products}}
+                    [Sequelize.Op.iLike] : '%' + req.query.products + '%'}}
                 ] 
             }
     }).then(rta => {
