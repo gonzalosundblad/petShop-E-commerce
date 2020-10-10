@@ -19,6 +19,12 @@ module.exports = (sequelize) => {
     stock: {
       type: DataTypes.INTEGER,
       defaultValue: '0'
+    },
+    image: {
+      type: DataTypes.BLOB
+    },
+    categoryId: {
+      type: DataTypes.INTEGER
     }
   });
 };
