@@ -1,32 +1,61 @@
 
 
 
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import  axios from 'axios';
 import './product.css'
 
 
-export default function Product ({ product }){
+export default function Product ({ produc }){
   //{id, name, description, price, stock, imagen }
- const [producto, setProduct] = useState(product)
+  const [name, setName] = useState();
+  const [description, setDescription] = useState();
+  const [image, setImage] = useState();
+  const [id, setId] = useState();
+  const [price, setPrice] = useState();
+  const [stock, setStock] = useState();;
+
+  
+
+  
+  useEffect(() => {
+    async function detProd() {
+      const response = await axios.get(`http://localhost:3001/products/${produc}`)
+      const json = await response.data;    
+      console.log(json) 
+      setName(json.name);
+      setDescription(json.description); 
+      setImage(json.image); 
+      setId(json.id); 
+      setPrice(json.price); 
+      setStock(json.stock); 
+    }
+    detProd();
+    }, []);
+      
+  
+
+    
+    
+  
+
+  
  
-
-
-  return (
+  return(
   <div className="producto">
-    <figure>
+     <figure>
 
-      <img className="producto-img-top" src={product.imagen} alt="imagen de perro"/>
-    </figure>
-    <h1 className="producto-title">{product.name}</h1>
-    <p className="producto-texto">Description: {product.description}</p>
-    <ul> 
-      <li className="producto-text">Precio: {product.price}</li>
-      <li className="producto-text">Stock: {product.stock}</li>
-      <img src={product.imagen} alt="imagen de perro"/>
+       <img className="producto-img-top" src={image} alt="imagen de perro"/>
+     </figure>
+    <h1 className="producto-title">{name}</h1>
+     <p className="producto-texto">Description: {description}</p>
+     <ul> 
+       <li className="producto-text">Precio: {price}</li>
+       <li className="producto-text">Stock: {stock}</li>
+       {/* <img src={product.imagen} alt="imagen de perro"/> */}
     
     
-    </ul>
+     </ul> 
   </div>
   )
 }
