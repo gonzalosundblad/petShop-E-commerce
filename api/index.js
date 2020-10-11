@@ -24,8 +24,7 @@ var arrayProductosPerros = [{
   name: "Eukanuba Small",
   description: "comida para el perrito",
   price: 750, 
-  stock: 100,
-  categoryId: 1
+  stock: 100
 },{
   name: "Dog Chow BIG",
   description: "comida para el PERROTE",
@@ -67,7 +66,7 @@ conn.sync({ force }).then(() => {
        
     var SinCategoria =  Category.create({
       name: "Sin Categoria",
-      description: "Categoria que habla sobre aves",
+      description: "Producto sin categoria",
       id: "0"
     });
     var Perros =  Category.create({
@@ -84,12 +83,34 @@ conn.sync({ force }).then(() => {
       name: "Aves",
       description: "Categoria que habla sobre aves"
     });
+
     var AlimentoPerro = arrayProductosPerros.map(e => {
-      Product.create(e);
-    })
+      if(!e.categoryId){
+        Product.create(e)
+          .then(function(e) {
+            e.addCategories('0')
+          })
+      } else {
+        Product.create(e)
+          .then(product => {
+            product.addCategories(e.categoryId)
+          })
+      }
+    });
+
     var AlimentoGato = arrayProductosGatos.map(e => {
-      Product.create(e);
-    })
+      if(!e.categoryId){
+        Product.create(e)
+          .then(function(e) {
+            e.addCategories('0')
+          })
+      } else {
+        Product.create(e)
+          .then(product => {
+            product.addCategories(e.categoryId)
+          })
+      }
+    });
   
     Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro])
       .then(res => {
