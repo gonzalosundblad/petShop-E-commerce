@@ -20,13 +20,11 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { Category, Product } = require('./src/db');
-
 var arrayProductosPerros = [{
   name: "Eukanuba Small",
   description: "comida para el perrito",
   price: 750, 
-  stock: 100,
-  categoryId: 1
+  stock: 100
 },{
   name: "Dog Chow BIG",
   description: "comida para el PERROTE",
@@ -40,7 +38,6 @@ var arrayProductosPerros = [{
   stock: 100,
   categoryId: 1
 }];
-
 var arrayProductosGatos = [{
   name: "Cat Chow",
   description: "comida para el michi de la ciudad",
@@ -60,14 +57,18 @@ var arrayProductosGatos = [{
   stock: 100,
   categoryId: 2
 }]
-
 // Syncing all the models at once.
 const force = true;
 conn.sync({ force }).then(() => {
   server.listen(3001, () => {            //MODIFIQUE EL PUERTO EN EL QUE SE ESCUCHA EL SERVIDOR PARA PODER TENER FRONT Y BACK ABIERTOS
     
-    console.log('%s listening at 3001'); // eslint-disable-line no-console    
-
+    console.log('%s listening at 3001'); // eslint-disable-line no-console 
+       
+    var SinCategoria =  Category.create({
+      name: "Sin Categoria",
+      description: "Producto sin categoria",
+      id: "0"
+    });
     var Perros =  Category.create({
       name: "Perros",
       description: "Categoria que habla sobre perros"
@@ -84,16 +85,37 @@ conn.sync({ force }).then(() => {
     });
 
     var AlimentoPerro = arrayProductosPerros.map(e => {
-      Product.create(e);
-    })
+      if(!e.categoryId){
+        Product.create(e)
+          .then(function(e) {
+            e.addCategories('0')
+          })
+      } else {
+        Product.create(e)
+          .then(product => {
+            product.addCategories(e.categoryId)
+          })
+      }
+    });
 
     var AlimentoGato = arrayProductosGatos.map(e => {
-      Product.create(e);
-    })
+      if(!e.categoryId){
+        Product.create(e)
+          .then(function(e) {
+            e.addCategories('0')
+          })
+      } else {
+        Product.create(e)
+          .then(product => {
+            product.addCategories(e.categoryId)
+          })
+      }
+    });
   
-    Promise.all([Perros, Gatos, Aves, AlimentoGato, AlimentoPerro])
+    Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro])
       .then(res => {
         console.log("Categorías y producto precargades");
       });
   });
 });
+
