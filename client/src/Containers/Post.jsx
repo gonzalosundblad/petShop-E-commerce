@@ -15,28 +15,36 @@ export default function AgregarCategoria() {
  
   function handleSubmit (event){
     event.preventDefault();
- 
+    
      const usuario = {
        name: nueva,
        description: description
     };
- 
+
+    
     axios.post(`http://localhost:3001/products/category`,  usuario )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
- })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+      borrarInput()
+    })
+
+    
   }
+      function borrarInput(){
+        document.getElementById("name").value = "";
+        document.getElementById("description").value = "";
+      }
+  
  
     return (
       <div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Nombre:
-            <input type="text" name="name" onChange={handleChange} />
-            <input type="text" description="description" onChange={handleChange2} />
-          </label>
-          <button type="submit" >Agregar</button>
+        <form id="miForm" onSubmit={handleSubmit}>
+          <label>Nombre de Categoría: </label>
+            <input id="name" type="text" name="name" onChange={handleChange} />
+            <label>Descripción: </label>
+            <input id="description" type="text" description="description" onChange={handleChange2} />
+          <button type="submit">Agregar</button>
         </form>
       </div>
     )
