@@ -25,7 +25,7 @@ export default function Cate (){
             </Link>
             <div>
                 {
-                prod.map(p => <ProductCard key = {p.id} imagen= {p.imagen} name= {p.name}price= {p.price}/>)
+                prod.map(p => <ProductCard id={p.id} key = {p.id} imagen= {p.imagen} name= {p.name}price= {p.price}/>)
                 }
             </div>
         </div>

@@ -10,6 +10,15 @@ server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
 		.catch(next);
 });
 
+server.get('/category/', (req, res, next) => {  //TRAE TODOS LAS CATEGORIAS
+
+	Category.findAll()
+		.then(category => {
+			res.json(category);
+		})
+		.catch(next);
+});
+
 server.get('/category/:nombreCat', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS DE X CATEGORIA
 
 	Category.findOne({
@@ -54,9 +63,9 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 })
 
 server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
-
-	const {name, description, price, stock, categoryId } = req.body;
 	
+	const {name, description, price, stock, categoryId } = req.body;
+	console.log(req.body)
 	if( !name || !description || !categoryId ){
 		return res.status(400).send("Campos requeridos")
 	} else {
@@ -74,7 +83,7 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 })
 	
 server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
-
+	console.log(req.body)
 	const { name, description } = req.body ;
 	
 	if(!name){
