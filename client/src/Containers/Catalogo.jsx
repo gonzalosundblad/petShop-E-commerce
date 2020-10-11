@@ -21,7 +21,7 @@ export default function Catalogo({ products, categ}){
   return(
     <div>
       <select onChange={e =>filtrarCategoria(e.target, products)}>
-        {categ.map((c, i) => ( <option className="opciones" key={i}> {c} </option> ))}
+        {categ.map((c, i) => ( <option className="opciones" key={i}> {c} </option>))}
       </select>
       {prod.map(p => 
         <ProductCard 

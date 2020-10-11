@@ -7,7 +7,7 @@ import {Link } from "react-router-dom";
 export default function Cate (){
     const [prod, setProd] = useState([]);
 
-    function catalogoo (){
+    function catalogoo ({productos}){
         axios.get(`http://localhost:3001/products`)
         .then(r =>{
             const array = r.data;

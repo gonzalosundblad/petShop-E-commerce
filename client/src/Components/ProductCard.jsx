@@ -1,10 +1,10 @@
 
-import React, { useState} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './productCard.css'
 
 export default function ProductCard ({id, name, price, imagen}){
-  const [card, setCard] = useState()
+  // const [card, setCard] = useState()
   return(
     <Link to={`/products/:${id}`}>
     
