@@ -49,9 +49,10 @@ function App() {
         </div>
         <div className="productoSolo">
         <Route exact path='/products/:id' render={({ match }) => 
-        <Product product={products.find(p => p.id === parseInt(match.params.id))}/>
+           <Product product={products.find(p => p.id === parseInt(match.params.id))}/>
         }/>
         </div> 
+
 
       </BrowserRouter>  
     </div>
