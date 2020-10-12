@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import SearchBar from './Components/SearchBar';
 import Cate from './Containers/Axios';
+import AgregarCategoria from './Containers/Post';
 // import CrudProduct from './Components/crudProduct'; 
 
 
@@ -44,12 +45,14 @@ function App() {
           </div>
           <div className="product">
         <Route exact path="/products" render={() =>
-          <Cate/>}
-        />
+          <Cate/>} />        
         </div>
+        <Route  path="/nuevaCateg"  render={() =>
+          <AgregarCategoria/>}/> 
+       
         <div className="productoSolo">
-        <Route exact path='/products/:id' render={({ match }) => 
-           <Product product={products.find(p => p.id === parseInt(match.params.id))}/>
+        <Route exact path='/products/:prodId' render={({ match }) => 
+          <Product produc={match.params.prodId}/>
         }/>
         </div> 
 
