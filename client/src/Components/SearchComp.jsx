@@ -12,9 +12,7 @@ export default function Search ({funcion}){
             
             funcion(product);
         }}>
-          <Link exact to="/">
-            <img className="logo" src={logo} alt=""/>
-          </Link>
+          
           <div>
             <input className="barra" type="search"
                 placeholder="Ingresar Producto"

@@ -19,6 +19,7 @@ export default function SearchBar (){
         })
     }
 
+
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
