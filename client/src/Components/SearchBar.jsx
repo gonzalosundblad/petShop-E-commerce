@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
-import './searchbar.css'
+import '../Estilos/searchbar.css';
 import logo from '../imagenes/logo.jpeg';    
-import {
-    Link
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import Catalogo from './CatalogoComp';
 

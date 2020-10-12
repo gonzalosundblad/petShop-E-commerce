@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import '../Components/searchbar.css';
-import {
-    Link
-  } from "react-router-dom";
-  import './searchbar.css'
-  import logo from '../imagenes/logo.jpeg';
-  import '../Components/searchbar.css';
+import {Link } from "react-router-dom";
+import '../Estilos/searchbar.css';
+import logo from '../imagenes/logo.jpeg';
+  
 
 export default function Search ({funcion}){
     const[product, setProduct]= useState([]);

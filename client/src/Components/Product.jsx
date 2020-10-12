@@ -1,7 +1,7 @@
 
 import React  from 'react';
 
-import './product.css'
+import '../Estilos/product.css';
 
 
 export default function Product ({id, name, description, price, stock, imagen}){

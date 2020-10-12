@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import {Link} from "react-router-dom";
 import Search from '../Components/SearchComp';
 import logo from '../imagenes/logo.jpeg';
-import '../Components/searchbar.css';
+import '../Estilos/searchbar.css';
 import SearchBar from '../Components/SearchBar';
 import SearchBar2 from '../Components/SearchBar2';
-import Select from '../Components/SelectComp';
+
 import Categoria2 from './Categoria2';
 
 export default function Nav({funcionCatag, funcionSearch}) {
@@ -19,7 +19,7 @@ export default function Nav({funcionCatag, funcionSearch}) {
         <Link to='/products'>
           <button onClick={funcionCatag}>Catalogoooo</button>
         </Link>
-         <Categoria2/>
+         
        
        
       </div>

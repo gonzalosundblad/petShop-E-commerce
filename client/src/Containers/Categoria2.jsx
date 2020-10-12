@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import CategoriaCard from '../Components/CategoriaComp';
+import axios from 'axios';
 
 export default function MostrarCategorias (){
     const [nombre, setNombre] = useState([]);
@@ -15,8 +16,9 @@ export default function MostrarCategorias (){
         }, []);
   
     return (
-      <div >
-          <CategoriaCard nombre = {nombre} />
+      <div >{
+          nombre.map(n => <CategoriaCard nombre = {n.name} />)
+            }
         </div>
   
     );

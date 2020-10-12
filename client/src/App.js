@@ -21,7 +21,7 @@ import SearchBar2 from './Components/SearchBar2'
 import Catalogo from './Components/CatalogoComp';
 // import CrudProduct from './Components/crudProduct'; 
 import CategoryPerro from './Containers/Categorias';
-
+import Categoria2 from './Containers/Categoria2';
 
 // var productos = [
 //   {cat: 'perros', id:1,name: "Eukanuba Small", description: "Hola soy un perro" , price: "$850", stock:"60", imagen: "https://mascotaselmolino.com.ar/3868/eukanuba-adulto-small-breed.jpg"},
@@ -39,23 +39,19 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <div className="searchBar">
-        <Route path="/" render={() => 
-          <Nav />}
-          />
-        {/* <Route path='/products/search' render={() => 
-          <SearchBar2 />}
-          /> */}
+        <Route path="/" render={() =>  <Nav />} />
+        <Route exact path="/" component={Categoria2} />
         <Route exact path="/products" component={MostrarCatalogo} />
-        <Route exact path="/products/perros" component={CategoryPerro} />
+        <Route exact path="/products/Perros" component={CategoryPerro} />
         <Route exact path="/">
 
-          <div className="pedigree">
+          {/* <div className="pedigree">
             <ProductCard name="Perros" imagen={perros}/>
           </div>
           
           <div className="pedigree">
             <ProductCard name="Gatos" imagen={gatos}/>
-          </div>
+          </div> */}
         </Route>
         </div>
           <div className="product"></div>

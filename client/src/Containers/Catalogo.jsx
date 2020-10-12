@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ProductCard from '../Components/ProductCard';
- 
-import './catalogo.css'
+import '../Estilos/catalogo.css';
 
 
 
