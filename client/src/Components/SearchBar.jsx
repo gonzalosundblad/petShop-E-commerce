@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import Catalogo from './CatalogoComp';
 
-
 export default function SearchBar (){
     const [text, setText] = useState([]);
     const [producto, setProducto] = useState([]);
@@ -34,9 +33,10 @@ export default function SearchBar (){
                 placeholder="Ingresar Producto"
                 value={text} 
                 onChange={e => setText(e.target.value)}>
+
             </input>
-            
             <Link to='/products/search'>
+            <input type="submit" value="BUSCAR" />
             <input className="boton" type="submit" value="BUSCAR" />
              </Link>
             </div>
