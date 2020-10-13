@@ -76,7 +76,7 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	} else {
 		var category = Category.findAll({
 			where: {
-				name: categoryId
+				id: categoryId
 			}
 		})
 		var producto = Product.create({ name, description, price, stock })
@@ -123,7 +123,8 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 })
 
 server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
-	const { name, description } = req.body ;
+  const { name, description } = req.body ;
+  console.log(req.body)
 	if(!name){
 		return res.status(400).send('Campos requeridos')
 	}

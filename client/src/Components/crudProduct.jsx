@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
 import { Form,Button,  } from 'react-bootstrap';
 import './crudProduct.css'
+=======
+import React, { useState, useEffect, Children } from 'react';
+import { Form, Col, Row, Button } from 'react-bootstrap';
+// import './crudProduct.css'
+>>>>>>> 6a774d748f3541cf1110f5d3be88e00090ecd913
 import axios from 'axios';
 import MultipleSelect from './MultipleSelect';
 import { Link } from 'react-router-dom' 

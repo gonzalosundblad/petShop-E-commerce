@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useState, useEffect } from 'react';
 
 import perros from './imagenes/perros.jpg'
@@ -34,9 +35,29 @@ var categ = ['perros', 'gatos']
 function App() {
   const [ categories, setCategories] = useState()
   
+=======
+import React, {useState} from 'react';
+import StyleApp from './App.module.css';
+import Product from './Components/Product';
+import ProductCard from './Components/ProductCard';
+import { BrowserRouter, Route, Link} from "react-router-dom";
+import MostrarCatalogo from './Containers/Catalogo2'
+import Nav from './Containers/Nav'
+import AgregarCategoria from './Containers/Post';
+import CrudProduct from './Components/crudProduct'; 
+import CategoryPerro from './Containers/Categorias';
+import Categoria2 from './Containers/Categoria2';
+import SearchBar2 from './Components/SearchBar2';
+import Catalogo from './Components/CatalogoComp';
+
+function App() {
+  const [products,setProducts] = useState()
+
+>>>>>>> 6a774d748f3541cf1110f5d3be88e00090ecd913
   return (
-    <div className="App">
+    <div className= {StyleApp.App}>
       <BrowserRouter>
+<<<<<<< HEAD
        
         <div className="searchBar">
           <Route  path="/" component={SearchBar}></Route>
@@ -66,20 +87,24 @@ function App() {
         
         <Route exact path='/product/crud/' component={CrudProduct}/>
         <Route exact path={'/product/crud/:ID'} render={({ match }) => <CrudProduct prod={match.params.ID}/>}/>     
+=======
+      <div>
+        <Route path="/" render={() =>  <Nav />} />
+        <div className= {StyleApp.padding}>
+          <Route exact path="/" component={Categoria2} />
+          <Route exact path="/products" component={MostrarCatalogo} />
+          <Route exact path="/products/Perros" component={CategoryPerro} />
+          <Route exact path="/" />
+          <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
+          <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
+          {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
+        </div>
+>>>>>>> 6a774d748f3541cf1110f5d3be88e00090ecd913
       </div> 
       </BrowserRouter>  
     </div>
   );
 }
 
-// Axios({
-//   method: "GET",
-//   url: "http://localhost:5000/",
-//   headers: {
-//     "Content-Type": "application/json"
-//   }
-// }).then(res => {
-//   console.log(res.data.message);
-// });
 
 export default App;
