@@ -76,7 +76,7 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	} else {
 		var category = Category.findAll({
 			where: {
-				id: categoryId
+				name: categoryId
 			}
 		})
 		var producto = Product.create({ name, description, price, stock })
@@ -112,14 +112,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			res.json(product)
 		}
 	})
-	// Product.findByPk(idProducto)
-	// .then(data => {
-	// 	data.addCategories(idCategoria)
-	// 	res.send('categoria agregada')
-	// }).catch(err => {
-	// 	console.log('Error: ', err)
-	// 	res.send('Ese producto o categoria no existe :(')
-	// })
 })
 
 server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
@@ -137,18 +129,6 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 		console.log('Error: ', err)
 	})
 })
-
-// server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
-// 	const { idProducto, idCategoria } = req.params;
-// 	Product.findByPk(idProducto)
-// 	.then(data => {
-// 		data.removeCategories(idCategoria)
-// 		res.send('La categoria fue eliminada del producto')
-// 	}).catch(err => {
-// 		console.log('Error: ', err)
-// 		res.send('Ocurrio un error :(')
-// 	})
-// })
 
 server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
