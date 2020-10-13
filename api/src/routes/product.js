@@ -93,10 +93,10 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 			}).catch(err => {
 				console.log('Error: ', err)
 				res.send('Ocurrio un error :(').status(404)
-			})	
+			})
 	}
 })
-	
+
 server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
@@ -106,7 +106,7 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 		if(product[0].categories[0].id === 0) {		//Si tiene categoryId 0 (Sin categoria) le asigna el categoryId recibido por params
 			product[0].setCategories(idCategoria)
 			res.json(product)
-		} else {									
+		} else {
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
 			console.log(product[0])
 			res.json(product)
@@ -153,7 +153,7 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
-		include: { model: Category },									
+		include: { model: Category },
 		where: { id: idProducto }
 	}).then(data => {
 		var arr = [];
@@ -176,23 +176,20 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 
 server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
     const {name, description, price, stock } = req.body;
-    Product.update({
+
+		Product.findByPk(req.params.id)
+		.then(product => {
+			console.log(product)
+			product.update({
         name,
         description,
         price,
         stock
-    },{
-        returning: true,
-        where: {
-            id: req.params.id
-        }
-    }).then(function(product) {
-        if(product[0] == 0) {
-			res.status(400).send('Error, campos requeridos')
-			return product[0]
-        }
-        res.status(200).json(product)
-    }).catch(err => {
+		})
+		res.json(product)
+
+	})
+	.catch(err => {
         res.status(400)
         console.log('Error: ', err)
     })
