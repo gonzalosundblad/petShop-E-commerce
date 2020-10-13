@@ -11,8 +11,7 @@ export default function CrudProduct( ){
     description: "",
     stock: "",
     price: "",
-    image: "",
-    categoryId: 1, 
+    image: ""
   })
   const [ errors, setErrors] = useState({});
   const [ categories, setCategories ] = useState([]);
@@ -107,7 +106,7 @@ export default function CrudProduct( ){
             stock: "",
             price: "",
             image: "",
-            categoryId: 1, 
+            categoryId: 1 
 
           })
                   
