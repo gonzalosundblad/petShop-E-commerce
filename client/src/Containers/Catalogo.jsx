@@ -33,3 +33,4 @@ export default function Catalogo({ products, categ}){
     </div>
   )
 }
+

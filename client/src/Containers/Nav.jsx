@@ -17,6 +17,12 @@ export default function Nav({funcionCatag, funcionSearch}) {
         <Link to='/products'>
           <button onClick={funcionCatag}>Catalogoooo</button>
         </Link>
+        <Link to='/product/crud'>
+          <button >Agregar Producto</button>
+        </Link>
+        <Link to='/product/AgregarCategoria'>
+          <button >Agregar Categoria</button>
+        </Link>
       </div>
     );
   };

@@ -6,7 +6,7 @@ import '../Estilos/productCard.css';
 export default function ProductCard ({id, name, price, imagen}){
   // const [card, setCard] = useState()
   return(
-    <Link to={`/products/${id}`}>
+    <Link to={`/producto/${id}`}>
       <div className="card">
         <figure>
           <img className="card-img-top" src={imagen} alt="imagen de perro"/>

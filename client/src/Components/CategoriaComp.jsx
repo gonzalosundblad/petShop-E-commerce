@@ -5,6 +5,7 @@ import  '../imagenes/perros.jpg';
 
 export default function CategoriaCard ({nombre}){
     // const [card, setCard] = useState()
+ 
     return(
       <Link to={`/products/${nombre}`}>
         <div className="card">
@@ -16,4 +17,6 @@ export default function CategoriaCard ({nombre}){
         </div>
     </Link>
     )
+      
+      
   };

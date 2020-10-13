@@ -7,6 +7,7 @@ function Catalogo({productos}) {
         <div>
           {productos.map(p => 
           <ProductCard 
+                id={p.id}
                 img={p.img}
                 name={p.name}
                 price={p.price}

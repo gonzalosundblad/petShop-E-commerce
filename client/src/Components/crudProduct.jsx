@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Children } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
-import './crudProduct.css'
+// import './crudProduct.css'
 import axios from 'axios';
 
 

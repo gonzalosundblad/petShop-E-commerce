@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Catalogo from '../Components/CatalogoComp'
-import Nav from '../Containers/Nav';
 
   export default function MostrarCatalogo () {
 
@@ -17,7 +16,6 @@ import Nav from '../Containers/Nav';
         detProd();
         }, []);
   
-  
     // function onClose(id){
     //   setCities(oldCities => oldCities.filter(c => c.id !== id));
     // }
@@ -30,4 +28,4 @@ import Nav from '../Containers/Nav';
         </div>
   
     );
-  }
+  };

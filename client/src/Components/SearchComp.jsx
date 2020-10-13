@@ -20,7 +20,7 @@ export default function Search ({funcion}){
                 onChange={e => setProduct(e.target.value)}>
             </input>
             
-            {/* <Link to='/products/search'> */}
+            {/* <Link to= '/products/search' > */}
             <input className="boton" type="submit" value="BUSCAR" />
             {/* </Link> */}
              </div>
