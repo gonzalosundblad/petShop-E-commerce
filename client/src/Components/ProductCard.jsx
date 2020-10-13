@@ -1,24 +1,25 @@
-
-import React, { useState} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import './productCard.css'
+import StyleProductCard from '../Estilos/ProductCard.module.css';
+import img from '../imagenes/comida.jpg'
 
 export default function ProductCard ({id, name, price, imagen}){
-  const [card, setCard] = useState()
+  // const [card, setCard] = useState()
   return(
-    <Link to={`/products/:${id}`}>
-    
-
-    <div className="card">
-
-      <figure>
-        <img className="card-img-top" src={imagen} alt="imagen de perro"/>
-      </figure>
-      <h1 className="card-title">{name}</h1>
-      <ul>
-        <li className="card-text">Precio:{price}</li>
-      </ul>
-  </div>
-  </Link>
+    <a className={StyleProductCard.productCard} href={`/products/${id}`}>
+        <div >
+          <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
+        </div>
+        <div className={StyleProductCard.containerLyrics}>
+          <h3>{name}</h3>
+          <h1>${price}</h1>
+        </div>
+        <div class={StyleProductCard.goCorner}>
+          <div class={StyleProductCard.goArrow}> → </div>
+        </div>
+    </a>
   )
 } 
+
+
+
