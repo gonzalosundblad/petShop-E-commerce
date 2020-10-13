@@ -11,6 +11,7 @@ import CategoryPerro from './Containers/Categorias';
 import Categoria2 from './Containers/Categoria2';
 import SearchBar2 from './Components/SearchBar2';
 import Catalogo from './Components/CatalogoComp';
+import Modifica from './Containers/Put';
 
 function App() {
   const [products,setProducts] = useState()
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/" />
           <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
           <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
+          <Route path='/ModificarProducto/' render={() => <Modifica/>}/>
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
         </div>
       </div> 
