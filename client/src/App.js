@@ -63,8 +63,9 @@ function App() {
         <Route exact path='/products/:prodId' render={({ match }) => 
           <Product produc={match.params.prodId}/>
         }/>
-      
-        <Route path='/product/crud/' render={() => <CrudProduct/>}/>
+        
+        <Route exact path='/product/crud/' component={CrudProduct}/>
+        <Route exact path={'/product/crud/:ID'} render={({ match }) => <CrudProduct prod={match.params.ID}/>}/>     
       </div> 
       </BrowserRouter>  
     </div>

@@ -4,14 +4,14 @@
 import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 import './product.css'
-
+import { Link } from 'react-router-dom';
 
 export default function Product ({ produc }){
   //{id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [id, setId] = useState();
+  const [id, setId] = useState(produc);
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
 
@@ -43,19 +43,23 @@ export default function Product ({ produc }){
  
   return(
   <div className="producto">
-     <figure>
+    <figure>
 
-       <img className="producto-img-top" src={image} alt="imagen de perro"/>
-     </figure>
+      <img className="producto-img-top" src={image} alt="imagen de perro"/>
+    </figure>
     <h1 className="producto-title">{name}</h1>
-     <p className="producto-texto">Description: {description}</p>
-     <ul> 
-       <li className="producto-text">Precio: {price}</li>
-       <li className="producto-text">Stock: {stock}</li>
-       {/* <img src={product.imagen} alt="imagen de perro"/> */}
-    
-    
-     </ul> 
+    <p className="producto-texto">Description: {description}</p>
+    <ul> 
+      <li className="producto-text">Precio: {price}</li>
+      <li className="producto-text">Stock: {stock}</li>
+      {/* <img src={product.imagen} alt="imagen de perro"/> */}
+  
+  
+    </ul> 
+    <Link to={`/product/crud/${produc}`}>
+
+      <span>Modificar</span>
+    </Link>
   </div>
   )
 }
