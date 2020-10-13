@@ -76,7 +76,7 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	} else {
 		var category = Category.findAll({
 			where: {
-				name: categoryId
+				id: categoryId
 			}
 		})
 		var producto = Product.create({ name, description, price, stock })
@@ -111,6 +111,9 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			console.log(product[0])
 			res.json(product)
 		}
+	}).catch(err => {
+		console.log('D: Error: ', err)
+		res.send('Ocurrio un error :(').status(404)
 	})
 })
 
@@ -126,7 +129,7 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 	}).then(function(category){
 		res.json(category).status(200)
 	}).catch(err => {
-		console.log('Error: ', err)
+		console.log('D: Error: ', err)
 	})
 })
 
@@ -149,7 +152,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 			res.send('Categoria eliminada')//                             || para mantenerla en la tabla de union con esa categoria ||
 		}//																   ----------------------------------------------------------
 	}).catch(err => {
-		console.log('Error: ', err)
+		console.log('D: Error: ', err)
 		res.send('Ocurrio un error :(')
 	})
 })
@@ -174,7 +177,7 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
         res.status(200).json(product)
     }).catch(err => {
         res.status(400)
-        console.log('Error: ', err)
+        console.log('D: Error: ', err)
     })
 });
 
@@ -191,6 +194,8 @@ server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA
 	}).then(function([ rows, [updated] ]) {
 		res.status(200);
 		res.json(updated)
+	}).catch(err => {
+		console.log('D: Error: ', err)
 	})
 });
 

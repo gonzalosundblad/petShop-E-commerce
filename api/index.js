@@ -24,7 +24,8 @@ var arrayProductosPerros = [{
   name: "Eukanuba Small",
   description: "comida para el perrito",
   price: 750, 
-  stock: 100
+  stock: 100,
+  categoryId: [1, 2]
 },{
   name: "Dog Chow BIG",
   description: "comida para el PERROTE",
