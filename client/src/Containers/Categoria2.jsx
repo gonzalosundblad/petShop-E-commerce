@@ -9,17 +9,20 @@ export default function MostrarCategorias (){
         async function detProd() {
           const response = await axios.get(`http://localhost:3001/products/category`)
           const array = await response.data;    
-          console.log(array) 
           setNombre(array);   
         }
         detProd();
         }, []);
-  
+        
     return (
-      <div >{
-          nombre.map(n => <CategoriaCard nombre = {n.name} />)
+        <div >
+            {
+            nombre.map(n => {
+                if (n.name !== 'Sin Categoria'){ 
+                    return  <CategoriaCard nombre = {n.name} id={n.id} /> 
+                }
+            })
             }
-        </div>
-  
-    );
-  }
+        </div>  
+    )
+}

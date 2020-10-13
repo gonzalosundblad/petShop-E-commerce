@@ -4,20 +4,20 @@ import React  from 'react';
 // import '../Estilos/product.css';
 
 
-export default function Product ({id, name, description, price, stock, imagen}){
+export default function Product ({producto}){
   //{id, name, description, price, stock, imagen }
 //  const [producto, setProduct] = useState(product)
  
   return (
     <div>
-      <figure>
+      {/* <figure>
         <img/>
-      </figure>
-      <h1>{name}</h1>
-      <p>Description: {description}</p>
+      </figure> */}
+      <h1>{producto.name}</h1>
+      <p>Description: {producto.description}</p>
       <ul> 
-        <li>Precio: {price}</li>
-        <li>Stock: {stock}</li>
+        <li>Precio: {producto.price}</li>
+        <li>Stock: {producto.stock}</li>
       </ul>
     </div>
 )};
