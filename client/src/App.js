@@ -1,31 +1,34 @@
 import React, {useState} from 'react';
-import './App.css';
+import StyleApp from './App.module.css';
 import Product from './Components/Product';
 import ProductCard from './Components/ProductCard';
 import { BrowserRouter, Route, Link} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo2'
 import Nav from './Containers/Nav'
 import AgregarCategoria from './Containers/Post';
-// import CrudProduct from './Components/crudProduct'; 
+import CrudProduct from './Components/crudProduct'; 
 import CategoryPerro from './Containers/Categorias';
 import Categoria2 from './Containers/Categoria2';
+import SearchBar2 from './Components/SearchBar2';
+import Catalogo from './Components/CatalogoComp';
 
 function App() {
   const [products,setProducts] = useState()
-  
+
   return (
-    <div className="App">
+    <div className= {StyleApp.App}>
       <BrowserRouter>
-      <div className="searchBar">
+      <div>
         <Route path="/" render={() =>  <Nav />} />
-        <Route exact path="/" component={Categoria2} />
-        <Route exact path="/products" component={MostrarCatalogo} />
-        <Route exact path="/products/Perros" component={CategoryPerro} />
-        <Route exact path="/"></Route>
-        <Route  path="/nuevaCateg"  render={() =><AgregarCategoria/>}/> 
-        {/* <div className="productoSolo"> */}
-        {/* <Route exact path='/products/:prodId' render={({ match }) =>  <Product produc={match.params.prodId}/>}/> */}
-      {/* </div>  */}
+        <div className= {StyleApp.padding}>
+          <Route exact path="/" component={Categoria2} />
+          <Route exact path="/products" component={MostrarCatalogo} />
+          <Route exact path="/products/Perros" component={CategoryPerro} />
+          <Route exact path="/" />
+          <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
+          <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
+          {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
+        </div>
       </div> 
       </BrowserRouter>  
     </div>

@@ -1,19 +1,20 @@
 import React  from 'react';
 import { Link } from 'react-router-dom';
-import  '../Estilos/productCard.css';
+import  StyleCategoria from '../Estilos/CategoriaComp.module.css';
 import  '../imagenes/perros.jpg';
 
 export default function CategoriaCard ({nombre}){
     // const [card, setCard] = useState()
     return(
-      <Link to={`/products/${nombre}`}>
-        <div className="card">
-            {/* <figure>
-                <img className="card-img-top" src='perros' alt="imagen de perro"/>
-            </figure> */}
-            <h1 className="card-title">Categoria</h1>
-            <h1 className="card-title">{nombre}</h1>
+      <a className={StyleCategoria.card1} href={`/products/${nombre}`}>
+        {/* <figure>
+            <img className="card-img-top" src='perros' alt="imagen de perro"/>
+        </figure> */}
+        <h3 className={StyleCategoria.titleCat}>Categoría</h3>
+        <h1 className={StyleCategoria.titleName}>{nombre}</h1>
+        <div class={StyleCategoria.goCorner}>
+          <div class={StyleCategoria.goArrow}> → </div>
         </div>
-    </Link>
+      </a>
     )
   };

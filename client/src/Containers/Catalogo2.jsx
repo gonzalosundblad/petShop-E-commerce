@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Catalogo from '../Components/CatalogoComp'
-import Nav from '../Containers/Nav';
 
   export default function MostrarCatalogo () {
 
@@ -25,9 +24,9 @@ import Nav from '../Containers/Nav';
     return (
       <div >
         {/* <Nav/> */}
-          {/* <Nav catag={buscando}/> */}
-          <Catalogo productos = {products} />
-        </div>
+        {/* <Nav catag={buscando}/> */}
+        <Catalogo productos = {products} />
+      </div>
   
     );
   }

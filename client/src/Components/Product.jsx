@@ -1,7 +1,7 @@
 
 
 import React  from 'react';
-import '../Estilos/product.css';
+// import '../Estilos/product.css';
 
 
 export default function Product ({id, name, description, price, stock, imagen}){
@@ -9,15 +9,15 @@ export default function Product ({id, name, description, price, stock, imagen}){
 //  const [producto, setProduct] = useState(product)
  
   return (
-    <div className="producto">
+    <div>
       <figure>
-        <img className="producto-img-top" src={imagen} alt="imagen de perro"/>
+        <img/>
       </figure>
-      <h1 className="producto-title">{name}</h1>
-      <p className="producto-texto">Description: {description}</p>
+      <h1>{name}</h1>
+      <p>Description: {description}</p>
       <ul> 
-        <li className="producto-text">Precio: {price}</li>
-        <li className="producto-text">Stock: {stock}</li>
+        <li>Precio: {price}</li>
+        <li>Stock: {stock}</li>
       </ul>
     </div>
 )};
