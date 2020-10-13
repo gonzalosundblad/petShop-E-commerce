@@ -13,16 +13,16 @@ export default function MostrarCategorias (){
         }
         detProd();
         }, []);
-        
-    return (
-        <div >
-            {
-            nombre.map(n => {
-                if (n.name !== 'Sin Categoria'){ 
-                    return  <CategoriaCard nombre = {n.name} id={n.id} /> 
-                }
-            })
-            }
-        </div>  
-    )
-}
+  
+        return (
+          <div >
+              {
+              nombre.map(n => {
+                  if (n.name !== 'Sin Categoria'){ 
+                      return  <CategoriaCard nombre = {n.name} id={n.id} /> 
+                  }
+              })
+              }
+          </div>  
+      )
+  }

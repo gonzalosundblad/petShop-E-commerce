@@ -22,6 +22,9 @@ export default function Nav({funcionCatag, funcionSearch}) {
         <a className={StyleNav.botones} href='/AgregarCategoria'>
             <span className= {StyleNav.botonAddProduct}>Agregar Categoría</span>
         </a>
+        <a className={StyleNav.botones} href='/ModificarProducto/'>
+            <span className= {StyleNav.botonAddProduct}>Modificar Producto</span>
+        </a>
       </div>
       <SearchBar2 />
     </div>
