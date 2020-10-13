@@ -18,14 +18,11 @@ export default function MostrarCategorias (){
         <div >
             {
             nombre.map(n => {
-                console.log(n)
-                if (n.name !== 'Sin Categoria'){
-                    
-                    return  <CategoriaCard nombre = {n.name} id={n.id} />
-                    
+                if (n.name !== 'Sin Categoria'){ 
+                    return  <CategoriaCard nombre = {n.name} id={n.id} /> 
                 }
             })
             }
         </div>  
-    );
+    )
 }

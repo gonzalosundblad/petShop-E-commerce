@@ -23,10 +23,7 @@ export default function Categories ({Categ}) {
       
         return (
           <div >
-            {/* <Nav/> */}
-              {/* <Nav catag={buscando}/> */}
-              <Catalogo productos = {products} />
-            </div>
-      
-        );
-      }
+            <Catalogo productos = {products} />
+          </div>
+        )
+      };

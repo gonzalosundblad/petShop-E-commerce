@@ -15,7 +15,7 @@ import SearchBar2 from './Components/SearchBar2';
 import Catalogo from './Components/CatalogoComp';
 
 function App() {
-  const [products,setProducts] = useState()
+  // const [products,setProducts] = useState()
 
   return (
     <div className= {StyleApp.App}>
@@ -25,11 +25,10 @@ function App() {
         <div className= {StyleApp.padding}>
           <Route exact path="/" component={Categoria2} />
           <Route exact path="/products" component={MostrarCatalogo} />
-          <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
-          <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
+          <Route exact path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
+          <Route exact path='/AgregarProducto/' render={() => <CrudProduct/>}/>
           <Route exact path={`/products/:Categoria`} render={({match}) => <Categories Categ={match.params.Categoria}/>}/>
           <Route exact path={`/producto/:Id`} render={({ match }) =>  <ProductoSolo Id={match.params.Id}/>}/>
-          {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
         </div>
       </div> 
       </BrowserRouter>  

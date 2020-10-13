@@ -10,9 +10,9 @@ export default function Product ({producto}){
  
   return (
     <div>
-      <figure>
+      {/* <figure>
         <img/>
-      </figure>
+      </figure> */}
       <h1>{producto.name}</h1>
       <p>Description: {producto.description}</p>
       <ul> 
