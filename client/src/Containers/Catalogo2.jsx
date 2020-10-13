@@ -23,9 +23,9 @@ import Catalogo from '../Components/CatalogoComp'
     return (
       <div >
         {/* <Nav/> */}
-          {/* <Nav catag={buscando}/> */}
-          <Catalogo productos = {products} />
-        </div>
+        {/* <Nav catag={buscando}/> */}
+        <Catalogo productos = {products} />
+      </div>
   
     );
   };

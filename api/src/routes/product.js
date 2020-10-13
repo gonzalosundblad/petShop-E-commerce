@@ -76,7 +76,7 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	} else {
 		var category = Category.findAll({
 			where: {
-				name: categoryId
+				id: categoryId
 			}
 		})
 		var producto = Product.create({ name, description, price, stock })
