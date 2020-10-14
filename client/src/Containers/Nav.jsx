@@ -26,7 +26,9 @@ export default function Nav({funcionCatag, funcionSearch}) {
             <span className= {StyleNav.botonAddProduct}>Modificar Producto</span>
         </a>
       </div>
-      <SearchBar2 />
+      <div className={StyleNav.searchBar}>
+        <SearchBar2 />
+      </div>
     </div>
   );
 };
