@@ -2,7 +2,7 @@ import React  from 'react';
 import ProductCard from './ProductCard';
 import StyleCatalogo from '../Estilos/ProductCard.module.css'
 
-function Catalogo({productos}) {
+function Catalogo2({productos}) {
   console.log(productos)
     if(productos.length >= 1){
       return (
@@ -21,4 +21,4 @@ function Catalogo({productos}) {
   };
 
 
- export default Catalogo;
+ export default Catalogo2;
