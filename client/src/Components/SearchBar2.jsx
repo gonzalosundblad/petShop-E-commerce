@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import Catalogo from './CatalogoComp';
+import Catalogo2 from './CatalogoComp';
 import axios from 'axios';
 import Search from './SearchComp';
 import Nav from '../Containers/Nav';
@@ -25,7 +25,7 @@ export default function SearchBar2(){
                 <Search funcion={onSearch}/>
             </div>
             <div>
-                <Catalogo productos={texto}/>
+                <Catalogo2 productos={texto}/>
             </div>
         </div>
     )

@@ -27,6 +27,7 @@ export default function CrudProduct( { prod } ){
     stock: "",
     price: "",
     image: "",
+
   })
   const [errors, setErrors] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -162,13 +163,14 @@ export default function CrudProduct( { prod } ){
     
     
   return(
+
     <Form className="form-class" display="block" onSubmit={AddPutFunction}>
     {!input.image ? null : 
       <figure>
           <img className="producto-img-top" src={input.image} alt="imagen de perro"/>
       </figure> }
     <Form.Row  >
-      
+     
       <Link to="/products/">
         <Button
             // enabled={!handleSubmit()} 

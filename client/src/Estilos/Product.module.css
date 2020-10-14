@@ -1,0 +1,61 @@
+.productCard {
+    background-color: white;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 10% auto;
+    width: 250px;
+    justify-content: center;
+    height: 10%;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+
+.productCard h3 {
+    margin: -10px;
+}
+
+
+
+.productCard h1 {
+    font-size: 15px;
+}
+
+
+
+.goArrow {
+    margin-top: 4px;
+    margin-right: 15px;
+    color: white;
+    font-family: courier, sans;
+    font-size: xxx-large;
+}
+  
+
+.productCard a {
+    text-decoration: none;
+    height: 280px;
+}
+
+.productCard ul {
+    margin: 0px;
+    border: opx;
+    padding: 0px;
+}
+
+.productCard li {
+    list-style: none;
+}
+
+.containerLyrics {
+    padding-top: 15px;
+}
+
+.img {
+    height: 185px;
+    width: 185px;
+    border: 1px solid grey;
+    margin-top: 20px;
+    border-radius: 30px 30px 0px 0px;
+}
