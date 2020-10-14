@@ -7,11 +7,16 @@ import StyleNav from '../Estilos/Nav.module.css';
 
 
 export default function Nav({funcionCatag, onSearch, resultados}) {
+
+  function recargar() {
+    window.location.reload()
+  }
+
   return (
     <div className={StyleNav.nav}>
-      <Link exact to="/">
+      <a href="/">
         <img className={StyleNav.logo} src={logo} alt=""/>
-      </Link>
+      </a>
       <div className={StyleNav.botones}>
         <a className={StyleNav.botones} href='/products'>
             <span className={StyleNav.botonCatalogo} onClick={funcionCatag}>Catálogo</span>
