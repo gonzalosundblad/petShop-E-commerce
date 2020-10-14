@@ -164,19 +164,21 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 })
 
 server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
-    const {name, description, price, stock } = req.body;
+	const {name, description, price, stock } = req.body;
+	
     Product.update({
         name,
         description,
         price,
-        stock
+        stock,
     },{
         returning: true,
         where: {
             id: req.params.id
         }
     }).then(function(product) {
-        if(product[0] == 0) {
+		console.log(product)
+        if(product[0] === 0) {
 			res.status(400).send('Error, campos requeridos')
 			return product[0]
         }

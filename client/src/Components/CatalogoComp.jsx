@@ -8,6 +8,7 @@ function Catalogo({productos}) {
         <div className={StyleCatalogo.display}>
           {productos.map(p => 
           <ProductCard 
+                key={p.id}
                 id={p.id}
                 img={p.img}
                 name={p.name}
@@ -16,9 +17,6 @@ function Catalogo({productos}) {
             )}
         </div>
         );
-    }
-  
-  ;
-
-
+    };
+    
  export default Catalogo;

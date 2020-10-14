@@ -8,7 +8,7 @@ import borrarCategoria from '../Containers/BorrarCategoria';
 export default function CategoriaCard ({nombre, id}){
 
     return(
-      <a className={StyleCategoria.card1} href={`/products/${nombre}`}>
+      <a className={StyleCategoria.card1} href={`/products/category/${nombre}`}>
         {/* <figure>
             <img className="card-img-top" src='perros' alt="imagen de perro"/>
         </figure> */}
