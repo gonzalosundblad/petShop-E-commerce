@@ -1,43 +1,17 @@
 
-
-// import React  from 'react';
-// import '../Estilos/product.css';
-
-
-// export default function Product ({id, name, description, price, stock, imagen}){
-//   {id, name, description, price, stock, imagen }
-//  const [producto, setProduct] = useState(product)
- 
-//   return (
-//     <a className={StyleProductCard.productCard} href={`/products/${id}`}>
-//         <div >
-//           <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
-//         </div>
-//         <div className={StyleProductCard.containerLyrics}>
-//           <h3>{name}</h3>
-//           <h1>${price}</h1>
-//         </div>
-//         <div class={StyleProductCard.goCorner}>
-//           <div class={StyleProductCard.goArrow}> → </div>
-//         </div>
-//     </a>
-// )};
-
-
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 // import './product.css'
 import StyleProductCard from '../Estilos/Product.module.css';
 
 import img from '../imagenes/comida.jpg'
 
-
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [id, setId] = useState();
+  const [id, setId] = useState(produc);
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
 
@@ -64,10 +38,7 @@ export default function Product ({ id2 }){
     
     
   
-
-  
- 
-  return(
+    return(
     <div className={StyleProductCard.productCard}>
         <div>
           <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
@@ -81,3 +52,4 @@ export default function Product ({ id2 }){
     </div>
   )
 } 
+

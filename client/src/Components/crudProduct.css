@@ -1,0 +1,16 @@
+.danger{
+    border-color:red;
+    color: red;
+}
+ p{
+    font-size: 5px;
+    margin-bottom:  0 px;
+}
+
+.form-class{
+    display: block;
+}
+
+.form-group{
+    margin-bottom: 5px;
+}
