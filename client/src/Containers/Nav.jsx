@@ -6,7 +6,7 @@ import SearchBar2 from '../Components/SearchBar2';
 import StyleNav from '../Estilos/Nav.module.css';
 
 
-export default function Nav({funcionCatag, funcionSearch}) {
+export default function Nav({funcionCatag, onSearch, resultados}) {
   return (
     <div className={StyleNav.nav}>
       <Link exact to="/">
@@ -26,8 +26,7 @@ export default function Nav({funcionCatag, funcionSearch}) {
             <span className= {StyleNav.botonAddProduct}>Modificar Producto</span>
         </a>
       </div>
-      <SearchBar2 />
+      <SearchBar2 onSearch={onSearch} productos={resultados}/>
     </div>
   );
 };
-  
