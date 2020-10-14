@@ -8,7 +8,7 @@ export default function ProductCard ({id, name, price, imagen}){
 
   console.log(id)
   return(
-    <a className={StyleProductCard.productCard} href={`/producto/${id}`}>
+    <a className={StyleProductCard.productCard} href={`/products/${id}`}>
         <div >
           <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
         </div>
