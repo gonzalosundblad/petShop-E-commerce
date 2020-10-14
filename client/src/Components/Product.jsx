@@ -11,7 +11,7 @@ export default function Product ({ id2 }){
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [id, setId] = useState(produc);
+  const [id, setId] = useState();
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
 
