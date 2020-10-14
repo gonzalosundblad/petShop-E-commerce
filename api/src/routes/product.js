@@ -1,5 +1,11 @@
 const server = require('express').Router();
 const { Product, Category, productcategory } = require('../db.js');
+const fileUpload = require('express-fileupload');
+const bodyParser = require('body-parser')
+
+server.use(bodyParser.urlencoded({extended: false}));
+server.use(bodyParser.json());
+server.use(fileUpload());
 
 server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
 	Product.findAll()
@@ -48,7 +54,6 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 		for (let i = 0; i < data.categories.length; i++) {
 			arr.push(data.categories[i].name)
 		}
-		console.log(data)
 		res.json({
 			name: data.name,
 			description: data.description,
@@ -63,8 +68,10 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 	})
 })
 
-server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
+server.post('/', async (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	const {name, description, price, stock, categoryId } = req.body;
+
+
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
@@ -108,7 +115,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			res.json(product)
 		} else {									
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
-			console.log(product[0])
 			res.json(product)
 		}
 	}).catch(err => {
