@@ -105,8 +105,8 @@ export default function CrudProduct( ){
     // console.log(e.target.name);
     // console.log(e.target)
     const storageRef = firebase.storage().ref(`/fotosProductos/${file.name}`);
-    // const url = storageRef.getDownloadURL()
-    // console.log(url);
+    // const storageRef = firebase.storage().ref(`/fotosProductos/${file.name}`).getDownloadURL().then((url) => { var myUrl = url})
+    // ESTO DE ARRIBA ES PARA MANDAR MAS PROLIJAMENTE LA URL A LA BASE DE DATOS. DEBERIA DISPARARSE UNA ACTION Q MANDE LA var myUrl en vez de semihardocdear en la ruta de product
     storageRef.put(file);
     // console.log(storageRef)
     setInput({

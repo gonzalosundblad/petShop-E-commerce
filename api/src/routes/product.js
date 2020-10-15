@@ -238,7 +238,7 @@ server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
 			}).then(value2 => {
 				res.status(200).send('Borrado exitosamente');
 			}).catch(err => {
-				res.status(404).send('Este producto nunca exitió');
+				res.status(404).send('Este producto nunca existió');
 			})
 	}
 })

@@ -21,7 +21,11 @@ module.exports = (sequelize) => {
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            // FALTA VALIDACION DE PASSWORD ?CON REGEXP?
+            // validate: {
+            //     isPassword: true
+            // }
         }
     }
 )};

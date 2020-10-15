@@ -41,7 +41,7 @@ export default function Product ({ id2 }){
     return(
     <div className={StyleProductCard.productCard}>
         <div>
-          <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
+          <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
         </div>
         <div className={StyleProductCard.containerLyrics}>
           <h3>{name}</h3>
