@@ -39,6 +39,7 @@ server.get('/category/:nombreCat', (req, res, next) => {  //TRAE TODOS LOS PRODU
 })
 
 server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
+	console.log(req.params.id);
 	var arr = [];
 	Product.findByPk(req.params.id, {
 		include: {
@@ -48,7 +49,6 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 		for (let i = 0; i < data.categories.length; i++) {
 			arr.push(data.categories[i].name)
 		}
-		console.log(data)
 		res.json({
 			name: data.name,
 			description: data.description,
@@ -58,7 +58,6 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 			categories: arr
 		})
 	}).catch(err => {
-		console.log('Error: ', err)
 		res.send('No existe ese producto :(')
 	})
 })
@@ -69,12 +68,12 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
-		Product.create({ 
-			name, 
-			description, 
-			price, 
-			stock, 
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token=${tokenDeAccesoArchivoFirebase}`
+		Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
 		 })
 			.then(function(productSinId) {
 				productSinId.addCategories("0")
@@ -86,12 +85,12 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 				id: categoryId
 			}
 		})
-		var producto = Product.create({ 
-			name, 
-			description, 
-			price, 
-			stock, 
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token` 
+		var producto = Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
 		 })
 		Promise.all([category, producto])
 			.then(values => {
@@ -106,10 +105,10 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 			}).catch(err => {
 				console.log('Error: ', err)
 				res.send('Ocurrio un error :(').status(404)
-			})	
+			})
 	}
 })
-	
+
 server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
@@ -119,7 +118,7 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 		if(product[0].categories[0].id === 0) {		//Si tiene categoryId 0 (Sin categoria) le asigna el categoryId recibido por params
 			product[0].setCategories(idCategoria)
 			res.json(product)
-		} else {									
+		} else {
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
 			console.log(product[0])
 			res.json(product)
@@ -137,7 +136,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 
 server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body ;
-  console.log(req.body)
 	if(!name){
 		return res.status(400).send('Campos requeridos')
 	}
@@ -166,7 +164,7 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
-		include: { model: Category },									
+		include: { model: Category },
 		where: { id: idProducto }
 	}).then(data => {
 		var arr = [];

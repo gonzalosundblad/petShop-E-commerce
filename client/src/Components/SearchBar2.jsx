@@ -6,9 +6,12 @@ import Nav from '../Containers/Nav';
 
 export default function SearchBar2({onSearch, resultados}){
 
-    return (
-        <div>
-                <Search funcion={onSearch} resultados = {resultados}/>
-        </div>
-    )
+return(
+  <div>
+    <div>
+      <Search funcion={onSearch} productos={resultados} />
+    </div>
+  </div>
+)
+
 }

@@ -2,24 +2,22 @@ import { GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRO
 import axios from 'axios';
 
 export function getProducts() { //obtener todos los productos
-    axios.get('http://localhost:3001/products')
-    .then(function(res) {
-        return ({ type: GET_PRODUCTS, payload: res.data }) }
- )}
+    const request = axios.get('http://localhost:3001/products')
+    return { type:GET_PRODUCTS, payload: request}; }
 
-export function getCategories() { //obtener todos los productos
+
+export function getCategories() { //obtener todas las categorias
     const request = axios.get('http://localhost:3001/products/category');
-    console.log(request);
-    return { type: GET_CATEGORIES, payload: request }; }
+    return { type: GET_CATEGORIES, payload: request}; }
 
-export function getProductByCategory(){//obtener todos los productos de una categoria
-    const request = axios.get('http://localhost:3001/products/category/:nombreCat')
+export function getProductByCategory(name){//obtener todos los productos de una categoria
+    const request = axios.get(`http://localhost:3001/products/category/${name}`)
     return { type: GET_CATEGORIES_NOMBRECAT, payload : request }; }
 
-export function getProductById(){
-    const request = axios.get('http://localhost:3001/products/:id')
+export function getProductById(id){
+    const request = axios.get(`http://localhost:3001/products/${id}`)
     return { type: GET_ID, payload : request } ; }//obtener un producto segun su id
-
+// HASTA ACA FUNCIONA--------------------------
 export function postProduct(){      //agrega un nuevo producto
   const request = axios.post('http://localhost:3001/products')
   return { type: POST_PRODUCT, payload : request } ; }
@@ -27,9 +25,9 @@ export function postProduct(){      //agrega un nuevo producto
 export function postIdProdCatId(){   //agrega una categoria a un producto
   const request = axios.post('http://localhost:3001/products/:idProducto/category/:idCategoria')
   return { type: POST_IDPROD_CAT_IDCATEG, payload : request } ; }
-
-export function postCategory(){   //agrega una categoria
-  const request = axios.post('http://localhost:3001/products')
+//  postCategory tambien funciona
+export function postCategory(data){   //agrega una categoria
+  const request = axios.post('http://localhost:3001/products/category', data)
   return { type: POST_CATEGORY, payload : request } ; }
 
 export function putId(){   //agrega una categoria

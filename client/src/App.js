@@ -3,24 +3,29 @@ import React, { useState, useEffect } from 'react';
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo2'
-import Nav from './Containers/Nav'
+import Nav from './Containers/Nav';
 import AgregarCategoria from './Containers/Post';
 import CrudProduct from './Components/crudProduct';
-import CategoryPerro from './Containers/Categorias';
+import Categories from './Containers/Categorias';
 import Categoria2 from './Containers/Categoria2';
 import Modifica from './Containers/Put';
 import axios from 'axios';
 import Catalogo from './Components/CatalogoComp'
-import {getProducts} from './redux/actions.js'
-
+import Product from './Components/Product';
+import ProductoSolo from './Containers/ProductoSolo';
+import {getProducts, getCategories} from './redux/actions.js'
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
 
-  useEffect(() => {
-    getProducts()
-
-      }, []);
+  // useEffect(() => {
+  //   getCategories().payload
+  //   .then(resp => console.log(resp.data))
+  // })
+  // useEffect(() => {
+  //   getProducts()
+  //   .then(resp => console.log(resp.data))
+  // })
 
   function onSearch(producto) {
        axios.get(`http://localhost:3001/search?products=${producto}`)
@@ -39,15 +44,20 @@ function App() {
           <Route path="/" render = {() => <Catalogo productos = {resultados} /> } />
           <Route exact path="/" component={Categoria2} />
           <Route exact path="/products" component={MostrarCatalogo} />
-          <Route exact path="/products/Perros" component={CategoryPerro} />
+          <Route exact path={`/products/category/:name`} render={({ match }) => <Categories name={match.params.name}/>} />
           <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
           <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
           <Route path='/ModificarProducto/' render={() => <Modifica/>}/>
+          <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
+          <Route exact path='/products/crud/' render={() => <CrudProduct/>}/>
+          <Route exact path="/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
         </div>
       </div>
       </BrowserRouter>
     </div>
   );
 }
+
+
 export default App;

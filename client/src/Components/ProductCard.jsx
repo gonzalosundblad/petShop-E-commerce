@@ -6,9 +6,8 @@ import img from '../imagenes/comida.jpg'
 export default function ProductCard ({id, name, price, image}){
   // const [card, setCard] = useState()
 
-  console.log(id)
   return(
-    <a className={StyleProductCard.productCard} href={`/products/${id}`}>
+    <a className={StyleProductCard.productCard} href={`/producto/${id}`}>
         <div >
           <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
         </div>

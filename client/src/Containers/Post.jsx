@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
- 
+import {postCategory} from '../redux/actions.js'
+
 export default function AgregarCategoria() {
   const [ nueva, setNueva] = useState([]);
   const [ description, setDescription] = useState([])
@@ -8,35 +9,39 @@ export default function AgregarCategoria() {
   function handleChange (event){
     setNueva( event.target.value );
   }
- 
+
   function handleChange2 (event){
     setDescription( event.target.value )
   }
- 
+
   function handleSubmit (event){
     event.preventDefault();
-    
+
      const usuario = {
        name: nueva,
        description: description
     };
 
-    
-    axios.post(`http://localhost:3001/products/category`,  usuario )
-    .then(res => {
-      console.log(res);
-      console.log(res.data);
-      borrarInput()
-    })
 
-    
+    // axios.post(`http://localhost:3001/products/category`,  usuario )
+    // .then(res => {
+    //   console.log(res);
+    //   console.log(res.data);
+    //   borrarInput()
+    // })
+      postCategory(usuario).payload
+      .then(function(resp){
+        console.log(resp.data);
+        borrarInput()
+      })
+
   }
       function borrarInput(){
         document.getElementById("name").value = "";
         document.getElementById("description").value = "";
       }
-  
- 
+
+
     return (
       <div>
         <form id="miForm" onSubmit={handleSubmit}>
@@ -48,4 +53,4 @@ export default function AgregarCategoria() {
         </form>
       </div>
     )
-}
+};
