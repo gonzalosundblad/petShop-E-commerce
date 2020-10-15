@@ -2,15 +2,17 @@ import React, {useState} from 'react';
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo2'
-import Nav from './Containers/Nav'
+import Nav from './Containers/Nav';
 import AgregarCategoria from './Containers/Post';
 import CrudProduct from './Components/crudProduct';
-import CategoryPerro from './Containers/Categorias';
+import Categories from './Containers/Categorias';
 import Categoria2 from './Containers/Categoria2';
 import Modifica from './Containers/Put';
 import axios from 'axios';
 import Catalogo from './Components/CatalogoComp'
 import Product from './Components/Product';
+import ProductoSolo from './Containers/ProductoSolo';
+
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
@@ -31,12 +33,14 @@ function App() {
           <Route path="/" render = {() => <Catalogo productos = {resultados} /> } />
           <Route exact path="/" component={Categoria2} />
           <Route exact path="/products" component={MostrarCatalogo} />
-          <Route exact path="/products/category/:name" render={({ match }) => <CategoryPerro name={match.params.name}/>} />
+          <Route exact path={`/products/category/:name`} render={({ match }) => <Categories name={match.params.name}/>} />
           <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
           <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
           <Route path='/ModificarProducto/' render={() => <Modifica/>}/>
-          <Route exact path='/products/:id' render={({ match }) => <Product id2={match.params.id} />}/>
+          <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
+          <Route exact path='/products/crud/' render={() => <CrudProduct/>}/>
+          <Route exact path="/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
         </div>
       </div>
       </BrowserRouter>

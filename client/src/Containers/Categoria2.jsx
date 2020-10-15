@@ -9,7 +9,6 @@ export default function MostrarCategorias (){
         async function detProd() {
           const response = await axios.get(`http://localhost:3001/products/category`)
           const array = await response.data;    
-          console.log(array) 
           setNombre(array);   
         }
         detProd();

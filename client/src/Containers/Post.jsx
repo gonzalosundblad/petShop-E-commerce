@@ -20,8 +20,8 @@ export default function AgregarCategoria() {
        name: nueva,
        description: description
     };
-
     
+
     axios.post(`http://localhost:3001/products/category`,  usuario )
     .then(res => {
       console.log(res);
@@ -48,4 +48,4 @@ export default function AgregarCategoria() {
         </form>
       </div>
     )
-}
+};

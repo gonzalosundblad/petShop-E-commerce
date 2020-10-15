@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import  StyleCategoria from '../Estilos/CategoriaComp.module.css';
 import  '../imagenes/perros.jpg';
 
-export default function CategoriaCard ({nombre}){
-    // const [card, setCard] = useState()
+import borrarCategoria from '../Containers/BorrarCategoria';
+
+export default function CategoriaCard ({nombre, id}){
+
     return(
       <a className={StyleCategoria.card1} href={`/products/category/${nombre}`}>
         {/* <figure>
@@ -17,4 +19,8 @@ export default function CategoriaCard ({nombre}){
         </div>
       </a>
     )
+      
+      
   };
+
+
