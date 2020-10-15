@@ -10,7 +10,7 @@ function Catalogo({productos}) {
           <ProductCard 
                 key={p.id}
                 id={p.id}
-                img={p.img}
+                image={p.image}
                 name={p.name}
                 price={p.price}
                 />

@@ -25,38 +25,37 @@ var arrayProductosPerros = [{
   description: "comida para el perrito",
   price: 750, 
   stock: 100,
-  categoryId: [1, 2]
+  categoryId: 1,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FEukanuba%20Small.jpg?alt=media&token"
 },{
   name: "Dog Chow BIG",
   description: "comida para el PERROTE",
   price: 780, 
   stock: 100,
-  categoryId: 1
+  categoryId: 1,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FDogChowBig.jpg?alt=media&token"
 },{
   name: "Pedigree MEDIUM",
   description: "comida para el perrito",
   price: 150, 
   stock: 100,
-  categoryId: 1
+  categoryId: 1,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2Fcomida.jpg?alt=media&token"
 }];
 var arrayProductosGatos = [{
   name: "Cat Chow",
   description: "comida para el michi de la ciudad",
   price: 750, 
   stock: 100,
-  categoryId: 2
-},{
-  name: "Fideos con tuco de anoche",
-  description: "comida para el michi del barrio",
-  price: 555, 
-  stock: 100,
-  categoryId: 2
+  categoryId: 2,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FCatChow.jpg?alt=media&token"
 },{
   name: "WHISKAS",
   description: "comida para el michi cheto",
   price: 600, 
   stock: 100,
-  categoryId: 2
+  categoryId: 2,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FCatChow.jpg?alt=media&token"
 }]
 // Syncing all the models at once.
 const force = true;

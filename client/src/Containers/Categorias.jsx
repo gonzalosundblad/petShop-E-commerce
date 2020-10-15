@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Catalogo from '../Components/CatalogoComp';
 
-export default function CategoryPerro ({ name }) {
+export default function Categories({ name }) {
 
     const [products, setProducts] = useState([]);
       

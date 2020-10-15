@@ -1,11 +1,5 @@
 const server = require('express').Router();
 const { Product, Category, productcategory } = require('../db.js');
-const fileUpload = require('express-fileupload');
-const bodyParser = require('body-parser')
-
-server.use(bodyParser.urlencoded({extended: false}));
-server.use(bodyParser.json());
-server.use(fileUpload());
 
 server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
 	Product.findAll()
@@ -54,6 +48,7 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 		for (let i = 0; i < data.categories.length; i++) {
 			arr.push(data.categories[i].name)
 		}
+		console.log(data)
 		res.json({
 			name: data.name,
 			description: data.description,
@@ -68,14 +63,19 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 	})
 })
 
-server.post('/', async (req, res) => {		//AGREGA NUEVOS PRODUCTOS
-	const {name, description, price, stock, categoryId } = req.body;
-
-
+server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
+	const {name, description, price, stock, categoryId, image} = req.body;
+	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
-		Product.create({ name, description, price, stock })
+		Product.create({ 
+			name, 
+			description, 
+			price, 
+			stock, 
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
+		 })
 			.then(function(productSinId) {
 				productSinId.addCategories("0")
 				res.json(productSinId)
@@ -86,7 +86,13 @@ server.post('/', async (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 				id: categoryId
 			}
 		})
-		var producto = Product.create({ name, description, price, stock })
+		var producto = Product.create({ 
+			name, 
+			description, 
+			price, 
+			stock, 
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token` 
+		 })
 		Promise.all([category, producto])
 			.then(values => {
 				var category = values[0]
@@ -115,12 +121,18 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			res.json(product)
 		} else {									
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
+			console.log(product[0])
 			res.json(product)
 		}
-	}).catch(err => {
-		console.log('D: Error: ', err)
-		res.send('Ocurrio un error :(').status(404)
 	})
+	// Product.findByPk(idProducto)
+	// .then(data => {
+	// 	data.addCategories(idCategoria)
+	// 	res.send('categoria agregada')
+	// }).catch(err => {
+	// 	console.log('Error: ', err)
+	// 	res.send('Ese producto o categoria no existe :(')
+	// })
 })
 
 server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
@@ -135,9 +147,21 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 	}).then(function(category){
 		res.json(category).status(200)
 	}).catch(err => {
-		console.log('D: Error: ', err)
+		console.log('Error: ', err)
 	})
 })
+
+// server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
+// 	const { idProducto, idCategoria } = req.params;
+// 	Product.findByPk(idProducto)
+// 	.then(data => {
+// 		data.removeCategories(idCategoria)
+// 		res.send('La categoria fue eliminada del producto')
+// 	}).catch(err => {
+// 		console.log('Error: ', err)
+// 		res.send('Ocurrio un error :(')
+// 	})
+// })
 
 server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
@@ -158,34 +182,32 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 			res.send('Categoria eliminada')//                             || para mantenerla en la tabla de union con esa categoria ||
 		}//																   ----------------------------------------------------------
 	}).catch(err => {
-		console.log('D: Error: ', err)
+		console.log('Error: ', err)
 		res.send('Ocurrio un error :(')
 	})
 })
 
 server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
-	const {name, description, price, stock } = req.body;
-	
+    const {name, description, price, stock } = req.body;
     Product.update({
         name,
         description,
         price,
-        stock,
+        stock
     },{
         returning: true,
         where: {
             id: req.params.id
         }
     }).then(function(product) {
-		console.log(product)
-        if(product[0] === 0) {
+        if(product[0] == 0) {
 			res.status(400).send('Error, campos requeridos')
 			return product[0]
         }
         res.status(200).json(product)
     }).catch(err => {
         res.status(400)
-        console.log('D: Error: ', err)
+        console.log('Error: ', err)
     })
 });
 
@@ -202,8 +224,6 @@ server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA
 	}).then(function([ rows, [updated] ]) {
 		res.status(200);
 		res.json(updated)
-	}).catch(err => {
-		console.log('D: Error: ', err)
 	})
 });
 
