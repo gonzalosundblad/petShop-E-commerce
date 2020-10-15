@@ -9,16 +9,14 @@ function Catalogo({productos}) {
           {productos.map(p => 
           <ProductCard 
                 id={p.id}
-                img={p.img}
+                image={p.image}
                 name={p.name}
                 price={p.price}
                 />
             )}
         </div>
         );
-    }
-  
-  ;
+    };
 
 
  export default Catalogo;

@@ -13,6 +13,7 @@ import CategoryPerro from './Containers/Categorias';
 import Categoria2 from './Containers/Categoria2';
 import SearchBar2 from './Components/SearchBar2';
 import Catalogo from './Components/CatalogoComp';
+import BorrarCategoria from './Containers/BorrarCategoria';
 
 function App() {
   // const [products,setProducts] = useState()
@@ -24,11 +25,13 @@ function App() {
         <Route path="/" render={() =>  <Nav />} />
         <div className= {StyleApp.padding}>
           <Route exact path="/" component={Categoria2} />
+          <Route exact path='/BorrarCategoria' render={() => <BorrarCategoria/>}/>
           <Route exact path="/products" component={MostrarCatalogo} />
           <Route exact path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
           <Route exact path='/AgregarProducto/' render={() => <CrudProduct/>}/>
           <Route exact path={`/products/:Categoria`} render={({match}) => <Categories Categ={match.params.Categoria}/>}/>
           <Route exact path={`/producto/:Id`} render={({ match }) =>  <ProductoSolo Id={match.params.Id}/>}/>
+          {/* <Route exact path={`/products/search=:name`} render={({ match }) =>  <Catalogo productos={match.params.name}/>}/> */}
         </div>
       </div> 
       </BrowserRouter>  
@@ -39,3 +42,4 @@ function App() {
 
 export default App;
 
+{/* <Catalogo productos={producto}/> */}

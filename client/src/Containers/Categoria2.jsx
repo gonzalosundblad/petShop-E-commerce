@@ -3,13 +3,13 @@ import CategoriaCard from '../Components/CategoriaComp';
 import axios from 'axios';
 
 export default function MostrarCategorias (){
-    const [nombre, setNombre] = useState([]);
+    const [categorias, setCategoria] = useState([]);
   
     useEffect(() => {
         async function detProd() {
           const response = await axios.get(`http://localhost:3001/products/category`)
           const array = await response.data;    
-          setNombre(array);   
+          setCategoria(array);   
         }
         detProd();
         }, []);
@@ -17,9 +17,9 @@ export default function MostrarCategorias (){
     return (
         <div >
             {
-            nombre.map(n => {
+            categorias.map(n => {
                 if (n.name !== 'Sin Categoria'){ 
-                    return  <CategoriaCard nombre = {n.name} id={n.id} /> 
+                    return  <CategoriaCard nombre={n.name} id={n.id} /> 
                 }
             })
             }

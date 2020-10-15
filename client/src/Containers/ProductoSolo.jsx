@@ -16,10 +16,6 @@ export default function ProductSolo ({Id}) {
             detProd();
             }, []);
 
-        // function onClose(id){
-        //   setCities(oldCities => oldCities.filter(c => c.id !== id));
-        // }
-      
         return (
           <div >
               <Product producto = {producto} />

@@ -23,7 +23,7 @@ export default function Categories ({Categ}) {
       
         return (
           <div >
-            <Catalogo productos = {products} />
+            <Catalogo productos = {products}/>
           </div>
         )
       };
