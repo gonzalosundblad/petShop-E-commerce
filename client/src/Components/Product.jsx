@@ -1,23 +1,35 @@
-
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 
-export default function Product ({ product }){
-  //{id, name, description, price, stock, imagen }
- const [producto, setProduct] = useState(product)
- 
+
+// import {getCategories} from '../../redux/actions/category';
+import {  mostrarProductos} from '../Redux/actions'
+import store from '../Redux/store';
+import { useDispatch } from 'react-redux'
+
+
+export default function ProudctList() {
+
+  const dispatch = useDispatch();
+
+  const [productos, setProductos] = useState()
+
+
+  useEffect(() => {
+      if(!productos){
+       dispatch( mostrarProductos());
+      }
+       store.subscribe(() => setProductos(store.getState().productos))
+
+
+  },[])
+
   return (
-  <div>
-    <figure>
-      <img src={product.imagen} alt="imagen de perro"/>
-    </figure>
-    <h1>Name:{product.name}</h1>
-    <p>Description:{product.description}</p>
-    <ul> 
-      <li>Price:{product.price}</li>
-      <li>Stock: {product.stock}</li>
-    </ul>
-  </div>
-  )
-}
+    <div>
+      <h1>hola</h1>
+      
+
+    </div>
+
+  );
+} 
