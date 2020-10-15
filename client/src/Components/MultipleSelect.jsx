@@ -1,5 +1,4 @@
-import React from 'react';
-import clsx from 'clsx';
+import React, { useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -8,9 +7,9 @@ import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
-import Chip from '@material-ui/core/Chip';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -53,18 +52,23 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelect( {user, names }) {
+export default function MultipleSelect( {user, names, cat}) {
   const classes = useStyles();
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
   const [personID, setPersonID] = React.useState([]);
   
+  useEffect(() => {
+    if(cat !== "undefined" && cat[0] !== "Sin Categoria"){
+      setPersonName(cat);
+      cat=undefined;
+    }
+  })
   const handleChange = (event) => {
     console.log(event.target)
     setPersonName(event.target.value);
     // setPersonName(event.target.name)
   };
-
   function AddCategory(){
     if(personName.length > 0){
       console.log(personName)
@@ -115,7 +119,7 @@ export default function MultipleSelect( {user, names }) {
           { names.map((name) => {
             if (name.name !== 'Sin Categoria'){
               return (
-              <MenuItem key={name.name} value={name.name} >
+              <MenuItem key={name.name} value={name.id} >
                 <Checkbox checked={personName.indexOf(name.name) > -1} />
                 <ListItemText primary={name.name}  />
               </MenuItem> )

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 // import './product.css'
 import StyleProductCard from '../Estilos/Product.module.css';
-
+import { Link } from "react-router-dom"
 import img from '../imagenes/comida.jpg'
 
 export default function Product ({ id2 }){
@@ -11,7 +11,7 @@ export default function Product ({ id2 }){
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [id, setId] = useState(produc);
+  const [id, setId] = useState(id2);
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
 
@@ -38,7 +38,7 @@ export default function Product ({ id2 }){
     
     
   
-
+    return (
     <div className={StyleProductCard.productCard}>
         <div>
           <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
@@ -49,6 +49,9 @@ export default function Product ({ id2 }){
           <h1>${price}</h1>
           <h1>{stock}</h1>
         </div>
+        <Link to={`/products/crud/${id2}`}>
+          <span>Modificar</span>
+        </Link>
     </div>
   )
 } 

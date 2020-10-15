@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+  import React, { useState, useEffect, useRef } from 'react';
 import { Form,Button,  } from 'react-bootstrap';
 import './crudProduct.css'
 import axios from 'axios';
@@ -69,6 +69,7 @@ export default function CrudProduct( { prod } ){
           image: json.image
         })   
         
+        setCategories(json.categories)
         
       }
       getProduct();
@@ -115,7 +116,7 @@ export default function CrudProduct( { prod } ){
         axios.post(`http://localhost:3001/products/`,  input )
           .then(res => {
             console.log(res);
-            console.log(res.data);
+              console.log(res.data);
             setUserId(res.data.id);
             x = false;
           })
@@ -124,33 +125,15 @@ export default function CrudProduct( { prod } ){
       }else{
         axios.put(`http://localhost:3001/products/:${prod}`, input )
           .then(res => {
-            console.log(res);
             console.log(res.data);
-            
+          
           })
           .catch(err => console.log(err))
           setUserId(prod)
       }
-      // console.log(res.data.id)
     }
   
-    // const handlerChange = (event) => {
-    //   `set${event.target.name}(${event.target.value})`;
-    //   console.log(event.target.value)
-    //   return
-    // }
 
-  function handleSubmit() {
-    console.log(!errors.name  && !errors.stock && !errors.price )
-    return(!errors.name  && !errors.stock && !errors.price );
-  }
-
-  // function putProduct( id ){
-  //   axios.put(`http://localhost:3001/products/${id}` , {name: "nuevo prod", description:"es un nnuevo producto", stock: 8, price:15})
-  //   .then(response => {
-  //     console.log(response)
-  //   })
-  // }
     function deleteProduct (){
       axios.delete(`http://localhost:3001/products/${prod}`,  input )
           .then(res => {
@@ -207,7 +190,7 @@ export default function CrudProduct( { prod } ){
         variant="primary" type="submit" >
         ADD/PUT
       </Button>
-      {!x ? null : <MultipleSelect user={userID} names={categories_name}></MultipleSelect> }
+      {!x ? null : <MultipleSelect user={userID} names={categories_name} cat={categories}></MultipleSelect> }
        {/* <button onchange={() => putProduct(2)}></button> */}
       
     </Form>

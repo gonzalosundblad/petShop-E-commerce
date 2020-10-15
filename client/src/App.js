@@ -22,13 +22,15 @@ function App() {
         <Route path="/" render={() =><Nav />} />
         <div className= {StyleApp.padding}>
           <Route exact path="/" component={Categoria2} />
-          <Route exact path="/products" component={MostrarCatalogo} />
+          <Route exact path="/products/" component={MostrarCatalogo} />
           <Route exact path="/products/category/:name" render={({ match }) => <CategoryPerro name={match.params.name} /> } />
           <Route exact path="/" />
           <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
-          <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
+          
           <Route path='/ModificarProducto/' render={() => <Modifica/>}/>
           <Route exact path="/products/:id" render={({ match }) => <Product id2={match.params.id} /> } />
+          <Route exact path='/products/crud/' component={CrudProduct}/>
+          <Route exact path="/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
         </div>
       </div> 
