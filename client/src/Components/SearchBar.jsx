@@ -3,7 +3,7 @@ import '../Estilos/searchbar.css';
 import logo from '../imagenes/logo.jpeg';    
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import Catalogo from './CatalogoComp';
+import Catalogo2 from './CatalogoComp';
 
 export default function SearchBar (){
     const [text, setText] = useState([]);
@@ -42,7 +42,7 @@ export default function SearchBar (){
              </Link>
             </div>
             <div>
-                <Catalogo productos={producto}/>
+                <Catalogo2 productos={producto}/>
             </div>
         </form>
        

@@ -1,41 +1,52 @@
 import React, {useState} from 'react';
 import StyleApp from './App.module.css';
-import Product from './Components/Product';
-import ProductCard from './Components/ProductCard';
-import { BrowserRouter, Route, Link} from "react-router-dom";
+import { BrowserRouter, Route} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo2'
-import Nav from './Containers/Nav'
+import Nav from './Containers/Nav';
 import AgregarCategoria from './Containers/Post';
-import CrudProduct from './Components/crudProduct'; 
-import CategoryPerro from './Containers/Categorias';
+import CrudProduct from './Components/crudProduct';
+import Categories from './Containers/Categorias';
 import Categoria2 from './Containers/Categoria2';
-import SearchBar2 from './Components/SearchBar2';
-import Catalogo from './Components/CatalogoComp';
 import Modifica from './Containers/Put';
+import axios from 'axios';
+import Catalogo from './Components/CatalogoComp'
+import Product from './Components/Product';
+import ProductoSolo from './Containers/ProductoSolo';
 
 function App() {
   const [products,setProducts] = useState()
-
+  const [resultados, setResultados] = useState([]);
+  function onSearch(producto) {
+       axios.get(`http://localhost:3001/search?products=${producto}`)
+          .then(r =>{
+              const array = r.data;
+              setResultados(array);
+              if(array.length === 0){
+                return alert('No se encontraron resultados')}
+          })}
   return (
     <div className= {StyleApp.App}>
       <BrowserRouter>
       <div>
-        <Route path="/" render={() =>  <Nav />} />
+        <Route path="/" render={() =>  <Nav onSearch={onSearch} productos={resultados} />} />
         <div className= {StyleApp.padding}>
+          <Route path="/" render = {() => <Catalogo productos = {resultados} /> } />
           <Route exact path="/" component={Categoria2} />
           <Route exact path="/products" component={MostrarCatalogo} />
-          <Route exact path="/products/Perros" component={CategoryPerro} />
-          <Route exact path="/" />
-          <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>  
+          <Route exact path={`/products/category/:name`} render={({ match }) => <Categories name={match.params.name}/>} />
+          <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
           <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
           <Route path='/ModificarProducto/' render={() => <Modifica/>}/>
+          <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
+          <Route exact path='/products/crud/' render={() => <CrudProduct/>}/>
+          <Route exact path="/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
         </div>
-      </div> 
-      </BrowserRouter>  
+      </div>
+      </BrowserRouter>
     </div>
   );
 }
 
 
-export default App;
+export default App; 

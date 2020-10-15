@@ -1,29 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import Catalogo from '../Components/CatalogoComp';
+import Product from '../Components/Product';
 
-export default function Categories({ name }) {
+export default function ProductSolo ({Id}) {
 
-    const [products, setProducts] = useState([]);
-      
+    const [producto, setProducto] = useState([]);
+      console.log(Id)
         useEffect(() => {
             async function detProd() {
-              const response = await axios.get(`http://localhost:3001/products/category/${name}`)
+              const response = await axios.get(`http://localhost:3001/products/${Id}`)
               const json = await response.data;    
               console.log(json) 
-              setProducts(json);   
+              setProducto(json);   
             }
             detProd();
             }, []);
-      
-      
+
         // function onClose(id){
         //   setCities(oldCities => oldCities.filter(c => c.id !== id));
         // }
       
         return (
           <div >
-            <Catalogo productos = {products} />
-          </div>
-        )
-      };
+              <Product producto = {producto} />
+            </div>
+      
+        );
+      }

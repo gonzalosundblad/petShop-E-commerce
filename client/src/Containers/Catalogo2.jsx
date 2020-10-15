@@ -16,7 +16,6 @@ import Catalogo from '../Components/CatalogoComp'
         detProd();
         }, []);
   
-  
     // function onClose(id){
     //   setCities(oldCities => oldCities.filter(c => c.id !== id));
     // }
@@ -29,4 +28,4 @@ import Catalogo from '../Components/CatalogoComp'
       </div>
   
     );
-  }
+  };

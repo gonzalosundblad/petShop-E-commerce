@@ -17,7 +17,13 @@ server.get('/', function(req, res) {    //UN SEARCH PARA BUSCAR TODOS LOS PRODUC
                 ] 
             }
     }).then(rta => {
+        if(!rta) {
+            res.send('No se encontro lo que buscaba :(').status(404)
+        }
         res.json(rta)
+    }).catch(err => {
+        console.log('D: Error: ', err)
+        res.send('No se encontro lo que buscaba :(').status(404)
     })
 });
 
