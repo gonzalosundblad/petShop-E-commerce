@@ -2,16 +2,17 @@
 
 import React  from 'react';
 // import '../Estilos/product.css';
+import StyleProductCard from '../Estilos/ProductCard.module.css';
 
 
-export default function Product ({id, name, description, price, stock, imagen}){
+export default function Product ({id, name, description, price, stock, image}){
   //{id, name, description, price, stock, imagen }
 //  const [producto, setProduct] = useState(product)
  
   return (
     <div>
       <figure>
-        <img/>
+      <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
       </figure>
       <h1>{name}</h1>
       <p>Description: {description}</p>

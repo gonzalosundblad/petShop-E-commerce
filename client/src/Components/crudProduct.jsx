@@ -105,8 +105,10 @@ export default function CrudProduct( ){
     // console.log(e.target.name);
     // console.log(e.target)
     const storageRef = firebase.storage().ref(`/fotosProductos/${file.name}`);
+    // const url = storageRef.getDownloadURL()
+    // console.log(url);
     storageRef.put(file);
-    console.log(storageRef)
+    // console.log(storageRef)
     setInput({
       ...input,
       [e.target.name]: e.target.value

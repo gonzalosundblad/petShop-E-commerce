@@ -9,7 +9,7 @@ function Catalogo({productos}) {
         <div className={StyleCatalogo.display}>
           {productos.map(p => 
           <ProductCard 
-                img={p.img}
+                image={p.image}
                 name={p.name}
                 price={p.price}
                 />
