@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import StyleProductCard from '../Estilos/ProductCard.module.css';
 import img from '../imagenes/comida.jpg'
 
-export default function ProductCard ({id, name, price, imagen}){
+export default function ProductCard ({id, name, price, image}){
   // const [card, setCard] = useState()
 
   console.log(id)
   return(
     <a className={StyleProductCard.productCard} href={`/products/${id}`}>
         <div >
-          <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
+          <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
         </div>
         <div className={StyleProductCard.containerLyrics}>
           <h3>{name}</h3>
@@ -21,7 +21,4 @@ export default function ProductCard ({id, name, price, imagen}){
         </div>
     </a>
   )
-} 
-
-
-
+}

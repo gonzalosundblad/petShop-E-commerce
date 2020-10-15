@@ -7,11 +7,11 @@ function Catalogo({productos}) {
     if(productos.length >= 1){
       return (
         <div className={StyleCatalogo.display}>
-          {productos.map(p => 
-          <ProductCard 
+          {productos.map(p =>
+          <ProductCard
                 key={p.id}
                 id={p.id}
-                img={p.img}
+                img={p.image}
                 name={p.name}
                 price={p.price}
                 />
@@ -19,7 +19,7 @@ function Catalogo({productos}) {
         </div>
         );
     } else return '';
-  
+
   };
 
 

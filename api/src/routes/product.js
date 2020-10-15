@@ -64,11 +64,18 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 })
 
 server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
-	const {name, description, price, stock, categoryId } = req.body;
+	const {name, description, price, stock, categoryId, image} = req.body;
+	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
-		Product.create({ name, description, price, stock })
+		Product.create({ 
+			name, 
+			description, 
+			price, 
+			stock, 
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token=${tokenDeAccesoArchivoFirebase}`
+		 })
 			.then(function(productSinId) {
 				productSinId.addCategories("0")
 				res.json(productSinId)
@@ -79,7 +86,13 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 				id: categoryId
 			}
 		})
-		var producto = Product.create({ name, description, price, stock })
+		var producto = Product.create({ 
+			name, 
+			description, 
+			price, 
+			stock, 
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token` 
+		 })
 		Promise.all([category, producto])
 			.then(values => {
 				var category = values[0]
@@ -175,21 +188,19 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 })
 
 server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
-	const {name, description, price, stock } = req.body;
-	
+    const {name, description, price, stock } = req.body;
     Product.update({
         name,
         description,
         price,
-        stock,
+        stock
     },{
         returning: true,
         where: {
             id: req.params.id
         }
     }).then(function(product) {
-		console.log(product)
-        if(product[0] === 0) {
+        if(product[0] == 0) {
 			res.status(400).send('Error, campos requeridos')
 			return product[0]
         }

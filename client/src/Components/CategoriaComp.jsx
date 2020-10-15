@@ -1,7 +1,6 @@
 import React  from 'react';
 import { Link } from 'react-router-dom';
 import  StyleCategoria from '../Estilos/CategoriaComp.module.css';
-import  '../imagenes/perros.jpg';
 
 export default function CategoriaCard ({nombre}){
     // const [card, setCard] = useState()

@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo2'
@@ -10,9 +11,17 @@ import Categoria2 from './Containers/Categoria2';
 import Modifica from './Containers/Put';
 import axios from 'axios';
 import Catalogo from './Components/CatalogoComp'
+import {getProducts} from './redux/actions.js'
+
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
+
+  useEffect(() => {
+    getProducts()
+
+      }, []);
+
   function onSearch(producto) {
        axios.get(`http://localhost:3001/search?products=${producto}`)
           .then(r =>{
