@@ -4,7 +4,7 @@ const { Product, Category, productcategory, User, Order } = require('../db.js');
 //   '/users'
 // 15/10 preguntar por relaciones (ver en db.js) y preguntar por validacion password (ver modelo user) y preguntar por url de firebase
 
-server.post('/', (req, res) => {                       // AGREGA NUEVO USUARIO
+server.post('/', (req, res) => { // AGREGA NUEVO USUARIO
     const { name, email, password } = req.body;
     if( !name || !email || !password) {
         return res.status(400).send("Campos requeridos")
