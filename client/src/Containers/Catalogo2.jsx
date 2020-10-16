@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Catalogo from '../Components/CatalogoComp'
-import {getProducts} from '../redux/actions.js'
+import {getProducts} from '../Redux/actions.js'
 import {connect} from 'react-redux';
-import store from '../redux/store';
+import store from '../Redux/store';
 
 
   function MostrarCatalogo ({getProducts}) {

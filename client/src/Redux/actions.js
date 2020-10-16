@@ -4,16 +4,15 @@ import axios from 'axios';
 export function getProducts() { //obtener todos los productos
     const request = axios.get('http://localhost:3001/products')
     return { type:GET_PRODUCTS, payload: request}; }
+
 // export function getProducts() {
-//   return function (dispatch) {
+//   return function(dispatch){
 //     axios.get(`http://localhost:3001/products`)
-//       .then(r => r.data)
-//       .then(d => {
-//         dispatch({ type:GET_PRODUCTS, payload: d});
-//         console.log(d)
-//       })
-//   }
-// }
+//       .then(function(resp){
+//         console.log(resp);
+//           dispatch({ type:GET_PRODUCTS, payload: resp.data})
+//         })}}
+
 
 export function getCategories() { //obtener todas las categorias
     const request = axios.get('http://localhost:3001/products/category');
