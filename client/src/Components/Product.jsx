@@ -4,10 +4,10 @@ import React  from 'react';
 // import '../Estilos/product.css';
 
 
-export default function Product ({id, name, description, price, stock, imagen}){
+export default function Product ({id, name, description, price, stock, image}){
   //{id, name, description, price, stock, imagen }
 //  const [producto, setProduct] = useState(product)
- 
+
   return (
     <div>
       <figure>
@@ -15,7 +15,7 @@ export default function Product ({id, name, description, price, stock, imagen}){
       </figure>
       <h1>{name}</h1>
       <p>Description: {description}</p>
-      <ul> 
+      <ul>
         <li>Precio: {price}</li>
         <li>Stock: {stock}</li>
       </ul>
@@ -37,32 +37,32 @@ export default function Product ({ produc }){
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
 
-  
 
-  
+
+
   useEffect(() => {
     async function detProd() {
       const response = await axios.get(`http://localhost:3001/products/${produc}`)
-      const json = await response.data;    
-      console.log(json) 
+      const json = await response.data;
+      console.log(json)
       setName(json.name);
-      setDescription(json.description); 
-      setImage(json.image); 
-      setId(json.id); 
-      setPrice(json.price); 
-      setStock(json.stock); 
+      setDescription(json.description);
+      setImage(json.image);
+      setId(json.id);
+      setPrice(json.price);
+      setStock(json.stock);
     }
     detProd();
     }, []);
-      
-  
 
-    
-    
-  
 
-  
- 
+
+
+
+
+
+
+
   return(
   <div className="producto">
      <figure>
@@ -71,14 +71,14 @@ export default function Product ({ produc }){
      </figure>
     <h1 className="producto-title">{name}</h1>
      <p className="producto-texto">Description: {description}</p>
-     <ul> 
+     <ul>
        <li className="producto-text">Precio: {price}</li>
        <li className="producto-text">Stock: {stock}</li>
        {/* <img src={product.imagen} alt="imagen de perro"/> */}
-    
-    
-     {/* </ul> 
+
+
+     {/* </ul>
 
   </div> */}
   {/* )
-} */} 
+} */}
