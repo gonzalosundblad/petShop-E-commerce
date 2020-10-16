@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Catalogo from '../Components/CatalogoComp'
+import { getCategories } from '../Redux/actions';
+import { getProducts } from '../Redux/actions';
 
   export default function MostrarCatalogo () {
 
     const [products, setProducts] = useState([]);
   
     useEffect(() => {
-        async function detProd() {
-          const response = await axios.get(`http://localhost:3001/products`)
-          const json = await response.data;    
-          console.log(json) 
-          setProducts(json);   
-        }
-        detProd();
+      getProducts().payload
+      .then(resp => setProducts(resp.data))
         }, []);
   
   

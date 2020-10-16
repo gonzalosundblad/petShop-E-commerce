@@ -30,6 +30,9 @@ export default function Nav({funcionCatag, onSearch, resultados}) {
         <a className={StyleNav.botones} href='/ModificarProducto/'>
             <span className= {StyleNav.botonAddProduct}>Modificar Producto</span>
         </a>
+        <a className={StyleNav.botones} href='/Carrito/'>
+            <span className= {StyleNav.botonAddProduct}>Mi Carrito</span>
+        </a>
       </div>
       <SearchBar2 onSearch={onSearch} productos={resultados} />
     </div>

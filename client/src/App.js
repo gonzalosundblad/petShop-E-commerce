@@ -11,6 +11,7 @@ import Modifica from './Containers/Put';
 import axios from 'axios';
 import Catalogo from './Components/CatalogoComp'
 import Product from './Components/Product';
+import Carrito from './Containers/carrito';
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
@@ -36,6 +37,7 @@ function App() {
           <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
           <Route path='/ModificarProducto/' render={() => <Modifica/>}/>
           <Route exact path='/products/:id' render={({ match }) => <Product id2={match.params.id} />}/>
+          <Route path='/Carrito/' component={Carrito} />
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
         </div>
       </div>

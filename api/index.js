@@ -35,7 +35,7 @@ var arrayProductosPerros = [{
   name: "Pedigree MEDIUM",
   description: "comida para el perrito",
   price: 150, 
-  stock: 100,
+  stock: 0,
   categoryId: 1
 }];
 var arrayProductosGatos = [{
@@ -54,7 +54,7 @@ var arrayProductosGatos = [{
   name: "WHISKAS",
   description: "comida para el michi cheto",
   price: 600, 
-  stock: 100,
+  stock: 0,
   categoryId: 2
 }]
 // Syncing all the models at once.
