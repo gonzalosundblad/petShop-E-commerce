@@ -2,7 +2,20 @@ import React, { useState, useEffect, Children } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
 // import './crudProduct.css'
 import axios from 'axios';
+import firebase, { storage } from 'firebase'
 
+var firebaseConfig = {
+  apiKey: "AIzaSyBE3Y03cTrnOwM9DkcGpUklWYkjESBaH3A",
+  authDomain: "petshopfiles.firebaseapp.com",
+  databaseURL: "https://petshopfiles.firebaseio.com",
+  projectId: "petshopfiles",
+  storageBucket: "petshopfiles.appspot.com",
+  messagingSenderId: "332756429714",
+  appId: "1:332756429714:web:fbfb632f36b580b7682f4b",
+  measurementId: "G-Q2NHZVYZ1F"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 
 export default function CrudProduct( ){
@@ -12,7 +25,7 @@ export default function CrudProduct( ){
     stock: "",
     price: "",
     image: "",
-    categoryId: 1, 
+    categoryId: 1,  
   })
   const [ errors, setErrors] = useState({});
   const [ categories, setCategories ] = useState([]);
@@ -86,6 +99,22 @@ export default function CrudProduct( ){
     }));
   }
 
+  function handleUpload (e) {
+    const file = e.target.files[0];
+    // var x = e.target.value.slice(12)
+    // console.log(e.target.name);
+    // console.log(e.target)
+    const storageRef = firebase.storage().ref(`/fotosProductos/${file.name}`);
+    // const url = storageRef.getDownloadURL()
+    // console.log(url);
+    storageRef.put(file);
+    // console.log(storageRef)
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    });
+  }
+
   function handleSubmit() {
     // console.log(!errors.name && !errors.stock && !errors.price);
     
@@ -150,7 +179,7 @@ export default function CrudProduct( ){
         
      
         
-      <input type="file" value={input.image} onChange={handleInputChange}  name="image" accept="image/png, .jpeg, .jpg, image/gif"/>
+      <input type="file" value={input.image} onChange={handleUpload}  name="image" accept="image/png, .jpeg, .jpg, image/gif"/>
 
       <Button  enabled={!handleSubmit()} variant="primary" type="submit">
         Submit
