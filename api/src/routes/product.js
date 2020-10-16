@@ -39,7 +39,6 @@ server.get('/category/:nombreCat', (req, res, next) => {  //TRAE TODOS LOS PRODU
 })
 
 server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
-	console.log(req.params.id);
 	var arr = [];
 	Product.findByPk(req.params.id, {
 		include: {
@@ -64,7 +63,6 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 
 server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	const {name, description, price, stock, categoryId, image} = req.body;
-	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
@@ -120,7 +118,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			res.json(product)
 		} else {
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
-			console.log(product[0])
 			res.json(product)
 		}
 	})
@@ -171,7 +168,6 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 		for (let i = 0; i < data[0].categories.length; i++) {			//recorro todas las categorias del producto
 			arr.push(data[0].categories[i].id)
 		}
-		console.log(arr)//												   ----------------------------------------------------------
 		if(arr.length > 1) {	// <---------------Pregunto-------------- ||  si tiene mas de 1 categoria solo elimino la categoria ||
 			data[0].removeCategories(idCategoria)//						  ||--------------------------------------------------------||
 			res.send('Categoria eliminada')	// 						      ||  se elimina PERO se mantienen las demas categorias     ||
@@ -198,6 +194,7 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
             id: req.params.id
         }
     }).then(function(product) {
+			console.log(product[1]);
         if(product[0] == 0) {
 			res.status(400).send('Error, campos requeridos')
 			return product[0]
@@ -205,7 +202,6 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
         res.status(200).json(product)
     }).catch(err => {
         res.status(400)
-        console.log('Error: ', err)
     })
 });
 

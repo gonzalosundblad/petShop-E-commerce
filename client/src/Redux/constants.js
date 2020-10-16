@@ -11,14 +11,13 @@ export const PUT_CATEGORY_ID = "PUT_CATEGORY_ID"
 export const DELETE_IDPROD_CAT_IDCATEG = "DELETE_IDPROD_CAT_IDCATEG"
 export const DELETE_ID = "DELETE_ID"
 export const DELETE_CATEGORY_ID = "DELETE_CATEGORY_ID"
-export const SEARCH_PRODUCT = "SEARCH_PRODUCT"
+export const SEARCH = "SEARCH"
 // (`http://localhost:3001/search?products=${producto}`)
 // server.get('/category', (req, res) => {
 // server.get('/category/:nombreCat', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS DE X CATEGORIA
 // server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 // server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 // server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
-
 // server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 // server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
 // server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID

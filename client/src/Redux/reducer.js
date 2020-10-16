@@ -6,6 +6,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+  console.log(action)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
     return {
@@ -42,10 +43,33 @@ export default (state = initialState, action) => {
       ...state,
       categories : state.categories.concat(action.category)
     }
-    case PUT_ID: //modificar un producto segun si id
+    case PUT_ID: //modificar un producto segun sU id
     return {
       ...state,
-      products : action.product
+      products : state.products.map(prod => prod.id === action.payload.id ? action.payload : prod )
+    }
+    case PUT_CATEGORY_ID: //modificar una categoria
+    return {
+      ...state,
+      categories : state.categories.map(cat => cat.id === action.payload.id ? action.payload : cat )
+    }
+    case DELETE_ID: //eliminar un producto
+    return {
+      ...state,
+      products: state.products.filter((state.products.id) => id !== action.payload)
+    }
+    case DELETE_CATEGORY_ID: //elimina una categoria
+    return {
+      ...state,
+      categories: state.categories.filter((state.categories.id) => id !== action.payload)
+
+
+    }
+    case SEARCH_PRODUCT: // busca entre todos
+    return {
+      ...state,
+      products : action.payload
+
     }
     default : return state
   }

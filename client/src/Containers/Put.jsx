@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-
-
+import {putId, getProducts} from '../redux/actions.js'
 
 export default function Modifica() {
     const [state, setState] = useState({
@@ -11,28 +10,26 @@ export default function Modifica() {
         price: "",
         stock: ""
     });
-
     const [prodGuardados, setProdGuardados] = useState([])
-
+    // useEffect(() => {
+    //  axios.get(`http://localhost:3001/products`)
+    //  .then(r =>{
+    //      const array = r.data;
+    //      setProdGuardados(array)
+    //  })
+    //  .catch(error => {console.log(error)})
+    // }, []);
     useEffect(() => {
-     axios.get(`http://localhost:3001/products`)
-     .then(r =>{
-         const array = r.data;
-         console.log(array)
-         setProdGuardados(array)
-
-     })
-     .catch(error => {console.log(error)})
+      getProducts().payload
+      .then(resp => setProdGuardados(resp.data))
     }, []);
 
-   function handleChange (e){
+   function handleChange(e){
        setState({
            ...state,
            [e.target.name]: e.target.value,
        });
    }
-
-
    // const submitProducto = (e) => {
    //     actualizarEstado({
    //         id: "",
@@ -42,37 +39,33 @@ export default function Modifica() {
    //         stock: ""
    //     });
    // };
-
-
    function handleSubmit (event) {
      event.preventDefault();
-
-
      const cambios =  {
        name: state.name,
        description: state.description,
        price: state.price,
        stock: state.stock
      }
-
-     const headers = {  
+     const headers = {
        headers: {
        "Content-Type": "application/json",
        "Accept": "application/json"
-   } 
- }
-      
-     axios.put(`http://localhost:3001/products/${state.id}` , cambios , headers)
-     .then(response => {
-       console.log(response)
-       borrarInput()
-       reload()
-     })
-     .catch(err => {
-       console.log(err)
-     })
+         }
+       }
+     //  axios.put(`http://localhost:3001/products/${state.id}` , cambios , headers)
+     // .then(response => {
+     //   console.log(response)
+     //   borrarInput()
+     //   reload()
+     // })
+     // .catch(err => {
+     //   console.log(err)
+     // })
+     const id = state.id
+     putId(id, cambios)
 
-    }
+}
     function borrarInput(){
       document.getElementById("id").value = "";
       document.getElementById("name").value = "";
@@ -80,12 +73,9 @@ export default function Modifica() {
       document.getElementById("price").value = "";
       document.getElementById("stock").value = "";
     }
-
     function reload(){
       window.location.reload()
     }
-
-
 
    return (
        <div>
@@ -106,7 +96,7 @@ export default function Modifica() {
                              <input type="text" value={`$ ${encontrado.price}`}/>
                              <label>Stock:</label>
                              <input type="text" value={encontrado.stock} />
-                           </form>                               
+                           </form>
                            )
                        })
                    }

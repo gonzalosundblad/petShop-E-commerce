@@ -13,19 +13,10 @@ import axios from 'axios';
 import Catalogo from './Components/CatalogoComp'
 import Product from './Components/Product';
 import ProductoSolo from './Containers/ProductoSolo';
-import {getProducts, getCategories} from './redux/actions.js'
+import {search} from './redux/actions.js'
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
-
-  // useEffect(() => {
-  //   getCategories().payload
-  //   .then(resp => console.log(resp.data))
-  // })
-  // useEffect(() => {
-  //   getProducts()
-  //   .then(resp => console.log(resp.data))
-  // })
 
   function onSearch(producto) {
        axios.get(`http://localhost:3001/search?products=${producto}`)
@@ -34,7 +25,9 @@ function App() {
               setResultados(array);
               if(array.length === 0){
                 return alert('No se encontraron resultados')}
-          })}
+          })
+
+        }
   return (
     <div className= {StyleApp.App}>
       <BrowserRouter>
