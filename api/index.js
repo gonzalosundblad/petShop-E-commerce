@@ -19,7 +19,23 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { Category, Product } = require('./src/db');
+const { Category, Product, User } = require('./src/db');
+
+var arrayDeUsuarios = [{
+  name: "Eric",
+  email: "eric@gmail.com",
+  password: "1234"
+},{
+  name: "Gonza",
+  email: "gonza@gmail.com",
+  password: "1234"
+},{
+  name: "Gaby",
+  email: "gaby@gmail.com",
+  password: "1234"
+}];
+
+
 var arrayProductosPerros = [{
   name: "Eukanuba Small",
   description: "comida para el perrito",
@@ -111,8 +127,11 @@ conn.sync({ force }).then(() => {
           })
       }
     });
-  
-    Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro])
+    
+    var Usuarios = arrayDeUsuarios.map(e => {
+      User.create(e)
+    })
+    Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro, Usuarios])
       .then(res => {
         console.log("Categorías y producto precargades");
       });
