@@ -1,8 +1,9 @@
 import React, { useState, useEffect, Children } from 'react';
-import { Form, Col, Row, Button } from 'react-bootstrap';
-// import './crudProduct.css'
+import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
+import './crudProduct.css'
 import axios from 'axios';
 import firebase, { storage } from 'firebase'
+import { getCategories } from '../Redux/actions'
 
 var firebaseConfig = {
   apiKey: "AIzaSyBE3Y03cTrnOwM9DkcGpUklWYkjESBaH3A",
@@ -25,32 +26,30 @@ export default function CrudProduct( ){
     stock: "",
     price: "",
     image: "",
-    categoryId: 1,  
+    categoryId: 1,
   })
   const [ errors, setErrors] = useState({});
   const [ categories, setCategories ] = useState([]);
-  
+
 
   function getIdCategory(event) {
     // event.preventDefault();
-    
+
     let x = categories[event.target.selectedIndex]
     setInput({
       ...input,
       categoryId: x.id,
     });
-    
+
   }
 
-  
+
 
   useEffect(() => {
-    async function searchCategories() {
-      const response = await axios.get(`http://localhost:3001/products/category/`)
-      const json = await response.data;    
-      console.log(json) 
-      setCategories(json)
-    }
+   function searchCategories() {
+    getCategories().payload
+    .then(resp => setCategories(resp.data))
+  }
     searchCategories();
   }, []);
 
@@ -65,10 +64,10 @@ export default function CrudProduct( ){
         errors.price =  "Price is required";
       }else if(!typeof(parseFloat(input.price) == "NaN")){
         errors.price = "Price is not a number";
-        
+
       }else if(parseFloat(input.price) < 0){
         errors.price = "Price has to be major to 0";
-      
+
       }else if(!/^\d+(\.\d{1,2})?$/.test(input.price)){
         errors.price = "Price Format Invalid(Format valid (Number.Number))";
       }
@@ -77,16 +76,16 @@ export default function CrudProduct( ){
       // }else if(!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)){
       }else if(!typeof(parseFloat(input.stock) === "number")){
         errors.stock = "Stock is not a number";
-      
+
       }else if(parseFloat(input.stock) < 0){
         errors.stock = "Stock has to be major to 0";
       }else if(!/^\d+(\.\d{1,2})?$/.test(input.stock)){
         errors.stock = "Stock Format Invalid(Format valid (Number.Number))";
       }
-    
-    
+
+
       return errors;
-    };  
+    };
 
   const handleInputChange = function(e) {
     setInput({
@@ -117,12 +116,12 @@ export default function CrudProduct( ){
 
   function handleSubmit() {
     // console.log(!errors.name && !errors.stock && !errors.price);
-    
+
    return(!errors.name  && !errors.stock && !errors.price );
-      
+
     }
 
-    
+
   return(
     <Form className="form-class" display="block" onSubmit={(e) => {
       e.preventDefault();
@@ -136,15 +135,15 @@ export default function CrudProduct( ){
             stock: "",
             price: "",
             image: "",
-            categoryId: 1, 
+            categoryId: 1,
 
           })
-                  
+
  })
       }}>
-      
+
         <Form.Row  >
-         
+
           <Form.Group className="form-group" controlId="formGridName" >
             <Form.Label>Producto: </Form.Label>
             <Form.Control autoComplete="false" className={errors.name && 'danger'} value={input.name} onChange={handleInputChange} name="name"/>
@@ -153,10 +152,10 @@ export default function CrudProduct( ){
 
           <Form.Group controlId="formGridState">
             <Form.Label>Categoria</Form.Label>
-              <Form.Control as="select" name="categoryId" 
-               onChange={e => getIdCategory(e)} 
+              <Form.Control as="select" name="categoryId"
+               onChange={e => getIdCategory(e)}
                >
-                {categories.map((category, i) => <option key={category.id} id={i} >{category.name}</option>)} 
+                {categories.map((category, i) => <option key={category.id} id={i} >{category.name}</option>)}
               </Form.Control>
           </Form.Group>
           <Form.Group controlId="formGridName" >
@@ -176,14 +175,15 @@ export default function CrudProduct( ){
             {!errors.stock ? null : <p className="danger">{errors.stock}</p>}
           </Form.Group>
         </Form.Row>
-        
-     
-        
+
+
+
       <input type="file" value={input.image} onChange={handleUpload}  name="image" accept="image/png, .jpeg, .jpg, image/gif"/>
 
       <Button  enabled={!handleSubmit()} variant="primary" type="submit">
         Submit
       </Button>
+
     </Form>
   )
 }

@@ -32,8 +32,8 @@ export function postProduct(){      //agrega un nuevo producto
   const request = axios.post('http://localhost:3001/products')
   return { type: POST_PRODUCT, payload : request } ; }
 
-export function postIdProdCatId(){   //agrega una categoria a un producto
-  const request = axios.post('http://localhost:3001/products/:idProducto/category/:idCategoria')
+export function postIdProdCatId(user, category){   //agrega una categoria a un producto
+  const request = axios.post(`http://localhost:3001/products/${user}/category/${category}`)
   return { type: POST_IDPROD_CAT_IDCATEG, payload : request } ; }
 //-------------------------------------------
 //  postCategory TAMBIEN FUNCIONA
@@ -41,23 +41,20 @@ export function postCategory(data){   //agrega una categoria
   const request = axios.post('http://localhost:3001/products/category', data)
   return { type: POST_CATEGORY, payload : request } ; }
 //----------------------------------------
-// export function putId(id, cambios){   //modifica un producto segun id
-//   axios.put(`http://localhost:3001/products/${id}`, cambios)
-//     .then(function(res){
-//       console.log(res);
-//       return { type: PUT_ID, payload : res }
-//     })
-//   }
+// PutId FUNCIONA
 export function putId (id, cambios) {
     return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
       return({ type: PUT_ID, payload : response })
       console.log(response);
     })
     }
+export function putCategoryId (id, cambios) {
+    return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
+      return({ type:PUT_CATEGORY_ID, payload : response })
+      console.log(response);
+    })
+    }
 
-export function putCategoryId(){   //modifica una categoria segun id
-const request = axios.put('http://localhost:3001/products')
-return { type: PUT_CATEGORY_ID, payload : request } ; }
 
 export function deleteCatOfProduct(){   //elimina una categoria de un producto
 const request = axios.put('http://localhost:3001/products')

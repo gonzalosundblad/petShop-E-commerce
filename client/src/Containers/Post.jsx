@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {postCategory} from '../redux/actions.js'
+import {postCategory} from '../Redux/actions'
 
 export default function AgregarCategoria() {
   const [ nueva, setNueva] = useState([]);
@@ -43,7 +43,7 @@ export default function AgregarCategoria() {
 
 
     return (
-      <div>
+      <div className="form-class">
         <form id="miForm" onSubmit={handleSubmit}>
           <label>Nombre de Categoría: </label>
             <input id="name" type="text" name="name" onChange={handleChange} />

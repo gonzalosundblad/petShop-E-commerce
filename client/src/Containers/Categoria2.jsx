@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import CategoriaCard from '../Components/CategoriaComp';
 import axios from 'axios';
-import {getCategories} from '../redux/actions.js'
+import {getCategories} from '../Redux/actions.js'
 
 export default function MostrarCategorias (){
     const [nombre, setNombre] = useState([]);
@@ -24,7 +24,7 @@ export default function MostrarCategorias (){
               {
               nombre.map(n => {
                   if (n.name !== 'Sin Categoria'){
-                      return  <CategoriaCard nombre = {n.name} id={n.id} />
+                      return  <CategoriaCard key={n.id} nombre = {n.name} id={n.id} />
                   }
               })
               }

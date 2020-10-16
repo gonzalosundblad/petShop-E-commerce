@@ -26,7 +26,7 @@ export default function SearchBar (){
             modificar();
             setText("");
         }}>
-          <Link exact to="/">
+          <Link exact to="/user">
             <img className="logo" src={logo} alt=""/>
           </Link>
           <div>

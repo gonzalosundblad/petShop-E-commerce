@@ -18,18 +18,12 @@ export default function Nav({funcionCatag, onSearch, resultados}) {
         <img className={StyleNav.logo} src={logo} alt=""/>
       </a>
       <div className={StyleNav.botones}>
-        <a className={StyleNav.botones} href='/products'>
+        <a className={StyleNav.botones} href='/user'>
+            <span className={StyleNav.botonCatalogo} onClick={funcionCatag}>Inicio</span>
+            </a>
+        <a className={StyleNav.botones} href='/user/products'>
             <span className={StyleNav.botonCatalogo} onClick={funcionCatag}>Catálogo</span>
-        </a>
-        <a className={StyleNav.botones} href='/AgregarProducto/'>
-            <span className= {StyleNav.botonAddProduct}>Agregar Producto</span>
-        </a>
-        <a className={StyleNav.botones} href='/AgregarCategoria'>
-            <span className= {StyleNav.botonAddProduct}>Agregar Categoría</span>
-        </a>
-        <a className={StyleNav.botones} href='/ModificarProducto/'>
-            <span className= {StyleNav.botonAddProduct}>Modificar Producto</span>
-        </a>
+            </a>
       </div>
       <SearchBar2 onSearch={onSearch} productos={resultados} />
     </div>
