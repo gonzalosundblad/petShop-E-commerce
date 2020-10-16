@@ -1,22 +1,28 @@
 import React, {useState} from 'react';
 import '../Estilos/searchbar.css';
-import logo from '../imagenes/logo.jpeg';    
+import logo from '../imagenes/logo.jpeg';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Catalogo2 from './CatalogoComp';
+import {search} from '../Redux/actions.js'
+import {connect} from 'react-redux';
 
-export default function SearchBar (){
+export default function SearchBar (search){
     const [text, setText] = useState([]);
     const [producto, setProducto] = useState([]);
 
     function modificar (){
-        axios.get(`http://localhost:3001/search?products=${text}`)
-        .then(r =>{
-            const array = r.data;
-            console.log(array)
-            setProducto(array);
-            
+        // axios.get(`http://localhost:3001/search?products=${text}`)
+        // .then(r =>{
+        //     const array = r.data;
+        //     setProducto(array);
+        // })
+        useEffect(() => {
+        search().payload
+        .then(resp => {
+          setProducto(resp.data);
         })
+      }, []);
     }
 
 
@@ -32,7 +38,7 @@ export default function SearchBar (){
           <div>
             <input className="barra" type="search"
                 placeholder="Ingresar Producto"
-                value={text} 
+                value={text}
                 onChange={e => setText(e.target.value)}>
 
             </input>
@@ -45,7 +51,15 @@ export default function SearchBar (){
                 <Catalogo2 productos={producto}/>
             </div>
         </form>
-       
+
     )
 }
 
+const mapStateToProps = (state) => ({
+products : state.products
+})
+
+export default connect(
+mapStateToProps,
+{search})
+(SearchBar);

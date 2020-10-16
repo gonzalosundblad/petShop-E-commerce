@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import {putId, getCategories, putCategoryId} from '../Redux/actions.js'
+import {connect} from 'react-redux';
 
-export default function Modifica() {
+function Modifica() {
     const [state, setState] = useState({
         id: "",
         name: ""
@@ -104,3 +105,12 @@ export default function Modifica() {
             </div>
     );
 }
+
+const mapStateToProps = (state) => ({
+  categories : state.categories
+})
+
+export default connect(
+mapStateToProps,
+{putId, getCategories, putCategoryId})
+(Modifica);

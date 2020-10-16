@@ -4,6 +4,7 @@ import './crudProduct.css'
 import axios from 'axios';
 import firebase, { storage } from 'firebase'
 import { getCategories } from '../Redux/actions'
+import {connect} from 'react-redux';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBE3Y03cTrnOwM9DkcGpUklWYkjESBaH3A",
@@ -19,7 +20,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-export default function CrudProduct( ){
+function CrudProduct( ){
   const [ input, setInput ] = useState({
     name: "",
     description: "",
@@ -187,3 +188,12 @@ export default function CrudProduct( ){
     </Form>
   )
 }
+
+const mapStateToProps = (state) => ({
+  products : state.products
+})
+
+export default connect(
+mapStateToProps,
+{getCategories})
+(CrudProduct);

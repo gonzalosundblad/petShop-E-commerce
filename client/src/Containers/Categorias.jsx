@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Catalogo from '../Components/CatalogoComp';
 import {getProductByCategory} from '../Redux/actions.js'
+import {connect} from 'react-redux';
+import store from '../Redux/store';
 
-export default function Categories({ name }) {
+function Categories({ name, getProductByCategory }) {
 
     const [products, setProducts] = useState([]);
         //
@@ -26,3 +28,12 @@ export default function Categories({ name }) {
           </div>
         )
       };
+
+const mapStateToProps = (state) => ({
+categories : state.categories
+})
+
+export default connect(
+mapStateToProps,
+{getProductByCategory})
+(Categories);

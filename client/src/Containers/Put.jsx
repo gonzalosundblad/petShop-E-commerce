@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import {putId, getProducts} from '../Redux/actions.js'
+import {connect} from 'react-redux';
 
-export default function Modifica() {
+function Modifica() {
     const [state, setState] = useState({
         id: "",
         name: "",
@@ -33,7 +34,7 @@ export default function Modifica() {
        price: state.price,
        stock: state.stock
      }
-     
+
      const id = state.id
      putId(id, cambios)
      .then( resp => {
@@ -141,3 +142,12 @@ export default function Modifica() {
             </div>
     );
 }
+
+const mapStateToProps = (state) => ({
+products : state.products
+})
+
+export default connect(
+mapStateToProps,
+{putId, getProducts})
+(Modifica);

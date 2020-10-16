@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
     case GET_CATEGORIES_NOMBRECAT: // obtener todos los productos de cierta categoria
     return {
       ...state,
-      categories : action.categories.products,
+      categories : action.categories,
     }
     case GET_ID: //obtener un producto segun su id
     return {

@@ -44,13 +44,11 @@ export function postCategory(data){   //agrega una categoria
 export function putId (id, cambios) {
     return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
       return({ type: PUT_ID, payload : response })
-      console.log(response);
     })
     }
 export function putCategoryId (id, cambios) {
     return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
       return({ type:PUT_CATEGORY_ID, payload : response })
-      console.log(response);
     })
     }
 

@@ -2,8 +2,10 @@ import React, {useState, useEffect} from 'react';
 import CategoriaCard from '../Components/CategoriaComp';
 import axios from 'axios';
 import {getCategories} from '../Redux/actions.js'
+import {connect} from 'react-redux';
+import store from '../Redux/store';
 
-export default function MostrarCategorias (){
+function MostrarCategorias (){
     const [nombre, setNombre] = useState([]);
 
     // useEffect(() => {
@@ -30,4 +32,13 @@ export default function MostrarCategorias (){
               }
           </div>
       )
-  }
+  };
+
+const mapStateToProps = (state) => ({
+categories : state.categories
+})
+
+export default connect(
+mapStateToProps,
+{getCategories})
+(MostrarCategorias);

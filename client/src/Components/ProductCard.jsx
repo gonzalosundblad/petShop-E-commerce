@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StyleProductCard from '../Estilos/ProductCard.module.css';
-import img from '../imagenes/comida.jpg'
 
 export default function ProductCard ({id, name, price, image}){
   // const [card, setCard] = useState()

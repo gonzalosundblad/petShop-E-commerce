@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {postCategory} from '../Redux/actions'
+import {connect} from 'react-redux';
 
-export default function AgregarCategoria() {
+function AgregarCategoria() {
   const [ nueva, setNueva] = useState([]);
   const [ description, setDescription] = useState([])
 
@@ -54,3 +55,12 @@ export default function AgregarCategoria() {
       </div>
     )
 };
+
+const mapStateToProps = (state) => ({
+  categories : state.categories
+})
+
+export default connect(
+mapStateToProps,
+{postCategory})
+(AgregarCategoria);

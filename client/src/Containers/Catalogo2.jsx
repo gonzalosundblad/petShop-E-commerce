@@ -31,16 +31,11 @@ import store from '../Redux/store';
     );
   };
 
-  const mapStateToProps = (state) => ({
-    products : state.products
-  })
-  // const mapDispatchToProps = dispatch => {
-  //   return {
-  //     getProducts: () => dispatch(getProducts())
-  //   }
-  // }
+const mapStateToProps = (state) => ({
+  products : state.products
+})
 
 export default connect(
-  mapStateToProps,
-  {getProducts})
-  (MostrarCatalogo);
+mapStateToProps,
+{getProducts})
+(MostrarCatalogo);

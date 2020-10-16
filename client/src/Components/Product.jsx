@@ -4,9 +4,9 @@ import  axios from 'axios';
 // import './product.css'
 import StyleProductCard from '../Estilos/Product.module.css';
 import {getProductById} from '../Redux/actions.js'
+import {connect} from 'react-redux';
 
-
-export default function Product ({ id2 }){
+function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
@@ -60,3 +60,12 @@ export default function Product ({ id2 }){
     </div>
   )
 }
+
+const mapStateToProps = (state) => ({
+  products : state.products
+})
+
+export default connect(
+mapStateToProps,
+{getProductById})
+(Product);
