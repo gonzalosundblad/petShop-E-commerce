@@ -55,13 +55,13 @@ export default function Modifica() {
        stock: state.stock
      }
 
-     const headers = {  
+     const headers = {
        headers: {
        "Content-Type": "application/json",
        "Accept": "application/json"
-   } 
+   }
  }
-      
+
      axios.put(`http://localhost:3001/products/${state.id}` , cambios , headers)
      .then(response => {
        console.log(response)
@@ -106,7 +106,7 @@ export default function Modifica() {
                              <input type="text" value={`$ ${encontrado.price}`}/>
                              <label>Stock:</label>
                              <input type="text" value={encontrado.stock} />
-                           </form>                               
+                           </form>
                            )
                        })
                    }

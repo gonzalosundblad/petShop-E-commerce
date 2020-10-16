@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
     case POST_IDPROD_CAT_IDCATEG: //agregar a un producto existente una categoria
     return {
       ...state,
-      categories :    state.products.concat(action.category)
+      categories : state.products.concat(action.category)
     }
     case POST_CATEGORY: //agregar una categoria
     return {
