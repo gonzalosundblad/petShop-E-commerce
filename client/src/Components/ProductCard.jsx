@@ -7,7 +7,7 @@ export default function ProductCard ({id, name, price, image}){
   // const [card, setCard] = useState()
 
   return(
-    <a className={StyleProductCard.productCard} href={`/producto/${id}`}>
+    <a className={StyleProductCard.productCard} href={`/user/producto/${id}`}>
         <div >
           <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
         </div>

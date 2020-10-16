@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import {putId, getProducts} from '../redux/actions.js'
+import {putId, getProducts} from '../Redux/actions.js'
 
 export default function Modifica() {
     const [state, setState] = useState({
@@ -11,14 +11,7 @@ export default function Modifica() {
         stock: ""
     });
     const [prodGuardados, setProdGuardados] = useState([])
-    // useEffect(() => {
-    //  axios.get(`http://localhost:3001/products`)
-    //  .then(r =>{
-    //      const array = r.data;
-    //      setProdGuardados(array)
-    //  })
-    //  .catch(error => {console.log(error)})
-    // }, []);
+
     useEffect(() => {
       getProducts().payload
       .then(resp => setProdGuardados(resp.data))
@@ -30,40 +23,24 @@ export default function Modifica() {
            [e.target.name]: e.target.value,
        });
    }
-   // const submitProducto = (e) => {
-   //     actualizarEstado({
-   //         id: "",
-   //         name: "",
-   //         description: "",
-   //         price: "",
-   //         stock: ""
-   //     });
-   // };
+
    function handleSubmit (event) {
      event.preventDefault();
      const cambios =  {
+       key: state.id,
        name: state.name,
        description: state.description,
        price: state.price,
        stock: state.stock
      }
-     const headers = {
-       headers: {
-       "Content-Type": "application/json",
-       "Accept": "application/json"
-         }
-       }
-     //  axios.put(`http://localhost:3001/products/${state.id}` , cambios , headers)
-     // .then(response => {
-     //   console.log(response)
-     //   borrarInput()
-     //   reload()
-     // })
-     // .catch(err => {
-     //   console.log(err)
-     // })
+     
      const id = state.id
      putId(id, cambios)
+     .then( resp => {
+       console.log(resp)
+       borrarInput()
+       reload()
+     })
 
 }
     function borrarInput(){
@@ -78,14 +55,14 @@ export default function Modifica() {
     }
 
    return (
-       <div>
+       <div className="form-class">
            <div>
                <h3>Lista de productos disponibles para modificar</h3>
            </div>
                    {
                        prodGuardados && prodGuardados.map(encontrado => {
                            return (
-                             <form>
+                             <form key={encontrado.id}>
                              <label>Id:</label>
                              <input type="text" value={encontrado.id} />
                              <label>Nombre:</label>

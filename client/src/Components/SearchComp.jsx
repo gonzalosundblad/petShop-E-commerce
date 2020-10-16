@@ -19,6 +19,12 @@ export default function Search ({funcion}){
                     <input className={StyleSearchComp.boton} type="submit" value="." />
                 {/* </Link> */}
             </div>
+            <a href='/login'>
+            <span>Iniciar Sesión</span>
+        </a>
+      <a  href='/register'>
+            <span >Registrarse</span>
+        </a>
         </form>
     )
 }

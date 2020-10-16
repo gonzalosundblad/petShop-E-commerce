@@ -1,8 +1,9 @@
 import React, { useState, useEffect, Children } from 'react';
-import { Form, Col, Row, Button } from 'react-bootstrap';
-// import './crudProduct.css'
+import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
+import './crudProduct.css'
 import axios from 'axios';
 import firebase, { storage } from 'firebase'
+import { getCategories } from '../Redux/actions'
 
 var firebaseConfig = {
   apiKey: "AIzaSyBE3Y03cTrnOwM9DkcGpUklWYkjESBaH3A",
@@ -45,12 +46,10 @@ export default function CrudProduct( ){
   
 
   useEffect(() => {
-    async function searchCategories() {
-      const response = await axios.get(`http://localhost:3001/products/category/`)
-      const json = await response.data;    
-      console.log(json) 
-      setCategories(json)
-    }
+   function searchCategories() {
+    getCategories().payload
+    .then(resp => setCategories(resp.data))
+  }
     searchCategories();
   }, []);
 
@@ -184,6 +183,7 @@ export default function CrudProduct( ){
       <Button  enabled={!handleSubmit()} variant="primary" type="submit">
         Submit
       </Button>
+      
     </Form>
   )
 }

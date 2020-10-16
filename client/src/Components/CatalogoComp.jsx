@@ -1,6 +1,6 @@
 import React  from 'react';
 import ProductCard from './ProductCard';
-import StyleCatalogo from '../Estilos/ProductCard.module.css'
+import StyleCatalogo from '../Estilos/CatalogoComp.module.css'
 
 function Catalogo({productos}) {
       return (

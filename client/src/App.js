@@ -12,8 +12,14 @@ import Modifica from './Containers/Put';
 import axios from 'axios';
 import Catalogo from './Components/CatalogoComp'
 import Product from './Components/Product';
-import ProductoSolo from './Containers/ProductoSolo';
-import {search} from './redux/actions.js'
+import ModificaCategoria from './Containers/modificaCatego'
+import Presentacion from './Components/presentacion';
+import User from './Components/UserNuevo'
+import UserNuevo from './Components/User'
+import NavAdmin from './Containers/NavBarAdmin';
+import ControlledCarousel from './Components/Carousel';
+
+// import { search } from './redux/actions.js'
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
@@ -32,19 +38,26 @@ function App() {
     <div className= {StyleApp.App}>
       <BrowserRouter>
       <div>
-        <Route path="/" render={() =>  <Nav onSearch={onSearch} productos={resultados} />} />
+        <Route exact path="/" render={() =>  <Presentacion />} />
+        <Route exact path="/" render={() =>  <ControlledCarousel />} />
+        <Route exact path="/login" render={() =>  <User />} />
+        <Route exact path="/register" render={() => <UserNuevo /> } />
+        <Route path="/user" render={() =>  <Nav onSearch={onSearch} productos={resultados} />} />
         <div className= {StyleApp.padding}>
-          <Route path="/" render = {() => <Catalogo productos = {resultados} /> } />
-          <Route exact path="/" component={Categoria2} />
-          <Route exact path="/products" component={MostrarCatalogo} />
-          <Route exact path={`/products/category/:name`} render={({ match }) => <Categories name={match.params.name}/>} />
-          <Route path="/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
-          <Route path='/AgregarProducto/' render={() => <CrudProduct/>}/>
-          <Route path='/ModificarProducto/' render={() => <Modifica/>}/>
-          <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
+          <Route path="/user" render = {() => <Catalogo productos = {resultados} /> } />
+          <Route exact path="/user" component={Categoria2} />
+          <Route exact path="/user/products" component={MostrarCatalogo} />
+          <Route exact path={`/user/products/category/:name`} render={({ match }) => <Categories name={match.params.name}/>} />
+          <Route  path="/admin/"  render={() => <NavAdmin/>} />
+          <Route exact path="/admin/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
+          <Route exact path='/admin/' render={() => <CrudProduct/>}/>
+          <Route  path='/admin/ModificarProducto/' render={() => <Modifica/>}/>
+          <Route  path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />}/>
+          <Route exact path={`/user/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
-          <Route exact path='/products/crud/' render={() => <CrudProduct/>}/>
-          <Route exact path="/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
+          <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
+          <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
+          
         </div>
       </div>
       </BrowserRouter>

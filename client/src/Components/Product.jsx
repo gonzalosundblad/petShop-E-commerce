@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 // import './product.css'
 import StyleProductCard from '../Estilos/Product.module.css';
-import {getProductById} from '../redux/actions.js'
+import {getProductById} from '../Redux/actions.js'
 
 
 export default function Product ({ id2 }){
