@@ -35,4 +35,3 @@ export default function Nav({funcionCatag, onSearch, resultados}) {
     </div>
   );
 };
-  

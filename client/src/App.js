@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo2'
@@ -12,10 +13,11 @@ import axios from 'axios';
 import Catalogo from './Components/CatalogoComp'
 import Product from './Components/Product';
 import ProductoSolo from './Containers/ProductoSolo';
-
+import {search} from './redux/actions.js'
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
+
   function onSearch(producto) {
        axios.get(`http://localhost:3001/search?products=${producto}`)
           .then(r =>{
@@ -23,7 +25,9 @@ function App() {
               setResultados(array);
               if(array.length === 0){
                 return alert('No se encontraron resultados')}
-          })}
+          })
+
+        }
   return (
     <div className= {StyleApp.App}>
       <BrowserRouter>
@@ -49,4 +53,4 @@ function App() {
 }
 
 
-export default App; 
+export default App;

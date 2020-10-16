@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 // import './product.css'
 import StyleProductCard from '../Estilos/Product.module.css';
+import {getProductById} from '../redux/actions.js'
 
-import img from '../imagenes/comida.jpg'
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
@@ -14,34 +14,42 @@ export default function Product ({ id2 }){
   const [id, setId] = useState();
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
+  // useEffect(() => {
+    //   async function detProd() {
+      //     const response = await axios.get(`http://localhost:3001/products/${id2}`)
+        //     const json = await response.data;
+        //     setName(json.name);
+        //     setDescription(json.description);
+        //     setImage(json.image);
+        //     setId(json.id);
+        //     setPrice(json.price);
+        //     setStock(json.stock);
+        //   }
+        //   detProd();
+        //   }, []);
 
-  
+        useEffect(() => {
+          getProductById(id2).payload
+          .then(function(resp){
+            setName(resp.data.name);
+            setDescription(resp.data.description);
+            setImage(resp.data.image);
+            setId(resp.data.id);
+            setPrice(resp.data.price);
+            setStock(resp.data.stock)
+          }
+        )
+      }, []);
 
-  
-  useEffect(() => {
-    async function detProd() {
-      const response = await axios.get(`http://localhost:3001/products/${id2}`)
-      const json = await response.data;    
-      console.log(json) 
-      setName(json.name);
-      setDescription(json.description); 
-      setImage(json.image); 
-      setId(json.id); 
-      setPrice(json.price); 
-      setStock(json.stock); 
-    }
-    detProd();
-    }, []);
-      
-  
 
-    
-    
-  
+
+
+
+
     return(
     <div className={StyleProductCard.productCard}>
         <div>
-          <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
+          <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
         </div>
         <div className={StyleProductCard.containerLyrics}>
           <h3>{name}</h3>
@@ -51,5 +59,4 @@ export default function Product ({ id2 }){
         </div>
     </div>
   )
-} 
-
+}
