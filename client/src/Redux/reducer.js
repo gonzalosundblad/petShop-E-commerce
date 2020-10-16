@@ -1,4 +1,4 @@
-import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT } from './constants';
+import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH } from './constants';
 
 const initialState = {
   products : [],
@@ -6,12 +6,13 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(action)
+  console.log(action.payload);
+
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
     return {
       ...state,
-      products : action.products,
+      products : action.payload,
     }
     case GET_CATEGORIES: //obtener todas las categorias
     return {
@@ -56,16 +57,16 @@ export default (state = initialState, action) => {
     case DELETE_ID: //eliminar un producto
     return {
       ...state,
-      products: state.products.filter((state.products.id) => id !== action.payload)
+      products: state.products.filter((id) => id !== action.payload)
     }
     case DELETE_CATEGORY_ID: //elimina una categoria
     return {
       ...state,
-      categories: state.categories.filter((state.categories.id) => id !== action.payload)
+      categories: state.categories.filter((id) => id !== action.payload)
 
 
     }
-    case SEARCH_PRODUCT: // busca entre todos
+    case SEARCH: // busca entre todos
     return {
       ...state,
       products : action.payload

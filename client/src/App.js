@@ -14,9 +14,13 @@ import Catalogo from './Components/CatalogoComp'
 import Product from './Components/Product';
 import ProductoSolo from './Containers/ProductoSolo';
 import {search} from './redux/actions.js'
+import store from './redux/store';
+
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
+
+console.log(store.getState());
 
   function onSearch(producto) {
        axios.get(`http://localhost:3001/search?products=${producto}`)
