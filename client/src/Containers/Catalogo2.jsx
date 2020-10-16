@@ -7,15 +7,6 @@ import {getProducts} from '../Redux/actions'
 
     const [products, setProducts] = useState([]);
 
-    // useEffect(() => {
-    //     async function detProd() {
-    //       const response = await axios.get(`http://localhost:3001/products`)
-    //       const json = await response.data;
-    //       console.log(json)
-    //       setProducts(json);
-    //     }
-    //     detProd();
-    //     }, []);
 
     useEffect(() => {
       getProducts().payload

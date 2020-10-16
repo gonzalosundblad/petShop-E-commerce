@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import {putId, getProducts} from '../Redux/actions.js'
+import {putId, getProducts, deleteProduct} from '../Redux/actions.js'
 
 export default function Modifica() {
     const [state, setState] = useState({
@@ -33,7 +33,7 @@ export default function Modifica() {
        price: state.price,
        stock: state.stock
      }
-     
+
      const id = state.id
      putId(id, cambios)
      .then( resp => {
@@ -52,12 +52,20 @@ export default function Modifica() {
     }
     function reload(){
       window.location.reload()
+    } 
+
+
+    function delet (){
+      deleteProduct(state.id).then(resp => {
+        console.log(resp)
+        reload()
+      })
     }
 
    return (
        <div className="form-class">
            <div>
-               <h3>Lista de productos disponibles para modificar</h3>
+               <h3>Lista de productos disponibles para modificar/eliminar</h3>
            </div>
                    {
                        prodGuardados && prodGuardados.map(encontrado => {
@@ -74,13 +82,14 @@ export default function Modifica() {
                              <label>Stock:</label>
                              <input type="text" value={encontrado.stock} />
                            </form>
+
                            )
                        })
                    }
 
 
            <div className="modificador">
-               <h3>Ingrese los datos que desea modificar</h3>
+               <h3>Ingrese los datos que desea modificar/eliminar</h3>
                <form className="text-left"
                    onSubmit={handleSubmit}>
 
@@ -136,6 +145,8 @@ export default function Modifica() {
                     <button type="submit" value="Actualizar">
                         Modificar producto
                     </button>
+
+                    <button onClick={delet} >Eliminar</button>
                 </form>
                 </div>
             </div>

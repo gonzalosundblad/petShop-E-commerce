@@ -47,17 +47,25 @@ export function putCategoryId (id, cambios) {
     }
 
 
-export function deleteCatOfProduct(){   //elimina una categoria de un producto
-const request = axios.put('http://localhost:3001/products')
-return { type: DELETE_IDPROD_CAT_IDCATEG, payload : request } ; }
+export function deleteCatOfProduct(idP, idC){   //elimina una categoria de un producto
+ return axios.delete(`http://localhost:3001/products/${idP}/category/${idC}`).then((resp) => {
+  return { type: DELETE_IDPROD_CAT_IDCATEG, payload : resp } 
+ })
+ }
 
-export function deleteProduct(){   //elimina un producto segun id
-const request = axios.put('http://localhost:3001/products')
-return { type: DELETE_ID, payload : request } ; }
+export function deleteProduct(id){   //elimina un producto segun id
+ return axios.delete(`http://localhost:3001/products/${id}`).then((resp) => {
+   return { type: DELETE_ID, payload : resp }
+   console.log(resp)
+ })
+  }
+export function deleteCategory(id){   //elimina un producto segun id
+ return axios.delete(`http://localhost:3001/products/category/${id}`).then((resp) => {
+   return { type: DELETE_ID, payload : resp }
+   console.log(resp)
+ })
+  }
 
-export function deleteCategory(){   //elimina una categoria
-const request = axios.put('http://localhost:3001/products')
-return { type: DELETE_CATEGORY_ID, payload : request } ; }
 
 export function search(producto){   //busca entre todo
 const request = axios.put(`http://localhost:3001/search?products=${producto}`)

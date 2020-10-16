@@ -43,7 +43,6 @@ function App() {
         <Route exact path="/login" render={() =>  <User />} />
         <Route exact path="/register" render={() => <UserNuevo /> } />
         <Route path="/user" render={() =>  <Nav onSearch={onSearch} productos={resultados} />} />
-        <div className= {StyleApp.padding}>
           <Route path="/user" render = {() => <Catalogo productos = {resultados} /> } />
           <Route exact path="/user" component={Categoria2} />
           <Route exact path="/user/products" component={MostrarCatalogo} />
@@ -58,7 +57,6 @@ function App() {
           <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
           <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
           
-        </div>
       </div>
       </BrowserRouter>
     </div>

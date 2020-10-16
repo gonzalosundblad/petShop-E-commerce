@@ -23,12 +23,6 @@ export default function AgregarCategoria() {
     };
 
 
-    // axios.post(`http://localhost:3001/products/category`,  usuario )
-    // .then(res => {
-    //   console.log(res);
-    //   console.log(res.data);
-    //   borrarInput()
-    // })
       postCategory(usuario).payload
       .then(function(resp){
         console.log(resp.data);

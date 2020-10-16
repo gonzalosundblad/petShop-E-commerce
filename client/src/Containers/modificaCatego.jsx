@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import {putId, getCategories, putCategoryId} from '../Redux/actions.js'
+import {deleteCategory, getCategories, putCategoryId} from '../Redux/actions.js'
 
-export default function Modifica() {
+export default function ModificaCategoria() {
     const [state, setState] = useState({
         id: "",
         name: ""
@@ -48,6 +48,13 @@ export default function Modifica() {
     }
     function reload(){
       window.location.reload()
+    }
+
+    function delet (){
+      deleteCategory(state.id).then(resp => {
+        console.log(resp)
+        reload()
+      })
     }
 
    return (
@@ -99,8 +106,10 @@ export default function Modifica() {
                     <button type="submit" value="Actualizar">
                         Modificar Categoría
                     </button>
+                    <button onClick={delet} >Borrar</button>
                 </form>
                 </div>
             </div>
+
     );
 }

@@ -6,15 +6,8 @@ import {getProductByCategory} from '../Redux/actions.js'
 export default function Categories({ name }) {
 
     const [products, setProducts] = useState([]);
-        //
-        // useEffect(() => {
-        //     async function detProd() {
-        //       const response = await axios.get(`http://localhost:3001/products/category/${name}`)
-        //       const json = await response.data;
-        //       setProducts(json);
-        //     }
-        //     detProd();
-        //     }, []);
+
+    console.log(products)
         useEffect(() => {
           getProductByCategory(name).payload
           .then(resp => setProducts(resp.data))
