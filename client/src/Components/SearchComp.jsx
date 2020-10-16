@@ -4,20 +4,20 @@ import StyleSearchComp from '../Estilos/SearchBar.module.css';
   
 
 export default function Search ({funcion}){
-    const[product, setProduct]= useState([]);
+    const[producto, setProduct]= useState([]);
     return (
         <form onSubmit={(e) => {
             e.preventDefault(); 
-            funcion(product); }}>
+            funcion(producto); }}>
             <div className={StyleSearchComp.inputs}>
                 <input className={StyleSearchComp.barra} type="search"
                     placeholder="Ingresar Producto"
-                    value={product} 
+                    value={producto} 
                     onChange={e => setProduct(e.target.value)}>
                 </input>
-                {/* <Link to='/products/search'> */}
+                {/* <a href='/products/search'> */}
                     <input className={StyleSearchComp.boton} type="submit" value="." />
-                {/* </Link> */}
+               {/* </a> */}
             </div>
         </form>
     )

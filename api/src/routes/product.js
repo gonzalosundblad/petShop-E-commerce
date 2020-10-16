@@ -74,7 +74,7 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 			description, 
 			price, 
 			stock, 
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token=${tokenDeAccesoArchivoFirebase}`
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
 		 })
 			.then(function(productSinId) {
 				productSinId.addCategories("0")
