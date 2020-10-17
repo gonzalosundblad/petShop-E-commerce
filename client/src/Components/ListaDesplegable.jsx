@@ -23,8 +23,12 @@ export function ListaDesplegable(){
                     <li><a href=''>Ordenes</a>
                     <ul className="orden">
                             <li><a href='/admin/ordenes'>Ordenes</a></li>
-                            
-                        </ul>
+                    </ul>
+                    </li>
+                    <li><a href=''>Usuarios</a>
+                    <ul className="orden">
+                            <li><a href='/admin/usuarios'>Usuarios</a></li>
+                    </ul>
                     </li>
                 </ul>
             </li>
