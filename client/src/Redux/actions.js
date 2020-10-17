@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH } from './constants';
+import { GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH, POST_USER } from './constants';
 import axios from 'axios';
 
 export function getProducts() { //obtener todos los productos
@@ -44,7 +44,7 @@ export function putCategoryId (id, cambios) {
       return({ type:PUT_CATEGORY_ID, payload : response })
       console.log(response);
     })
-    }
+  }
 
 
 export function deleteCatOfProduct(idP, idC){   //elimina una categoria de un producto
@@ -70,3 +70,10 @@ export function deleteCategory(id){   //elimina un producto segun id
 export function search(producto){   //busca entre todo
 const request = axios.get(`http://localhost:3001/search?products=${producto}`)
 return { type: SEARCH, payload : request } ; }
+
+//--------------------------------------------------------------------------------
+//USERS
+
+export function postUser(usuario){      //agrega un nuevo usuario
+  const request = axios.post('http://localhost:3001/users', usuario)
+  return { type: POST_USER , payload : request } ; }

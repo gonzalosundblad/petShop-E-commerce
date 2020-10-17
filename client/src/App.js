@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from 'react';
-
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route} from "react-router-dom";
-import MostrarCatalogo from './Containers/Catalogo2'
+import MostrarCatalogo from './Containers/Catalogo'
 import Nav from './Containers/Nav';
-import AgregarCategoria from './Containers/Post';
-import CrudProduct from './Components/crudProduct';
-import Categories from './Containers/Categorias';
-import Categoria2 from './Containers/Categoria2';
-import Modifica from './Containers/Put';
+import {CrudProduct} from './Containers/Productos';
+import {MostrarCategorias} from './Containers/Categorias';
+import {ProductosPorCategoria} from './Containers/Categorias';
+import {BorrarCategoria} from './Containers/Categorias';
+import {AgregarCategoria} from './Containers/Categorias';
+import {ModificaCategoria} from './Containers/Categorias';
+import {Modifica} from './Containers/Productos';
 import axios from 'axios';
-import Catalogo from './Components/CatalogoComp'
 import Product from './Components/Product';
-import ModificaCategoria from './Containers/modificaCatego'
+import Catalogo from './Components/CatalogoComp';
 import Presentacion from './Components/presentacion';
-import User from './Components/UserNuevo'
-import UserNuevo from './Components/User'
+import User from './Components/UserNuevo';
+import UserNuevo from './Components/User';
 import NavAdmin from './Containers/NavBarAdmin';
 import ControlledCarousel from './Components/Carousel';
+<<<<<<< HEAD
 import { search } from './Redux/actions';
+=======
+import {AgregarUsuario} from './Containers/Usuarios';
+>>>>>>> c9216cdfd0a6b6cab29fa9f6552489257f7c9d37
 
 // import { search } from './redux/actions.js'
 import Carrito from './Containers/carrito';
 function App() {
-  const [products,setProducts] = useState()
+  // const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
+  // useEffect(() => {
+  //   search(producto).payload
+  //   .then(resp => setResultados(resp.data))
+  // }, []);
 
   function onSearch(producto) {
        search(producto).payload
@@ -39,6 +47,7 @@ function App() {
     <div className= {StyleApp.App}>
       <BrowserRouter>
       <div>
+<<<<<<< HEAD
         <Route exact path="/" render={() =>  <Presentacion />} />
         <Route exact path="/" render={() =>  <ControlledCarousel />} />
         <Route exact path="/login" render={() =>  <User />} />
@@ -59,6 +68,29 @@ function App() {
           <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
           <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
           
+=======
+        <Route path="/" render={() =>  <Nav onSearch={onSearch}  />} />
+        <Route path='/' render = {() => <Catalogo productos = {resultados} /> } />
+        <div className= {StyleApp.padding}>
+          {/* <Route exact path="/" render={() =>  <Presentacion />} /> */}
+          {/* <Route path="/user" render={() =>  <Nav onSearch={onSearch}  />} /> */}
+          <Route exact path='/' component={MostrarCategorias}/>
+          <Route exact path="/" render={() =>  <ControlledCarousel />} />
+          <Route exact path={`/products/category/:Categoria`} render={({match}) => <ProductosPorCategoria name={match.params.Categoria}/>}/>
+          <Route exact path="/login" render={() =>  <User />} />
+          <Route exact path="/register" render={() => <AgregarUsuario/> } />
+            <div className= {StyleApp.padding}>
+              <Route exact path="/products" component={MostrarCatalogo} />
+              <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
+              <Route exact path="/admin/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
+              <Route exact path='/admin/ModificarProducto/' render={() => <Modifica/>}/>
+              <Route exact path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />}/>
+              <Route exact path='/admin/BorrarCategoria' render={() => <BorrarCategoria/>}/> 
+              <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
+              <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } /> 
+            </div>
+        </div>
+>>>>>>> c9216cdfd0a6b6cab29fa9f6552489257f7c9d37
       </div>
       </BrowserRouter>
     </div>

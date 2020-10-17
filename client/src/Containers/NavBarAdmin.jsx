@@ -21,6 +21,9 @@ export default function NavAdmin({funcionCatag, onSearch, resultados}) {
         <a className={StyleNav.botones} href='/admin/AgregarCategoria'>
             <span className= {StyleNav.botonAddProduct}>Agregar Categoría</span>
         </a>
+        <a className={StyleNav.botones} href="/BorrarCategoria">
+          <span className={StyleNav.botonAddProduct}>Borrar Categoria</span>
+        </a>
         <a className={StyleNav.botones} href='/admin/ModificarProducto/'>
             <span className= {StyleNav.botonAddProduct}>Modificar/Eliminar Producto</span>
         </a>
@@ -29,6 +32,9 @@ export default function NavAdmin({funcionCatag, onSearch, resultados}) {
         </a>
         <a className={StyleNav.botones} href='/admin'>
             <span className= {StyleNav.botonAddProduct}>Admin</span>
+        </a>
+        <a className={StyleNav.botones} href='/admin/products/crud/'>
+            <span className= {StyleNav.botonAddProduct}>Agregar Producto</span>
         </a>
       </div>
     </div>

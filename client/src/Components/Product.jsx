@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 // import './product.css'
-import StyleProductCard from '../Estilos/Product.module.css';
+import Style from '../Estilos/Product.module.css';
 import {getProductById} from '../Redux/actions.js'
 import img from '../imagenes/comida.jpg'
 import Carrito from '../Containers/carrito';
@@ -15,8 +15,7 @@ export default function Product ({ id2 }){
   const [id, setId] = useState();
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
-
-
+ 
         useEffect(() => {
           getProductById(id2).payload
           .then(function(resp){
@@ -63,16 +62,15 @@ export default function Product ({ id2 }){
    } else{
 
     return(
-    <div className={StyleProductCard.productCard}>
+    <div className={Style.product}>
         <div>
-
-          <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
+          <img className={Style.img} src={image} alt="imagen de perro"/>
         </div>
-        <div className={StyleProductCard.containerLyrics}>
-          <h3>{name}</h3>
-          <h1>{description}</h1>
-          <h1>${price}</h1>
-          <h1>Stock: {stock}</h1>
+        <div className={Style.containerLyrics}>
+          <h1>{name}</h1>
+          <h3>{description}</h3>
+          <h4>${price}</h4>
+          <h5>Stock: {stock}</h5>
         </div>
         <button onClick={guardarCarro} >Agregar al carrito</button>
 
