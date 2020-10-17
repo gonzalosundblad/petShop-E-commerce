@@ -9,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Button } from '@material-ui/core';
 import axios from 'axios';
+import postIdProdCatId from '../Redux/actions'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +74,7 @@ export default function MultipleSelect( {user, names, cat}) {
     if(personName.length > 0){
       console.log(personName)
       personName.map( category => {
-        axios.post(`http://localhost:3001/products/${user}/category/${category}`)
+        postIdProdCatId(user, category)(`http://localhost:3001/products/${user}/category/${category}`)
           .then(res => {
             console.log(res);
             console.log(res.data);

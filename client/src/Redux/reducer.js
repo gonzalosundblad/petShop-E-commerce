@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
       ...state,
       categories : state.categories.concat(action.category)
     }
-    case PUT_ID: //modificar un producto segun si id
+    case PUT_ID: //modificar un producto segun sU id
     return {
       ...state,
       products : state.products.map(prod => prod.id === action.payload.id ? action.payload : prod )
@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
     case DELETE_ID: //eliminar un producto
     return {
       ...state,
-      products: state.products.filter((state.products.id) => id !== action.payload)
+      products: state.products.filter((state.products.id) =>  id !== action.payload )
     }
     case DELETE_CATEGORY_ID: //elimina una categoria
     return {

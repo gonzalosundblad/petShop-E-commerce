@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 // import './product.css'
-import StyleProductCard from '../Estilos/Product.module.css';
-import {getProductById} from '../Redux/actions';
-import img from '../imagenes/comida.jpg'
+import Style from '../Estilos/Product.module.css';
+import {getProductById} from '../Redux/actions.js'
+
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
@@ -14,8 +14,8 @@ export default function Product ({ id2 }){
   const [id, setId] = useState();
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();;
-
-    useEffect(() => {
+ 
+        useEffect(() => {
           getProductById(id2).payload
           .then(function(resp){
             setName(resp.data.name);
@@ -27,19 +27,18 @@ export default function Product ({ id2 }){
           }
         )
       }, []);
-      
+
     return(
-    <div className={StyleProductCard.productCard}>
+    <div className={Style.product}>
         <div>
-          <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
+          <img className={Style.img} src={image} alt="imagen de perro"/>
         </div>
-        <div className={StyleProductCard.containerLyrics}>
-          <h3>{name}</h3>
-          <h1>{description}</h1>
-          <h1>${price}</h1>
-          <h1>{stock}</h1>
+        <div className={Style.containerLyrics}>
+          <h1>{name}</h1>
+          <h3>{description}</h3>
+          <h4>${price}</h4>
+          <h5>Stock: {stock}</h5>
         </div>
     </div>
   )
-} 
-
+}

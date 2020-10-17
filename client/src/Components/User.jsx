@@ -1,12 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { Form, Col, Row, Button } from 'react-bootstrap';
+
+export default function UserNuevo (){
+
+  const [ errors, setErrors] = useState({});
 
 
-export default function User (){
+  function validate(input) {
+    let errors = {};
+    if (!input.name) {
+      errors.name = ' Name is required';
+    } else if (input.name.length < 3) {
+      errors.name = ' Name is invalid (more than 3 characters)';
+    }
+    if (!input.price){
+      errors.price =  "Price is required";
+    }else if(!typeof(parseFloat(input.price) == "NaN")){
+      errors.price = "Price is not a number";
+      
+    }else if(parseFloat(input.price) < 0){
+      errors.price = "Price has to be major to 0";
+    
+    }else if(!/^\d+(\.\d{1,2})?$/.test(input.price)){
+      errors.price = "Price Format Invalid(Format valid (Number.Number))";
+    }
+    if (!input.stock){
+      errors.stock =  "Stock is required";
+    // }else if(!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)){
+    }else if(!typeof(parseFloat(input.stock) === "number")){
+      errors.stock = "Stock is not a number";
+    
+    }else if(parseFloat(input.stock) < 0){
+      errors.stock = "Stock has to be major to 0";
+    }else if(!/^\d+(\.\d{1,2})?$/.test(input.stock)){
+      errors.stock = "Stock Format Invalid(Format valid (Number.Number))";
+    }
+  
+  
+    return errors;
+  };  
+    
     
 
 
     return (
         <Form>
+            <Form.Group controlId="formGridAddress1">
+                <Form.Label>Address</Form.Label>
+                <Form.Control placeholder="1234 Main St" />
+            </Form.Group>
             <Form.Row>
                 <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>Email</Form.Label>
@@ -19,16 +61,8 @@ export default function User (){
                 </Form.Group>
             </Form.Row>
 
-            <Form.Group controlId="formGridAddress1">
-                <Form.Label>Address</Form.Label>
-                <Form.Control placeholder="1234 Main St" />
-            </Form.Group>
 
-            <Form.Group controlId="formGridAddress2">
-                <Form.Label>Address 2</Form.Label>
-                <Form.Control placeholder="Apartment, studio, or floor" />
-            </Form.Group>
-
+{/* 
             <Form.Row>
                 <Form.Group as={Col} controlId="formGridCity">
                 <Form.Label>City</Form.Label>
@@ -47,7 +81,7 @@ export default function User (){
                 <Form.Label>Zip</Form.Label>
                 <Form.Control />
                 </Form.Group>
-            </Form.Row>
+            </Form.Row> */}
 
             <Form.Group id="formGridCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
