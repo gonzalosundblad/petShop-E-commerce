@@ -12,6 +12,7 @@ function Catalogo({productos}) {
                 image={p.image}
                 name={p.name}
                 price={p.price}
+                stock={p.stock}
                 />
             )}
         </div>

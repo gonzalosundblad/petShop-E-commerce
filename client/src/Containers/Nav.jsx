@@ -24,6 +24,9 @@ export default function Nav({funcionCatag, onSearch, resultados}) {
         <a className={StyleNav.botones} href='/user/products'>
             <span className={StyleNav.botonCatalogo} onClick={funcionCatag}>Catálogo</span>
             </a>
+        <a className={StyleNav.botones} href='/carrito'>
+            <span className={StyleNav.botonCatalogo}>Mi Carrito</span>
+            </a>
       </div>
       <SearchBar2 onSearch={onSearch} productos={resultados} />
     </div>

@@ -21,6 +21,7 @@ import ControlledCarousel from './Components/Carousel';
 import { search } from './Redux/actions';
 
 // import { search } from './redux/actions.js'
+import Carrito from './Containers/carrito';
 function App() {
   const [products,setProducts] = useState()
   const [resultados, setResultados] = useState([]);
@@ -52,8 +53,9 @@ function App() {
           <Route exact path='/admin/' render={() => <CrudProduct/>}/>
           <Route  path='/admin/ModificarProducto/' render={() => <Modifica/>}/>
           <Route  path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />}/>
-          <Route exact path={`/user/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
+          <Route exact path={`/user/products/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
+          <Route exact path='/carrito' render={() => <Carrito />}/>
           <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
           <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
           

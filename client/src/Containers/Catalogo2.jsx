@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Catalogo from '../Components/CatalogoComp'
 import {getProducts} from '../Redux/actions'
+import { getCategories } from '../Redux/actions';
 
   export default function MostrarCatalogo () {
 
