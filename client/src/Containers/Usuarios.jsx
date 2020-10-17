@@ -30,7 +30,6 @@ export function AgregarUsuario() {                  //agrega usuario
   
       postUser(usuario).payload
       .then(function(resp){
-        console.log(resp.data);
         borrarInput()
       })
   

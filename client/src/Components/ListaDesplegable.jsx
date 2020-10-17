@@ -20,7 +20,12 @@ export function ListaDesplegable(){
                             <li><a href='/admin/ModificarCategoria/'>Modificar/Borrar</a></li>
                         </ul>
                     </li>
-                    <li><a href=''>Ordenes</a></li>
+                    <li><a href=''>Ordenes</a>
+                    <ul>
+                            <li><a href='/admin/AgregarCategoria'>Agregar Categorias</a></li>
+                            <li><a href='/admin/ModificarCategoria/'>Modificar/Borrar</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>

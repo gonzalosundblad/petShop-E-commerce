@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import {Link} from "react-router-dom";
 import logo from '../imagenes/logo.png';
 import '../Estilos/SearchBar.module.css';
-import SearchBar2 from '../Components/SearchBar2';
 import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
-import SearchBar from '../Components/SearchBar';
 import {ListaDesplegable} from '../Components/ListaDesplegable';
 
 export default function NavBar({funcionCatag, onSearch}) {

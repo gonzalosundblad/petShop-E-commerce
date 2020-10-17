@@ -15,6 +15,7 @@ import Catalogo from './Components/CatalogoComp';
 import User from './Components/Login';
 import ControlledCarousel from './Components/Carousel';
 import {AgregarUsuario} from './Containers/Usuarios';
+import  Ordenes from './Containers/Orden';
 
 import { search } from './Redux/actions'
 import Carrito from './Containers/carrito';
@@ -50,6 +51,7 @@ function App() {
               <Route exact path='/admin/BorrarCategoria' render={() => <BorrarCategoria/>}/> 
               <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
               <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } /> 
+              <Route exact path="/admin/ordenes" render={() => <Ordenes /> } /> 
             </div>
         </div>
       </div>

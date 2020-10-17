@@ -16,6 +16,7 @@ export default function Product ({ id2 }){
   const [product_id, setId] = useState();
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();
+  const [quantity, setQuantity] = useState();
  
         useEffect(() => {
           getProductById(id2).payload
@@ -30,7 +31,9 @@ export default function Product ({ id2 }){
         )
       }, []);
 
-
+      function handleChange(e) {
+        setQuantity(e.target.value)
+      }
 
 
 
@@ -39,7 +42,7 @@ export default function Product ({ id2 }){
     function subirCarrito(){
       setProducto({
         product_id: id2,
-        quantity: 8,
+        quantity: quantity,
         price: price
       })
 
@@ -49,7 +52,7 @@ export default function Product ({ id2 }){
       })
 
  }
- console.log(producto)
+
 
    if(stock <= 0){
      return(
@@ -78,6 +81,7 @@ export default function Product ({ id2 }){
           <h3>{description}</h3>
           <h4>${price}</h4>
           <h5>Stock: {stock}</h5>
+           <input type="number" onChange={handleChange} />
         <button className={Style.boton} onClick={subirCarrito} >Agregar al carrito</button>
         </div>
 

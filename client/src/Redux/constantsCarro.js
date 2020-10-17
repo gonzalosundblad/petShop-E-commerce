@@ -1,2 +1,3 @@
 export const POST_CARRO = "POST_CARRO"
 export const GET_CARRO = "GET_CARRO"
+export const PUT_CANTIDAD_CARRO = "PUT_CANTIDAD_CARRO"
