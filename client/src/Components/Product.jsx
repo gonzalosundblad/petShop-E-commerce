@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import  axios from 'axios';
 // import './product.css'
@@ -49,6 +49,7 @@ export default function Product ({ id2 }){
       postCarrito(2, producto).payload
       .then(function(resp){
         console.log(resp.data)
+        window.location.replace("http://localhost:3000/carrito")
       })
 
  }

@@ -59,6 +59,8 @@ export default function Carrito() {
           )
         }
         <button onClick={vaciar} >Vaciar Carrito</button>
+        <a href="/products">Seguir Comprando</a>
+        <a href="/order">Finalizar Compra</a>
     </div>
   )
 }
