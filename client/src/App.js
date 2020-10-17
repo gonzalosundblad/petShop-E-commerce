@@ -12,7 +12,7 @@ import Categoria2 from './Containers/Categoria2';
 import SearchBar2 from './Components/SearchBar2';
 import Catalogo from './Components/CatalogoComp';
 import Modifica from './Containers/Put';
-
+import User from './Components/User';
 function App() {
 
   return (
@@ -31,6 +31,7 @@ function App() {
           <Route exact path="/products/:id" render={({ match }) => <Product id2={match.params.id} /> } />
           <Route exact path='/products/crud/' component={CrudProduct}/>
           <Route exact path="/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
+          <Route path="/users/" component={User}/>
           {/* <Route path='/products/search' render={() => <SearchBar2 /> }/> */}
         </div>
       </div> 

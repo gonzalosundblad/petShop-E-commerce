@@ -5,6 +5,7 @@ import  axios from 'axios';
 import StyleProductCard from '../Estilos/Product.module.css';
 import { Link } from "react-router-dom"
 import img from '../imagenes/comida.jpg'
+import { getProductById } from '../Redux/actions'
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
@@ -19,19 +20,17 @@ export default function Product ({ id2 }){
 
   
   useEffect(() => {
-    async function detProd() {
-      const response = await axios.get(`http://localhost:3001/products/${id2}`)
-      const json = await response.data;    
-      console.log(json) 
-      setName(json.name);
-      setDescription(json.description); 
-      setImage(json.image); 
-      setId(json.id); 
-      setPrice(json.price); 
-      setStock(json.stock); 
+    getProductById(id2).payload
+    .then(function(resp){
+      setName(resp.data.name);
+      setDescription(resp.data.description);
+      setImage(resp.data.image);
+      setId(resp.data.id);
+      setPrice(resp.data.price);
+      setStock(resp.data.stock)
     }
-    detProd();
-    }, []);
+  )
+  }, []);
       
   
 

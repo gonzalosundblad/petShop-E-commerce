@@ -29,5 +29,4 @@ export default function Nav({funcionCatag, funcionSearch}) {
       <SearchBar2 />
     </div>
   );
-};
-  
+};  
