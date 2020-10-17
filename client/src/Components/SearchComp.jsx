@@ -11,7 +11,7 @@ export default function Search ({funcion}){
             funcion(producto); }}>
             <div className={StyleSearchComp.inputs}>
                 <input className={StyleSearchComp.barra} type="search"
-                    placeholder="Ingresar Producto"
+                    placeholder="Buscar productos..."
                     value={producto} 
                     onChange={e => setProduct(e.target.value)}>
                 </input>
@@ -19,12 +19,6 @@ export default function Search ({funcion}){
                     <input className={StyleSearchComp.boton} type="submit" value="." />
                {/* </a> */}
             </div>
-            <a href='/login'>
-            <span>Iniciar Sesión</span>
-        </a>
-      <a  href='/register'>
-            <span >Registrarse</span>
-        </a>
         </form>
     )
 }

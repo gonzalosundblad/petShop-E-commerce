@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form,Button, Col } from 'react-bootstrap';
+import {postUser} from '../Redux/actions';
 
 export default function User (){
     const [input, setInput] = useState( {
@@ -16,6 +17,11 @@ export default function User (){
     })
 
     useEffect(()  => {
+      postUser(input).payload
+        .then(function(resp){
+        console.log(resp.data);
+    // borrarInput()
+  })
     })
     
   const handleInputChange = function(e) {
@@ -54,18 +60,8 @@ export default function User (){
     return errors;
   };
    
-function addUser(e){
-    // if (typeof(errors) ==="undefined"){
-    //     alert("No hay datos cargados")
-    // }
-    // else if(!errors){
-    //     console.log(errors)
-    // alert(`${errors.name} ${<br/>} ${errors.apellido}` ) 
-    // }
-    // else(
-        console.log("aca va la acción")
-        // )  
-    }
+  
+
     return (
       <div>
         <Form.Row>
@@ -85,7 +81,7 @@ function addUser(e){
               {!errors.password ? <p> </p> : <p>{errors.password}</p>}
             </Form.Group>
         </Form.Row>
-            <Button enabled={!errors} onClick={addUser} variant="primary" type="submit">
+            <Button enabled={!errors} /*onClick={addUser}*/ variant="primary" type="submit">
                 Registrarse
             </Button>       
       </div>

@@ -222,8 +222,6 @@ export function CrudProduct( ){
         }else if(!/^\d+(\.\d{1,2})?$/.test(input.stock)){
           errors.stock = "Stock Format Invalid(Format valid (Number.Number))";
         }
-      
-      
         return errors;
       };  
   
@@ -327,3 +325,4 @@ export function CrudProduct( ){
       </Form>
     )
 }
+

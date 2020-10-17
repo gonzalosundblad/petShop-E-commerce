@@ -16,25 +16,29 @@ export default function NavBar({funcionCatag, onSearch}) {
 
   return (
     <div className={StyleNav.nav}>
-      <div>
-        <Link to='/'>
-          <img className={StyleNav.logo} src={logo} alt=""/>
-        </Link>
+      <div className={StyleNav.divFixed}>
+        <div>
+          <Link to='/'>
+            <img className={StyleNav.logo} src={logo} alt=""/>
+          </Link>
+        </div>
+        <div>
+          <Search funcion={onSearch}/> 
+        </div>
       </div>
-      <div>
-        <Search funcion={onSearch}/>
-      </div>
-      <div className={StyleNav.botones}>
-        <a className={StyleNav.botones} href='/products'>
-          <span className={StyleNav.botonCatalogo} >Catálogo</span>
-        </a>
-        <a className={StyleNav.botones} href='/register'>
-          <span className={StyleNav.botonCatalogo} >Registrarse</span>
-        </a>
-        <a className={StyleNav.botones} href='/login'>
-          <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
-        </a> 
-        <ListaDesplegable/>    
+      <div className={StyleNav.divBotones}>
+        <div className={StyleNav.botones}>
+          <a className={StyleNav.botones} href='/products'>
+            <span className={StyleNav.botonCatalogo} >Catálogo</span>
+          </a>
+          <a className={StyleNav.botones} href='/register'>
+            <span className={StyleNav.botonCatalogo} >Registrarse</span>
+          </a>
+          <a className={StyleNav.botones} href='/login'>
+            <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
+          </a> 
+          <ListaDesplegable/> 
+        </div>   
       </div>
       
       {/* // <SearchBar2 onSearch={onSearch} productos={resultados} /> */}

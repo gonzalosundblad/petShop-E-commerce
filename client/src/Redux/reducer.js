@@ -1,8 +1,9 @@
-import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT } from './constants';
+import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT, POST_USER} from './constants';
 
 const initialState = {
   products : [],
-  categories : []
+  categories : [],
+  users: []
 };
 
 export default (state = initialState, action) => {
@@ -71,6 +72,11 @@ export default (state = initialState, action) => {
       products : action.payload
 
     }
+    case POST_USER:
+      return{
+        ...state,
+        users : state.users.concat(action.users)
+      }
     default : return state
   }
   };

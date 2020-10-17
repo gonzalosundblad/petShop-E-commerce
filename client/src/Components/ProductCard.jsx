@@ -8,34 +8,39 @@ export default function ProductCard ({id, name, price, image, stock}){
   console.log(stock)
 if(stock === 0){
   return (
-  <a className={StyleProductCard.productCard} href={`/user/producto/${id}`}>
-    <div >
-      <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
+    <div className={StyleProductCard.divSinStock}>
+      <a className={StyleProductCard.productCard} href={`/producto/${id}`}>
+        <div >
+          <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
+        </div>
+        <div className={StyleProductCard.containerLyrics}>
+          <h3 className={StyleProductCard.name}>{name}</h3>
+          <h2 className={StyleProductCard.precio}>${price}</h2>
+        </div>
+        <div class={StyleProductCard.goCorner}>
+          <div class={StyleProductCard.goArrow}> → </div>
+        </div>
+        <div >
+          <h1 >Sin Stock</h1>
+        </div>
+      </a>
     </div>
-    <div className={StyleProductCard.containerLyrics}>
-      <h3>{name}</h3>
-      <h1>${price}</h1>
-      <h1>No disponible</h1>
-    </div>
-    <div class={StyleProductCard.goCorner}>
-      <div class={StyleProductCard.goArrow}> → </div>
-    </div>
-</a>
   )
 }
   else return(
-    <a className={StyleProductCard.productCard} href={`/user/producto/${id}`}>
+    <div className={StyleProductCard.divConStock}>
+    <a className={StyleProductCard.productCard} href={`/producto/${id}`}>
         <div >
           <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
         </div>
         <div className={StyleProductCard.containerLyrics}>
           <h3>{name}</h3>
-          <h1>${price}</h1>
+          <h2>${price}</h2>
         </div>
         <div class={StyleProductCard.goCorner}>
           <div class={StyleProductCard.goArrow}> → </div>
         </div>
-        
     </a>
+    </div>
   )
 }

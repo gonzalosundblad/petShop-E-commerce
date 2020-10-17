@@ -18,6 +18,7 @@ import User from './Components/UserNuevo';
 import UserNuevo from './Components/User';
 import NavAdmin from './Containers/NavBarAdmin';
 import ControlledCarousel from './Components/Carousel';
+import {AgregarUsuario} from './Containers/Usuarios';
 
 // import { search } from './redux/actions.js'
 function App() {
@@ -51,7 +52,7 @@ function App() {
           <Route exact path="/" render={() =>  <ControlledCarousel />} />
           <Route exact path={`/products/category/:Categoria`} render={({match}) => <ProductosPorCategoria name={match.params.Categoria}/>}/>
           <Route exact path="/login" render={() =>  <User />} />
-          <Route exact path="/register" render={() => <UserNuevo /> } />
+          <Route exact path="/register" render={() => <AgregarUsuario/> } />
             <div className= {StyleApp.padding}>
               <Route exact path="/products" component={MostrarCatalogo} />
               <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
