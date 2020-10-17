@@ -6,9 +6,9 @@ import SearchBar2 from '../Components/SearchBar2';
 import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
 import SearchBar from '../Components/SearchBar';
-import {ListaDesplegable} from './ListaDesplegable';
+import {ListaDesplegable} from '../Components/ListaDesplegable';
 
-export default function Nav({funcionCatag, onSearch, resultados}) {
+export default function NavBar({funcionCatag, onSearch}) {
 
   function recargar() {
     window.location.reload()
@@ -16,35 +16,25 @@ export default function Nav({funcionCatag, onSearch, resultados}) {
 
   return (
     <div className={StyleNav.nav}>
-      <Link to='/'>
-        <img className={StyleNav.logo} src={logo} alt=""/>
-      </Link>
-      <div className={StyleNav.botones}>
-        {/* <a className={StyleNav.botones} href="/BorrarCategoria">
-          <span className={StyleNav.botonAddProduct}>Borrar Categoria</span>
-        </a> */}
-        {/* <a className={StyleNav.botones} href='/products'>
-          <span className={StyleNav.botonCatalogo} onClick={funcionCatag}>Catálogo</span>
-        </a> */}
-        {/* <a className={StyleNav.botones} href='/AgregarProducto/'>
-          <span className= {StyleNav.botonAddProduct}>Agregar Producto</span>
-        </a>
-        <a className={StyleNav.botones} href='/AgregarCategoria'>
-          <span className= {StyleNav.botonAddProduct}>Agregar Categoría</span>
-        </a>
-        <a className={StyleNav.botones} href='/ModificarProducto/'>
-          <span className= {StyleNav.botonAddProduct}>Modificar Producto</span>
-        </a> */}
+      <div>
+        <Link to='/'>
+          <img className={StyleNav.logo} src={logo} alt=""/>
+        </Link>
       </div>
-      <ListaDesplegable/>
-      <Search funcion={onSearch}  />
+      <div>
+        <Search funcion={onSearch}/>
+      </div>
       <div className={StyleNav.botones}>
-        <a className={StyleNav.botones} href='/user'>
-          <span className={StyleNav.botonCatalogo} >Inicio</span>
-        </a>
-        <a className={StyleNav.botones} href='/user/products'>
+        <a className={StyleNav.botones} href='/products'>
           <span className={StyleNav.botonCatalogo} >Catálogo</span>
         </a>
+        <a className={StyleNav.botones} href='/register'>
+          <span className={StyleNav.botonCatalogo} >Registrarse</span>
+        </a>
+        <a className={StyleNav.botones} href='/login'>
+          <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
+        </a> 
+        <ListaDesplegable/>    
       </div>
       
       {/* // <SearchBar2 onSearch={onSearch} productos={resultados} /> */}

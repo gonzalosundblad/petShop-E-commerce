@@ -29,18 +29,18 @@ export function MostrarCategorias (){                  //Muestra las categorias 
 
 export function ProductosPorCategoria({ name }) {         //Muestra los productos segun la categoria
 
-    const [products, setProducts] = useState([]);
-      
-    useEffect(() => {
-      getProductByCategory(name).payload
-      .then(resp => setProducts(resp.data))
-    }, []);
+const [products, setProducts] = useState([]);
+  
+useEffect(() => {
+  getProductByCategory(name).payload
+  .then(resp => setProducts(resp.data))
+}, []);
 
-    return (
-        <div >
-          <Catalogo productos = {products}/>
-        </div>
-        )
+return (
+    <div >
+      <Catalogo productos = {products}/>
+    </div>
+    )
 };
 
 export function BorrarCategoria() {                      //borra categoria
