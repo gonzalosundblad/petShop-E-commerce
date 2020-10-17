@@ -5,7 +5,7 @@ import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
 import '../Estilos/crudProduct.css';
 // import axios from 'axios';
 import firebase, { storage } from 'firebase';
-import { getCategories } from '../Redux/actions';
+import { deleteProduct, getCategories } from '../Redux/actions';
 
 export function Modifica() {                                //modifica producto
     const [state, setState] = useState({
@@ -57,6 +57,12 @@ export function Modifica() {                                //modifica producto
     }
     function reload(){
       window.location.reload()
+    }
+    function delet (){
+      deleteProduct(state.id).then(resp => {
+        console.log(resp)
+        reload()
+      })
     }
 
    return (
@@ -141,6 +147,7 @@ export function Modifica() {                                //modifica producto
                     <button type="submit" value="Actualizar">
                         Modificar producto
                     </button>
+                    <button onClick={delet} > Eliminar </button>
                 </form>
                 </div>
             </div>

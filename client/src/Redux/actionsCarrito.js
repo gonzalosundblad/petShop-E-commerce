@@ -1,4 +1,4 @@
-import {POST_CARRO, GET_CARRO, PUT_CANTIDAD_CARRO} from './constantsCarro'
+import {POST_CARRO, GET_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO} from './constantsCarro'
 
 import axios from 'axios';
 
@@ -17,3 +17,9 @@ export function postCarrito(usuario, products){ //Agregar productos al carrito
       console.log(response);
     })
   }
+  export function deleteCarrito(id){   //vacia carrito segun id usuario
+    return axios.delete(`http://localhost:3001/user/${id}/cart`).then((resp) => {
+      return { type: DELETE_CARRITO, payload : resp }
+      console.log(resp)
+    })
+     }
