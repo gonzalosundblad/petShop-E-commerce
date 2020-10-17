@@ -11,10 +11,12 @@ export default function Carrito() {
   const [quantity, setQuantity] = useState();
   const [cantidad, setCantidad] = useState();
 
+
     useEffect(() => {
       getCarrito(2).payload
+      //axios.get(`http://localhost:3001/users/${2}/cart`)
       .then(resp => {
-        console.log(resp.data[0].products[0])
+        console.log('data' + resp.data[0].products)
         setName(resp.data[0].products[0].name)
         setImage(resp.data[0].products[0].image)
         setId(resp.data[0].products[0].id)
@@ -22,16 +24,14 @@ export default function Carrito() {
         setCantidad(resp.data[0].products[0].LineaDeOrden.quantity)
         console.log(resp.data[0].products[0].LineaDeOrden.quantity)
       })
+      .catch(error => 'error')
     })
-    
+
+
     function handleChange(e){
       setQuantity(e.target.value)
-      
-
+      console.log('cantidad ' + cantidad);
     }
-
-    console.log(cantidad)
-
 
   return(
     <div>
@@ -42,7 +42,8 @@ export default function Carrito() {
         <div>
           <h3>{name} </h3>
           <h1>${price} </h1>
-          <input type="number" useRef={cantidad} value={cantidad} onChange={handleChange} />
+          <input type="number" defaultValue= "1" onChange={handleChange} />
+
         </div>
     </div>
   )

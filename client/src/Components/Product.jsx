@@ -17,7 +17,7 @@ export default function Product ({ id2 }){
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
- 
+
         useEffect(() => {
           getProductById(id2).payload
           .then(function(resp){
@@ -32,13 +32,13 @@ export default function Product ({ id2 }){
       }, []);
 
       function handleChange(e) {
-        setQuantity(e.target.value)
+        setQuantity(e.target.value);
       }
 
 
 
   const [producto, setProducto] = useState()
-  
+
     function subirCarrito(){
       setProducto({
         product_id: id2,
@@ -65,7 +65,7 @@ export default function Product ({ id2 }){
         <h1>{description}</h1>
         <h1>${price}</h1>
         <h1>Sin Stock</h1>
-        <a href="/products">Volver al Catálogo</a> 
+        <a href="/products">Volver al Catálogo</a>
       </div>
     </div>
      )
@@ -81,12 +81,11 @@ export default function Product ({ id2 }){
           <h3>{description}</h3>
           <h4>${price}</h4>
           <h5>Stock: {stock}</h5>
-           <input type="number" onChange={handleChange} />
+           <input type="number" defaultValue= "1" onChange={handleChange} />
         <button className={Style.boton} onClick={subirCarrito} >Agregar al carrito</button>
         </div>
 
     </div>
-  ) 
+  )
 }
 }
-
