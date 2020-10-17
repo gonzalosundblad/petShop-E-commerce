@@ -75,5 +75,5 @@ return { type: SEARCH, payload : request } ; }
 //USERS
 
 export function postUser(usuario){      //agrega un nuevo usuario
-  const request = axios.post('http://localhost:3001/users', usuario)
+  const request = axios.post('http://localhost:3001/users/', usuario)
   return { type: POST_USER , payload : request } ; }

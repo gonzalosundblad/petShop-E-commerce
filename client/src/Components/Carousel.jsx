@@ -4,6 +4,7 @@ import {Carousel} from 'react-responsive-carousel';
 import Misy from '../imagenes/misyGatos.jpg';
 import Pedigree from '../imagenes/pedigree.jpg';
 import Antipulgas from '../imagenes/antipulgas.jpg';
+import img4 from '../imagenes/juguetesPortada2.jpg';
 import '../Estilos/card.css';
 
  export default function ControlledCarousel() {

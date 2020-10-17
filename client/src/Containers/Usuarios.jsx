@@ -45,14 +45,14 @@ export function AgregarUsuario() {                  //agrega usuario
    
   return (
     <div>
-      <form id="miForm" onSubmit={handleSubmit}>
+      <form id="miForm">
         <label>Nombre: </label>
           <input id="name" type="text" name="name" onChange={handleChange} />
           <label>Email: </label>
-          <input id="description" type="text" description="email" onChange={handleChange2} />
+          <input id="email" type="email" description="email" onChange={handleChange2} />
           <label>Contraseña: </label>
-          <input id="description" type="text" description="password" onChange={handleChange3} />
-        <button type="submit">Agregar</button>
+          <input id="password" type="password" description="password" onChange={handleChange3} />
+        <button onClick={handleSubmit} >Agregar</button>
       </form>
     </div>
   )

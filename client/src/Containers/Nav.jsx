@@ -16,19 +16,6 @@ export default function NavBar({funcionCatag, onSearch}) {
 
   return (
     <div className={StyleNav.nav}>
-      <a href="/">
-        <img className={StyleNav.logo} src={logo} alt=""/>
-      </a>
-      <div className={StyleNav.botones}>
-        <a className={StyleNav.botones} href='/user'>
-            <span className={StyleNav.botonCatalogo} onClick={funcionCatag}>Inicio</span>
-            </a>
-        <a className={StyleNav.botones} href='/user/products'>
-            <span className={StyleNav.botonCatalogo} onClick={funcionCatag}>Catálogo</span>
-            </a>
-        <a className={StyleNav.botones} href='/carrito'>
-            <span className={StyleNav.botonCatalogo}>Mi Carrito</span>
-            </a>
       <div className={StyleNav.divFixed}>
         <div>
           <Link to='/'>
@@ -50,12 +37,14 @@ export default function NavBar({funcionCatag, onSearch}) {
           <a className={StyleNav.botones} href='/login'>
             <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
           </a> 
+          <a className={StyleNav.botones} href='/carrito'>
+            <span className={StyleNav.botonCatalogo} >Carrito</span>
+          </a> 
           <ListaDesplegable/> 
         </div>   
       </div>
       
       {/* // <SearchBar2 onSearch={onSearch} productos={resultados} /> */}
-    </div>
     </div>
   );
 };

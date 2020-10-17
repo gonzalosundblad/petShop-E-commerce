@@ -6,15 +6,16 @@ import Style from '../Estilos/Product.module.css';
 import {getProductById} from '../Redux/actions.js'
 import img from '../imagenes/comida.jpg'
 import Carrito from '../Containers/carrito';
+import { postCarrito } from '../Redux/actionsCarrito';
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [id, setId] = useState();
+  const [product_id, setId] = useState();
   const [price, setPrice] = useState();
-  const [stock, setStock] = useState();;
+  const [stock, setStock] = useState();
  
         useEffect(() => {
           getProductById(id2).payload
@@ -35,22 +36,28 @@ export default function Product ({ id2 }){
 
   const [producto, setProducto] = useState()
   
-    function guardarCarro(){
+    function subirCarrito(){
       setProducto({
-        id: id2,
-        name: name,
-        price: price,
+        product_id: id2,
+        quantity: 8,
+        price: price
       })
+
+      postCarrito(2, producto).payload
+      .then(function(resp){
+        console.log(resp.data)
+      })
+
  }
  console.log(producto)
 
    if(stock <= 0){
      return(
-      <div className={StyleProductCard.productCard}>
+      <div className={Style.productCard}>
       <div>
-        <img className={StyleProductCard.img} src={img} alt="imagen de perro"/>
+        <img className={Style.img} src={img} alt="imagen de perro"/>
       </div>
-      <div className={StyleProductCard.containerLyrics}>
+      <div className={Style.containerLyrics}>
         <h3>{name}</h3>
         <h1>{description}</h1>
         <h1>${price}</h1>
@@ -71,8 +78,8 @@ export default function Product ({ id2 }){
           <h3>{description}</h3>
           <h4>${price}</h4>
           <h5>Stock: {stock}</h5>
+        <button className={Style.boton} onClick={subirCarrito} >Agregar al carrito</button>
         </div>
-        <button onClick={guardarCarro} >Agregar al carrito</button>
 
     </div>
   ) 

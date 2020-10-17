@@ -1,23 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Catalogo from '../Components/CatalogoComp';
-import {getProductByCategory} from '../Redux/actions.js'
-
-export default function Categories({ name }) {
-
-    const [products, setProducts] = useState([]);
-
-    console.log(products)
-        useEffect(() => {
-          getProductByCategory(name).payload
-          .then(resp => setProducts(resp.data))
-        }, []);
-
-        return (
-          <div >
-            <Catalogo productos = {products} />
-          </div>
-        )
-      };
 import CategoriaCard from '../Components/CategoriaComp';
 import {getProductByCategory, getCategories} from '../Redux/actions.js';
 import {deleteCategory} from '../Redux/actions'; 
