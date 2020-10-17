@@ -5,6 +5,7 @@ import { deleteCarrito, getCarrito, putCantidadOrden } from '../Redux/actionsCar
 
 export default function Carrito() {
   const [products, setProducts] = useState([])
+  const [state, setState] = useState([])
 
 
   useEffect(() => {
@@ -19,6 +20,16 @@ export default function Carrito() {
 
   function reload(){
     window.location.reload()
+  }
+
+
+
+  function cambiar(e){
+    setState(e.target.value)
+    putCantidadOrden(2, state)
+    .then(res =>{
+      console.log(res)
+    })
   }
 
   function vaciar (){
@@ -40,7 +51,7 @@ export default function Carrito() {
             <div>
               <h3>{encontrado.name} </h3>
               <h1>${encontrado.price} </h1>
-              <input type="number" value={encontrado.LineaDeOrden.quantity} />
+              <input type="number" value={encontrado.LineaDeOrden.quantity} onChange={cambiar} />
               {/* <button onClick={delet} >X</button> */}
             </div>
             </div>

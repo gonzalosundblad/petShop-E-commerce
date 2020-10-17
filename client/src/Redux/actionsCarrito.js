@@ -11,14 +11,14 @@ export function postCarrito(usuario, products){ //Agregar productos al carrito
   return { type: POST_CARRO , payload : request } ; } 
 
   export function putCantidadOrden (id, cambio) { //Cambiar la cantidad de los productos
-    return axios.put(`http://localhost:3001/user/${id}/cart`, cambio)
+    return axios.put(`http://localhost:3001/users/${id}/cart`, cambio)
     .then((response) => {
       return({ type:PUT_CANTIDAD_CARRO, payload : response })
       console.log(response);
     })
   }
   export function deleteCarrito(id){   //vacia carrito segun id usuario
-    return axios.delete(`http://localhost:3001/user/${id}/cart`).then((resp) => {
+    return axios.delete(`http://localhost:3001/users/${id}/cart`).then((resp) => {
       return { type: DELETE_CARRITO, payload : resp }
       console.log(resp)
     })
