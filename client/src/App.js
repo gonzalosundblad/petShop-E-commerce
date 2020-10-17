@@ -49,7 +49,6 @@ function App() {
               <Route exact path="/admin/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
               <Route exact path='/admin/ModificarProducto/' render={() => <Modifica/>}/>
               <Route exact path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />}/>
-              <Route exact path='/admin/BorrarCategoria' render={() => <BorrarCategoria/>}/> 
               <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
               <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } /> 
               <Route exact path="/admin/ordenes" render={() => <Ordenes /> } /> 

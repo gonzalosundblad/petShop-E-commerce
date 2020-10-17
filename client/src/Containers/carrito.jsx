@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
-import { getCarrito, putCantidadOrden } from '../Redux/actionsCarrito';
+import { deleteCarrito, getCarrito, putCantidadOrden } from '../Redux/actionsCarrito';
 
 
 export default function Carrito() {
@@ -17,8 +17,16 @@ export default function Carrito() {
   }, [])
 
 
+  function reload(){
+    window.location.reload()
+  }
 
-
+  function vaciar (){
+    deleteCarrito(2).then(resp => {
+      console.log(resp)
+      reload()
+    })
+  }
 
   return(
     <div>
@@ -33,11 +41,13 @@ export default function Carrito() {
               <h3>{encontrado.name} </h3>
               <h1>${encontrado.price} </h1>
               <input type="number" value={encontrado.LineaDeOrden.quantity} />
+              {/* <button onClick={delet} >X</button> */}
             </div>
             </div>
           )}
           )
         }
+        <button onClick={vaciar} >Vaciar Carrito</button>
     </div>
   )
 }

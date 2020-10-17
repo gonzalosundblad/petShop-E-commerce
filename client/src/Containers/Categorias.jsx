@@ -169,6 +169,13 @@ export function ModificaCategoria() {                   //modifica categoria
       window.location.reload()
     }
 
+    function delet (){
+      deleteCategory(state.id).then(resp => {
+        console.log(resp)
+        reload()
+      })
+    }
+
    return (
       <div className="form-class">
         <div>
@@ -214,6 +221,7 @@ export function ModificaCategoria() {                   //modifica categoria
             <button type="submit" value="Actualizar">
                 Modificar Categoría
             </button>
+            <button onClick={delet} >Borrar</button>
           </form>
         </div>
       </div>
