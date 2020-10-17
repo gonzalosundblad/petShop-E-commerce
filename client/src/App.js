@@ -18,6 +18,7 @@ import User from './Components/UserNuevo'
 import UserNuevo from './Components/User'
 import NavAdmin from './Containers/NavBarAdmin';
 import ControlledCarousel from './Components/Carousel';
+import { search } from './Redux/actions';
 
 // import { search } from './redux/actions.js'
 function App() {
@@ -25,11 +26,10 @@ function App() {
   const [resultados, setResultados] = useState([]);
 
   function onSearch(producto) {
-       axios.get(`http://localhost:3001/search?products=${producto}`)
+       search(producto).payload
           .then(r =>{
-              const array = r.data;
-              setResultados(array);
-              if(array.length === 0){
+              setResultados(r.data);
+              if(r.data.length === 0){
                 return alert('No se encontraron resultados')}
           })
 

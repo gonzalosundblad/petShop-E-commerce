@@ -68,5 +68,5 @@ export function deleteCategory(id){   //elimina un producto segun id
 
 
 export function search(producto){   //busca entre todo
-const request = axios.put(`http://localhost:3001/search?products=${producto}`)
+const request = axios.get(`http://localhost:3001/search?products=${producto}`)
 return { type: SEARCH, payload : request } ; }
