@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios'
+import axios from 'axios' ;
 import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
 
 
 export default function Carrito() {
   const [products, setProducts] = useState([])
-  const [state, setState] = useState([])
+  const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
 
 
@@ -25,7 +25,7 @@ export default function Carrito() {
 
   function cambiar(e){
     setState(parseInt(e.target.value))
-    putCantidadOrden(2, state)
+    putCantidadOrden(2, state + 1)
     .then(res =>{
       console.log(res)
     })
@@ -33,24 +33,21 @@ export default function Carrito() {
 
   function vaciar (){
     deleteCarrito(2).then(resp => {
-      console.log(resp)
       reload()
     })
   }
   function onDelete (e){
     const f = (element) => element.id == e.target.value
     let index =  products.findIndex(f)
+    // setBorrado(products.splice(index, 1))
     var borrado = products.splice(index, 1)
+
     var product_id = borrado[0].id
+    console.log('ondelete' + product_id)
 
-    deleteCarritoUno(2, 1).payload
-    .then(resp => {
-      console.log(resp)
-    })
+    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+}
 
-
-
-  }
 
   if(products.length <= 0){
     return(
@@ -60,7 +57,7 @@ export default function Carrito() {
       </div>
     )
   }else{
-    console.log(products)
+    console.log('hay productos')
 
   return(
     <div>
