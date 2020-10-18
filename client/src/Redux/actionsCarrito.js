@@ -24,7 +24,7 @@ export function postCarrito(usuario, products){ //Agregar productos al carrito
     })
      }
   export function deleteCarritoUno(id, idProd){   //vacia carrito segun id usuario
-    return axios.delete(`http://localhost:3001/users/${id}//deleteCartProduct`, idProd).then((resp) => {
+    return axios.delete(`http://localhost:3001/users/${id}/deleteCartProduct`, idProd).then((resp) => {
       return { type: DELETE_CARRITOUNO, payload : resp }
       console.log(resp)
     })

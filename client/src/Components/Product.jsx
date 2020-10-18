@@ -17,7 +17,8 @@ export default function Product ({ id2 }){
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
- 
+
+  
         useEffect(() => {
           getProductById(id2).payload
           .then(function(resp){
@@ -37,16 +38,13 @@ export default function Product ({ id2 }){
 
 
 
-  const [producto, setProducto] = useState()
-  
+      
     function subirCarrito(){
-      setProducto({
+
+      postCarrito(2, {
         product_id: id2,
         quantity: quantity,
-        price: price
-      })
-
-      postCarrito(2, producto).payload
+        price: price}).payload
       .then(function(resp){
         console.log(resp.data)
         window.location.replace("http://localhost:3000/carrito")
@@ -83,7 +81,7 @@ export default function Product ({ id2 }){
           <h4>${price}</h4>
           <h5>Stock: {stock}</h5>
            <input type="number" onChange={handleChange} />
-        <button className={Style.boton} onClick={subirCarrito} >Agregar al carrito</button>
+        <button className={Style.boton} onClick={subirCarrito }>Agregar al carrito</button>
         </div>
 
     </div>
