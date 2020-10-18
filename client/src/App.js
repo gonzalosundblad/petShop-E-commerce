@@ -19,6 +19,7 @@ import  Ordenes from './Containers/Orden';
 import { search } from './Redux/actions'
 import Carrito from './Containers/carrito';
 import Usuarios from './Components/usuarios';
+import Perfil from './Components/perfil';
 function App() {
   const [resultados, setResultados] = useState([]);
 
@@ -52,6 +53,7 @@ function App() {
               <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } /> 
               <Route exact path="/admin/ordenes" render={() => <Ordenes /> } /> 
               <Route exact path="/admin/usuarios" render={() => <Usuarios /> } /> 
+              <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } /> 
             </div>
         </div>
       </div>
