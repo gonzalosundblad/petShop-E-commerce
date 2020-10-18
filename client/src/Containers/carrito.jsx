@@ -24,7 +24,7 @@ export default function Carrito() {
 
 
   function cambiar(e){
-    setState(e.target.value)
+    setState(parseInt(e.target.value))
     putCantidadOrden(2, state)
     .then(res =>{
       console.log(res)
@@ -36,10 +36,6 @@ export default function Carrito() {
       console.log(resp)
       reload()
     })
-  }
-  function handleChange(e){
-    setQuantity(parseInt(e.target.value));
-    console.log('quantity ' + e.target.value);
   }
 
   return(

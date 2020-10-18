@@ -8,6 +8,6 @@ export function getOrder() { //obtener todos los productos
 
 //--------Usuarios-------
 
-export function getUser() { //obtener todos los productos
+export function getUser() { //obtener todos los usuarios
   const request = axios.get('http://localhost:3001/users/')
   return { type:GET_USER, payload: request}; }
