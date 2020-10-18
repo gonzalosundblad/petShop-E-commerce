@@ -43,35 +43,35 @@ return (
     )
 };
 
-export function BorrarCategoria() {                      //borra categoria
+// export function BorrarCategoria() {                      //borra categoria
 
-  const [idCambiado, setID] = useState ([]);
+//   const [idCambiado, setID] = useState ([]);
 
-  function handleChange (e)  {
-      setID(e.target.value);
-    }
+//   function handleChange (e)  {
+//       setID(e.target.value);
+//     }
     
-    function handleSubmit (event){
-      event.preventDefault();
-    }
+//     function handleSubmit (event){
+//       event.preventDefault();
+//     }
     
-    deleteCategory(idCambiado).payload
-    .then(function(resp){
-    console.log(resp.data);
-  })
+//     deleteCategory(idCambiado).payload
+//     .then(function(resp){
+//     console.log(resp.data);
+//   })
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          ID De la categoria:
-          <input type="text" name="id" onChange={handleChange} />
-        </label>
-        <button type="submit">Borrar</button>
-      </form>
-    </div>
-  )
-};
+//   return (
+//     <div>
+//       <form onSubmit={handleSubmit}>
+//         <label>
+//           ID De la categoria:
+//           <input type="text" name="id" onChange={handleChange} />
+//         </label>
+//         <button type="submit">Borrar</button>
+//       </form>
+//     </div>
+//   )
+// };
 
 export function AgregarCategoria() {                  //agrega categoria
   const [ nueva, setNueva] = useState([]);

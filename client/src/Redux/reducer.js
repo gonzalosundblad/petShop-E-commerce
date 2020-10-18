@@ -1,12 +1,12 @@
 import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT, POST_USER} from './constants';
 
-const initialState = {
+export const initialState = {
   products : [],
   categories : [],
   users: []
 };
 
-export default (state = initialState, action) => {
+export const Reducers = (state = initialState, action) => {
   console.log(action)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
@@ -77,7 +77,7 @@ export default (state = initialState, action) => {
       products : action.payload
 
     }
-    case POST_USER:
+    case POST_USER:  //agrega un usuario
       return{
         ...state,
         users : state.users.concat(action.users)

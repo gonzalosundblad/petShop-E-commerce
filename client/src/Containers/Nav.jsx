@@ -5,6 +5,7 @@ import '../Estilos/SearchBar.module.css';
 import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
 import {ListaDesplegable} from '../Components/ListaDesplegable';
+import Changito from '../imagenes/changuito2.png'
 
 export default function NavBar({funcionCatag, onSearch}) {
 
@@ -23,6 +24,10 @@ export default function NavBar({funcionCatag, onSearch}) {
         <div>
           <Search funcion={onSearch}/> 
         </div>
+        <a className={StyleNav.botonCarrito} href='/carrito'>
+            <img className={StyleNav.img} src={Changito}/>
+            <h5>$0,00</h5>
+          </a> 
       </div>
       <div className={StyleNav.divBotones}>
         <div className={StyleNav.botones}>
@@ -34,9 +39,6 @@ export default function NavBar({funcionCatag, onSearch}) {
           </a>
           <a className={StyleNav.botones} href='/login'>
             <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
-          </a> 
-          <a className={StyleNav.botones} href='/carrito'>
-            <span className={StyleNav.botonCatalogo} >Carrito</span>
           </a> 
           <ListaDesplegable/> 
         </div>   
