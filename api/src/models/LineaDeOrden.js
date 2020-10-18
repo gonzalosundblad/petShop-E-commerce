@@ -2,18 +2,18 @@ const { DataTypes } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 
-  // defino el modelo
-
 module.exports = (sequelize) => {
-  // defino el modelo
-  sequelize.define('lineadeordens', {
-    price: {
-      type: DataTypes.INTEGER,
-      defaultValue: "0"
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      defaultValue: "1"
-    }
-  }
-)};
+    sequelize.define('LineaDeOrden', {
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        price: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+        }
+    }, {
+        //Para que sequelize no le ponga a la table automáticamente el nombre 'LineaDeOrdens'
+        freezeTableName: true
+    })
+}

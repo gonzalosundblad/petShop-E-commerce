@@ -38,10 +38,14 @@ const { Product, Category, Review, User, Order, LineaDeOrden } = sequelize.model
 // BelongsTo, BelongsToMany, HasMany, HasOne
 Product.belongsToMany(Category, {through: 'productcategory'});
 Category.belongsToMany(Product, {through: 'productcategory'});
-Order.belongsTo(User);
+
 User.hasMany(Order);
-Order.belongsToMany(Product, {through: 'lineadeordens'});
-Product.belongsToMany(Order, {through: 'lineadeordens'});
+Order.belongsTo(User);
+
+Product.belongsToMany(Order, { through: LineaDeOrden, as: 'orders', foreignKey:'product_id' });
+
+Order.belongsToMany(Product, { through: LineaDeOrden, as: 'products', foreignKey:'order_id' });
+
 // product has many review
 // erview belong to many user
 
