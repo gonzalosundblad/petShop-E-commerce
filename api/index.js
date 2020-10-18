@@ -128,8 +128,8 @@ conn.sync({ force }).then(() => {
 
     var Usuarios = arrayDeUsuarios.map(e => {
       User.create(e)
-    })
-  
+    });
+
     Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro, Usuarios])
       .then(res => {
         console.log("Categorías, Usuarios y Producto precargades");

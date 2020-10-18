@@ -1,9 +1,9 @@
 const server = require('express').Router();
-const { Product, Category, User, Order, LineaDeOrden } = require('../db.js');
+const { Product, User, Order, LineaDeOrden } = require('../db.js');
 
 //============================USUARIOS=============================
 
-server.post('/', (req, res) => {                        // AGREGA NUEVO USUARIO
+server.post('/', (req, res) => {                       // S34 : Crear Ruta para creación de Usuario
     const { name, email, password } = req.body;
     if( !name || !email || !password) {
         return res.status(400).send("Campos requeridos")
@@ -19,7 +19,7 @@ server.post('/', (req, res) => {                        // AGREGA NUEVO USUARIO
     })
 });
 
-server.put('/:id', (req, res) => {                      // MODIFICA USUARIO EXISTENTE POR ID
+server.put('/:id', (req, res) => {               // S35 : Crear Ruta para modificar Usuario segun id
     const { name, email, password } = req.body;
     User.update({
         name,
@@ -43,7 +43,7 @@ server.put('/:id', (req, res) => {                      // MODIFICA USUARIO EXIS
 
 });
 
-server.get('/', (req, res) => {                         // TRAE TODOS LOS USUARIOS
+server.get('/', (req, res) => {          // S36 : Crear Ruta que retorne todos los Usuarios
     User.findAll()
         .then(users => {
             res.json(users);
@@ -53,7 +53,7 @@ server.get('/', (req, res) => {                         // TRAE TODOS LOS USUARI
 		});
 });
 
-server.delete('/:id', (req, res) => {                   // ELIMINA USUARIOS POR ID
+server.delete('/:id', (req, res) => {    // S37 : Crear Ruta para eliminar Usuario
     var userId = req.params.id;
     if(!userId){
 		res.status(404).send('Debes ingresar un ID')
@@ -62,7 +62,7 @@ server.delete('/:id', (req, res) => {                   // ELIMINA USUARIOS POR 
             .then(value => {
                 value.destroy()
             }).then(value2 => {
-                res.status(200).send('Borrado exitosamente')
+                res.status(200).send('Borrado exitosamente') 
             }).catch(err => {
                 res.status(404).send('Este usuario nunca existió')
             })
@@ -71,16 +71,16 @@ server.delete('/:id', (req, res) => {                   // ELIMINA USUARIOS POR 
 
 //============================CARRITO===============================
 
-server.post('/:idUser/cart', (req, res) => {            //AGREGA ITEM AL CARRITO
-    const idUser = req.params.idUser;
+server.post('/:idUser/cart', (req, res) => {                            //S38 : Crear Ruta para agregar Item al Carrito
+    const {idUser} = req.params;
     const { product_id, quantity, price } = req.body;
-
     Order.findOrCreate({
         where:{
             userId: idUser,
             orderState: 'carrito'
         }
     }).then(ord => {
+        // console.log(ord[0])
         const order_id = ord[0].id;
         return LineaDeOrden.create({
             product_id,
@@ -94,15 +94,14 @@ server.post('/:idUser/cart', (req, res) => {            //AGREGA ITEM AL CARRITO
         res.status(400)
         console.log('Error: ', err)
     })
-    
 });
 
-server.get('/:idUser/cart', (req, res) => {             //TRAE TODOS LOS ITEMS DE UN USUARIO EN PARTICULAR      
-    const idUser = req.params.idUser;
+server.get('/:idUser/cart', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito      
+    const { idUser } = req.params;
     Order.findAll({
         where: {
             userId: idUser,
-            orderState: 'carrito'
+            orderState: 'carrito'   
         },
         include: {
             model:Product, 
@@ -116,7 +115,7 @@ server.get('/:idUser/cart', (req, res) => {             //TRAE TODOS LOS ITEMS D
     })
 });
 
-server.delete('/:idUser/cart', (req, res) => {          //VACIA EL CARRITO DE DETERMINADO USUARIO
+server.delete('/:idUser/cart', (req, res) => {                          //S40 : Crear Ruta para vaciar el carrito
     const idUser = req.params.idUser;
     Order.findOne({
         where: {
@@ -138,7 +137,7 @@ server.delete('/:idUser/cart', (req, res) => {          //VACIA EL CARRITO DE DE
     })
 });
 
-server.put('/:idUser/cart', function(req, res){         //MODIFICA LA CANTIDAD DE ITEMS DE LA LINEA DE ORDEN
+server.put('/:idUser/cart', function(req, res){                         //S41 : Crear Ruta para editar las cantidades del carrito
     const idUser = req.params.idUser;
     const { product_id, quantity } = req.body;
     Order.findOne({
@@ -163,8 +162,8 @@ server.put('/:idUser/cart', function(req, res){         //MODIFICA LA CANTIDAD D
     })
 })
 
-server.delete('/:idUser/deleteCartProduct', (req, res) => {  //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN
-    const idUser = req.params.idUser;
+server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
+    const idUser = req.params.idUser;                                   // S111: INVENTO DE ERIC
     const { product_id } = req.body;
     Order.findOne({        
         where: {
@@ -184,5 +183,23 @@ server.delete('/:idUser/deleteCartProduct', (req, res) => {  //ELIMINA UN PRODUC
         res.send(error)
     })    
 })
+
+//===========================Ordenes================================
+
+server.get('/:id/orders', (req, res) => {                               //S45: Crear Ruta que retorne todas las Ordenes de los usuarios
+    Order.findAll({
+        where: {
+            userId: req.params.id
+        }
+    })
+    .then(orders => {
+        res.json(orders)
+    })
+    .catch(err => {
+        res.send('Este usuario no tiene ordenes')
+    })
+});
+
+
 
 module.exports = server;

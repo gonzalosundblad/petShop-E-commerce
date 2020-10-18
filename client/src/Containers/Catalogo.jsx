@@ -1,36 +1,20 @@
-// import React, { useState } from 'react';
-// import ProductCard from '../Components/ProductCard';
-// import '../Estilos/catalogo.css';
+import React, { useState, useEffect } from 'react';
+import Catalogo from '../Components/CatalogoComp'
+import {getProducts} from '../Redux/actions';
 
+export default function MostrarCatalogo () {
 
+  const [products, setProducts] = useState([]);
 
-// export default function Catalogo({ products, categ}){
-  
-//   const [prod, setProd] = useState(products);
-//   // const [categories, setCategories] = useState(categ);
-//   // useEffect(() => {
-//   // })
+  useEffect(() => {
+    getProducts().payload
+    .then(resp => setProducts(resp.data))
+  }, []);
+    
+  return (
+    <div >
+      <Catalogo productos = {products} />
+    </div>
 
-
-//   function filtrarCategoria(event, products) {
-//     // event.preventDefault();
-//     const arrayCat = products.filter( product => product.cat === event.value)
-//     setProd(arrayCat);
-//   }
-//   return(
-//     <div>
-//       <select onChange={e =>filtrarCategoria(e.target, products)}>
-//         {categ.map((c, i) => ( <option className="opciones" key={i}> {c} </option>))}
-//       </select>
-//       {prod.map(p => 
-//         <ProductCard 
-//           key = {p.id} 
-//           imagen= {p.imagen} 
-//           name= {p.name}
-//           price= {p.price}
-//         />
-//       )}
-//     </div>
-//   )
-// }
-
+  );
+};

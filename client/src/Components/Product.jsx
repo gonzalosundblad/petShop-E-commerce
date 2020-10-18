@@ -1,55 +1,113 @@
-
+import { Link, Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import  axios from 'axios';
-// import './product.css'
-import StyleProductCard from '../Estilos/Product.module.css';
-
+import Style from '../Estilos/Product.module.css';
+import {getProductById} from '../Redux/actions.js'
 import img from '../imagenes/comida.jpg'
+import Carrito from '../Containers/carrito';
+import { postCarrito } from '../Redux/actionsCarrito';
+import Changuito from '../imagenes/carrito+.png'
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [id, setId] = useState();
+  const [product_id, setId] = useState();
   const [price, setPrice] = useState();
-  const [stock, setStock] = useState();;
+  const [stock, setStock] = useState();
+  const [quantity, setQuantity] = useState();
 
   
+        useEffect(() => {
+          getProductById(id2).payload
+          .then(function(resp){
+            setName(resp.data.name);
+            setDescription(resp.data.description);
+            setImage(resp.data.image);
+            setId(resp.data.id);
+            setPrice(resp.data.price);
+            setStock(resp.data.stock)
+          }
+        )
+      }, []);
 
-  
-  useEffect(() => {
-    async function detProd() {
-      const response = await axios.get(`http://localhost:3001/products/${id2}`)
-      const json = await response.data;    
-      console.log(json) 
-      setName(json.name);
-      setDescription(json.description); 
-      setImage(json.image); 
-      setId(json.id); 
-      setPrice(json.price); 
-      setStock(json.stock); 
-    }
-    detProd();
-    }, []);
+      function handleChange(e) {
+        setQuantity(e.target.value)
+      }
+
+
+
       
-  
+    function subirCarrito(){
 
-    
-    
-  
-    return(
-    <div className={StyleProductCard.productCard}>
-        <div>
-          <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>
+      postCarrito(2, {
+        product_id: id2,
+        quantity: quantity,
+        price: price}).payload
+      .then(function(resp){
+        console.log(resp.data)
+        window.location.replace("http://localhost:3000/carrito")
+      })
+
+ }
+
+
+   if(stock <= 0){
+     return(
+      <div className={Style.product}>
+        <div className={Style.contenedor}>
+          <img className={Style.img} src={image} alt=""/>
+          <div className={Style.imgNameCart}>
+            <div className={Style.containerLyrics}>
+              <h1>{name}</h1>
+              <h2>${price}</h2>
+            </div>
+            <div className={Style.cantidadStock}>
+              <div className={Style.stock}>
+                <h6>No hay Stock</h6>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={StyleProductCard.containerLyrics}>
-          <h3>{name}</h3>
-          <h1>{description}</h1>
-          <h1>${price}</h1>
-          <h1>{stock}</h1>
-        </div>
+      <div className={Style.description}>
+        <h3>Descripción:</h3>
+        <hr/>
+        <h4>{description}</h4>
+      </div>
     </div>
-  )
-} 
+     )
+   } else{
+
+    return(
+    <div className={Style.product}>
+        <div className={Style.contenedor}>
+          <img className={Style.img} src={image} alt=""/>
+          <div className={Style.imgNameCart}>
+            <div className={Style.containerLyrics}>
+              <h1>{name}</h1>
+              <h2>${price}</h2>
+            </div>
+            <div className={Style.cantidadStock}>
+              <div className={Style.cantidad}>
+                <label>Seleccione Cantidad:</label>
+                <input classname={Style.input} type="number" onChange={handleChange} />
+                <button className={Style.boton} onClick={subirCarrito }>
+                    <img className={Style.changuito} src={Changuito}/>
+                </button>
+              </div>
+              <div className={Style.stock}>
+                <h5>Stock diponible: {stock} unidades</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div className={Style.description}>
+        <h3>Descripción:</h3>
+        <hr/>
+        <h4>{description}</h4>
+      </div>
+    </div>
+  ) 
+}
+}
 

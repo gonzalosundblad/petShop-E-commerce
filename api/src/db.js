@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,
-} = process.env; 
+} = process.env;
 
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/petshop`, {
@@ -40,14 +40,8 @@ Product.belongsToMany(Category, {through: 'productcategory'});
 Category.belongsToMany(Product, {through: 'productcategory'});
 
 User.hasMany(Order);
-Order.belongsTo(User);
-
 Product.belongsToMany(Order, { through: LineaDeOrden, as: 'orders', foreignKey:'product_id' });
-
-Order.belongsToMany(Product, { through: LineaDeOrden, as: 'products', foreignKey:'order_id' });
-
-// product has many review
-// erview belong to many user
+Order.belongsToMany(Product, { through: LineaDeOrden, as: 'products', foreignKey:'order_id' }); 
 
 
 

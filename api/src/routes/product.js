@@ -48,7 +48,6 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 		for (let i = 0; i < data.categories.length; i++) {
 			arr.push(data.categories[i].name)
 		}
-		console.log(data)
 		res.json({
 			name: data.name,
 			description: data.description,
@@ -58,22 +57,20 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 			categories: arr
 		})
 	}).catch(err => {
-		console.log('Error: ', err)
 		res.send('No existe ese producto :(')
 	})
 })
 
 server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	const {name, description, price, stock, categoryId, image} = req.body;
-	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
-		Product.create({ 
-			name, 
-			description, 
-			price, 
-			stock, 
+		Product.create({
+			name,
+			description,
+			price,
+			stock,
 			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
 		 })
 			.then(function(productSinId) {
@@ -86,12 +83,12 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 				id: categoryId
 			}
 		})
-		var producto = Product.create({ 
-			name, 
-			description, 
-			price, 
-			stock, 
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token` 
+		var producto = Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
 		 })
 		Promise.all([category, producto])
 			.then(values => {
@@ -106,10 +103,10 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 			}).catch(err => {
 				console.log('Error: ', err)
 				res.send('Ocurrio un error :(').status(404)
-			})	
+			})
 	}
 })
-	
+
 server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
@@ -119,9 +116,8 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 		if(product[0].categories[0].id === 0) {		//Si tiene categoryId 0 (Sin categoria) le asigna el categoryId recibido por params
 			product[0].setCategories(idCategoria)
 			res.json(product)
-		} else {									
+		} else {
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
-			console.log(product[0])
 			res.json(product)
 		}
 	})
@@ -137,7 +133,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 
 server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body ;
-  console.log(req.body)
 	if(!name){
 		return res.status(400).send('Campos requeridos')
 	}
@@ -166,14 +161,13 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
-		include: { model: Category },									
+		include: { model: Category },
 		where: { id: idProducto }
 	}).then(data => {
 		var arr = [];
 		for (let i = 0; i < data[0].categories.length; i++) {			//recorro todas las categorias del producto
 			arr.push(data[0].categories[i].id)
 		}
-		console.log(arr)//												   ----------------------------------------------------------
 		if(arr.length > 1) {	// <---------------Pregunto-------------- ||  si tiene mas de 1 categoria solo elimino la categoria ||
 			data[0].removeCategories(idCategoria)//						  ||--------------------------------------------------------||
 			res.send('Categoria eliminada')	// 						      ||  se elimina PERO se mantienen las demas categorias     ||
@@ -200,6 +194,7 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
             id: req.params.id
         }
     }).then(function(product) {
+			console.log(product[1]);
         if(product[0] == 0) {
 			res.status(400).send('Error, campos requeridos')
 			return product[0]
@@ -207,7 +202,6 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
         res.status(200).json(product)
     }).catch(err => {
         res.status(400)
-        console.log('Error: ', err)
     })
 });
 
