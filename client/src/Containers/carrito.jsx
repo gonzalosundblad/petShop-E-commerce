@@ -12,7 +12,6 @@ export default function Carrito() {
   useEffect(() => {
     getCarrito(2).payload
     .then(res => {
-      console.log(res.data[0].products)
       setProducts(res.data[0].products)
     })
   }, [])
@@ -41,19 +40,16 @@ export default function Carrito() {
   function onDelete (e){
     const f = (element) => element.id == e.target.value
     let index =  products.findIndex(f)
-    // setBorrado(products.splice(index, 1))
     var borrado = products.splice(index, 1)
-
     var product_id = borrado[0].id
-    console.log(product_id)
 
-    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-
-
-    deleteCarritoUno(2)
+    deleteCarritoUno(2, 1).payload
     .then(resp => {
       console.log(resp)
     })
+
+
+
   }
 
   if(products.length <= 0){

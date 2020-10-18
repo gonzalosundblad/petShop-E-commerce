@@ -55,9 +55,10 @@ function loginUser(){
           if (user.password === input.password){
             console.log('ok');
             //  window.location.href=`https://www.google.com.ar/`
+            window.location.href=`http://localhost:3000/user/`
           }
           if (user.password !== input.password){
-            console.log('no');
+            alert('Wrong Password')
           }
         }
         })
