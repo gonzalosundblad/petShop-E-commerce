@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
-
+import Estilo from '../Estilos/ProductoCarrito.module.css';
+import ProductoCarrito from '../Components/ProductoCarrito';
 
 export default function Carrito() {
   const [products, setProducts] = useState([])
@@ -57,7 +58,7 @@ export default function Carrito() {
     })
   }
 
-  if(products.length <= 0){
+  if(products.length === 0){
     return(
       <div>
         <h1>Agregar productos al carrito</h1>
@@ -69,26 +70,33 @@ export default function Carrito() {
 
   return(
     <div>
-      <h2>Tus productos</h2>
-      {products && products.map(encontrado => {
+      <div className={Estilo.tusProductos}>
+        <h2 >Tus productos</h2>
+      </div>
+      {products && products.map(e => {
+        console.log(products)
         return(
-          <div key={encontrado.id}>
-            <div>
-              <img src={encontrado.image} alt="imagen de perro"/>
-            </div>
-            <div>
-              <h3>{encontrado.name} </h3>
-              <h1>${encontrado.price} </h1>
-              <input type="number" value={encontrado.LineaDeOrden.quantity} onChange={cambiar} />
-              <button onClick={onDelete} value={encontrado.id} >X</button>
-            </div>
-            </div>
+          <ProductoCarrito 
+              id={e.id}
+              name={e.name}
+              price={e.price}
+              image={e.image}
+              LineaDeOrden={e.LineaDeOrden.quantity}
+              funcionDelete={onDelete}
+              funcionInput={cambiar}
+            />
           )}
           )
         }
-        <button onClick={vaciar} >Vaciar Carrito</button>
-        <a href="/products">Seguir Comprando</a>
-        <a href="/order">Finalizar Compra</a>
+        <div className={Estilo.botonesFinales}>
+          <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
+          <a className={Estilo.botonesFinales} href='/products'>
+            <span className={Estilo.botoncitos} >Seguir Comprando</span>
+          </a>
+          <a className={Estilo.botonesFinales} href='/order'>
+            <span className={Estilo.botoncitos} >Finalizar Compra</span>
+          </a>
+        </div>  
     </div>
   )
 }
