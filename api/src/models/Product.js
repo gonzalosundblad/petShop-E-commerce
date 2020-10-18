@@ -21,9 +21,7 @@ module.exports = (sequelize) => {
       defaultValue: '1'
     },
     image: {
-      type: DataTypes.BLOB
+      type: DataTypes.STRING
     }
   });
 };
-
- 
