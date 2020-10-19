@@ -1,12 +1,15 @@
-import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT, POST_USER} from './constants';
+import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT, 
+  POST_USER, POST_CARRO} from './constants';
+import { DELETE_CARRITO, DELETE_CARRITOUNO } from './constantsCarro';
 
-const initialState = {
+export const initialState = {
   products : [],
   categories : [],
-  users: []
+  users: [],
+  carrito:[]
 };
 
-export default (state = initialState, action) => {
+export const Reducers = (state = initialState, action) => {
   console.log(action)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
@@ -76,8 +79,8 @@ export default (state = initialState, action) => {
       ...state,
       products : action.payload
 
-    }
-    case POST_USER:
+    }//--------------------------------------------------usuarios
+    case POST_USER:  //agrega un usuario
       return{
         ...state,
         users : state.users.concat(action.users)
@@ -92,16 +95,49 @@ export default (state = initialState, action) => {
     case PUT_USER:
       return {
         ...state,
-        user : state.users.map(user => user.id === action.payload.id ? action.payload : user)        
+        users : state.users.map(user => user.id === action.payload.id ? action.payload : user)        
       }  
 
     case  DELETE_USER:
       return {
         ...state,
-        user : state.users.filter(prod =>  prod.id !== action.payload )
+        users : state.users.filter(prod =>  prod.id !== action.payload )
         }
   
-      default : return state
+    
+      //-----------------------------------------------------Carrito
+      case POST_CARRO:  //agrega un producto al carrito
+      return{
+        ...state,
+        carrito : state.carrito.concat(action.carrito)
+      }
+
+      case GET_CARRO:
+        return {
+          ...state,
+          carrito : action.carrito
+        }
+  
+      case PUT_CANTIDAD_CARRO:
+        return {
+          ...state,
+          carrito : state.carrito.map(carr => carr.id === action.payload.id ? action.payload : carr)        
+        }  
+  
+      case  DELETE_CARRITO:
+        return {
+          ...state,
+          carrito : state.carrito.filter(carr =>  carr.id !== action.payload )
+          }
+
+      case DELETE_CARRITOUNO:
+        return {
+          ...state,
+          carrito : state.carrito.filter(carr => carr.id !== action.payload)
+        }
+    
+      
+    default : return state
   }
 
   };

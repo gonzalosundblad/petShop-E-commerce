@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
-import {getUsers} from '../Redux/actions.js';
+import {getUser} from '../Redux/actionsOrden';
 import { Link } from 'react-router-dom'
 export default function User (){
     const [users, setUsers] = useState([])
@@ -13,7 +13,7 @@ export default function User (){
     var x = false;
 
     useEffect(() => {
-        getUsers().users
+        getUser().payload
         .then(resp => setUsers(resp.data))
         
     },[])
@@ -97,4 +97,4 @@ export default function User (){
             </Button>
     </div>
     )
-}
+ }

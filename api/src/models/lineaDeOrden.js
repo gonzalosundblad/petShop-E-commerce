@@ -11,8 +11,7 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT,
             allowNull: false,
         }
-    }, {
-        //Para que sequelize no le ponga a la table automáticamente el nombre 'LineaDeOrdens'
+    },{
         freezeTableName: true
     })
 }

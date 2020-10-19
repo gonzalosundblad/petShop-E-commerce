@@ -33,13 +33,13 @@ export function postCategory(data){   //agrega una categoria
   return { type: POST_CATEGORY, payload : request } ; }
 //----------------------------------------
 // PutId FUNCIONA
-export function putId (id, cambios) {
+export function putId (id, cambios) { //modifica un producto
     return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
       return({ type: PUT_ID, payload : response })
       console.log(response);
     })
     }
-export function putCategoryId (id, cambios) {
+export function putCategoryId (id, cambios) {  //modifica una categoria
     return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
       return({ type:PUT_CATEGORY_ID, payload : response })
       console.log(response);
@@ -59,7 +59,7 @@ export function deleteProduct(id){   //elimina un producto segun id
    console.log(resp)
  })
   }
-export function deleteCategory(id){   //elimina un producto segun id
+export function deleteCategory(id){   //elimina una categoria segun id
  return axios.delete(`http://localhost:3001/products/category/${id}`).then((resp) => {
    return { type: DELETE_ID, payload : resp }
    console.log(resp)

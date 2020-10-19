@@ -6,19 +6,20 @@ import Nav from './Containers/Nav';
 import {CrudProduct} from './Containers/Productos';
 import {MostrarCategorias} from './Containers/Categorias';
 import {ProductosPorCategoria} from './Containers/Categorias';
-import {BorrarCategoria} from './Containers/Categorias';
+// import {BorrarCategoria} from './Containers/Categorias';
 import {AgregarCategoria} from './Containers/Categorias';
 import {ModificaCategoria} from './Containers/Categorias';
-import {Modifica} from './Containers/Productos';
+import {ModificayBorra} from './Containers/Productos';
 import Product from './Components/Product';
 import Catalogo from './Components/CatalogoComp';
 import User from './Components/Login';
 import ControlledCarousel from './Components/Carousel';
 import {AgregarUsuario} from './Containers/Usuarios';
-import UsuariosPutDelete from './Containers/UsuariosModDelete'
-
+import  Ordenes from './Containers/Orden';
 import { search } from './Redux/actions'
 import Carrito from './Containers/carrito';
+import Usuarios from './Components/usuarios';
+import Perfil from './Components/perfil';
 function App() {
   const [resultados, setResultados] = useState([]);
 
@@ -46,13 +47,13 @@ function App() {
               <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
               <Route exact path="/carrito" render={() => <Carrito/>} />
               <Route exact path="/admin/AgregarCategoria"  render={() =><AgregarCategoria/>}/>
-              <Route exact path='/admin/ModificarProducto/' render={() => <Modifica/>}/>
+              <Route exact path='/admin/ModificarProducto/' render={() => <ModificayBorra/>}/>
               <Route exact path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />}/>
-              <Route exact path='/admin/BorrarCategoria' render={() => <BorrarCategoria/>}/> 
               <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
               <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } /> 
-              <Route exact path='/admin/products/users/' render={() => <UsuariosPutDelete/>}/>
-              <Route exact path='/user/' render={() => <Catalogo />}/>
+              <Route exact path="/admin/ordenes" render={() => <Ordenes /> } /> 
+              <Route exact path="/admin/usuarios" render={() => <Usuarios /> } /> 
+              <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } /> 
             </div>
         </div>
       </div>
