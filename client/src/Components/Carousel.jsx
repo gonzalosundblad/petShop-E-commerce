@@ -12,20 +12,19 @@ import '../Estilos/card.css';
   return (
     <div className="contenedor">
       <Carousel > 
-      <div className="card">
-        <img src={Pedigree} alt=""/>
+        <div className="card">
+          <img src={Pedigree} alt=""/>
         </div>
-      <div className="card" >
-      <img src={Misy} alt=""/>
+        <div className="card" >
+          <img src={Misy} alt=""/>
         </div>
-      <div className="card" >
-      <img src={Antipulgas} alt=""/>
+        <div className="card" >
+          <img src={Antipulgas} alt=""/>
         </div>
-      <div className="card" >
-      <img src={img4} alt=""/>
+        <div className="card" >
+          <img src={img4} alt=""/>
         </div>
       </Carousel>
-
     </div>
   );
 }

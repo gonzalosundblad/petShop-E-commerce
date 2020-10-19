@@ -9,7 +9,7 @@ export function getCarrito(usuario) { //obtener todos los productos del carrito
 export function postCarrito(usuario, products){ //Agregar productos al carrito
   const request = axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
   return { type: POST_CARRO , payload : request } ; } 
-
+//--
   export function putCantidadOrden (id, cambio) { //Cambiar la cantidad de los productos
     return axios.put(`http://localhost:3001/users/${id}/cart`, cambio)
     .then((response) => {

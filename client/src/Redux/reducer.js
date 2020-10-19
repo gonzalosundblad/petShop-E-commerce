@@ -1,14 +1,16 @@
-import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT, 
-  POST_USER, POST_CARRO} from './constants';
+import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH} from './constants';
+import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO} from './constantsCarro'
+import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from './constantesOrden'
 
-export const initialState = {
+ const initialState = {
   products : [],
   categories : [],
   users: [],
-  carrito:[]
+  carrito:[],
+  order: []
 };
 
-export const Reducers = (state = initialState, action) => {
+export default (state = initialState, action) => {
   console.log(action)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
@@ -29,7 +31,7 @@ export const Reducers = (state = initialState, action) => {
     case GET_ID: //obtener un producto segun su id
     return {
       ...state,
-      products : action.product,
+      products : action.products,
     }
     case POST_PRODUCT: // agregar producto
     return {
@@ -73,7 +75,7 @@ export const Reducers = (state = initialState, action) => {
 
 
     }
-    case SEARCH_PRODUCT: // busca entre todos
+    case SEARCH: // busca entre todos
     return {
       ...state,
       products : action.payload
@@ -84,13 +86,58 @@ export const Reducers = (state = initialState, action) => {
         ...state,
         users : state.users.concat(action.users)
       }
+    case GET_USER:
+      return {
+        ...state,
+        users : action.users
+      }
+    case PUT_USER:
+      return {
+        ...state,
+        user : state.users.map(user => user.id === action.payload.id ? action.payload : user)
+      }
+    case  DELETE_USER:
+      return {
+        ...state,
+        user : state.users.filter(prod =>  prod.id !== action.payload )
+        }
       //-----------------------------------------------------Carrito
+      case GET_CARRO: //obtener todas las categorias
+      return {
+        ...state,
+        carrito : action.carrito,
+      }
       case POST_CARRO:  //agrega un producto al carrito
       return{
         ...state,
         carrito : state.carrito.concat(action.carrito)
       }
-      
+      case PUT_CANTIDAD_CARRO:
+        return {
+          ...state,
+          carrito : state.carrito.map(cart => cart.id === action.payload.id ? action.payload : cart )
+        }
+      case DELETE_CARRITO:
+        return{
+          ...state,
+          carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
+        }
+        case DELETE_CARRITOUNO:
+          return{
+            ...state,
+            carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
+          }
+//--------Orden------------
+          case GET_ID: 
+            return {
+              ...state,
+              order : action.order,
+            }
+          case PUT_ORDER:
+            return {
+              ...state,
+              order: state.order.map(ord => ord.id === action.payload.id ? action.payload : ord )
+            }
     default : return state
   }
   };
