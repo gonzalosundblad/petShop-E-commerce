@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import  axios from 'axios';
-// import './product.css'
 import Style from '../Estilos/Product.module.css';
 import {getProductById} from '../Redux/actions.js'
 import img from '../imagenes/comida.jpg'
 import Carrito from '../Containers/carrito';
 import { postCarrito } from '../Redux/actionsCarrito';
+import Changuito from '../imagenes/carrito+.png'
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
@@ -17,7 +16,8 @@ export default function Product ({ id2 }){
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
- 
+
+  
         useEffect(() => {
           getProductById(id2).payload
           .then(function(resp){
@@ -37,18 +37,16 @@ export default function Product ({ id2 }){
 
 
 
-  const [producto, setProducto] = useState()
-  
+      
     function subirCarrito(){
-      setProducto({
+
+      postCarrito(2, {
         product_id: id2,
         quantity: quantity,
-        price: price
-      })
-
-      postCarrito(2, producto).payload
+        price: price}).payload
       .then(function(resp){
         console.log(resp.data)
+        window.location.replace("http://localhost:3000/carrito")
       })
 
  }
@@ -56,16 +54,25 @@ export default function Product ({ id2 }){
 
    if(stock <= 0){
      return(
-      <div className={Style.productCard}>
-      <div>
-        <img className={Style.img} src={img} alt="imagen de perro"/>
-      </div>
-      <div className={Style.containerLyrics}>
-        <h3>{name}</h3>
-        <h1>{description}</h1>
-        <h1>${price}</h1>
-        <h1>Sin Stock</h1>
-        <a href="/products">Volver al Catálogo</a> 
+      <div className={Style.product}>
+        <div className={Style.contenedor}>
+          <img className={Style.img} src={image} alt=""/>
+          <div className={Style.imgNameCart}>
+            <div className={Style.containerLyrics}>
+              <h1>{name}</h1>
+              <h2>${price}</h2>
+            </div>
+            <div className={Style.cantidadStock}>
+              <div className={Style.stock}>
+                <h6>No hay Stock</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div className={Style.description}>
+        <h3>Descripción:</h3>
+        <hr/>
+        <h4>{description}</h4>
       </div>
     </div>
      )
@@ -73,18 +80,32 @@ export default function Product ({ id2 }){
 
     return(
     <div className={Style.product}>
-        <div>
-          <img className={Style.img} src={image} alt="imagen de perro"/>
+        <div className={Style.contenedor}>
+          <img className={Style.img} src={image} alt=""/>
+          <div className={Style.imgNameCart}>
+            <div className={Style.containerLyrics}>
+              <h1>{name}</h1>
+              <h2>${price}</h2>
+            </div>
+            <div className={Style.cantidadStock}>
+              <div className={Style.cantidad}>
+                <label>Seleccione Cantidad:</label>
+                <input classname={Style.input} type="number" onChange={handleChange} />
+                <button className={Style.boton} onClick={subirCarrito }>
+                    <img className={Style.changuito} src={Changuito}/>
+                </button>
+              </div>
+              <div className={Style.stock}>
+                <h5>Stock diponible: {stock} unidades</h5>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={Style.containerLyrics}>
-          <h1>{name}</h1>
-          <h3>{description}</h3>
-          <h4>${price}</h4>
-          <h5>Stock: {stock}</h5>
-           <input type="number" onChange={handleChange} />
-        <button className={Style.boton} onClick={subirCarrito} >Agregar al carrito</button>
-        </div>
-
+      <div className={Style.description}>
+        <h3>Descripción:</h3>
+        <hr/>
+        <h4>{description}</h4>
+      </div>
     </div>
   ) 
 }
