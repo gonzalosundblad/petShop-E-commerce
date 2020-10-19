@@ -84,13 +84,47 @@ export const Reducers = (state = initialState, action) => {
         ...state,
         users : state.users.concat(action.users)
       }
+    case GET_USER:
+      return {
+        ...state,
+        users : action.users
+      }
+    case PUT_USER:
+      return {
+        ...state,
+        user : state.users.map(user => user.id === action.payload.id ? action.payload : user)
+      }
+    case  DELETE_USER:
+      return {
+        ...state,
+        user : state.users.filter(prod =>  prod.id !== action.payload )
+        }
       //-----------------------------------------------------Carrito
+      case GET_CARRO: //obtener todas las categorias
+      return {
+        ...state,
+        carrito : action.carrito,
+      }
       case POST_CARRO:  //agrega un producto al carrito
       return{
         ...state,
         carrito : state.carrito.concat(action.carrito)
       }
-      
+      case PUT_CANTIDAD_CARRO:
+        return {
+          ...state,
+          carrito : state.carrito.map(cart => cart.id === action.payload.id ? action.payload : cart )
+        }
+      case DELETE_CARRITO:
+        return{
+          ...state,
+          carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
+        }
+        case DELETE_CARRITOUNO:
+          return{
+            ...state,
+            carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
+          }
     default : return state
   }
   };

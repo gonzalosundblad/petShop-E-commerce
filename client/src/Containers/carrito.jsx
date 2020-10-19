@@ -24,16 +24,6 @@ export default function Carrito() {
     window.location.reload()
   }
 
-
-
-  function cambiar(e){
-    setState(e.target.value)
-    putCantidadOrden(2, state)
-    .then(res =>{
-      console.log(res)
-    })
-  }
-
   function vaciar (){
     deleteCarrito(2).then(resp => {
       console.log(resp)
@@ -53,7 +43,7 @@ export default function Carrito() {
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
 
 
-    deleteCarritoUno(2)
+    deleteCarritoUno(2, 2)
     .then(resp => {
       console.log(resp)
     })
@@ -77,6 +67,7 @@ export default function Carrito() {
       {products && products.map(e => {
         console.log(products)
         return(
+          <div>
           <ProductoCarrito 
               id={e.id}
               name={e.name}
@@ -84,8 +75,8 @@ export default function Carrito() {
               image={e.image}
               LineaDeOrden={e.LineaDeOrden.quantity}
               funcionDelete={onDelete}
-              funcionInput={cambiar}
             />
+            </div>
           )}
           )
         }
