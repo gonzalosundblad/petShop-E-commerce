@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios' ;
 import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
-
+import Estilo from '../Estilos/ProductoCarrito.module.css';
+import ProductoCarrito from '../Components/ProductoCarrito';
 
 export default function Carrito() {
   const [products, setProducts] = useState([])
@@ -12,7 +13,12 @@ export default function Carrito() {
   useEffect(() => {
     getCarrito(2).payload
     .then(res => {
-      setProducts(res.data[0].products)
+      if(!res.data[0]){
+        console.log("agregar")
+      }
+      else{
+        setProducts(res.data[0].products)
+      }
     })
   }, [])
 
@@ -21,35 +27,37 @@ export default function Carrito() {
     window.location.reload()
   }
 
-
-
-  function cambiar(e){
-    setState(parseInt(e.target.value))
-    putCantidadOrden(2, state + 1)
-    .then(res =>{
-      console.log(res)
-    })
-  }
-
   function vaciar (){
     deleteCarrito(2).then(resp => {
       reload()
     })
   }
   function onDelete (e){
+    //console.log(e)
     const f = (element) => element.id == e.target.value
     let index =  products.findIndex(f)
     // setBorrado(products.splice(index, 1))
     var borrado = products.splice(index, 1)
-
     var product_id = borrado[0].id
-    console.log('ondelete' + product_id)
+    console.log('ondelete ' + product_id)
+    setProducts(products => products.filter(p => p.id != product_id));
+    console.log(products);
 
-    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-}
+    // var product_id = borrado[0].id
+    // console.log('ondelete' + product_id)
+    //
+    // //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+    // deleteCarritoUno(2, 2)
+    // .then(resp => {
+    //   console.log(resp)
+    // })
+  }
 
 
-  if(products.length <= 0){
+  const order_id = products.map(id => id.LineaDeOrden.order_id)
+
+
+  if(!products || products.length === 0){
     return(
       <div>
         <h1>Agregar productos al carrito</h1>
@@ -61,26 +69,34 @@ export default function Carrito() {
 
   return(
     <div>
-      <h2>Tus productos</h2>
-      {products && products.map(encontrado => {
+      <div className={Estilo.tusProductos}>
+        <h2 >Tus productos</h2>
+      </div>
+      {products && products.map(e => {
+        console.log(products)
         return(
-          <div key={encontrado.id}>
-            <div>
-              <img src={encontrado.image} alt="imagen de perro"/>
-            </div>
-            <div>
-              <h3>{encontrado.name} </h3>
-              <h1>${encontrado.price} </h1>
-              <input type="number" value={encontrado.LineaDeOrden.quantity} onChange={cambiar} />
-              <button onClick={onDelete} value={encontrado.id} >X</button>
-            </div>
+          <div>
+          <ProductoCarrito
+              id={e.id}
+              name={e.name}
+              price={e.price}
+              image={e.image}
+              LineaDeOrden={e.LineaDeOrden.quantity}
+              funcionDelete={onDelete}
+            />
             </div>
           )}
           )
         }
-        <button onClick={vaciar} >Vaciar Carrito</button>
-        <a href="/products">Seguir Comprando</a>
-        <a href="/order">Finalizar Compra</a>
+        <div className={Estilo.botonesFinales}>
+          <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
+          <a className={Estilo.botonesFinales} href='/products'>
+            <span className={Estilo.botoncitos} >Seguir Comprando</span>
+          </a>
+          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+            <span className={Estilo.botoncitos}  >Finalizar Compra</span>
+          </a>
+        </div>
     </div>
   )
 }

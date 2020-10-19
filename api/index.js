@@ -34,8 +34,6 @@ var arrayDeUsuarios = [{
   email: "gaby@gmail.com",
   password: "1234"
 }];
-
-
 var arrayProductosPerros = [{
   name: "Eukanuba Small",
   description: "comida para el perrito",
@@ -127,13 +125,14 @@ conn.sync({ force }).then(() => {
           })
       }
     });
-    
+
     var Usuarios = arrayDeUsuarios.map(e => {
       User.create(e)
-    })
+    });
+
     Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro, Usuarios])
       .then(res => {
-        console.log("Categorías y producto precargades");
+        console.log("Categorías, Usuarios y Producto precargades");
       });
   });
 });

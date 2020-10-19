@@ -1,8 +1,7 @@
 const server = require('express').Router();
-const { Product, Category, productcategory, User, Order, LineaDeOrden } = require('../db.js');
+const { Product, User, Order, LineaDeOrden } = require('../db.js');
 
-//   '/users'
-// 15/10 preguntar por relaciones (ver en db.js) y preguntar por validacion password (ver modelo user) y preguntar por url de firebase
+//============================USUARIOS=============================
 
 server.post('/', (req, res) => {                       // S34 : Crear Ruta para creación de Usuario
     const { name, email, password } = req.body;
@@ -19,8 +18,6 @@ server.post('/', (req, res) => {                       // S34 : Crear Ruta para 
         console.log('Error: ', err)
     })
 });
-
-
 
 server.put('/:id', (req, res) => {               // S35 : Crear Ruta para modificar Usuario segun id
     const { name, email, password } = req.body;
@@ -56,7 +53,6 @@ server.get('/', (req, res) => {          // S36 : Crear Ruta que retorne todos l
 		});
 });
 
-
 server.delete('/:id', (req, res) => {    // S37 : Crear Ruta para eliminar Usuario
     var userId = req.params.id;
     if(!userId){
@@ -73,9 +69,9 @@ server.delete('/:id', (req, res) => {    // S37 : Crear Ruta para eliminar Usuar
     }
 })
 
+//============================CARRITO===============================
 
-
-server.post('/:idUser/cart', (req, res) => {        //     S38 : Crear Ruta para agregar Item al Carrito
+server.post('/:idUser/cart', (req, res) => {                            //S38 : Crear Ruta para agregar Item al Carrito
     const {idUser} = req.params;
     const { product_id, quantity, price } = req.body;
     Order.findOrCreate({
@@ -101,8 +97,7 @@ server.post('/:idUser/cart', (req, res) => {        //     S38 : Crear Ruta para
     })
 });
 
-
-server.get('/:idUser/cart', (req, res) => {        //    S39 : Crear Ruta que retorne todos los items del Carrito
+server.get('/:idUser/cart', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito
     const { idUser } = req.params;
     Order.findAll({
         where: {
@@ -121,9 +116,7 @@ server.get('/:idUser/cart', (req, res) => {        //    S39 : Crear Ruta que re
     })
 });
 
-
-
-server.delete('/:idUser/cart', (req, res) => {          //  S40 : Crear Ruta para vaciar el carrito
+server.delete('/:idUser/cart', (req, res) => {                          //S40 : Crear Ruta para vaciar el carrito
     const idUser = req.params.idUser;
     Order.findOne({
         where: {
@@ -145,9 +138,7 @@ server.delete('/:idUser/cart', (req, res) => {          //  S40 : Crear Ruta par
     })
 });
 
-
-server.put('/:idUser/cart', function(req, res){         //MODIFICA LA CANTIDAD DE ITEMS DE LA LINEA DE ORDEN
-                                                       //S41 : Crear Ruta para editar las cantidades del carrito
+server.put('/:idUser/cart', function(req, res){                         //S41 : Crear Ruta para editar las cantidades del carrito
     const idUser = req.params.idUser;
     const { product_id, quantity } = req.body;
     Order.findOne({
@@ -172,9 +163,8 @@ server.put('/:idUser/cart', function(req, res){         //MODIFICA LA CANTIDAD D
     })
 })
 
-
-server.delete('/:idUser/deleteCartProduct', (req, res) => {  //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
-    const idUser = req.params.idUser;                       // S111: INVENTO DE ERIC
+server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
+    const idUser = req.params.idUser;                                   // S111: INVENTO DE ERIC
     const { product_id } = req.body;
     Order.findOne({
         where: {
@@ -195,9 +185,9 @@ server.delete('/:idUser/deleteCartProduct', (req, res) => {  //ELIMINA UN PRODUC
     })
 })
 
+//===========================Ordenes================================
 
-
-server.get('/:id/orders', (req, res) => {       //  S45: Crear Ruta que retorne todas las Ordenes de los usuarios
+server.get('/:id/orders', (req, res) => {                               //S45: Crear Ruta que retorne todas las Ordenes de los usuarios
     Order.findAll({
         where: {
             userId: req.params.id
