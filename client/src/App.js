@@ -20,6 +20,7 @@ import { search } from './Redux/actions'
 import Carrito from './Containers/carrito';
 import Usuarios from './Components/usuarios';
 import Perfil from './Components/perfil';
+import OrdenUsuario from './Containers/ordenUsuario';
 function App() {
   const [resultados, setResultados] = useState([]);
 
@@ -30,7 +31,9 @@ function App() {
             setResultados(resp.data)
           })
      }
+
   return (
+    
     <div className= {StyleApp.App}>
       <BrowserRouter>
       <div>
@@ -54,6 +57,8 @@ function App() {
               <Route exact path="/admin/ordenes" render={() => <Ordenes /> } /> 
               <Route exact path="/admin/usuarios" render={() => <Usuarios /> } /> 
               <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } /> 
+              <Route exact path="/order" render={() => <OrdenUsuario /> } /> 
+              <Route exact path="/user/:id/products" render={({match}) => <MostrarCatalogo id={match.params.id} /> } /> 
             </div>
         </div>
       </div>
