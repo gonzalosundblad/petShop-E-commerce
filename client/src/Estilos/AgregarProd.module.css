@@ -5,74 +5,19 @@
   border: 2px solid rgb(21, 160, 160);
   background-color: rgb(155, 200, 230);
   margin: 2%;
-  margin-left: 10%;
-  width: 70%;
-  height: 400px;
+  margin-left: 29%;
+  width: 40%;
+  height: 300px;
 }
 
+
 .resultado{
-  margin-top: 1%;
+  margin-top: 2%;
 }
 
 .inputs{
   border-radius: 3px;
   border: 2px solid  rgb(21, 160, 160);
-}
-
-label{
-  color: rgb(2, 65, 65) ;
-  font-weight: bold;
-}
-
-.id{
-  width: 40%;
-  margin-left: 26.6%;
-  margin-bottom: 1%;
-}
-.nombre{
-  width: 43%;
-  margin-left: 25%;
-  margin-bottom: 1%;
-}
-
-.description{
-  width: 41.5%;
-  margin-left: 25.8%;
-  margin-bottom: 1%;
-}
-.price{
-  width: 43.5%;
-  margin-left: 24.8%;
-  margin-bottom: 1%;
-}
-.stock{
-  width: 43%;
-  margin-left: 25%;
-  margin-bottom: 1%;
-}
-
-.id2{
-  margin-left: 11%;
-}
-.nombre2{
-  margin-left: 4%;
-}
-
-.description2{
-
-  margin-left: 2%;
-
-}
-.price2{
-
-  margin-left: 6%;
-
-}
-
-.stock2{
-
-  margin-left: 7.2%;
-
 }
 
 .botoncitos{

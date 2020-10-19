@@ -115,6 +115,25 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
     })
 });
 
+server.get('/:idUser/cart/orders', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito      
+  const { idUser } = req.params;
+  Order.findAll({
+      where: {
+          userId: idUser,
+          orderState: 'creada'
+      },
+      include: {
+          model:Product, 
+          as: 'products'
+      }
+  }).then((items) => {
+      res.status(200).send(items)
+  }).catch((err) => {
+      res.status(404).send('Error')
+      console.log('Error: ', err)
+  })
+});
+
 server.delete('/:idUser/cart', (req, res) => {                          //S40 : Crear Ruta para vaciar el carrito
     const idUser = req.params.idUser;
     Order.findOne({
