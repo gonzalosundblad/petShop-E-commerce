@@ -5,7 +5,7 @@
     background-color: honeydew;
     margin: 2%;
     width: 1000px;
-    margin-left: 25%; 
+    margin-left: 15%; 
     display: grid;
     grid-template-columns: 300px 300px 300px 100px ;
 }
@@ -124,7 +124,7 @@
     align-items: center;
     justify-content: center;
     height: 50px;
-    margin-left: 46%;
+    margin-left: 42%;
     margin-bottom: -7px;
     margin-top: 20px;
 }
