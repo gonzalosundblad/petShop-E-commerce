@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import {putId, getProducts, deleteProduct, getCategories } from '../Redux/actions.js'
 import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
-import '../Estilos/crudProduct.css';
+import Estilo from '../Estilos/formsProd.module.css'
 import firebase, { storage } from 'firebase';
 
 export function ModificayBorra() {                                   //modifica y borra producto
@@ -66,29 +66,31 @@ export function ModificayBorra() {                                   //modifica 
   }
 
  return (
-     <div className="form-class">
+   <div>
+     <div className={Estilo.forms}>
          <div>
              <h3>Lista de productos disponibles para modificar/eliminar</h3>
          </div>
                  {
                      prodGuardados && prodGuardados.map(encontrado => {
                          return (
-                           <form key={encontrado.id}>
+                           <form key={encontrado.id}  className={Estilo.resultado}>
                            <label>Id:</label>
-                           <input type="text" value={encontrado.id} />
+                           <input type="text" value={encontrado.id}  className={Estilo.inputs} />
                            <label>Nombre:</label>
-                           <input type="text" value={encontrado.name} />
+                           <input type="text" value={encontrado.name} className={Estilo.inputs} />
                            <label>Descripcion:</label>
-                           <input type="text" value={encontrado.description} />
+                           <input type="text" value={encontrado.description} className={Estilo.inputs} />
                            <label>Precio:</label>
-                           <input type="text" value={`$ ${encontrado.price}`}/>
+                           <input type="text" value={`$ ${encontrado.price}`} className={Estilo.inputs}/>
                            <label>Stock:</label>
-                           <input type="text" value={encontrado.stock} />
+                           <input type="text" value={encontrado.stock} className={Estilo.inputs}/>
                          </form>
 
                          )
                      })
                  }
+                 </div>
 
 
          <div className="modificador">
@@ -96,60 +98,58 @@ export function ModificayBorra() {                                   //modifica 
              <form className="text-left"
                  onSubmit={handleSubmit}>
 
-                 <div className="camposformulario">
+                 <div className={Estilo.id}>
                      <label>Id:</label>
                      <input
                          type="number" id="id" name="id" className="form-control"
                          placeholder="Ingrese id del producto"
                          onChange={handleChange}
+                         className={Estilo.id2}
                      />
                  </div>
-                 <br /><br />
-
-                 <div className="camposformulario">
+                 <div className={Estilo.nombre}>
                      <label> Nombre: </label>
                      <input
                          type="text" id="name" name="name" className="form-control"
                          placeholder="Ingrese nombre del producto"
                          onChange={handleChange}
+                         className={Estilo.nombre2}
                      />
                  </div>
-                 <br /><br />
-
-                 <div className="camposformulario">
+                 <div className={Estilo.description}>
                     <label>Descripcion:</label>
                      <input
                          type="text" id="description" name="description" className="form-control"
                          placeholder="Ingrese una descripción"
                          onChange={handleChange}
+                         className={Estilo.description2}
                      />
                  </div>
-                 <br /><br />
-
-                 <div className="camposformulario">
+                 <div className={Estilo.price}>
                      <label>Precio: </label>
                      <input
                          type="number" id="price" name="price" className="form-control"
                          placeholder="Ingrese Precio"
                          onChange={handleChange}
+                         className={Estilo.price2}
                      />
                  </div>
-                 <br /><br />
-
-                  <div className="camposformulario">
+                  <div className={Estilo.stock}>
                       <label> Stock:</label>
                       <input
                           type="number" id="stock" name="stock" className="form-control"
                           placeholder="Ingrese cantidad"
                           onChange={handleChange}
+                          className={Estilo.stock2}
                       />
                   </div>
-
-                  <button type="submit" value="Actualizar">
+                 <div className={Estilo.botonesFinales} >
+                  <button type="submit" value="Actualizar" className={Estilo.botoncitos}>
                       Modificar producto
                   </button>
 
-                  <button onClick={delet} >Eliminar</button>
+                  <button onClick={delet} className={Estilo.botoncitos2} >Eliminar</button>
+                  </div>
               </form>
               </div>
           </div>
