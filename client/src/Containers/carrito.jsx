@@ -13,9 +13,12 @@ export default function Carrito() {
   useEffect(() => {
     getCarrito(2).payload
     .then(res => {
-      console.log(res.data[0].products)
-      setProducts(res.data[0].products)
-
+      if(!res.data[0]){
+        console.log("agregar")
+      }
+      else{
+        setProducts(res.data[0].products)
+      }
     })
   }, [])
 
@@ -41,15 +44,17 @@ export default function Carrito() {
     console.log(product_id)
 
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-
-
     deleteCarritoUno(2, 2)
     .then(resp => {
       console.log(resp)
     })
   }
 
-  if(products.length === 0){
+  
+  const order_id = products.map(id => id.LineaDeOrden.order_id)
+
+
+  if(!products || products.length === 0){
     return(
       <div>
         <h1>Agregar productos al carrito</h1>
@@ -85,7 +90,7 @@ export default function Carrito() {
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
-          <a className={Estilo.botonesFinales} href='/order'>
+          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`}>
             <span className={Estilo.botoncitos} >Finalizar Compra</span>
           </a>
         </div>  

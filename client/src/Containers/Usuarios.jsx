@@ -58,6 +58,7 @@ function validate(input) {
       .then(function(resp){
         borrarInput()
       })
+      window.location = '/login'
 
 
     }

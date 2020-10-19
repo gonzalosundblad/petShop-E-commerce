@@ -57,7 +57,7 @@ function App() {
               <Route exact path="/admin/ordenes" render={() => <Ordenes /> } /> 
               <Route exact path="/admin/usuarios" render={() => <Usuarios /> } /> 
               <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } /> 
-              <Route exact path="/order" render={() => <OrdenUsuario /> } /> 
+              <Route exact path="/order/:id" render={({match}) => <OrdenUsuario id={match.params.id} /> } /> 
             </div>
         </div>
       </div>
