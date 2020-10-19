@@ -10,7 +10,7 @@ const { Product, Category, productcategory, User, Order, LineaDeOrden } = requir
 //cuando modifico una orden solo cambio su estado ? creo q deberia poder agregar o sacar productos tmbbbb
 
 
-server.get('/', (req, res) => {    //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
+server.get('/', (req, res) => {       //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
     if(req.query.state) {
         Order.findAll({
             where: {
@@ -33,7 +33,6 @@ server.get('/', (req, res) => {    //S44 : Crear ruta que retorne todas las orde
 		});
 })
 
-
 server.get('/:id', (req, res) => {    //S46 : Crear Ruta que retorne una orden en particular.
     Order.findByPk(req.params.id)
         .then(order => {
@@ -43,7 +42,6 @@ server.get('/:id', (req, res) => {    //S46 : Crear Ruta que retorne una orden e
             res.send('Esta orden no existe')
         })
 })
-
 
 server.put('/:id', (req, res) => {    //S47 : Crear Ruta para modificar una Orden ..... modifica solo el state?????
     const { orderState } = req.body
@@ -65,7 +63,5 @@ server.put('/:id', (req, res) => {    //S47 : Crear Ruta para modificar una Orde
         console.log('Error: ', err)
     })
 });
-
-
 
 module.exports = server;

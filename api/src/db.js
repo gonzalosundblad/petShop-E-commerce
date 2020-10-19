@@ -36,12 +36,25 @@ const { Product, Category, Review, User, Order, LineaDeOrden } = sequelize.model
 // Aca vendrian las relaciones
 
 // BelongsTo, BelongsToMany, HasMany, HasOne
+
+//PRODUCT - CATEGORY
 Product.belongsToMany(Category, {through: 'productcategory'});
 Category.belongsToMany(Product, {through: 'productcategory'});
 
+//USER - ORDER
 User.hasMany(Order);
+
+//PRODUCT - ORDER
 Product.belongsToMany(Order, { through: LineaDeOrden, as: 'orders', foreignKey:'product_id' });
-Order.belongsToMany(Product, { through: LineaDeOrden, as: 'products', foreignKey:'order_id' }); 
+Order.belongsToMany(Product, { through: LineaDeOrden, as: 'products', foreignKey:'order_id' });
+
+//PRODUCT - REVIEW
+Product.hasMany(Review,{ foreignKey: 'product_id' });
+Review.belongsTo(Product,{ foreignKey:'product_id' });
+
+//USER - REVIEW
+User.hasMany(Review,{ foreignKey: 'user_id' });
+Review.belongsTo(User,{ foreignKey:'user_id' });
 
 
 
