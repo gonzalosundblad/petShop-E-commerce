@@ -85,17 +85,12 @@ export const Reducers = (state = initialState, action) => {
         ...state,
         users : state.users.concat(action.users)
       }
-<<<<<<< HEAD
       
     case GET_USERS:
-=======
-    case GET_USER:
->>>>>>> 38b89f0a62d440f490a641f6d1cd9af4d1bdd002
       return {
         ...state,
         users : action.users
       }
-<<<<<<< HEAD
 
     case PUT_USER:
       return {
@@ -110,18 +105,6 @@ export const Reducers = (state = initialState, action) => {
         }
   
     
-=======
-    case PUT_USER:
-      return {
-        ...state,
-        user : state.users.map(user => user.id === action.payload.id ? action.payload : user)
-      }
-    case  DELETE_USER:
-      return {
-        ...state,
-        user : state.users.filter(prod =>  prod.id !== action.payload )
-        }
->>>>>>> 38b89f0a62d440f490a641f6d1cd9af4d1bdd002
       //-----------------------------------------------------Carrito
       case GET_CARRO: //obtener todas las categorias
       return {
@@ -133,34 +116,6 @@ export const Reducers = (state = initialState, action) => {
         ...state,
         carrito : state.carrito.concat(action.carrito)
       }
-<<<<<<< HEAD
-
-      case GET_CARRO:
-        return {
-          ...state,
-          carrito : action.carrito
-        }
-  
-      case PUT_CANTIDAD_CARRO:
-        return {
-          ...state,
-          carrito : state.carrito.map(carr => carr.id === action.payload.id ? action.payload : carr)        
-        }  
-  
-      case  DELETE_CARRITO:
-        return {
-          ...state,
-          carrito : state.carrito.filter(carr =>  carr.id !== action.payload )
-          }
-
-      case DELETE_CARRITOUNO:
-        return {
-          ...state,
-          carrito : state.carrito.filter(carr => carr.id !== action.payload)
-        }
-    
-      
-=======
       case PUT_CANTIDAD_CARRO:
         return {
           ...state,
@@ -176,7 +131,6 @@ export const Reducers = (state = initialState, action) => {
             ...state,
             carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
           }
->>>>>>> 38b89f0a62d440f490a641f6d1cd9af4d1bdd002
     default : return state
   }
 

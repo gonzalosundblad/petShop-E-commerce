@@ -59,6 +59,7 @@ function App() {
               <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } /> 
               <Route exact path="/order" render={() => <OrdenUsuario /> } /> 
               <Route exact path="/user/:id/products" render={({match}) => <MostrarCatalogo id={match.params.id} /> } /> 
+              <Route exact path="/order/:id" render={({match}) => <OrdenUsuario id={match.params.id} /> } /> 
             </div>
         </div>
       </div>

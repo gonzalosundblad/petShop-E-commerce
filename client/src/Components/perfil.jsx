@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import OrdenUsuario from '../Containers/ordenUsuario';
-import {getUser, putDelete, putUser} from '../Redux/actionsOrden'
+import {getUser, deleteUser, putUser} from '../Redux/actionsOrden'
 
 export default function Perfil (id){
   const [state, setState] = useState({
@@ -51,8 +51,8 @@ export default function Perfil (id){
     putUser(id, cambios).payload
     .then(resp => {
       console.log(resp)
+      reload()
     })
-    //reload()
     }
     function reload(){
       window.location.reload()
@@ -60,7 +60,7 @@ export default function Perfil (id){
 
     function onDelete(){
       const id = datos.id
-      putDelete(id)
+      deleteUser(id)
       .then(resp => {
         console.log(resp)
         reload()
