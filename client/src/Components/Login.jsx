@@ -76,14 +76,14 @@ export default function User (){
         <div> 
             <Form.Row>
                 <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>Email:</Form.Label>
                     <Form.Control value={input.email} type="email" onChange={handleInputChange} placeholder="Enter email" name="email" />
                     {errors.email && (<h4 className="danger"> {errors.email} </h4>
                    )}
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Password:</Form.Label>
                     <Form.Control value={input.password} onChange={handleInputChange} type="password" placeholder="Password" name="password"/>
                     {errors.password && (
                       <h4 className="danger">{errors.password}</h4>
