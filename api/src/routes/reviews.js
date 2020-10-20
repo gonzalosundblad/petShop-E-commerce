@@ -2,47 +2,45 @@ const server = require('express').Router();
 const { Product, Review, User } = require('../db.js');
 
 
-server.post('/product/:id/review', (req, res) =>{//------------ Insertar una Review a un Producto
+server.post('/product/:id/review', (req, res) => {                       //S54 : Crear ruta para crear/agregar Review
     const product_id = req.params.id;
     const { qualification, description, user_id } = req.body;
+    
     Review.create({
         qualification,
         description,
         user_id,
         product_id,
-    })
-    .then((data) => {
+    }).then((data) => {
         res.status(201).send(data)        
-    })
-    .catch((error) => {
-        res.status(400).json({status: 400, message: error})
+    }).catch((error) => {
+        res.status(400).json({message: error})
     })
 })
 
-server.put('/product/:id/review/:idReview', (req, res) => {
-    const { id, idReview } = req.params;
-    const { qualification, description } = req.body;
+server.put('/product/:id/review/:idReview', (req, res) => {              //S55 : Crear ruta para Modificar Review
+    const {id, idReview} = req.params;
+    const { qualification ,description } = req.body
 
     Review.update({
-        description,
-        qualification
+        qualification: qualification,
+        description: description
     },{
-        returning: true,
-        where: {
+        where:{
             product_id: id,
             review_id: idReview
         }
+    }).then(data => {
+        res.send(data).status(200)
+    }).catch(err => {
+        console.log('Error: ', err)
+        res.status(400).send(err)
     })
-    .then((data) => {
-        res.status(200).json(data)        
-    })
-    .catch((error) => {
-        res.status(400).json({status: 400, message: error})
-    })
-})
+}) 
 
 server.delete('/product/:id/review/:idReview', (req, res) => {           //S56 : Crear Ruta para eliminar Review
     const {idReview} = req.params
+
     Review.destroy({
         where:{
             review_id: idReview
@@ -55,18 +53,19 @@ server.delete('/product/:id/review/:idReview', (req, res) => {           //S56 :
     })
 })
 
-server.get('/product/:id/review', (req, res) => {
-    const { id } = req.params;
+server.get('/product/:id/review/', (req, res) => {                       //S57 : Crear Ruta para obtener todas las reviews de un producto.
+    const { id } = req.params
     Review.findAll({
-		include: { model: User },
-		where: { product_id: id }
-    })
-    .then(data => {
-        res.json(data).status(200)
-    })
-    .catch(err => {
-        console.log('Error: ', err)
-        res.send('Ocurrio un error :(')
+        where: {
+            product_id: id
+        },
+        include: {
+            model: User
+        }
+    }).then(response => {
+        res.status(200).json(response)
+    }).catch(err => {
+        res.status(404).json(err)
     })
 })
 

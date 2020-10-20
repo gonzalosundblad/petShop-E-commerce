@@ -1,6 +1,6 @@
-import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH_PRODUCT, 
-  POST_USER, PUT_USER, POST_CARRO, GET_USERS, DELETE_USER} from './constants';
-import { DELETE_CARRITO, DELETE_CARRITOUNO, GET_CARRO, PUT_CANTIDAD_CARRO } from './constantsCarro';
+import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH} from './constants';
+import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA} from './constantsCarro'
+import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from './constantesOrden'
 
 export const initialState = {
   products : [],
@@ -74,7 +74,7 @@ export const Reducers = (state = initialState, action) => {
 
 
     }
-    case SEARCH_PRODUCT: // busca entre todos
+    case SEARCH: // busca entre todos
     return {
       ...state,
       products : action.payload
@@ -86,7 +86,7 @@ export const Reducers = (state = initialState, action) => {
         users : state.users.concat(action.users)
       }
       
-    case GET_USERS:
+    case GET_USER:
       return {
         ...state,
         users : action.users
@@ -106,7 +106,12 @@ export const Reducers = (state = initialState, action) => {
   
     
       //-----------------------------------------------------Carrito
-      case GET_CARRO: //obtener todas las categorias
+      case GET_CARRO: 
+      return {
+        ...state,
+        carrito : action.carrito,
+      }
+      case GET_CREADA: 
       return {
         ...state,
         carrito : action.carrito,

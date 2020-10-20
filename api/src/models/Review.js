@@ -1,17 +1,14 @@
 const { DataTypes } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
-
-  // defino el modelo
-
+// defino el modelo
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('review', {
     review_id:{
       type:DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
-      unique: true
+      primaryKey: true
     },
     description: {
       type: DataTypes.TEXT
