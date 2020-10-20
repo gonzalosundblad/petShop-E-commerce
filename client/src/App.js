@@ -34,7 +34,7 @@ function App() {
      }
 
   return (
-    
+
     <div className= {StyleApp.App}>
       <BrowserRouter>
       <div>
@@ -55,11 +55,11 @@ function App() {
               <Route exact path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />}/>
               <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
               <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } /> 
-              <Route exact path="/admin/ordenes" render={() => <Ordenes /> } /> 
-              <Route exact path="/admin/ordenes/:id" render={({match}) => <OrdenAdmin id={match.params.id} /> } /> 
-              <Route exact path="/admin/usuarios" render={() => <Usuarios /> } /> 
-              <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } /> 
-              <Route exact path="/order/:id" render={({match}) => <OrdenUsuario id={match.params.id} /> } /> 
+              <Route exact path="/admin/ordenes" render={() => <Ordenes /> } />
+              <Route exact path="/admin/ordenes/:id" render={({match}) => <OrdenAdmin id={match.params.id} /> } />
+              <Route exact path="/admin/usuarios" render={() => <Usuarios /> } />
+              <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } />
+              <Route exact path="/order/:id" render={({match}) => <OrdenUsuario id={match.params.id} /> } />
             </div>
         </div>
       </div>
