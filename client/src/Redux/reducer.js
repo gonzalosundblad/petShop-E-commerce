@@ -7,7 +7,8 @@ import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } fr
   categories : [],
   users: [],
   carrito:[],
-  order: []
+  order: [],
+  usuariosEnLinea: []
 };
 
 export default (state = initialState, action) => {

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
 import {getUser} from '../Redux/actionsOrden';
 import { Link } from 'react-router-dom'
+import StyleLogin from '../Estilos/StyleLogin.module.css';
+
 export default function User (){
     const [users, setUsers] = useState([])
     const [input, setInput] =useState ({
@@ -77,25 +79,26 @@ export default function User (){
     .then(resp => setUsers(resp.data))
   }, [])
 
-function loginUser(){
-        users.map((user) => {
-        if (user.email === input.email){
-          if (user.password === input.password){
-            console.log('ok');
-            //  window.location.href=`https://www.google.com.ar/`
-            window.location.href=`http://localhost:3000/user/`
-          }
-          if (user.password !== input.password){
-            alert('Wrong Password')
-          }
-        }
-        })
+// function loginUser(){
+//         users.map((user) => {
+//         if (user.email === input.email){
+//           if (user.password === input.password){
+//             console.log('ok');
+//             //  window.location.href=`https://www.google.com.ar/`
+//             window.location.href=`http://localhost:3000/user/`
+//           }
+//           if (user.password !== input.password){
+//             alert('Wrong Password')
+//           }
+//         }
+//         })
 
-        };
+//         };
 
   //  window.location.href=`https://www.google.com.ar/`
     return (
         <div>
+          <h2>Ingrese su usuario y contraseña</h2>
             <Form.Row>
                 <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Email:</Form.Label>
@@ -117,6 +120,12 @@ function loginUser(){
             <Button variant="primary" type="button" onClick={loginUser}>
                 Iniciar
             </Button>
+
+            <h2>No tiene cuenta?</h2>
+            <a className={StyleLogin.botones} href='/register'>
+              <span className={StyleLogin.botonCatalogo} >Registrarse</span>
+            </a>
+          
     </div>
     )
  }
