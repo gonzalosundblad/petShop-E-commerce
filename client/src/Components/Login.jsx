@@ -15,7 +15,7 @@ export default function User (){
     useEffect(() => {
         getUser().payload
         .then(resp => setUsers(resp.data))
-        
+
     },[])
 
 
@@ -39,11 +39,11 @@ export default function User (){
         if (input.password && input.email){
             users.forEach((user) => {
                 if (user.email === input.email){
-                    
+
                     if (user.password === input.password){
                         window.location=`user/${user.id}`;
                         x = true;
-                        
+
                     }
                 }
             })
@@ -55,10 +55,10 @@ export default function User (){
         }else{
             alert("Campos a completar.")
         }
-        
-            
+
+
     };
-    
+
     const handleInputChange = function(e) {
         setInput({
           ...input,
@@ -68,12 +68,34 @@ export default function User (){
             ...input,
             [e.target.name]: e.target.value
             }));
-        
+
       }
 
 
+  useEffect(() => {
+    getUser().payload
+    .then(resp => setUsers(resp.data))
+  }, [])
+
+function loginUser(){
+        users.map((user) => {
+        if (user.email === input.email){
+          if (user.password === input.password){
+            console.log('ok');
+            //  window.location.href=`https://www.google.com.ar/`
+            window.location.href=`http://localhost:3000/user/`
+          }
+          if (user.password !== input.password){
+            alert('Wrong Password')
+          }
+        }
+        })
+
+        };
+
+  //  window.location.href=`https://www.google.com.ar/`
     return (
-        <div> 
+        <div>
             <Form.Row>
                 <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Email:</Form.Label>

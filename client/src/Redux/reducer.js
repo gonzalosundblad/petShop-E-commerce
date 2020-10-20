@@ -1,5 +1,5 @@
 import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH} from './constants';
-import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO} from './constantsCarro'
+import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA} from './constantsCarro'
 import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from './constantesOrden'
 
  const initialState = {
@@ -102,7 +102,12 @@ export default (state = initialState, action) => {
         user : state.users.filter(prod =>  prod.id !== action.payload )
         }
       //-----------------------------------------------------Carrito
-      case GET_CARRO: //obtener todas las categorias
+      case GET_CARRO: 
+      return {
+        ...state,
+        carrito : action.carrito,
+      }
+      case GET_CREADA: 
       return {
         ...state,
         carrito : action.carrito,

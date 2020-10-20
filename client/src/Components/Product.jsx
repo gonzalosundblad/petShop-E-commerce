@@ -17,7 +17,7 @@ export default function Product ({ id2 }){
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
 
-  
+
         useEffect(() => {
           getProductById(id2).payload
           .then(function(resp){
@@ -32,12 +32,12 @@ export default function Product ({ id2 }){
       }, []);
 
       function handleChange(e) {
-        setQuantity(e.target.value)
+        setQuantity(e.target.value);
       }
 
 
 
-      
+
     function subirCarrito(){
 
       postCarrito(2, {
@@ -107,7 +107,6 @@ export default function Product ({ id2 }){
         <h4>{description}</h4>
       </div>
     </div>
-  ) 
+  )
 }
 }
-

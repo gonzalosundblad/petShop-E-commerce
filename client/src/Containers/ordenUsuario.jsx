@@ -4,10 +4,9 @@ import {getCarrito} from '../Redux/actionsCarrito'
 import { putOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 
-export default function OrdenUsuario(id){
+export default function OrdenUsuario({id, products}){
   const [orden, setOrden] = useState({})
   const [productOrder, setproductOrder] = useState([])
-
   useEffect(() => {
     getCarrito(2).payload
     .then(res => {
@@ -24,22 +23,18 @@ export default function OrdenUsuario(id){
 
   var precio = productOrder.map(e => e.price * e.LineaDeOrden.quantity)
 
-  // console.log(precio)
   var total = precio.reduce(function(a, b){
     return a + b
   }, 0)
 
-  console.log(total)
 
   var id2 = id.id
-  console.log(id2)
 
   const estado = {orderState:'creada'}
 
   function cambioEstado(){
     putOrder(id2, estado).payload
     .then(resp => {
-      console.log(resp)
       alert('Compra Exitosa')
       window.location='/'
     })
@@ -50,7 +45,7 @@ export default function OrdenUsuario(id){
   function cambioEstado2(){
     putOrder(id2, estado2).payload
     .then(resp => {
-      console.log(resp)
+
       alert('Pedido Cancelado')
       window.location='/'
     })
@@ -60,7 +55,6 @@ export default function OrdenUsuario(id){
     <div>
       <h1 className={StyleOrden.tuOrden} >Tu Orden</h1>
       {productOrder && productOrder.map(e => {
-        console.log(productOrder)
         return(
           <div className={StyleOrden.producto} >
             <h2>{e.name}</h2>

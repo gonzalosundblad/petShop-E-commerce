@@ -8,7 +8,7 @@ export function getOrder() { //obtener todos los productos
 
 //--------Usuarios-------
 
-export function getUser() { //obtener todos los productos
+export function getUser() { //obtener todos los usuarios
   const request = axios.get('http://localhost:3001/users/')
   return { type:GET_USER, payload: request}; }
 export function postUser(usuario){      //agrega un nuevo usuario
@@ -30,7 +30,7 @@ export function getOrderId(id){
   return{ type:GET_ORDENID, payload: request}
 }
 
-export function putOrder(id, estado){ 
+export function putOrder(id, estado){
   const request = axios.put(`http://localhost:3001/orders/${id}`, estado)
   return { type: PUT_ORDER , payload : request } ; }
 
