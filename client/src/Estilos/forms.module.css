@@ -1,0 +1,33 @@
+.forms{
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid rgb(21, 160, 160);
+  background-color: rgb(155, 200, 230);
+  margin: 2%;
+  margin-left: 25%;
+  width: 50%;
+  height: 400px;
+}
+
+.resultado{
+  margin-top: 2%;
+}
+
+.inputs{
+  border-radius: 3px;
+  border: 2px solid  rgb(21, 160, 160);
+}
+
+.formsAgregarCategoria{
+  display: block;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid rgb(21, 160, 160);
+  background-color: rgb(155, 200, 230);
+  margin: 2%;
+  margin-left: 25%;
+  width: 50%;
+  height: 200px;
+}

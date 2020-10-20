@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import Estilo from '../Estilos/forms.module.css'
 import { getOrder } from '../Redux/actionsOrden'
 
 export default function Ordenes (){
@@ -16,16 +17,16 @@ export default function Ordenes (){
   }, [])
 
   return(
-    <div> {
+    <div className={Estilo.forms} > {
     productGuardados && productGuardados.map(encontrado => {
         return (
-          <form key={encontrado.id}>
+          <form key={encontrado.id} className={Estilo.resultado} >
           <label>Id orden:</label>
-          <input type="text" value={encontrado.id} />
+          <input type="text" value={encontrado.id} className={Estilo.inputs} />
           <label>Estado de Orden:</label>
-          <input type="text" value={encontrado.orderState} />
+          <input type="text" value={encontrado.orderState} className={Estilo.inputs} />
           <label>Id usuario:</label>
-          <input type="text" value={encontrado.userId} />
+          <input type="text" value={encontrado.userId} className={Estilo.inputs} />
         </form>
         )
     })

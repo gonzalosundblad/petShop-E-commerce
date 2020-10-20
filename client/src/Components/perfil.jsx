@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import OrdenUsuario from '../Containers/ordenUsuario';
 import {getUser, deleteUser, putUser} from '../Redux/actionsOrden'
+import Estilo from '../Estilos/Perfil.module.css'
 
 export default function Perfil (id){
   const [state, setState] = useState({
@@ -76,27 +77,35 @@ export default function Perfil (id){
       )
     }else{
   return(
-    <div>
-        <h1>Bienvenido {datos.name} ! </h1>
-        <h2>Tu email : {datos.email}  </h2>
+    <div className={Estilo.productoGrande} >
+        <h1 className={Estilo.bienvenido} >Bienvenido {datos.name} ! </h1>
+        <h2 className={Estilo.producto} >Tu email : {datos.email}  </h2>
             <div>
                 <form onSubmit={handleSubmit}>
                   <div>
-                <label>Nombre</label>
-                  <input type="text" placeholder={datos.name} name="name" onChange={handleChange}/>
-                <label>Email</label>
-                  <input type="email" placeholder={datos.email} name="email" onChange={handleChange}/>
-                <label>Password</label>
-                  <input type="password" placeholder={datos.password} name="password" onChange={handleChange}/>
-                <button type="submit" value="Actualizar">
+                    <div  className={Estilo.nombre}>
+                <label >Nombre:</label>
+                  <input type="text" placeholder={datos.name} name="name" onChange={handleChange} className={Estilo.nombre2}/>
+                  </div>
+                  <div className={Estilo.email}>
+                <label>Email:</label>
+                  <input type="email" placeholder={datos.email} name="email" onChange={handleChange} className={Estilo.email2}/>
+                  </div>
+                  <div className={Estilo.password}>
+                <label>Password:</label>
+                  <input type="password" placeholder={datos.password} name="password" onChange={handleChange} className={Estilo.password2} />
+                  </div>
+                  <div className={Estilo.botonesFinales} >
+                <button type="submit" value="Actualizar" className={Estilo.botoncitos} >
                     Modificar datos
                 </button>
+                <button type="submit" onClick={onDelete} className={Estilo.botoncitos2}  >
+                          Eliminar Cuenta
+                </button>
+                  </div>
                   </div>
               </form>
           </div>
-          <button type="submit" onClick={onDelete} >
-                    Eliminar Cuenta
-          </button>
     </div>
   )
   }

@@ -5,6 +5,7 @@ import {getProductByCategory, getCategories} from '../Redux/actions.js';
 import {deleteCategory} from '../Redux/actions'; 
 import {postCategory} from '../Redux/actions';
 import {putCategoryId} from '../Redux/actions.js';
+import estilo from '../Estilos/forms.module.css';
 
 export function MostrarCategorias (){                  //Muestra las categorias en el home
   const [categorias, setCategoria] = useState([]);
@@ -43,36 +44,6 @@ return (
     )
 };
 
-// export function BorrarCategoria() {                      //borra categoria
-
-//   const [idCambiado, setID] = useState ([]);
-
-//   function handleChange (e)  {
-//       setID(e.target.value);
-//     }
-    
-//     function handleSubmit (event){
-//       event.preventDefault();
-//     }
-    
-//     deleteCategory(idCambiado).payload
-//     .then(function(resp){
-//     console.log(resp.data);
-//   })
-
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           ID De la categoria:
-//           <input type="text" name="id" onChange={handleChange} />
-//         </label>
-//         <button type="submit">Borrar</button>
-//       </form>
-//     </div>
-//   )
-// };
-
 export function AgregarCategoria() {                  //agrega categoria
   const [ nueva, setNueva] = useState([]);
   const [ description, setDescription] = useState([])
@@ -109,12 +80,16 @@ export function AgregarCategoria() {                  //agrega categoria
   
  
 return (
-  <div>
-    <form id="miForm" onSubmit={handleSubmit}>
-      <label>Nombre de Categoría: </label>
+  <div className={estilo.formsAgregarCategoria}>
+    <form  onSubmit={handleSubmit}>
+      <div>
+        <label>Nombre de Categoría: </label>
         <input id="name" type="text" name="name" onChange={handleChange} />
+      </div>
+      <div>
         <label>Descripción: </label>
         <input id="description" type="text" description="description" onChange={handleChange2} />
+      </div>
       <button type="submit">Agregar</button>
     </form>
   </div>
