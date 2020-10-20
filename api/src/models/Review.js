@@ -7,7 +7,24 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('review', {
-    text: DataTypes.TEXT
+    review_id:{
+      type:DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      unique: true
+    },
+    description: {
+      type: DataTypes.TEXT
+    },
+    qualification:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      validate:{
+          min:1,
+          max:5,
+      }
+    }
   }
+  
 )};
 
