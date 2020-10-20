@@ -157,7 +157,7 @@ export function ModificaCategoria() {                   //modifica categoria y b
    return (
       <div className={estilo.formsModificarCategoria }>
         <div>
-          <h3>Categorias disponibles para modificar o borrar:</h3>
+          <h3>Categorias disponibles para modificar o eliminar:</h3>
         </div>
         <div>
             {
@@ -188,7 +188,7 @@ export function ModificaCategoria() {                   //modifica categoria y b
         <hr/>
         
           <div>
-            <h2>Ingrese los datos que desea modificar o borrar</h2>
+            <h2>Ingrese los datos que desea modificar o liminar</h2>
           </div>
           <div>
             <form  onSubmit={handleSubmit}>
@@ -214,7 +214,7 @@ export function ModificaCategoria() {                   //modifica categoria y b
             </div>
             <div className={estilo.botones}>
               <button  className={estilo.botonModificar} type="submit" value="Actualizar"> Modificar </button>
-              <button className={estilo.botonBorrar} onClick={delet} >Borrar</button>
+              <button className={estilo.botonBorrar} onClick={delet} >Eliminar</button>
             </div>
         </div>
       

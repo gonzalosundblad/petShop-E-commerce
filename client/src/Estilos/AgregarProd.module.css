@@ -51,7 +51,7 @@
   border: 2px solid  rgb(21, 160, 160);
 }
 
-.botoncitos{
+/* .botoncitos{
   background-color: rgba(3, 139, 139, 0.863);
   color: white;
   width: 15%;
@@ -88,7 +88,7 @@
   display: flex;
   margin: 20px;
   justify-content: center;
-}
+} */
 
 
 .inputCategoria{

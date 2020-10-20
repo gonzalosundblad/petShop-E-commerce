@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import {putId, getProducts, deleteProduct, getCategories } from '../Redux/actions.js'
 import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
-import Estilo from '../Estilos/formsProd.module.css'
+import Estilo from '../Estilos/ModificarProd.module.css'
 import Estilos from '../Estilos/AgregarProd.module.css'
 import firebase, { storage } from 'firebase';
 
@@ -70,91 +70,101 @@ export function ModificayBorra() {                                   //modifica 
  return (
    <div>
      <div className={Estilo.forms}>
-         <div>
-             <h3>Lista de productos disponibles para modificar/eliminar</h3>
-         </div>
-                 {
-                     prodGuardados && prodGuardados.map(encontrado => {
-                         return (
-                           <form key={encontrado.id}  className={Estilo.resultado}>
-                           <label>Id:</label>
-                           <input type="text" value={encontrado.id}  className={Estilo.inputs} />
-                           <label>Nombre:</label>
-                           <input type="text" value={encontrado.name} className={Estilo.inputs} />
-                           <label>Descripcion:</label>
-                           <input type="text" value={encontrado.description} className={Estilo.inputs} />
-                           <label>Precio:</label>
-                           <input type="text" value={`$ ${encontrado.price}`} className={Estilo.inputs}/>
-                           <label>Stock:</label>
-                           <input type="text" value={encontrado.stock} className={Estilo.inputs}/>
-                         </form>
-
-                         )
-                     })
-                 }
-                 </div>
-
-
-         <div className="modificador">
-             <h3>Ingrese los datos que desea modificar/eliminar</h3>
-             <form className="text-left"
-                 onSubmit={handleSubmit}>
-
-                 <div className={Estilo.id}>
-                     <label>Id:</label>
-                     <input
-                         type="number" id="id" name="id" className="form-control"
-                         placeholder="Ingrese id del producto"
-                         onChange={handleChange}
-                         className={Estilo.id2}
-                     />
-                 </div>
-                 <div className={Estilo.nombre}>
-                     <label> Nombre: </label>
-                     <input
-                         type="text" id="name" name="name" className="form-control"
-                         placeholder="Ingrese nombre del producto"
-                         onChange={handleChange}
-                         className={Estilo.nombre2}
-                     />
-                 </div>
-                 <div className={Estilo.description}>
-                    <label>Descripcion:</label>
-                     <input
-                         type="text" id="description" name="description" className="form-control"
-                         placeholder="Ingrese una descripción"
-                         onChange={handleChange}
-                         className={Estilo.description2}
-                     />
-                 </div>
-                 <div className={Estilo.price}>
-                     <label>Precio: </label>
-                     <input
-                         type="number" id="price" name="price" className="form-control"
-                         placeholder="Ingrese Precio"
-                         onChange={handleChange}
-                         className={Estilo.price2}
-                     />
-                 </div>
-                  <div className={Estilo.stock}>
-                      <label> Stock:</label>
-                      <input
-                          type="number" id="stock" name="stock" className="form-control"
-                          placeholder="Ingrese cantidad"
-                          onChange={handleChange}
-                          className={Estilo.stock2}
-                      />
-                  </div>
-                 <div className={Estilo.botonesFinales} >
-                  <button type="submit" value="Actualizar" className={Estilo.botoncitos}>
-                      Modificar producto
-                  </button>
-
-                  <button onClick={delet} className={Estilo.botoncitos2} >Eliminar</button>
-                  </div>
-              </form>
-              </div>
+        <div>
+            <h3>Lista de productos disponibles para modificar/eliminar</h3>
+        </div>
+        <div className={Estilo.titulos}>
+          <h1>ID</h1>
+          <h1>Nombre</h1>
+          <h1>Descripcion</h1>
+          <h1>Precio</h1>
+          <h1>Stock</h1>
+        </div>
+        <div>
+            {
+            prodGuardados && prodGuardados.map(encontrado => {
+              return (
+                <div >
+                  <form key={encontrado.id} >
+                    <div className={Estilo.labelInput}>
+                      <div >                       
+                        <input className={Estilo.inputId} type="text" value={encontrado.id}  />
+                      </div>
+                      <div >                      
+                        <input className={Estilo.inputNombre} type="text" value={encontrado.name}  />
+                      </div>
+                      <div>                       
+                        <input className={Estilo.inputNombre}  type="text" value={encontrado.description} />
+                      </div>
+                      <div>
+                        <input className={Estilo.inputPrecio} type="text" value={`$ ${encontrado.price}`}/>
+                      </div>
+                      <div>
+                        <input className={Estilo.inputPrecio} type="text" value={encontrado.stock} />
+                      </div>
+                    </div>
+                  </form>
+                  <hr/>
+                </div>
+                )
+              })
+            }
           </div>
+      </div>
+
+      <div className={Estilo.formsModificar}>
+        <div>
+          <h3>Ingrese los datos que desea modificar/eliminar</h3>
+        </div>     
+        <form onSubmit={handleSubmit}>
+          <div className={Estilo.labelInputModificar}>
+                <label>Id:</label>
+                <input
+                    type="number" id="id" name="id" 
+                    placeholder="Nº"
+                    onChange={handleChange}
+                    className={Estilo.id2}
+                />
+          </div>
+          <div className={Estilo.labelInputModificar}>  
+            <label> Nombre: </label>
+            <input
+                type="text" id="name" name="name" 
+                placeholder="Ingrese nombre del producto"
+                onChange={handleChange}
+            />
+          </div>
+            <div className={Estilo.labelInputModificar}>
+              <label>Descripcion:</label>
+                <input
+                    type="text" id="description" name="description" 
+                    placeholder="Ingrese una descripción"
+                    onChange={handleChange}
+                />
+            </div>
+            <div className={Estilo.labelInputModificar}>
+              <label>Precio: </label>
+              <input
+                  type="number" id="price" name="price" 
+                  placeholder="Ingrese Precio"
+                  onChange={handleChange}
+              />
+            </div>
+            <div className={Estilo.labelInputModificar}>
+              <label> Stock:</label>
+              <input
+                  type="number" id="stock" name="stock" 
+                  placeholder="Ingrese cantidad"
+                  onChange={handleChange}
+              />
+            </div>
+          </form>      
+          <div className={Estilo.botones} >
+            <button type="submit" value="Actualizar" className={Estilo.botonModificar}> Modificar</button>
+            <button onClick={delet} className={Estilo.botonBorrar} >Eliminar</button>
+          </div>
+      </div>   
+    </div>
   );
 }
 
