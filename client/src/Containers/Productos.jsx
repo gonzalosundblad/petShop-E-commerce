@@ -3,7 +3,9 @@ import axios from 'axios';
 import {putId, getProducts, deleteProduct, getCategories } from '../Redux/actions.js'
 import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
 import Estilo from '../Estilos/formsProd.module.css'
+import Estilos from '../Estilos/AgregarProd.module.css'
 import firebase, { storage } from 'firebase';
+
 
 export function ModificayBorra() {                                   //modifica y borra producto
   const [state, setState] = useState({
@@ -270,68 +272,68 @@ export function CrudProduct( ){
   
       
     return(
-      <Form className="form-class" display="block" onSubmit={(e) => {
-        e.preventDefault();
-        axios.post(`http://localhost:3001/products/`,  input )
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
-            setInput({
-              name: "",
-              description: "",
-              stock: "",
-              price: "",
-              image: "",
-              categoryId: 1, 
-  
+      <div className={Estilos.forms} >
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          axios.post(`http://localhost:3001/products/`,  input )
+            .then(res => {
+              console.log(res);
+              console.log(res.data);
+              setInput({
+                name: "",
+                description: "",
+                stock: "",
+                price: "",
+                image: "",
+                categoryId: 1, 
+    
+              })            
             })
-                    
-   })
-        }}>
-        
-          <Form.Row  >
-           
-            <Form.Group className="form-group" controlId="formGridName" >
-              <Form.Label>Producto: </Form.Label>
-              <Form.Control autoComplete="false" className={errors.name && 'danger'} value={input.name} onChange={handleInputChange} name="name"/>
-              {!errors.name ? null : <p className="danger">{errors.name}</p>}
-            </Form.Group>
-  
-            <Form.Group controlId="formGridState">
-              <Form.Label>Categoria</Form.Label>
-                <Form.Control as="select" name="categoryId" 
-                 onChange={e => getIdCategory(e)} 
-                 >
-                  {categories.map((category, i) => <option key={category.id} id={i} >{category.name}</option>)} 
-                </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="formGridName" >
-              <Form.Label>Description: </Form.Label>
-              <Form.Control autoComplete={false} value={input.description} onChange={handleInputChange} name="description"/>
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group  className="form-group" controlId="formGridPrice">
-              <Form.Label>Price:</Form.Label>
-              <Form.Control autoComplete={false} className={errors.price && 'danger'} value={input.price} onChange={handleInputChange} name="price" />
-              {!errors.price ? null : <p className="danger">{errors.price}</p>}
-            </Form.Group>
-            <Form.Group className="form-group" controlId="formGridStock">
-              <Form.Label>Stock:</Form.Label>
-              <Form.Control autoComplete={false} className={errors.stock && 'danger'} value={input.stock} onChange={handleInputChange} name="stock" />
-              {!errors.stock ? null : <p className="danger">{errors.stock}</p>}
-            </Form.Group>
-          </Form.Row>
+          }}>
+          <div>
+            <h2>Agrega un producto:</h2>
+          </div>
+          <div>
+            <div className={Estilos.resultado} controlId="formGridName" >
+              <label>Producto: </label>
+              <input autoComplete="false" value={input.name} onChange={handleInputChange} name="name"/>
+            </div>
+            {!errors.name ? null : <p className="danger">{errors.name}</p>}
+
+            <div className={Estilos.resultado} controlId="formGridState">
+              <label>Categoria</label>
+              <Form.Control className={Estilos.inputCategoria} as="select" name="categoryId" 
+                onChange={e => getIdCategory(e)} 
+                >
+                {categories.map((category, i) => <option key={category.id} id={i} >{category.name}</option>)} 
+              </Form.Control>
+            </div>
+
+            <div  className={Estilos.resultado} controlId="formGridName" >
+              <label>Description: </label>
+              <input autoComplete={false} value={input.description} onChange={handleInputChange} name="description"/>
+            </div>
           
-       
+            <div  className={Estilos.resultado}  controlId="formGridPrice">
+              <label>Price:</label>
+              <input autoComplete={false}  value={input.price} onChange={handleInputChange} name="price" />
+            </div>
+            {!errors.price ? null : <p className="danger">{errors.price} </p>}
+
+            <div className={Estilos.resultado}  controlId="formGridStock">
+              <label>Stock:</label>
+              <input autoComplete={false}  value={input.stock} onChange={handleInputChange} name="stock" />
+            </div>
+            {!errors.stock ? null : <p className="danger">{errors.stock}</p>}
           
-        <input type="file" value={input.image} onChange={handleUpload}  name="image" accept="image/png, .jpeg, .jpg, image/gif"/>
-  
-        <Button  enabled={!handleSubmit()} variant="primary" type="submit">
-          Agregar
-        </Button>
-        
-      </Form>
+            <input  type="file" value={input.image} onChange={handleUpload}  name="image" accept="image/png, .jpeg, .jpg, image/gif"/>
+            
+            <div  >
+              <button  enabled={!handleSubmit()} variant="primary" type="submit"  > Agregar </button>
+            </div>
+          </div>
+        </form>
+      </div>
     )
-}
+};
 
