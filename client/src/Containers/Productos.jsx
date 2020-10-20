@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import {putId, getProducts, deleteProduct, getCategories } from '../Redux/actions.js'
+import {putId, getProductsRequest, deleteProduct, getCategories } from '../Redux/actions.js'
 import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
 import Estilo from '../Estilos/ModificarProd.module.css'
 import Estilos from '../Estilos/AgregarProd.module.css'
 import firebase, { storage } from 'firebase';
+import {connect} from 'react-redux'
 
 
-export function ModificayBorra() {                                   //modifica y borra producto
+export function ModificayBorra({products}) {    //modifica y borra producto
   const [state, setState] = useState({
       id: "",
       name: "",
@@ -18,8 +19,9 @@ export function ModificayBorra() {                                   //modifica 
   const [prodGuardados, setProdGuardados] = useState([])
 
   useEffect(() => {
-    getProducts().payload
-    .then(resp => setProdGuardados(resp.data))
+    getProductsRequest()
+    console.log('useEffect');
+    setProdGuardados(products)
   }, []);
 
  function handleChange(e){
@@ -29,6 +31,7 @@ export function ModificayBorra() {                                   //modifica 
      });
  }
 
+
  function handleSubmit (event) {
    event.preventDefault();
    const cambios =  {
@@ -37,17 +40,19 @@ export function ModificayBorra() {                                   //modifica 
      description: state.description,
      price: state.price,
      stock: state.stock
-   }
+       }
+       console.log(cambios);
+       }
+   function modificar(e){
+     console.log(state);
+        const id = state.id
+     putId(id, state)
+     .then( resp => {
+       console.log(resp)
+       borrarInput()
+       reload()
+   })}
 
-   const id = state.id
-   putId(id, cambios)
-   .then( resp => {
-     console.log(resp)
-     borrarInput()
-     reload()
-   })
-
-}
   function borrarInput(){
     document.getElementById("id").value = "";
     document.getElementById("name").value = "";
@@ -57,7 +62,7 @@ export function ModificayBorra() {                                   //modifica 
   }
   function reload(){
     window.location.reload()
-  } 
+  }
 
 
   function delet (){
@@ -87,13 +92,13 @@ export function ModificayBorra() {                                   //modifica 
                 <div >
                   <form key={encontrado.id} >
                     <div className={Estilo.labelInput}>
-                      <div >                       
+                      <div >
                         <input className={Estilo.inputId} type="text" value={encontrado.id}  />
                       </div>
-                      <div >                      
+                      <div >
                         <input className={Estilo.inputNombre} type="text" value={encontrado.name}  />
                       </div>
-                      <div>                       
+                      <div>
                         <input className={Estilo.inputNombre}  type="text" value={encontrado.description} />
                       </div>
                       <div>
@@ -115,21 +120,21 @@ export function ModificayBorra() {                                   //modifica 
       <div className={Estilo.formsModificar}>
         <div>
           <h3>Ingrese los datos que desea modificar/eliminar</h3>
-        </div>     
+        </div>
         <form onSubmit={handleSubmit}>
           <div className={Estilo.labelInputModificar}>
                 <label>Id:</label>
                 <input
-                    type="number" id="id" name="id" 
+                    type="number" id="id" name="id"
                     placeholder="Nº"
                     onChange={handleChange}
                     className={Estilo.id2}
                 />
           </div>
-          <div className={Estilo.labelInputModificar}>  
+          <div className={Estilo.labelInputModificar}>
             <label> Nombre: </label>
             <input
-                type="text" id="name" name="name" 
+                type="text" id="name" name="name"
                 placeholder="Ingrese nombre del producto"
                 onChange={handleChange}
             />
@@ -137,7 +142,7 @@ export function ModificayBorra() {                                   //modifica 
             <div className={Estilo.labelInputModificar}>
               <label>Descripcion:</label>
                 <input
-                    type="text" id="description" name="description" 
+                    type="text" id="description" name="description"
                     placeholder="Ingrese una descripción"
                     onChange={handleChange}
                 />
@@ -145,7 +150,7 @@ export function ModificayBorra() {                                   //modifica 
             <div className={Estilo.labelInputModificar}>
               <label>Precio: </label>
               <input
-                  type="number" id="price" name="price" 
+                  type="number" id="price" name="price"
                   placeholder="Ingrese Precio"
                   onChange={handleChange}
               />
@@ -153,17 +158,17 @@ export function ModificayBorra() {                                   //modifica 
             <div className={Estilo.labelInputModificar}>
               <label> Stock:</label>
               <input
-                  type="number" id="stock" name="stock" 
+                  type="number" id="stock" name="stock"
                   placeholder="Ingrese cantidad"
                   onChange={handleChange}
               />
             </div>
-          </form>      
+          </form>
           <div className={Estilo.botones} >
-            <button type="submit" value="Actualizar" className={Estilo.botonModificar}> Modificar</button>
+            <button onClick={modificar} type="submit" value="Actualizar" className={Estilo.botonModificar}> Modificar</button>
             <button onClick={delet} className={Estilo.botonBorrar} >Eliminar</button>
           </div>
-      </div>   
+      </div>
     </div>
   );
 }
@@ -180,170 +185,19 @@ var firebaseConfig = {                                        //agrega productos
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  
-export function CrudProduct( ){
-    const [ input, setInput ] = useState({
-      name: "",
-      description: "",
-      stock: "",
-      price: "",
-      image: "",
-      categoryId: 1,  
-    })
-    const [ errors, setErrors] = useState({});
-    const [ categories, setCategories ] = useState([]);
-    
-  
-    function getIdCategory(event) {
-      // event.preventDefault();
-      
-      let x = categories[event.target.selectedIndex]
-      setInput({
-        ...input,
-        categoryId: x.id,
-      });
-      
-    }
-  
-  
-    useEffect(() => {
-     function searchCategories() {
-      getCategories().payload
-      .then(resp => setCategories(resp.data))
-    }
-      searchCategories();
-    }, []);
-  
-    function validate(input) {
-        let errors = {};
-        if (!input.name) {
-          errors.name = 'Product Name is required';
-        } else if (input.name.length < 3) {
-          errors.name = 'Product Name is invalid (more than 3 characters)';
-        }
-        if (!input.price){
-          errors.price =  "Price is required";
-        }else if(!typeof(parseFloat(input.price) == "NaN")){
-          errors.price = "Price is not a number";
-          
-        }else if(parseFloat(input.price) < 0){
-          errors.price = "Price has to be major to 0";
-        
-        }else if(!/^\d+(\.\d{1,2})?$/.test(input.price)){
-          errors.price = "Price Format Invalid(Format valid (Number.Number))";
-        }
-        if (!input.stock){
-          errors.stock =  "Stock is required";
-        // }else if(!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)){
-        }else if(!typeof(parseFloat(input.stock) === "number")){
-          errors.stock = "Stock is not a number";
-        
-        }else if(parseFloat(input.stock) < 0){
-          errors.stock = "Stock has to be major to 0";
-        }else if(!/^\d+(\.\d{1,2})?$/.test(input.stock)){
-          errors.stock = "Stock Format Invalid(Format valid (Number.Number))";
-        }
-        return errors;
-      };  
-  
-    const handleInputChange = function(e) {
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value
-      });
-      setErrors(validate({
-        ...input,
-        [e.target.name]: e.target.value
-      }));
-    }
-  
-    function handleUpload (e) {
-      const file = e.target.files[0];
-      // var x = e.target.value.slice(12)
-      // console.log(e.target.name);
-      // console.log(e.target)
-      const storageRef = firebase.storage().ref(`/fotosProductos/${file.name}`);
-      // const storageRef = firebase.storage().ref(`/fotosProductos/${file.name}`).getDownloadURL().then((url) => { var myUrl = url})
-      // ESTO DE ARRIBA ES PARA MANDAR MAS PROLIJAMENTE LA URL A LA BASE DE DATOS. DEBERIA DISPARARSE UNA ACTION Q MANDE LA var myUrl en vez de semihardocdear en la ruta de product
-      storageRef.put(file);
-      // console.log(storageRef)
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value
-      });
-    }
-  
-    function handleSubmit() {
-      // console.log(!errors.name && !errors.stock && !errors.price);
-      
-     return(!errors.name  && !errors.stock && !errors.price );
-        
-      }
-  
-      
-    return(
-      <div className={Estilos.forms} >
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          axios.post(`http://localhost:3001/products/`,  input )
-            .then(res => {
-              console.log(res);
-              console.log(res.data);
-              setInput({
-                name: "",
-                description: "",
-                stock: "",
-                price: "",
-                image: "",
-                categoryId: 1, 
-    
-              })            
-            })
-          }}>
-          <div>
-            <h2>Agrega un producto:</h2>
-          </div>
-          <div>
-            <div className={Estilos.resultado} controlId="formGridName" >
-              <label>Producto: </label>
-              <input autoComplete="false" value={input.name} onChange={handleInputChange} name="name"/>
-            </div>
-            {!errors.name ? null : <p className="danger">{errors.name}</p>}
 
-            <div className={Estilos.resultado} controlId="formGridState">
-              <label>Categoria</label>
-              <Form.Control className={Estilos.inputCategoria} as="select" name="categoryId" 
-                onChange={e => getIdCategory(e)} 
-                >
-                {categories.map((category, i) => <option key={category.id} id={i} >{category.name}</option>)} 
-              </Form.Control>
-            </div>
+  const mapStateToProps = state => {
+    return {
+      products: state.products
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+    return {
+      getProductsRequest: () => dispatch(getProductsRequest())
+    }
+  }
 
-            <div  className={Estilos.resultado} controlId="formGridName" >
-              <label>Description: </label>
-              <input autoComplete={false} value={input.description} onChange={handleInputChange} name="description"/>
-            </div>
-          
-            <div  className={Estilos.resultado}  controlId="formGridPrice">
-              <label>Price:</label>
-              <input autoComplete={false}  value={input.price} onChange={handleInputChange} name="price" />
-            </div>
-            {!errors.price ? null : <p className="danger">{errors.price} </p>}
-
-            <div className={Estilos.resultado}  controlId="formGridStock">
-              <label>Stock:</label>
-              <input autoComplete={false}  value={input.stock} onChange={handleInputChange} name="stock" />
-            </div>
-            {!errors.stock ? null : <p className="danger">{errors.stock}</p>}
-          
-            <input  type="file" value={input.image} onChange={handleUpload}  name="image" accept="image/png, .jpeg, .jpg, image/gif"/>
-            
-            <div  >
-              <button  enabled={!handleSubmit()} variant="primary" type="submit"  > Agregar </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    )
-};
-
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ModificayBorra)

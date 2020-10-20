@@ -3,7 +3,7 @@ import StyleApp from './App.module.css';
 import { BrowserRouter, Route} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo'
 import Nav from './Containers/Nav';
-import {CrudProduct} from './Containers/Productos';
+import {CrudProduct} from './Containers/CrudProduct';
 import {MostrarCategorias} from './Containers/Categorias';
 import {ProductosPorCategoria} from './Containers/Categorias';
 // import {BorrarCategoria} from './Containers/Categorias';

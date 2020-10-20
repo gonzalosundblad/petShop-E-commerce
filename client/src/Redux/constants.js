@@ -14,6 +14,11 @@ export const DELETE_CATEGORY_ID = "DELETE_CATEGORY_ID";
 export const SEARCH = "SEARCH";
 
 export const POST_USER = "POST_USER";
+
+export const POST_REVIEW = "POST_USER";
+export const PUT_REVIEW = "POST_USER";
+export const DELETE_REVIEW = "POST_USER";
+export const GET_ALL_REVIEW = "POST_USER";
 // (`http://localhost:3001/search?products=${producto}`)
 // server.get('/category', (req, res) => {
 // server.get('/category/:nombreCat', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS DE X CATEGORIA

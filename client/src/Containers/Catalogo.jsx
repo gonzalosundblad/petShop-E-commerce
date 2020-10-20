@@ -4,10 +4,11 @@ import {getProductsRequest} from '../Redux/actions';
 import {connect} from 'react-redux'
 
 function MostrarCatalogo ({products, getProductsRequest}) {
+
   useEffect(() => {
-    getProductsRequest()
     console.log('useEffect');
     console.log(products);
+    getProductsRequest()
   }, []);
 
   return (

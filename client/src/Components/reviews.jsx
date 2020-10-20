@@ -1,23 +1,51 @@
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Style from '../Estilos/reviews.module.css';
+import {getAllReviewsRequest, deleteReviewRequest, putReviewRequest, postReviewRequest} from '../Redux/actionsReview';
+import {connect} from 'react-redux'
+import axios from 'axios';
 
-export default function Reviews(){
+function Reviews(props){
   var opiniones = [{date: "15/11" , user: "jorge", id:159, estrellas:5, title:"por ahora muy bueno", description: "Compre semillas."}, {date: "02/03" , user: "ana", id:241, estrellas:2, title:"Veremos las de perejil", description: "Explotaron de crecimiento"}]
+  const [state, setState] = useState({
+      qualification: "",
+      description: "",
+    });
+    function submit(){}
+        var prom=[];
+        var cantidaddevotos = [{1:0},{2:0},{3:0},{4:0},{5:0},{0:0}]
+          function promedio(){
+            var values = [1,2, 3, 3, 3]
+            opiniones.map(e => values.push([e][0].estrellas))
+            var total  = values.reduce(function(a,b){
+              return a + b
+            }, 0)
+            values.map(e => e === 1 )
+            prom = Math.round(total/values.length).toFixed(2);
+        }
+        promedio()
+      function handleChange (e){
+          setState({
+              ...state,
+              [e.target.name]: e.target.value,
+          });
+      }
+      function handleSubmit(e){
+          e.preventDefault();
+      }
+      function onSend(){
+        var id = 2
+        var post = {
+          qualification : 5,
+          description : 'jjjjjjjjjj',
+          user_id : 2
+          };
+          //postReviewRequest(2, post);
+          axios.post(`http://localhost:3001/product/${id}/review`, post)
+            .then(response => {console.log(response.data)})
 
-function submit(){}
-var prom=[];
-var cantidaddevotos = [{1:0},{2:0},{3:0},{4:0},{5:0},{0:0}]
-  function promedio(){
-    var values = [1,2, 3, 3, 3]
-    opiniones.map(e => values.push([e][0].estrellas))
-    var total  = values.reduce(function(a,b){
-      return a + b
-    }, 0)
-    values.map(e => e === 1 )
-    prom = Math.round(total/values.length).toFixed(2);
-    }
-promedio()
+      }
+
     return(
       <div className={Style.box}>
         <div >
@@ -73,24 +101,27 @@ promedio()
             </div>
 
             </td><td>
-            <form >
+            <form onSubmit={handleSubmit}>
               <h4 className={Style.subtitulo}> Dejanos tu opinion </h4>
               <p>
-                <input id="radio1" type="radio" name="estrellas" value="1"/>
+                <input id="radio1" type="radio" name="qualification" value="5" onChange={handleChange}/>
                 <label for="radio1" className={Style.estrellas}>★</label>
-                <input id="radio2" type="radio" name="estrellas" value="2"/>
+                <input id="radio2" type="radio" name="qualification" value="4" onChange={handleChange}/>
                 <label for="radio2" className={Style.estrellas}>★</label>
-                <input id="radio3" type="radio" name="estrellas" value="3"/>
+                <input id="radio3" type="radio" name="qualification" value="3" onChange={handleChange}/>
                 <label for="radio3" className={Style.estrellas}>★</label>
-                <input id="radio4" type="radio" name="estrellas" value="4"/>
+                <input id="radio4" type="radio" name="qualification" value="2" onChange={handleChange}/>
                 <label for="radio4" className={Style.estrellas}>★</label>
-                <input id="radio5" type="radio" name="estrellas" value="5"/>
+                <input id="radio5" type="radio" name="qualification" value="1" onChange={handleChange}/>
                 <label for="radio5"className={Style.estrellas}>★</label>
               </p>
               <h4>Cuentanos mas sobre el producto</h4>
-              <input type="text" />
+              <input className={Style.inputt}type="text" name="description" placeholder="Cuentanos mas sobre el producto"
+                  onChange={handleChange} />
               <hr/>
-              <botton className={Style.botton} onClick={submit} >Enviar opinion</botton>
+              <button onClick={onSend}className={Style.botton} type="submit">
+                Enviar opinion
+              </button>
             </form>
             </td></tr>
           </table>
@@ -102,4 +133,18 @@ promedio()
         )
 }
 
-// export total;
+const mapStateToProps = state => {
+  return {
+    reviews: state.reviews
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    postReviewRequest: () => dispatch(postReviewRequest())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Reviews)

@@ -5,14 +5,14 @@ const { Product, Review, User } = require('../db.js');
 server.post('/product/:id/review', (req, res) => {                       //S54 : Crear ruta para crear/agregar Review
     const product_id = req.params.id;
     const { qualification, description, user_id } = req.body;
-
+console.log(product_id, qualification, description, user_id);
     Review.create({
         qualification,
         description,
         user_id,
         product_id,
     }).then((data) => {
-        res.status(201).json(data)        
+        res.status(201).json(data)
     }).catch((error) => {
         res.status(400).json({message: error})
     })
@@ -53,7 +53,7 @@ server.delete('/product/:id/review/:idReview', (req, res) => {           //S56 :
     })
 })
 
-server.get('/product/:id/review/', (req, res) => {                       //S57 : Crear Ruta para obtener todas las reviews de un producto.
+server.get('/product/:id/review/', (req, res) => {  //S57 : Crear Ruta para obtener todas las reviews de un producto.
     const { id } = req.params
     Review.findAll({
         where: {
@@ -63,7 +63,7 @@ server.get('/product/:id/review/', (req, res) => {                       //S57 :
             model: User
         }
     }).then(response => {
-        res.status(200).json(response)
+        res.status(200).json({response : 'response'})
     }).catch(err => {
         res.status(404).json(err)
     })

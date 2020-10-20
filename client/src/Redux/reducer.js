@@ -1,17 +1,19 @@
 import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH} from './constants';
 import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA} from './constantsCarro'
 import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from './constantesOrden'
+import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW} from './constantsReview';
 
  const initialState = {
   products : [],
   categories : [],
   users: [],
   carrito:[],
-  order: []
+  order: [],
+  reviews : []
 };
 
 export default (state = initialState, action) => {
-  console.log('action.payload')
+  console.log(action.payload)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
     return {
@@ -133,16 +135,38 @@ export default (state = initialState, action) => {
             carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
           }
 //--------Orden------------
-          case GET_ID:
-            return {
-              ...state,
-              order : action.order,
-            }
-          case PUT_ORDER:
-            return {
-              ...state,
-              order: state.order.map(ord => ord.id === action.payload.id ? action.payload : ord )
-            }
+      case GET_ID:
+        return {
+          ...state,
+          order : action.order,
+        }
+      case PUT_ORDER:
+        return {
+          ...state,
+          order: state.order.map(ord => ord.id === action.payload.id ? action.payload : ord )
+        }
+//reviews-----------------------
+      case POST_REVIEW:
+        return {
+          ...state,
+          reviews :state.carrito.concat(action.payload)
+        }
+      case PUT_REVIEW:
+        return {
+          ...state,
+          reviews : state.reviews.map(ord => ord.id === action.payload.id ? action.payload : ord)
+        }
+      case DELETE_REVIEW:
+        return {
+          ...state,
+          reviews : state.reviews.filter(cart =>  cart.id !== action.payload )
+        }
+      case GET_ALL_REVIEW:
+        return {
+          ...state,
+          reviews : action.payload
+        }
+
     default : return state
   }
   };

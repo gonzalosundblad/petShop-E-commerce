@@ -43,7 +43,7 @@ export function getProductById(id){
     return { type: GET_ID, payload : request } ; }//obtener un producto segun su id
 // HASTA ACA FUNCIONA--------------------------
 //----------------------------------------------
-export function postProduct(){      //agrega un nuevo producto
+export function postProduct(input){      //agrega un nuevo producto
   const request = axios.post('http://localhost:3001/products')
   return { type: POST_PRODUCT, payload : request } ; }
 
