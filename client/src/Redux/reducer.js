@@ -12,12 +12,12 @@ import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } fr
 };
 
 export default (state = initialState, action) => {
-  console.log(action)
+  console.log('action.payload')
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
     return {
       ...state,
-      products : action.products,
+      products : action.payload,
     }
     case GET_CATEGORIES: //obtener todas las categorias
     return {
@@ -103,12 +103,12 @@ export default (state = initialState, action) => {
         user : state.users.filter(prod =>  prod.id !== action.payload )
         }
       //-----------------------------------------------------Carrito
-      case GET_CARRO: 
+      case GET_CARRO:
       return {
         ...state,
         carrito : action.carrito,
       }
-      case GET_CREADA: 
+      case GET_CREADA:
       return {
         ...state,
         carrito : action.carrito,
@@ -134,7 +134,7 @@ export default (state = initialState, action) => {
             carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
           }
 //--------Orden------------
-          case GET_ID: 
+          case GET_ID:
             return {
               ...state,
               order : action.order,

@@ -6,6 +6,7 @@ import img from '../imagenes/comida.jpg'
 import Carrito from '../Containers/carrito';
 import { postCarrito } from '../Redux/actionsCarrito';
 import Changuito from '../imagenes/carrito+.png'
+import Reviews from './reviews.jsx'
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
@@ -90,7 +91,7 @@ export default function Product ({ id2 }){
             <div className={Style.cantidadStock}>
               <div className={Style.cantidad}>
                 <label>Seleccione Cantidad:</label>
-                <input classname={Style.input} type="number" onChange={handleChange} />
+                <input classname={Style.input} type="number" min='0' max={stock} placeholder='Nº' onChange={handleChange} />
                 <button className={Style.boton} onClick={subirCarrito }>
                     <img className={Style.changuito} src={Changuito}/>
                 </button>
@@ -102,11 +103,12 @@ export default function Product ({ id2 }){
           </div>
         </div>
       <div className={Style.description}>
-        <h3>Descripción:</h3>
-        <hr/>
-        <h4>{description}</h4>
+      <h3>Descripción:</h3>
+      <hr/>
+      <h4>{description}</h4>
       </div>
-    </div>
+      <Reviews />
+      </div>
   )
 }
 }

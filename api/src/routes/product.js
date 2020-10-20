@@ -190,7 +190,11 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 
 server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
     const {name, description, price, stock } = req.body;
-    Product.update({
+
+		Product.findByPk(req.params.id)
+		.then(product => {
+			console.log(product)
+			product.update({
         name,
         description,
         price,
@@ -200,13 +204,17 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
         where: {
             id: req.params.id
         }
-    }).then(function(product) {
+    })
+	})
+		.then(function(product) {
+			console.log(product[1]);
         if(product[0] == 0) {
-			res.status(400).send('Error, campos requeridos')
-			return product[0]
+					res.status(400).send('Error, campos requeridos')
+					return product[0]
         }
-        res.status(200).json(product)
-    }).catch(err => {
+	        res.status(200).json(product)
+    })
+		.catch(err => {
         res.status(400)
         console.log('Error: ', err)
     })
@@ -214,7 +222,7 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
 
 server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID
 	const {name, description} = req.body;
-	Category.update({
+	Category.update({ 
 		name,
 		description
 	},{
@@ -245,7 +253,7 @@ server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
 })
 server.delete('/category/:id', (req, res) => {		//ELIMINA UNA CATEGORIA
 	var categoryId = req.params.id;
-    if(!categoryId){
+    if(!categoryId){ 
         res.status(404).send('Debes ingresar un ID')
     } else {
         Category.findByPk(categoryId)

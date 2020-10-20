@@ -5,14 +5,14 @@ const { Product, Review, User } = require('../db.js');
 server.post('/product/:id/review', (req, res) => {                       //S54 : Crear ruta para crear/agregar Review
     const product_id = req.params.id;
     const { qualification, description, user_id } = req.body;
-    
+
     Review.create({
         qualification,
         description,
         user_id,
         product_id,
     }).then((data) => {
-        res.status(201).send(data)        
+        res.status(201).json(data)        
     }).catch((error) => {
         res.status(400).json({message: error})
     })
@@ -36,7 +36,7 @@ server.put('/product/:id/review/:idReview', (req, res) => {              //S55 :
         console.log('Error: ', err)
         res.status(400).send(err)
     })
-}) 
+})
 
 server.delete('/product/:id/review/:idReview', (req, res) => {           //S56 : Crear Ruta para eliminar Review
     const {idReview} = req.params
