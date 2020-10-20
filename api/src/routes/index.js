@@ -16,5 +16,4 @@ router.use('/search', searchRouter);          //AGREGAMOS RUTA  /search
 router.use('/users', usersRouter);           //AGREGAMOS RUTA  /users
 router.use('/orders', ordersRouter);        //AGREMGAMOS RUTA /orders
 router.use('/reviews', reviewsRouter);     //AGREGAMOS RUTA  /reviews
-
 module.exports = router;

@@ -5,8 +5,8 @@ import { putOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 
 export default function OrdenUsuario(id){
-  const [orden, setOrden] = useState({})
   const [productOrder, setproductOrder] = useState([])
+  
   useEffect(() => {
     getCarrito(2).payload
     .then(res => {
