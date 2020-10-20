@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { getProdOrder } from '../Redux/actionsCarrito'
-import Estilo from '../Estilos/forms.module.css'
+import Estilo from '../Estilos/ordenesUsuario.module.css'
 
 export default function OrdenAdmin(id) {
   const [orderUser, setOrderUser] = useState([])
@@ -26,20 +26,20 @@ export default function OrdenAdmin(id) {
 
   return(
     <div>
-      <div>
+      <div  >
         { orderUser && orderUser.map(encontrado =>{
           return(
-              <form key={encontrado.id} className={Estilo.resultado} >
+              <form key={encontrado.id} className={Estilo.producto} >
               <label>Id Producto:</label>
-              <input type="text" value={encontrado.id} className={Estilo.inputs} />
+              <input type="text" value={encontrado.id}/>
               <label>Estado de Orden:</label>
-              <input type="text" value="creada" className={Estilo.inputs} />
+              <input type="text" value="creada"/>
               <label>Producto: </label>
-              <input type="text" value={encontrado.name} className={Estilo.inputs} />
+              <input type="text" value={encontrado.name}/>
               <label>Cantidad:</label>
-              <input type="text" value={encontrado.LineaDeOrden.quantity} className={Estilo.inputs} />
+              <input type="text" value={encontrado.LineaDeOrden.quantity} />
               <label>Precio:</label>
-              <input type="text" value={encontrado.price} className={Estilo.inputs} />
+              <input type="text" value={encontrado.price}/>
             </form>
             )
         })
