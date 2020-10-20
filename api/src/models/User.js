@@ -21,10 +21,14 @@ module.exports = (sequelize) => {
         },
         password: {
             type: DataTypes.STRING,
-            get() {
-                return () => this.getDataValue('password')
-            }
+            // get() {
+            //     return () => this.getDataValue('password')
+            // }
         },
+        state:{
+            type: DataTypes.ENUM("Fantasma", "Logueado", "Admin"),
+            defaultValue: "Logueado"
+        }
         
     }
 )};

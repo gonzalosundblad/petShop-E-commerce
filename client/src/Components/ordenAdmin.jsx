@@ -21,6 +21,13 @@ export default function OrdenAdmin(id) {
       }
     })
   }, [])
+
+  var precio = orderUser.map(e => e.price * e.LineaDeOrden.quantity)
+
+  // console.log(precio)
+  var total = precio.reduce(function(a, b){
+    return a + b
+  }, 0)
   
 
   return(
@@ -37,13 +44,17 @@ export default function OrdenAdmin(id) {
               <input type="text" value={encontrado.name}/>
               <label>Cantidad:</label>
               <input type="text" value={encontrado.LineaDeOrden.quantity} />
-              <label>Precio:</label>
+              <label>Precio por unidad:</label>
               <input type="text" value={encontrado.price}/>
+              <label>Precio Total:</label>
+              <input type="text" value={encontrado.price * encontrado.LineaDeOrden.quantity }/>
             </form>
             )
         })
-
         }
+        <div>
+          <h2>Total de Orden: {total} </h2>
+        </div>
       </div>
     </div>
   )

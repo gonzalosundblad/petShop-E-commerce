@@ -33,7 +33,7 @@ export default function Ordenes (){
             <input type="text" value={encontrado.orderState} className={Estilo.inputs} />
             <label>Id usuario:</label>
             <input type="text" value={encontrado.userId} className={Estilo.inputs} />
-            {encontrado.orderState === 'creada' ? <a href={`/admin/ordenes/${encontrado.id}`}>Ver Orden</a> : null }
+            {encontrado.orderState === 'creada' ? <a href={`/admin/ordenes/${encontrado.id}`}>Ver Orden</a> : <a>-----------</a>}
           </form>
           )
       })

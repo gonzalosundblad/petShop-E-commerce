@@ -4,7 +4,7 @@ import Basura from '../imagenes/basura.png';
 import { putCantidadOrden } from '../Redux/actionsCarrito';
 
 export default function ProductoCarritocard({id, image, name, price, LineaDeOrden, funcionDelete, funcionInput}){
-   
+
     var total= price * LineaDeOrden;
 
   function handleChange(e){
@@ -17,7 +17,7 @@ export default function ProductoCarritocard({id, image, name, price, LineaDeOrde
     }
     function reload(){
       window.location.reload()
-    } 
+    }
 
     putCantidadOrden(2, cambio)
     .then(resp => {
@@ -45,7 +45,7 @@ export default function ProductoCarritocard({id, image, name, price, LineaDeOrde
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
                     {/* <input type="number" value={LineaDeOrden} onChange={funcionInput} /> */}
-                    
+
                 </div>
                 <div className={Estilo.botonBorrar}>
                     
