@@ -1,8 +1,18 @@
 const server = require('express').Router();
 const { Product, User, Order, LineaDeOrden } = require('../db.js');
 
+const crypto = require ('crypto') 
 //============================USUARIOS=============================
-
+    const hashPassword = (pass) => {                                        // Encriptacion Password
+        const algorithm = 'aes-192-cbc';
+        const key = crypto.scryptSync(pass, 'salt', 24);
+        const iv = Buffer.alloc(16, 0);
+        const cipher = crypto.createCipheriv(algorithm, key, iv);
+        let encrypted = cipher.update('V1b2C312345678', 'utf8', 'hex');
+        return encrypted += cipher.final('hex');
+        
+    } 
+    
 server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
     const { name, email, password } = req.body;
     if( !name || !email || !password) {
@@ -11,7 +21,7 @@ server.post('/', (req, res) => {                                        //S34 : 
     User.create({
         name,
         email,
-        password
+        password : hashPassword(password)
     }).then(user => {
         res.status(200).json(user)
     }).catch(err => {
@@ -20,15 +30,18 @@ server.post('/', (req, res) => {                                        //S34 : 
 });
 
 server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
-    const { name, email, password } = req.body;
+    const { id } = req.params;
+    const { name, email, oldPassword, password } = req.body;
+    let OP = hashPassword(oldPassword)
     User.update({
         name,
         email,
-        password,
+        password : hashPassword(password)
     },{
         returning: true,
         where: {
-            id: req.params.id
+            id: id,
+            password : OP
         }
     }).then(function(user) {
         if(user[0] == 0) {

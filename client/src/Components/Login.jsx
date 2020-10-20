@@ -41,7 +41,7 @@ export default function User (){
                 if (user.email === input.email){
 
                     if (user.password === input.password){
-                        window.location=`user/${user.id}`;
+                        window.location=`user/${user.id}/products/`;
                         x = true;
 
                     }

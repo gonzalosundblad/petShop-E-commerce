@@ -8,7 +8,8 @@ export default function Perfil (id){
   const [state, setState] = useState({
       name: "",
       email: "",
-      password: ""
+      password: "",
+      oldPassword: ""
   });
   const [users, setUsers] = useState([])
 
@@ -42,7 +43,8 @@ export default function Perfil (id){
     const cambios =  {
       name: state.name,
       email: state.email,
-      password: state.password
+      password: state.password,
+      oldPassword: state.oldPassword
     }
     if(cambios.name.length === 0){cambios.name = datos.name}
     if(cambios.email.length === 0){cambios.email = datos.email}
@@ -84,27 +86,32 @@ export default function Perfil (id){
                 <form onSubmit={handleSubmit}>
                   <div>
                     <div  className={Estilo.nombre}>
-                <label >Nombre:</label>
-                  <input type="text" placeholder={datos.name} name="name" onChange={handleChange} className={Estilo.nombre2}/>
+                      <label >Nombre:</label>
+                      <input type="text" placeholder={datos.name} name="name" onChange={handleChange} className={Estilo.nombre2}/>
+                    </div>
+                    <div className={Estilo.email}>
+                      <label>Email:</label>
+                      <input type="email" placeholder={datos.email} name="email" onChange={handleChange} className={Estilo.email2}/>
+                    </div>
+                    <div className={Estilo.password}>
+                      <label>Contraseña vieja(tenga en cuenta que si no es correcta la vieja contraseña, esta no se modificara):</label>
+                      <input type="text" placeholder="Ingrese antigua contraseña" name="oldPassword" onChange={handleChange} className={Estilo.password2} />
+                    </div>
+                    <div>
+                      <label>Nueva Contraseña:</label>
+                      <input type="text" placeholder="Ingrese nueva contraseña"  name="password" onChange={handleChange} className={Estilo.password2} />
+                    </div>
+
+                    <div className={Estilo.botonesFinales} >
+                      <button type="submit" value="Actualizar" className={Estilo.botoncitos} >
+                        Modificar datos
+                      </button>
+                      <button type="submit" onClick={onDelete} className={Estilo.botoncitos2}  >
+                        Eliminar Cuenta
+                      </button>
+                    </div>
                   </div>
-                  <div className={Estilo.email}>
-                <label>Email:</label>
-                  <input type="email" placeholder={datos.email} name="email" onChange={handleChange} className={Estilo.email2}/>
-                  </div>
-                  <div className={Estilo.password}>
-                <label>Password:</label>
-                  <input type="password" placeholder="*****" name="password" onChange={handleChange} className={Estilo.password2} />
-                  </div>
-                  <div className={Estilo.botonesFinales} >
-                <button type="submit" value="Actualizar" className={Estilo.botoncitos} >
-                    Modificar datos
-                </button>
-                <button type="submit" onClick={onDelete} className={Estilo.botoncitos2}  >
-                          Eliminar Cuenta
-                </button>
-                  </div>
-                  </div>
-              </form>
+                </form>
           </div>
     </div>
   )
