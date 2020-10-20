@@ -119,7 +119,8 @@ server.get('/:idUser/cart/orders', (req, res) => {                             /
   const { idUser } = req.params;
   Order.findAll({
       where: {
-          userId: idUser
+          userId: idUser,
+          orderState: 'creada'
       },
       include: {
           model:Product, 

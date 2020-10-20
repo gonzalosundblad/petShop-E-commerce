@@ -19,7 +19,7 @@ export default function Ordenes (){
   }, [])
 
 
-  console.log(orderGuardada)
+  
 
   return(
     <div>
@@ -33,7 +33,7 @@ export default function Ordenes (){
             <input type="text" value={encontrado.orderState} className={Estilo.inputs} />
             <label>Id usuario:</label>
             <input type="text" value={encontrado.userId} className={Estilo.inputs} />
-            <a href={`/admin/ordenes/${encontrado.id}`}>Ver Orden</a> 
+            {encontrado.orderState === 'creada' ? <a href={`/admin/ordenes/${encontrado.id}`}>Ver Orden</a> : null }
           </form>
           )
       })

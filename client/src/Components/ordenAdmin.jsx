@@ -22,7 +22,6 @@ export default function OrdenAdmin(id) {
     })
   }, [])
   
-  // console.log(orderUser)
 
   return(
     <div>
