@@ -19,43 +19,57 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { Category, Product } = require('./src/db');
+const { Category, Product, User } = require('./src/db');
+
+var arrayDeUsuarios = [{
+  name: "Eric",
+  email: "eric@gmail.com",
+  password: "1234"
+},{
+  name: "Gonza",
+  email: "gonza@gmail.com",
+  password: "1234"
+},{
+  name: "Gaby",
+  email: "gaby@gmail.com",
+  password: "1234"
+}];
 var arrayProductosPerros = [{
   name: "Eukanuba Small",
   description: "comida para el perrito",
   price: 750, 
-  stock: 100
+  stock: 100,
+  categoryId: 1,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FEukanuba%20Small.jpg?alt=media&token"
 },{
   name: "Dog Chow BIG",
   description: "comida para el PERROTE",
   price: 780, 
   stock: 100,
-  categoryId: 1
+  categoryId: 1,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FDogChowBig.jpg?alt=media&token"
 },{
   name: "Pedigree MEDIUM",
   description: "comida para el perrito",
   price: 150, 
   stock: 100,
-  categoryId: 1
+  categoryId: 1,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2Fcomida.jpg?alt=media&token"
 }];
 var arrayProductosGatos = [{
   name: "Cat Chow",
   description: "comida para el michi de la ciudad",
   price: 750, 
   stock: 100,
-  categoryId: 2
-},{
-  name: "Fideos con tuco de anoche",
-  description: "comida para el michi del barrio",
-  price: 555, 
-  stock: 100,
-  categoryId: 2
+  categoryId: 2,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FCatChow.jpg?alt=media&token"
 },{
   name: "WHISKAS",
   description: "comida para el michi cheto",
   price: 600, 
   stock: 100,
-  categoryId: 2
+  categoryId: 2,
+  image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FCatChow.jpg?alt=media&token"
 }]
 // Syncing all the models at once.
 const force = true;
@@ -111,10 +125,14 @@ conn.sync({ force }).then(() => {
           })
       }
     });
-  
-    Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro])
+
+    var Usuarios = arrayDeUsuarios.map(e => {
+      User.create(e)
+    });
+
+    Promise.all([SinCategoria, Perros, Gatos, Aves, AlimentoGato, AlimentoPerro, Usuarios])
       .then(res => {
-        console.log("Categorías y producto precargades");
+        console.log("Categorías, Usuarios y Producto precargades");
       });
   });
 });

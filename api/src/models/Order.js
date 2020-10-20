@@ -7,13 +7,9 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('order', {
-    price: {
-      type: DataTypes.INTEGER,
-      defaultValue: "0"
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      defaultValue: "1"
+    orderState: {
+      type: DataTypes.ENUM('carrito', 'creada', 'procesando', 'cancelada', 'completa'),
+      defaultValue: 'carrito'
     }
   }
 )};

@@ -1,0 +1,160 @@
+
+
+.formsAgregarCategoria{                               
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid rgb(21, 160, 160);
+  background-color: #f7ffa7;
+  margin: 2%;
+  margin-left: 25%;
+  width: 50%;
+  height: 200px;
+  flex-direction: column;
+}
+
+.formsAgregarCategoria label{
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.formsAgregarCategoria input{
+  border-radius: 5px;
+  height: 25px;
+}
+
+.formsAgregarCategoria h1{
+  font-size: 25px;
+}
+
+.labelInput{
+  margin: 20px;
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+
+}
+
+.formsAgregarCategoria button{
+  height: 35px;
+  font-weight: bold;
+  width: 90px;
+  font-size: 17px;
+  background-color: #9aec9a;
+  border: solid 1px;
+
+}
+
+
+
+
+
+.formsModificarCategoria{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid rgb(21, 160, 160);
+  background-color: #f7ffa7;
+  margin: 2%;
+  margin-left: 25%;
+  width: 50%;
+  height: 500px;
+  flex-direction: column;
+}
+.formsModificarCategoria h3{
+  font-size: 22px;
+}
+.formsModificarCategoria h2{
+  margin: 15px;
+  font-size: 22px;
+}
+
+
+.labelInputModificar{
+  margin: 20px;
+  display: flex;
+  width: 265px;
+  justify-content: space-between;
+
+}
+
+.id{
+  display: flex;
+  align-items: center;
+  width: 65px;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.id input{
+  width: 30px;
+  height: 25px;
+  border-radius: 5px;
+  font-size: 15px;
+  border: solid 1px;
+  font-weight: bold;
+}
+
+.nombre{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 180px;
+  font-size: 20px;
+}
+
+.nombre input{
+  width: 90px;
+  height: 25px;
+  border-radius: 5px;
+  font-size: 15px;
+  border: solid 1px;
+  font-weight: bold;
+}
+
+/* .formsModificarCategoria input {
+  width: 80px;
+  height: 30px;
+} */
+
+.labelInputModificar label{
+  text-decoration: none;
+}
+/* 
+.forms{
+  width: 290px;
+  height: 46px;
+  display: flex;
+} */
+
+.botones{
+  width: 280px;
+  justify-content: space-between;
+  display: flex;
+  margin: 15px;
+  
+}
+
+.botones button{
+  width: 125px;
+  height: 32px;
+  font-size: 17px;
+  font-weight: bold;
+  border: solid 2px;
+}
+
+.botones button:hover{
+  box-shadow: 3px 3px 3px gray;
+  height: 34px;
+  width: 127px;
+}
+
+.botonModificar{
+  background-color: rgb(106, 238, 106);
+}
+
+.botonBorrar{
+  background-color: rgb(247, 82, 82);
+}

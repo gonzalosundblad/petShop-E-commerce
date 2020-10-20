@@ -2,13 +2,14 @@ import React  from 'react';
 import { Link } from 'react-router-dom';
 import  StyleCategoria from '../Estilos/CategoriaComp.module.css';
 import  '../imagenes/perros.jpg';
+import { useState } from 'react';
 
-import borrarCategoria from '../Containers/BorrarCategoria';
 
 export default function CategoriaCard ({nombre, id}){
+  // const [idCambiado, setID] = useState ([]);
 
     return(
-      <a className={StyleCategoria.card1} href={`/products/${nombre}`}>
+      <a className={StyleCategoria.card1} href={`/products/category/${nombre}`}>
         {/* <figure>
             <img className="card-img-top" src='perros' alt="imagen de perro"/>
         </figure> */}
@@ -19,8 +20,4 @@ export default function CategoriaCard ({nombre, id}){
         </div>
       </a>
     )
-      
-      
   };
-
-

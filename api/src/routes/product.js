@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category, productcategory } = require('../db.js');
+const { Product, Category } = require('../db.js');
 
 server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
 	Product.findAll()
@@ -48,7 +48,6 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 		for (let i = 0; i < data.categories.length; i++) {
 			arr.push(data.categories[i].name)
 		}
-		console.log(data)
 		res.json({
 			name: data.name,
 			description: data.description,
@@ -58,17 +57,22 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 			categories: arr
 		})
 	}).catch(err => {
-		console.log('Error: ', err)
 		res.send('No existe ese producto :(')
 	})
 })
 
 server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
-	const {name, description, price, stock, categoryId } = req.body;
+	const {name, description, price, stock, categoryId, image} = req.body;
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
-		Product.create({ name, description, price, stock })
+		Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
+		 })
 			.then(function(productSinId) {
 				productSinId.addCategories("0")
 				res.json(productSinId)
@@ -79,7 +83,13 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 				id: categoryId
 			}
 		})
-		var producto = Product.create({ name, description, price, stock })
+		var producto = Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
+		 })
 		Promise.all([category, producto])
 			.then(values => {
 				var category = values[0]
@@ -108,7 +118,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			res.json(product)
 		} else {
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
-			console.log(product[0])
 			res.json(product)
 		}
 	})
@@ -124,7 +133,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 
 server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body ;
-  console.log(req.body)
 	if(!name){
 		return res.status(400).send('Campos requeridos')
 	}
@@ -160,7 +168,6 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 		for (let i = 0; i < data[0].categories.length; i++) {			//recorro todas las categorias del producto
 			arr.push(data[0].categories[i].id)
 		}
-		console.log(arr)//												   ----------------------------------------------------------
 		if(arr.length > 1) {	// <---------------Pregunto-------------- ||  si tiene mas de 1 categoria solo elimino la categoria ||
 			data[0].removeCategories(idCategoria)//						  ||--------------------------------------------------------||
 			res.send('Categoria eliminada')	// 						      ||  se elimina PERO se mantienen las demas categorias     ||
@@ -185,13 +192,23 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
         description,
         price,
         stock
-		})
-		res.json(product)
-
+    },{
+        returning: true,
+        where: {
+            id: req.params.id
+        }
+    })
 	})
-	.catch(err => {
+		.then(function(product) {
+			console.log(product[1]);
+        if(product[0] == 0) {
+					res.status(400).send('Error, campos requeridos')
+					return product[0]
+        }
+	        res.status(200).json(product)
+    })
+		.catch(err => {
         res.status(400)
-        console.log('Error: ', err)
     })
 });
 
@@ -222,7 +239,7 @@ server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
 			}).then(value2 => {
 				res.status(200).send('Borrado exitosamente');
 			}).catch(err => {
-				res.status(404).send('Este producto nunca exitió');
+				res.status(404).send('Este producto nunca existió');
 			})
 	}
 })
