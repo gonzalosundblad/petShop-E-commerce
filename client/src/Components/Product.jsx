@@ -6,6 +6,7 @@ import img from '../imagenes/comida.jpg'
 import Carrito from '../Containers/carrito';
 import { postCarrito } from '../Redux/actionsCarrito';
 import Changuito from '../imagenes/carrito+.png'
+import Reviews from './reviews.jsx'
 
 export default function Product ({ id2 }){
 //  {id, name, description, price, stock, imagen }
@@ -17,7 +18,7 @@ export default function Product ({ id2 }){
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
 
-  
+
         useEffect(() => {
           getProductById(id2).payload
           .then(function(resp){
@@ -37,7 +38,7 @@ export default function Product ({ id2 }){
 
 
 
-      
+
     function subirCarrito(){
 
       postCarrito(2, {
@@ -102,12 +103,12 @@ export default function Product ({ id2 }){
           </div>
         </div>
       <div className={Style.description}>
-        <h3>Descripción:</h3>
-        <hr/>
-        <h4>{description}</h4>
+      <h3>Descripción:</h3>
+      <hr/>
+      <h4>{description}</h4>
       </div>
-    </div>
-  ) 
+      <Reviews />
+      </div>
+  )
 }
 }
-
