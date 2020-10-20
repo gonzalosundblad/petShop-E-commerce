@@ -1,11 +1,11 @@
 .producto{
-    /* display: flex; */
     align-items: center;
     justify-content: center;
     background-color: honeydew;
-    margin: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
     width: 1000px;
-    margin-left: 25%; 
+    margin-left: 20%; 
     display: grid;
     grid-template-columns: 300px 300px 300px 100px ;
 }
@@ -20,6 +20,12 @@
     /* width: 149px; */
     justify-content: center;
      
+}
+
+.Cambio {
+  width: 10%;
+  border-radius: 5px;
+  margin-left: 23%;
 }
 
 .inputBoton h3{

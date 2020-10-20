@@ -42,7 +42,8 @@ export default function ProductoCarritocard({id, image, name, price, LineaDeOrde
                 <div className={Estilo.inputBoton}>
                     <h3>Cantidad: </h3>
                     <h4>{LineaDeOrden} unidades</h4>
-                    <input type="text" onChange={handleChange} />
+                    <input type="text" onChange={handleChange} className={Estilo.Cambio} />
+                    <label>Unidades</label>
                     <h5>Total: ${total} </h5>
                     {/* <input type="number" value={LineaDeOrden} onChange={funcionInput} /> */}
 

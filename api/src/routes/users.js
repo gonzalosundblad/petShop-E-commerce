@@ -3,7 +3,7 @@ const { Product, User, Order, LineaDeOrden } = require('../db.js');
 
 //============================USUARIOS=============================
 
-server.post('/', (req, res) => {                       // S34 : Crear Ruta para creación de Usuario
+server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
     const { name, email, password } = req.body;
     if( !name || !email || !password) {
         return res.status(400).send("Campos requeridos")
@@ -19,7 +19,7 @@ server.post('/', (req, res) => {                       // S34 : Crear Ruta para 
     })
 });
 
-server.put('/:id', (req, res) => {               // S35 : Crear Ruta para modificar Usuario segun id
+server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
     const { name, email, password } = req.body;
     User.update({
         name,
@@ -43,7 +43,7 @@ server.put('/:id', (req, res) => {               // S35 : Crear Ruta para modifi
 
 });
 
-server.get('/', (req, res) => {          // S36 : Crear Ruta que retorne todos los Usuarios
+server.get('/', (req, res) => {                                         //S36 : Crear Ruta que retorne todos los Usuarios
     User.findAll()
         .then(users => {
             res.json(users);
@@ -53,7 +53,7 @@ server.get('/', (req, res) => {          // S36 : Crear Ruta que retorne todos l
 		});
 });
 
-server.delete('/:id', (req, res) => {    // S37 : Crear Ruta para eliminar Usuario
+server.delete('/:id', (req, res) => {                                   //S37 : Crear Ruta para eliminar Usuario
     var userId = req.params.id;
     if(!userId){
 		res.status(404).send('Debes ingresar un ID')
@@ -114,6 +114,25 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
         res.status(404).send('Error')
         console.log('Error: ', err)
     })
+});
+
+server.get('/:idUser/cart/orders', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito      
+  const { idUser } = req.params;
+  Order.findAll({
+      where: {
+          userId: idUser,
+          orderState: 'creada'
+      },
+      include: {
+          model:Product, 
+          as: 'products'
+      }
+  }).then((items) => {
+      res.status(200).send(items)
+  }).catch((err) => {
+      res.status(404).send('Error')
+      console.log('Error: ', err)
+  })
 });
 
 server.delete('/:idUser/cart', (req, res) => {                          //S40 : Crear Ruta para vaciar el carrito

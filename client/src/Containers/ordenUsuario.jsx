@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import {getCarrito} from '../Redux/actionsCarrito'
 import { putOrder } from '../Redux/actionsOrden'
+import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 
 export default function OrdenUsuario({id, products}){
   const [orden, setOrden] = useState({})
@@ -52,10 +53,10 @@ export default function OrdenUsuario({id, products}){
 
   return(
     <div>
-      <h1>Tu Orden</h1>
+      <h1 className={StyleOrden.tuOrden} >Tu Orden</h1>
       {productOrder && productOrder.map(e => {
         return(
-          <div>
+          <div className={StyleOrden.producto} >
             <h2>{e.name}</h2>
             <h2>${e.price * e.LineaDeOrden.quantity}</h2>
             <h3> Cantidad:{e.LineaDeOrden.quantity}</h3>
@@ -63,9 +64,13 @@ export default function OrdenUsuario({id, products}){
           )}
           )
         }
-        <h2>Total:{total} </h2>
-    <button onClick={cambioEstado} >Realizar Pedido</button>
-    <button onClick={cambioEstado2} >Cancelar Pedido</button>
+        <div  className={StyleOrden.inputBoton}>
+         <h2 >Total:{total} </h2>
+         </div>
+         <div className={StyleOrden.botonesFinales} >
+    <button onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido</button>
+    <button onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</button>
+         </div>
     </div>
   )
 }

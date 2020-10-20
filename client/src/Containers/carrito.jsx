@@ -32,25 +32,20 @@ export default function Carrito() {
       reload()
     })
   }
-  function onDelete (e){
-    //console.log(e)
-    const f = (element) => element.id == e.target.value
-    let index =  products.findIndex(f)
-    // setBorrado(products.splice(index, 1))
-    var borrado = products.splice(index, 1)
-    var product_id = borrado[0].id
-    console.log('ondelete ' + product_id)
-    setProducts(products => products.filter(p => p.id != product_id));
-    console.log(products);
+  function onDelete (){
+    // console.log(e)
+    // const f = (element) => element.id == e.target.value
+    // let index =  products.findIndex(f)
+    // // setBorrado(products.splice(index, 1))
+    // var borrado = products.splice(index, 1)
 
-    // var product_id = borrado[0].id
-    // console.log('ondelete' + product_id)
-    //
-    // //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    // deleteCarritoUno(2, 2)
-    // .then(resp => {
-    //   console.log(resp)
-    // })
+    var product_id = 2
+
+    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+    deleteCarritoUno(2, product_id)
+    .then(resp => {
+      console.log(resp)
+    })
   }
 
 
