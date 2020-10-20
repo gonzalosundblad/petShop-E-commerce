@@ -31,8 +31,10 @@ export function getOrderId(id){
 }
 
 export function putOrder(id, estado){
-  const request = axios.put(`http://localhost:3001/orders/${id}`, estado)
-  return { type: PUT_ORDER , payload : request } ; }
+    return axios.put(`http://localhost:3001/orders/${id}`, estado).then((resp) => {
+      return { type: PUT_ORDER , payload : resp }
+    })
+   }
 
 export function deleteOrder(id){      //borrar un  usuario
     return  axios.delete(`http://localhost:3001/users/${id}`).then((resp) => {

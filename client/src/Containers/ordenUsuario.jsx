@@ -4,7 +4,7 @@ import {getCarrito} from '../Redux/actionsCarrito'
 import { putOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 
-export default function OrdenUsuario({id, products}){
+export default function OrdenUsuario(id){
   const [orden, setOrden] = useState({})
   const [productOrder, setproductOrder] = useState([])
   useEffect(() => {
@@ -29,12 +29,15 @@ export default function OrdenUsuario({id, products}){
 
 
   var id2 = id.id
+  console.log(id2)
 
   const estado = {orderState:'creada'}
 
   function cambioEstado(){
-    putOrder(id2, estado).payload
+
+    putOrder(id2, estado)
     .then(resp => {
+      console.log(resp)
       alert('Compra Exitosa')
       window.location='/'
     })
@@ -43,9 +46,9 @@ export default function OrdenUsuario({id, products}){
   const estado2 = {orderState:'cancelada'}
 
   function cambioEstado2(){
-    putOrder(id2, estado2).payload
+    putOrder(id2, estado2)
     .then(resp => {
-
+      console.log(resp)
       alert('Pedido Cancelado')
       window.location='/'
     })
