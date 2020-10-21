@@ -17,6 +17,8 @@
 .formsAgregarCategoria label{
   text-decoration: none;
   font-size: 20px;
+  color: black;
+  font-weight: bold;
 }
 
 .formsAgregarCategoria input{
@@ -121,6 +123,8 @@
 
 .labelInputModificar label{
   text-decoration: none;
+  font-weight: bold;
+  color: black;
 }
 /* 
 .forms{
