@@ -1,16 +1,15 @@
 import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH} from './constants';
-import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO} from './constantsCarro'
+import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA} from './constantsCarro'
 import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from './constantesOrden'
 
- const initialState = {
+export const initialState = {
   products : [],
   categories : [],
   users: [],
-  carrito:[],
-  order: []
+  carrito:[]
 };
 
-export default (state = initialState, action) => {
+export const Reducers = (state = initialState, action) => {
   console.log(action)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
@@ -31,7 +30,7 @@ export default (state = initialState, action) => {
     case GET_ID: //obtener un producto segun su id
     return {
       ...state,
-      products : action.products,
+      products : action.product,
     }
     case POST_PRODUCT: // agregar producto
     return {
@@ -86,23 +85,33 @@ export default (state = initialState, action) => {
         ...state,
         users : state.users.concat(action.users)
       }
+      
     case GET_USER:
       return {
         ...state,
         users : action.users
       }
+
     case PUT_USER:
       return {
         ...state,
-        user : state.users.map(user => user.id === action.payload.id ? action.payload : user)
-      }
+        users : state.users.map(user => user.id === action.payload.id ? action.payload : user)        
+      }  
+
     case  DELETE_USER:
       return {
         ...state,
-        user : state.users.filter(prod =>  prod.id !== action.payload )
+        users : state.users.filter(prod =>  prod.id !== action.payload )
         }
+  
+    
       //-----------------------------------------------------Carrito
-      case GET_CARRO: //obtener todas las categorias
+      case GET_CARRO: 
+      return {
+        ...state,
+        carrito : action.carrito,
+      }
+      case GET_CREADA: 
       return {
         ...state,
         carrito : action.carrito,
@@ -127,17 +136,7 @@ export default (state = initialState, action) => {
             ...state,
             carrito: state.carrito.filter(cart =>  cart.id !== action.payload )
           }
-//--------Orden------------
-          case GET_ID: 
-            return {
-              ...state,
-              order : action.order,
-            }
-          case PUT_ORDER:
-            return {
-              ...state,
-              order: state.order.map(ord => ord.id === action.payload.id ? action.payload : ord )
-            }
     default : return state
   }
+
   };

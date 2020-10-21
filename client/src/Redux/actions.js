@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH, POST_USER } from './constants';
+import { GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH, POST_USER, GET_USERS, PUT_USER, DELETE_USER } from './constants';
 import axios from 'axios';
 
 export function getProducts() { //obtener todos los productos
@@ -77,3 +77,17 @@ return { type: SEARCH, payload : request } ; }
 export function postUser(usuario){      //agrega un nuevo usuario
   const request = axios.post('http://localhost:3001/users/', usuario)
   return { type: POST_USER , payload : request } ; }
+
+export function getUsers(){      //trae todos los usuarios
+  const request = axios.get('http://localhost:3001/users/')
+  return { type: GET_USERS, users: request } ; }
+
+export function putUser(id, usuario){      //agrega un nuevo usuario
+  const request = axios.put(`http://localhost:3001/users/${id}`, usuario)
+  return { type: PUT_USER , payload : request } ; }
+
+export function putDelete(id){      //borrar un  usuario
+  const request = axios.put(`http://localhost:3001/users/${id}`)
+  return { type: DELETE_USER , payload : request } ; }
+
+
