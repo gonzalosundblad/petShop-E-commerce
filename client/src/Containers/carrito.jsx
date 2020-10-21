@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios'
+import axios from 'axios' ;
 import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 
 export default function Carrito() {
   const [products, setProducts] = useState([])
-  const [state, setState] = useState([])
+  const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
 
 
@@ -29,7 +29,6 @@ export default function Carrito() {
 
   function vaciar (){
     deleteCarrito(2).then(resp => {
-      console.log(resp)
       reload()
     })
   }
@@ -49,7 +48,7 @@ export default function Carrito() {
     })
   }
 
-  
+
   const order_id = products.map(id => id.LineaDeOrden.order_id)
 
 
@@ -61,7 +60,7 @@ export default function Carrito() {
       </div>
     )
   }else{
-    console.log(products)
+    console.log('hay productos')
 
   return(
     <div>
@@ -72,7 +71,7 @@ export default function Carrito() {
         console.log(products)
         return(
           <div>
-          <ProductoCarrito 
+          <ProductoCarrito
               id={e.id}
               name={e.name}
               price={e.price}
@@ -89,10 +88,10 @@ export default function Carrito() {
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
-          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`}>
-            <span className={Estilo.botoncitos} >Finalizar Compra</span>
+          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+            <span className={Estilo.botoncitos}  >Finalizar Compra</span>
           </a>
-        </div>  
+        </div>
     </div>
   )
 }

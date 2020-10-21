@@ -5,7 +5,7 @@ import {getAllReviewsRequest, deleteReviewRequest, putReviewRequest, postReviewR
 import {connect} from 'react-redux'
 import axios from 'axios';
 
-function Reviews(props){
+function Reviews({postReviewRequest}){
   var opiniones = [{date: "15/11" , user: "jorge", id:159, estrellas:5, title:"por ahora muy bueno", description: "Compre semillas."}, {date: "02/03" , user: "ana", id:241, estrellas:2, title:"Veremos las de perejil", description: "Explotaron de crecimiento"}]
   const [state, setState] = useState({
       qualification: "",
@@ -40,9 +40,9 @@ function Reviews(props){
           description : 'jjjjjjjjjj',
           user_id : 2
           };
-          //postReviewRequest(2, post);
-          axios.post(`http://localhost:3001/product/${id}/review`, post)
-            .then(response => {console.log(response.data)})
+          postReviewRequest(2, post);
+          //axios.post(`http://localhost:3001/product/${id}/review`, post)
+            //.then(response => {console.log(response.data)})
 
       }
 

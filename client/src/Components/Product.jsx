@@ -33,7 +33,7 @@ export default function Product ({ id2 }){
       }, []);
 
       function handleChange(e) {
-        setQuantity(e.target.value)
+        setQuantity(e.target.value);
       }
 
 

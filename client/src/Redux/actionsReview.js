@@ -7,10 +7,11 @@ console.log(review);
   type : POST_REVIEW,
   payload : review
 }}
-export function postReviewRequest(id, post){//Crear ruta para crear/agregar Review
+export function postReviewRequest(idProducto, post){//Crear ruta para crear/agregar Review
 //productID y paquete con userId
+console.log(idProducto, post);
   return (dispatch) => {
-    axios.post(`http://localhost:3001/product/${id}/review`, post)
+    axios.post(`http://localhost:3001/product/${idProducto}/review`, post)
       .then(response => {dispatch(postReview(response.data))})
       .catch(error => {console.log(error)})
   }

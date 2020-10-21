@@ -93,7 +93,7 @@ export default function Perfil (id){
                   </div>
                   <div className={Estilo.password}>
                 <label>Password:</label>
-                  <input type="password" placeholder={datos.password} name="password" onChange={handleChange} className={Estilo.password2} />
+                  <input type="password" placeholder="*****" name="password" onChange={handleChange} className={Estilo.password2} />
                   </div>
                   <div className={Estilo.botonesFinales} >
                 <button type="submit" value="Actualizar" className={Estilo.botoncitos} >

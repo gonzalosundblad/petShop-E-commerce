@@ -12,7 +12,7 @@ export function getProdOrder(usuario) { //obtener todos los productos del carrit
 
 export function postCarrito(usuario, products){ //Agregar productos al carrito
   const request = axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
-  return { type: POST_CARRO , payload : request } ; } 
+  return { type: POST_CARRO , payload : request } ; }
 //--
   export function putCantidadOrden (id, cambio) { //Cambiar la cantidad de los productos
     return axios.put(`http://localhost:3001/users/${id}/cart`, cambio)
@@ -28,8 +28,10 @@ export function postCarrito(usuario, products){ //Agregar productos al carrito
     })
      }
   export function deleteCarritoUno(id, idProd){   //borra un producto segun id usuario
-    return axios.delete(`http://localhost:3001/users/${id}/deleteCartProduct`, idProd).then((resp) => {
+    return axios.delete(`http://localhost:3001/users/${id}/deleteCartProduct`, idProd)
+      .then((resp) => {
       return { type: DELETE_CARRITOUNO, payload : resp }
       console.log(resp)
     })
+    .catch(err => console.log('error'))
      }

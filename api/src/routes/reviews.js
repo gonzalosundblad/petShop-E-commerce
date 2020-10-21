@@ -5,14 +5,13 @@ const { Product, Review, User } = require('../db.js');
 server.post('/product/:id/review', (req, res) => {                       //S54 : Crear ruta para crear/agregar Review
     const product_id = req.params.id;
     const { qualification, description, user_id } = req.body;
-console.log(product_id, qualification, description, user_id);
     Review.create({
         qualification,
         description,
         user_id,
         product_id,
     }).then((data) => {
-        res.status(201).json(data)
+        res.status(201).send(data)
     }).catch((error) => {
         res.status(400).json({message: error})
     })

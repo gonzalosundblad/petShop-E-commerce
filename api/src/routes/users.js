@@ -62,7 +62,7 @@ server.delete('/:id', (req, res) => {                                   //S37 : 
             .then(value => {
                 value.destroy()
             }).then(value2 => {
-                res.status(200).send('Borrado exitosamente') 
+                res.status(200).send('Borrado exitosamente')
             }).catch(err => {
                 res.status(404).send('Este usuario nunca existió')
             })
@@ -89,6 +89,7 @@ server.post('/:idUser/cart', (req, res) => {                            //S38 : 
             price
         });
     }).then((l) => {
+      console.log(l);
         res.status(200).send(l)
     }).catch(err => {
         res.status(400)
@@ -96,15 +97,15 @@ server.post('/:idUser/cart', (req, res) => {                            //S38 : 
     })
 });
 
-server.get('/:idUser/cart', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito      
+server.get('/:idUser/cart', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito
     const { idUser } = req.params;
     Order.findAll({
         where: {
             userId: idUser,
-            orderState: 'carrito'   
+            orderState: 'carrito'
         },
         include: {
-            model:Product, 
+            model:Product,
             as: 'products'
         }
     }).then((items) => {
@@ -119,8 +120,7 @@ server.get('/:idUser/cart/orders', (req, res) => {                             /
   const { idUser } = req.params;
   Order.findAll({
       where: {
-          userId: idUser,
-          orderState: 'creada'
+          userId: idUser
       },
       include: {
           model:Product, 
@@ -147,7 +147,7 @@ server.delete('/:idUser/cart', (req, res) => {                          //S40 : 
         })
     }).then( lineaDeOrden => {
         lineaDeOrden.forEach(element => {
-           element.destroy() 
+           element.destroy()
         });
     }).then(()=>{
         res.send("Eliminado")
@@ -184,12 +184,12 @@ server.put('/:idUser/cart', function(req, res){                         //S41 : 
 server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
     const idUser = req.params.idUser;                                   // S111: INVENTO DE ERIC
     const { product_id } = req.body;
-    Order.findOne({        
+    Order.findOne({
         where: {
-            userId: idUser,            
+            userId: idUser,
             orderState: 'carrito'
         }
-    }).then( orden =>        
+    }).then( orden =>
         LineaDeOrden.destroy({
             where: {
                 order_id: orden.id,
@@ -200,7 +200,7 @@ server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMIN
         res.send( {Eliminaste: eliminado} )
     }).catch((error)=>{
         res.send(error)
-    })    
+    })
 })
 
 //===========================Ordenes================================
