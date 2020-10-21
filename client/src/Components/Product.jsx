@@ -107,7 +107,7 @@ export default function Product ({ id2 }){
       <hr/>
       <h4>{description}</h4>
       </div>
-      <Reviews />
+      <Reviews id={id2} />
       </div>
   )
 }

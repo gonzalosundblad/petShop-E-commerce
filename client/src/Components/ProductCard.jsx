@@ -29,7 +29,7 @@ if(stock === 0){
   )
 }
   else return(
-    <div className={StyleProductCard.divConStock}>
+    <div className={StyleProductCard.divConStock} >
     <a className={StyleProductCard.productCard} href={`/producto/${id}`}>
         <div >
           <img className={StyleProductCard.img} src={image} alt="imagen de perro"/>

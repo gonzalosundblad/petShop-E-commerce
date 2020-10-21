@@ -6,8 +6,6 @@ import {connect} from 'react-redux'
 function MostrarCatalogo ({products, getProductsRequest}) {
 
   useEffect(() => {
-    console.log('useEffect');
-    console.log(products);
     getProductsRequest()
   }, []);
 
@@ -24,7 +22,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    getProductsRequest: () => dispatch(getProductsRequest())
+    getProductsRequest: () => dispatch(getProductsRequest()),
   }
 }
 
