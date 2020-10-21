@@ -3,6 +3,13 @@ import { Form, Col, Row, Button } from 'react-bootstrap';
 import {getUser} from '../Redux/actionsOrden';
 import { Link } from 'react-router-dom'
 import StyleLogin from '../Estilos/StyleLogin.module.css';
+import estilo from '../Estilos/Login.module.css';
+import imagen from '../imagenes/PerroYgatito.png';
+import candado from '../imagenes/candado.png';
+import email from '../imagenes/email.png';
+import google from '../imagenes/google.png';
+import GitHub from '../imagenes/gitHub.png';
+import HenryPet from '../imagenes/HenryPet2.png';
 
 export default function User (){
     const [users, setUsers] = useState([])
@@ -97,35 +104,58 @@ export default function User (){
 
   //  window.location.href=`https://www.google.com.ar/`
     return (
-        <div>
-          <h2>Ingrese su usuario y contraseña</h2>
-            <Form.Row>
-                <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control value={input.email} type="email" onChange={handleInputChange} placeholder="Enter email" name="email" />
-                    {errors.email && (<h4 className="danger"> {errors.email} </h4>
-                   )}
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridPassword">
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control value={input.password} onChange={handleInputChange} type="password" placeholder="Password" name="password"/>
-                    {errors.password && (
-                      <h4 className="danger">{errors.password}</h4>
-                    )}
-                </Form.Group>
-            </Form.Row>
-
-
-            <Button variant="primary" type="button" onClick={loginUser}>
-                Iniciar
-            </Button>
-
-            <h2>No tiene cuenta?</h2>
-            <a className={StyleLogin.botones} href='/register'>
-              <span className={StyleLogin.botonCatalogo} >Registrarse</span>
-            </a>
-          
-    </div>
+      <div  id='aparecer'className={estilo.divOscuro}>
+        <div className={estilo.x}>
+          <a href='/'>
+            <span className={estilo.cerrar} > X </span>
+          </a> 
+        </div>
+        <div className={estilo.divTodo}>  
+          <div>
+            <img src={imagen} className={estilo.imagen}/>
+          </div>
+          <div className={estilo.henryPet}>
+            <img src={HenryPet} className={estilo.imgHenryPet}/>
+          </div>
+          <div  className={estilo.divCuadro}>
+            <div className={estilo.divIzquierda}> 
+              <h2>Iniciar Sesion</h2>
+                <Form.Row className={estilo.formRow}>
+                  <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridEmail">
+                    <img src={email} className={estilo.icono}/>
+                    <Form.Control className={estilo.input} value={input.email} type="email" onChange={handleInputChange} placeholder="Introduzca el email" name="email" /> 
+                  </Form.Group>
+                  {errors.email && (<h4 className="danger"> {errors.email} </h4>)}
+                  <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridPassword">
+                    <img src={candado} className={estilo.icono}/>
+                    <Form.Control className={estilo.input} value={input.password} onChange={handleInputChange} type="password" placeholder="Contraseña" name="password"/> 
+                  </Form.Group>
+                  {errors.password && (<h4 className="danger">{errors.password}</h4>)}
+                </Form.Row>
+                <Button className={estilo.boton} variant="primary" type="button" onClick={loginUser}> Iniciar </Button>
+                <div className={estilo.divAbajo}>
+                  <h3>¿No tenes cuenta?</h3>
+                  <a  href='/register'>
+                    <span  >Registrate</span>
+                  </a>
+                </div> 
+            </div>
+            <div>
+              <hr width="2" size="200"/>
+            </div>
+            <div className={estilo.divDerecha}>
+              <h3>Iniciar sesion con:</h3>
+              <div className={estilo.google}>
+                  <img src={google} className={estilo.imgGoogle}/>
+                  <h5>Iniciar con Google</h5>
+              </div>
+              <div className={estilo.gitHub}>
+                <img src={GitHub} className={estilo.imgGitHub}/>
+                <h5>Iniciar con GitHub</h5>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
     )
  }
