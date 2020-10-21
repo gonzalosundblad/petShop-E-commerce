@@ -25,9 +25,9 @@ module.exports = (sequelize) => {
             //     return () => this.getDataValue('password')
             // }
         },
-        state:{
-            type: DataTypes.ENUM("Fantasma", "Logueado", "Admin"),
-            defaultValue: "Logueado"
+        rol:{
+            type: DataTypes.ENUM("guest" ,"user", "Admin"),
+            defaultValue: "user"
         }
         
     }

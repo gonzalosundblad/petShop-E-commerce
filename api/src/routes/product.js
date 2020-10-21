@@ -1,6 +1,18 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
 
+
+function isAdmin(req, res, next) {
+  if (req.body.isAdmin) {
+    next();
+  } else {
+    res.status(401).json();
+    console.log(`Tenes que ser Admin para acceder a esta funcion`)
+  }
+}
+
+
+
 server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
 	Product.findAll()
 		.then(products => {
@@ -61,8 +73,8 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 	})
 })
 
-server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
-	const {name, description, price, stock, categoryId, image} = req.body;
+server.post('/', isAdmin, (req, res) => {		//AGREGA NUEVOS PRODUCTOS
+	const {name, description, price, stock, categoryId, image, isAdmin} = req.body;
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
@@ -107,7 +119,7 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	}
 })
 
-server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
+server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
 		include: { model: Category },
@@ -121,17 +133,10 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			res.json(product)
 		}
 	})
-	// Product.findByPk(idProducto)
-	// .then(data => {
-	// 	data.addCategories(idCategoria)
-	// 	res.send('categoria agregada')
-	// }).catch(err => {
-	// 	console.log('Error: ', err)
-	// 	res.send('Ese producto o categoria no existe :(')
-	// })
+
 })
 
-server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
+server.post('/category', isAdmin, (req, res) => {		//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body ;
 	if(!name){
 		return res.status(400).send('Campos requeridos')
@@ -146,19 +151,8 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 	})
 })
 
-// server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
-// 	const { idProducto, idCategoria } = req.params;
-// 	Product.findByPk(idProducto)
-// 	.then(data => {
-// 		data.removeCategories(idCategoria)
-// 		res.send('La categoria fue eliminada del producto')
-// 	}).catch(err => {
-// 		console.log('Error: ', err)
-// 		res.send('Ocurrio un error :(')
-// 	})
-// })
 
-server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
+server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
 		include: { model: Category },
@@ -181,7 +175,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 	})
 })
 
-server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
+server.put('/:id', isAdmin, function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
     const {name, description, price, stock } = req.body;
     Product.update({
         name,
@@ -205,7 +199,7 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
     })
 });
 
-server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID
+server.put('/category/:id', isAdmin, function(req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID
 	const {name, description} = req.body;
 	Category.update({
 		name,
@@ -221,7 +215,7 @@ server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA
 	})
 });
 
-server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
+server.delete('/:id', isAdmin, (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
 	var productId = req.params.id;
 	if(!productId){
 		res.status(404).send('Debes ingresar un ID')
@@ -236,7 +230,7 @@ server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
 			})
 	}
 })
-server.delete('/category/:id', (req, res) => {		//ELIMINA UNA CATEGORIA
+server.delete('/category/:id', isAdmin, (req, res) => {		//ELIMINA UNA CATEGORIA
 	var categoryId = req.params.id;
     if(!categoryId){
         res.status(404).send('Debes ingresar un ID')

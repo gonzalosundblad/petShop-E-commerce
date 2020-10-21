@@ -1,27 +1,21 @@
 const server = require('express').Router();
 const { Product, User, Order, LineaDeOrden } = require('../db.js');
+const bcrypt = require('bcrypt');
 
-const crypto = require ('crypto') 
-//============================USUARIOS=============================
-    const hashPassword = (pass) => {                                        // Encriptacion Password
-        const algorithm = 'aes-192-cbc';
-        const key = crypto.scryptSync(pass, 'salt', 24);
-        const iv = Buffer.alloc(16, 0);
-        const cipher = crypto.createCipheriv(algorithm, key, iv);
-        let encrypted = cipher.update('V1b2C312345678', 'utf8', 'hex');
-        return encrypted += cipher.final('hex');
-        
-    } 
-    
-server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
-    const { name, email, password } = req.body;
+  
+server.post('/', async (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
+    const { name, email, password, rol } = req.body;
     if( !name || !email || !password) {
         return res.status(400).send("Campos requeridos")
+    }else{
+      var hashPassword = await bcrypt.hash(password, 10)
     }
+
     User.create({
         name,
         email,
-        password : hashPassword(password)
+        password : hashPassword,
+        rol: rol || 'user'
     }).then(user => {
         res.status(200).json(user)
     }).catch(err => {
@@ -29,32 +23,32 @@ server.post('/', (req, res) => {                                        //S34 : 
     })
 });
 
-server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
-    const { id } = req.params;
-    const { name, email, oldPassword, password } = req.body;
-    let OP = hashPassword(oldPassword)
-    User.update({
-        name,
-        email,
-        password : hashPassword(password)
-    },{
-        returning: true,
-        where: {
-            id: id,
-            password : OP
-        }
-    }).then(function(user) {
-        if(user[0] == 0) {
-			res.status(400).send('Error, campos requeridos')
-			return user[0]
-        }
-        res.status(200).json(user)
-    }).catch(err => {
-        res.status(400)
-        console.log('Error: ', err)
-    })
+// server.put('/:id', isUser, (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
+//     const { id } = req.params;
+//     const { name, email, oldPassword, password } = req.body;
+//     let OP = hashPassword(oldPassword)
+//     User.update({
+//         name,
+//         email,
+//         password : hashPassword(password)
+//     },{
+//         returning: true,
+//         where: {
+//             id: id,
+//             password : OP
+//         }
+//     }).then(function(user) {
+//         if(user[0] == 0) {
+// 			res.status(400).send('Error, campos requeridos')
+// 			return user[0]
+//         }
+//         res.status(200).json(user)
+//     }).catch(err => {
+//         res.status(400)
+//         console.log('Error: ', err)
+//     })
 
-});
+// });
 
 server.get('/', (req, res) => {                                         //S36 : Crear Ruta que retorne todos los Usuarios
     User.findAll()
@@ -129,7 +123,7 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
     })
 });
 
-server.get('/:idUser/cart/orders', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito      
+server.get('/:idUser/cart/orders', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito     
   const { idUser } = req.params;
   Order.findAll({
       where: {
