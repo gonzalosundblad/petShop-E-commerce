@@ -2,6 +2,7 @@ import {GET_PRODUCTS, GET_CATEGORIES,GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PROD
 import {GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA} from './constantsCarro'
 import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from './constantesOrden'
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW} from './constantsReview';
+import {SET_SESSION} from './constantsUser.js';
 
  const initialState = {
   products : [],
@@ -14,7 +15,7 @@ import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW} from './constan
 };
 
 export default (state = initialState, action) => {
-  console.log(action.type)
+  console.log(action.payload)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
     return {
@@ -167,6 +168,13 @@ export default (state = initialState, action) => {
           ...state,
           reviews : action.payload
         }
+      case SET_SESSION: {
+        const {token, user} = action
+        return {
+          token,
+          user
+        }
+      }
     default : return state
   }
   };

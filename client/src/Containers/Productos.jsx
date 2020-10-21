@@ -41,15 +41,19 @@ export function ModificayBorra({products}) {    //modifica y borra producto
      price: state.price,
      stock: state.stock
        }
-       console.log(cambios);
        }
    function modificar(e){
-     console.log(state);
-        const id = state.id
-     putId(id, state)
+        const id = parseInt(state.id)
+        var cambio = {
+          description: state.description,
+          id: state.id,
+          name: state.name,
+          price: state.price,
+          stock: state.stock
+        }
+     putId(id, cambio)
      .then( resp => {
        console.log(resp)
-       borrarInput()
        reload()
    })}
 
