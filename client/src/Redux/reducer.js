@@ -9,7 +9,8 @@ import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW} from './constan
   users: [],
   carrito:[],
   order: [],
-  reviews : []
+  reviews : [],
+  usuariosEnLinea: []
 };
 
 export default (state = initialState, action) => {
