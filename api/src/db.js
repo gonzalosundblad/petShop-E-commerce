@@ -42,7 +42,8 @@ Product.belongsToMany(Category, {through: 'productcategory'});
 Category.belongsToMany(Product, {through: 'productcategory'});
 
 //USER - ORDER
-User.hasMany(Order);
+User.hasMany(Order, { foreignKey: 'userId' });
+Order.belongsTo(User, { foreignKey: 'userId' });
 
 //PRODUCT - ORDER
 Product.belongsToMany(Order, { through: LineaDeOrden, as: 'orders', foreignKey:'product_id' });

@@ -23,16 +23,19 @@ const { Category, Product, User } = require('./src/db');
 
 var arrayDeUsuarios = [{
   name: "Eric",
+  last_name: "Gomez",
   email: "eric@gmail.com",
   password: "1234",
   rol: "Admin"
 },{
   name: "Gonza",
+  last_name: "Sundblad",
   email: "gonza@gmail.com",
   password: "1234",
-  rol:"user"
+  role: "admin"
 },{
   name: "Gaby",
+  last_name: "Marciano",
   email: "gaby@gmail.com",
   password: "1234"
 }];

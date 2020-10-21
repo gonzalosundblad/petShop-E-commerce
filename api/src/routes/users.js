@@ -2,9 +2,11 @@ const server = require('express').Router();
 const { Product, User, Order, LineaDeOrden } = require('../db.js');
 const bcrypt = require('bcrypt');
 
-  
-server.post('/', async (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
-    const { name, email, password, rol } = req.body;
+
+//============================USUARIOS=============================
+ 
+server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
+    const { name, email, password } = req.body;
     if( !name || !email || !password) {
         return res.status(400).send("Campos requeridos")
     }else{
@@ -14,8 +16,7 @@ server.post('/', async (req, res) => {                                        //
     User.create({
         name,
         email,
-        password : hashPassword,
-        rol: rol || 'user'
+        password
     }).then(user => {
         res.status(200).json(user)
     }).catch(err => {
@@ -23,32 +24,32 @@ server.post('/', async (req, res) => {                                        //
     })
 });
 
-// server.put('/:id', isUser, (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
-//     const { id } = req.params;
-//     const { name, email, oldPassword, password } = req.body;
-//     let OP = hashPassword(oldPassword)
-//     User.update({
-//         name,
-//         email,
-//         password : hashPassword(password)
-//     },{
-//         returning: true,
-//         where: {
-//             id: id,
-//             password : OP
-//         }
-//     }).then(function(user) {
-//         if(user[0] == 0) {
-// 			res.status(400).send('Error, campos requeridos')
-// 			return user[0]
-//         }
-//         res.status(200).json(user)
-//     }).catch(err => {
-//         res.status(400)
-//         console.log('Error: ', err)
-//     })
-
-// });
+server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
+    const { id } = req.params;
+    const { name, email, password, newPassword, last_name } = req.body;
+    User.update({
+        name,
+        last_name,
+        email,
+        password: newPassword
+    },{
+        returning: true,
+        where: {
+            user_id: id,
+            password
+        }
+    }).then(function(user) {
+        console.log(user)
+        if(user[0] == 0) {
+			res.status(400).send('Error, campos requeridos')
+			return user[0]
+        }
+        res.status(200).json(user)
+    }).catch(err => {
+        res.status(400)
+        console.log('Error: ', err)
+    })
+});
 
 server.get('/', (req, res) => {                                         //S36 : Crear Ruta que retorne todos los Usuarios
     User.findAll()
@@ -123,22 +124,22 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
     })
 });
 
-server.get('/:idUser/cart/orders', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito     
+server.get('/:idUser/cart/orders', (req, res) => {                      //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
   const { idUser } = req.params;
   Order.findAll({
-      where: {
-          userId: idUser
-      },
-      include: {
-          model:Product, 
-          as: 'products'
-      }
-  }).then((items) => {
-      res.status(200).send(items)
-  }).catch((err) => {
-      res.status(404).send('Error')
-      console.log('Error: ', err)
-  })
+        where: {
+            userId: idUser
+        },
+        include: {
+            model:Product, 
+            as: 'products'
+        }
+    }).then((items) => {
+        res.status(200).send(items)
+    }).catch((err) => {
+        res.status(404).send('Error')
+        console.log('Error: ', err)
+    })
 });
 
 server.delete('/:idUser/cart', (req, res) => {                          //S40 : Crear Ruta para vaciar el carrito
