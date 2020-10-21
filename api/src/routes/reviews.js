@@ -11,7 +11,7 @@ server.post('/product/:id/review', (req, res) => {                       //S54 :
         user_id,
         product_id,
     }).then((data) => {
-        res.status(201).send(data)
+        res.status(201).json(data)
     }).catch((error) => {
         res.status(400).json({message: error})
     })
@@ -62,7 +62,7 @@ server.get('/product/:id/review/', (req, res) => {  //S57 : Crear Ruta para obte
             model: User
         }
     }).then(response => {
-        res.status(200).json({response : 'response'})
+        res.status(200).json(response)
     }).catch(err => {
         res.status(404).json(err)
     })
