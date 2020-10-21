@@ -13,7 +13,7 @@ server.post('/product/:id/review', (req, res) => {                       //S54 :
     }).then((data) => {
         res.status(201).json(data)
     }).catch((error) => {
-        res.status(400).json({message: error})
+        res.status(400).json(error)
     })
 })
 

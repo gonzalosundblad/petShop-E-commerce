@@ -14,7 +14,7 @@ import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW} from './constan
 };
 
 export default (state = initialState, action) => {
-  //console.log(action)
+  console.log(action.type)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
     return {
