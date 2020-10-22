@@ -5,8 +5,10 @@ import '../Estilos/SearchBar.module.css';
 import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
 import {ListaDesplegable} from '../Components/ListaDesplegable';
-import Changito from '../imagenes/changuito2.png'
-import {getCarrito} from '../Redux/actionsCarrito'
+import Changito from '../imagenes/changuito2.png';
+import {getCarrito} from '../Redux/actionsCarrito';
+import UsuarioLogeado from '../Components/UsuarioLogeado';
+
 
 export default function NavBar({funcionCatag, onSearch}) {
 
@@ -47,18 +49,24 @@ export default function NavBar({funcionCatag, onSearch}) {
             <img className={StyleNav.img} src={Changito}/>
             <h5>${total}</h5>
           </a> 
+          <div className={StyleNav.botones}>
+            <UsuarioLogeado />
+            <a className={StyleNav.botones} href='/login'>
+            <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
+          </a> 
+          </div>
       </div>
       <div className={StyleNav.divBotones}>
         <div className={StyleNav.botones}>
           <a className={StyleNav.botones} href='/products'>
             <span className={StyleNav.botonCatalogo} >Catálogo</span>
           </a>
-          <a className={StyleNav.botones} href='/register'>
+          {/* <a className={StyleNav.botones} href='/register'>
             <span className={StyleNav.botonCatalogo} >Registrarse</span>
-          </a>
-          <a className={StyleNav.botones} href='/login'>
+          </a> */}
+          {/* <a className={StyleNav.botones} href='/login'>
             <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
-          </a> 
+          </a>  */}
           <ListaDesplegable/> 
         </div>   
       </div>

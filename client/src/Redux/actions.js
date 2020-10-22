@@ -1,10 +1,33 @@
 import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH, POST_USER, GET_USERS, PUT_USER, DELETE_USER, POST_PASSWORD } from './constants';
 import axios from 'axios';
 
-export function getProducts() { //obtener todos los productos
-  const request = axios.get('http://localhost:3001/products')
-  return { type: GET_PRODUCTS, payload: request };
+export function getProducts(allProducts){//va a REDUCER
+console.log('allProducts');
+  return {
+  type : GET_PRODUCTS,
+  payload : allProducts
+}}
+export function getProductsRequest(){//Va a Catalogo2.jsx
+console.log('getProductsRequest');
+  return (dispatch) => {
+    axios.get(`http://localhost:3001/products`)
+    .then(response => {dispatch(getProducts(response.data))})
+    .catch(err => {console.log(err)})
+  }
 }
+    // export function fetchPost(valor) {  // va a POST.jsx
+    //   return function (dispatch) {
+    //     dispatch(getPost());
+    //     axios.get(`https://jsonplaceholder.typicode.com/todos/${valor}`)
+    //       .then(r => r.data)
+    //       .then(d => dispatch(receivePost(d)))
+    //       .catch(e => console.log(e));
+    //   }
+    // }
+//------
+// export function getProducts() { //obtener todos los productos
+//     const request = axios.get('http://localhost:3001/products')
+//     return { type:GET_PRODUCTS, payload: request}; }
 
 
 export function getCategories() { //obtener todas las categorias
@@ -23,7 +46,7 @@ export function getProductById(id) {
 }//obtener un producto segun su id
 // HASTA ACA FUNCIONA--------------------------
 //----------------------------------------------
-export function postProduct() {      //agrega un nuevo producto
+export function postProduct(input){      //agrega un nuevo producto
   const request = axios.post('http://localhost:3001/products')
   return { type: POST_PRODUCT, payload: request };
 }
@@ -40,67 +63,47 @@ export function postCategory(data) {   //agrega una categoria
 }
 //----------------------------------------
 // PutId FUNCIONA
-export function putId(id, cambios) { //modifica un producto
-  return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
-    return ({ type: PUT_ID, payload: response })
-    console.log(response);
-  })
-}
-export function putCategoryId(id, cambios) {  //modifica una categoria
-  return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
-    return ({ type: PUT_CATEGORY_ID, payload: response })
-    console.log(response);
-  })
-}
+export function putId (id, cambios) { //modifica un producto
+    return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
+      return({ type: PUT_ID, payload : response })
+      console.log(response);
+    })
+    }
+export function putCategoryId (id, cambios) {  //modifica una categoria
+    return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
+      return({ type:PUT_CATEGORY_ID, payload : response })
+      console.log(response);
+    })
+  }
 
 
-export function deleteCatOfProduct(idP, idC) {   //elimina una categoria de un producto
-  return axios.delete(`http://localhost:3001/products/${idP}/category/${idC}`).then((resp) => {
-    return { type: DELETE_IDPROD_CAT_IDCATEG, payload: resp }
-  })
-}
+export function deleteCatOfProduct(idP, idC){   //elimina una categoria de un producto
+ return axios.delete(`http://localhost:3001/products/${idP}/category/${idC}`).then((resp) => {
+  return { type: DELETE_IDPROD_CAT_IDCATEG, payload : resp }
+ })
+ }
 
-export function deleteProduct(id) {   //elimina un producto segun id
-  return axios.delete(`http://localhost:3001/products/${id}`).then((resp) => {
-    return { type: DELETE_ID, payload: resp }
-    console.log(resp)
-  })
-}
-export function deleteCategory(id) {   //elimina una categoria segun id
-  return axios.delete(`http://localhost:3001/products/category/${id}`).then((resp) => {
-    return { type: DELETE_ID, payload: resp }
-    console.log(resp)
-  })
-}
+export function deleteProduct(id){   //elimina un producto segun id
+ return axios.delete(`http://localhost:3001/products/${id}`).then((resp) => {
+   return { type: DELETE_ID, payload : resp }
+   console.log(resp)
+ })
+  }
+export function deleteCategory(id){   //elimina una categoria segun id
+ return axios.delete(`http://localhost:3001/products/category/${id}`).then((resp) => {
+   return { type: DELETE_ID, payload : resp }
+   console.log(resp)
+ })
+  }
 
 
-export function search(producto) {   //busca entre todo
-  const request = axios.get(`http://localhost:3001/search?products=${producto}`)
-  return { type: SEARCH, payload: request };
-}
+export function search(producto){   //busca entre todo
+const request = axios.get(`http://localhost:3001/search?products=${producto}`)
+return { type: SEARCH, payload : request } ; }
 
 //--------------------------------------------------------------------------------
 //USERS
 
 export function postUser(usuario) {      //agrega un nuevo usuario
   const request = axios.post('http://localhost:3001/users/', usuario)
-  return { type: POST_USER, payload: request };
-}
-
-export function getUsers() {      //trae todos los usuarios
-  const request = axios.get('http://localhost:3001/users/')
-  return { type: GET_USERS, users: request };
-}
-
-export function putUser(id, usuario) {      //agrega un nuevo usuario
-  const request = axios.put(`http://localhost:3001/users/${id}`, usuario)
-  return { type: PUT_USER, payload: request };
-}
-
-
-export function putDelete(id) {      //borrar un  usuario
-  const request = axios.put(`http://localhost:3001/users/${id}`)
-  return { type: DELETE_USER, payload: request };
-}
-
-
+  return { type: POST_USER , payload : request } ; }

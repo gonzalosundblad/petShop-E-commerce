@@ -17,7 +17,7 @@
     box-shadow: 3px 3px 3px gray;
 }
 
-.reviews hr{
+.hr{
     width: 900px;
     height: 2px;
     color: gray;
@@ -29,6 +29,9 @@
     justify-content: flex-start;
     font-size: 20px;
     color: rgb(107, 107, 107);
+}
+.p{
+  color: DarkSlateBlue;
 }
 .opiniones{
     margin-top: 25px;
@@ -84,16 +87,12 @@
   height: 30px;
   margin-top: 25px;
 }
-table{
-    table-layout: fixed;
-    width: 900px;
-}
 input[type="radio"] {
   display: none;
 }
-input[type="text"] {
+.inputt[type="text"] {
   width: 300px;
-  height: 100px;
+  height: 80px;
   color: grey;
 }
 .estrellas {
@@ -103,39 +102,38 @@ input[type="text"] {
 .estrellasnaranja{
   color: orange;
   font-size: 30px;
-}
+  }
 
 .estrellas:hover,
 .estrellas:hover ~ label {
   color: orange;
 }
+/*table{
+  table-layout: fixed;
+  width: 900px;
+}*/
 .cajon1{
-  width: 225px;
+  width: 250px;
 float:left;
 }
 .cajon2{
-  margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  width: 200px;
+  width: 250px;
   height: 200px;
   float:left;
-  font-size: 10px;
+  font-size: 20px;
   color: darkcyan;
 }
 
 input[type="radio"]:checked ~ label {
   color: orange;
 }
-form{
-  color: blue ;
-}
-.botton{
+.bottton{
   height: 50px;
   border-radius: 5px;
-  width: 60px;
+  width: 100px;
   background-color: darkcyan;
   color: white;
 }
