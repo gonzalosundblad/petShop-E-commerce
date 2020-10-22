@@ -1,6 +1,19 @@
+const {User} = require('../db')
+
 module.exports = (req, res, next) => {
-  if(req.user.rol === "user"){
-    return next();
-  }
-  res.status(401).send("Necesita registrarse")
-}
+  User.findAll({
+    where: {
+      role: "user"
+    }
+  }).then(resp => {
+    console.log(resp);
+   var user = resp.map(u => u.role)
+   if(resp.length > 0){
+     if(user[0] === "user"){
+       return next()
+     }
+   }else{
+     console.log("necesita estar registrado")
+   }
+})
+ }

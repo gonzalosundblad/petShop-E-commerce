@@ -1,16 +1,6 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
-
-
-function isAdmin(req, res, next) {
-  if (req.body.isAdmin) {
-    next();
-  } else {
-    res.status(401).json();
-    console.log(`Tenes que ser Admin para acceder a esta funcion`)
-  }
-}
-
+const isAdmin = require('../middlewares/isAdmin')
 
 
 server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
@@ -74,7 +64,7 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 })
 
 server.post('/', isAdmin, (req, res) => {		//AGREGA NUEVOS PRODUCTOS
-	const {name, description, price, stock, categoryId, image, isAdmin} = req.body;
+	const {name, description, price, stock, categoryId, image} = req.body;
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {

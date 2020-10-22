@@ -1,15 +1,7 @@
-const {User} = require('../db')
 
 module.exports = (req, res, next) => {
-  User.findOne({
-    where: {
-      rol: "Admin"
-    }
-  }).then(res => {
-    console.log(res);
-    return next()
-  })
-  .catch( err => {
-    res.status(401).send("Necesita registrarse")
-   })
+  if (req.user.rol === "Admin") {
+    return next();
+  }
+  res.status(401).send("Acceso no autorizado")
 }
