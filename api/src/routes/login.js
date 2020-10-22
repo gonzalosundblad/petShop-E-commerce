@@ -23,21 +23,35 @@ server.post('/login', async (req, res) => {
         console.log(err);
       }
       if (isMatch) {
-        passport.authenticate('local', {
-          successRedirect: `/${user.id}`,
-          failureRedirect: '/login'
+        const userData = {
+          user: {
+            user_id: user.user_id,
+            name: user.name,
+            last_name: user.last_name,
+            role: user.role,
+            email: email
+          }
+        }
+        const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90m' });
+        return res.status(200).json({
+          accessToken, user: {
+            user_id: user.user_id,
+            name: user.name,
+            last_name: user.last_name,
+            role: user.role,
+            email: email
+          }
         })
-        return res.json({ message: 'ok' })
       } else {
         return res.status(401).json({ message: 'Contraseña Incorrecta' })
       }
-    });
+    })
   }
 })
 
 
 server.get('/me', (req, res) => {
-  res.json({ message: "Usted está autorizado correctamente!", user: req.user });
+  res.json({ message: "Usted está autorizado correctamente!", user: req.isAuthenticated() });
 });
 
 module.exports = server;

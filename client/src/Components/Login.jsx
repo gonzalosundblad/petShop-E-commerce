@@ -32,7 +32,7 @@ export default function User() {
   function loginUser() {
     postLogin(input).payload
       .then(res => {
-        window.location = '/perfil'
+        console.log(res)
       }).catch(err => {
         console.log(err)
       })

@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { GET_ME, POST_LOGIN, POST_LOGOUT } from './constantesLog'
+var _axios = axios.create({
+  withCredentials: true
+})
 
-export function postLogin(usuario) {      //agrega un nuevo usuario
-  const request = axios.post('http://localhost:3001/auth/login', usuario)
+export function postLogin(usuario) {      //Login
+  const request = _axios.post('http://localhost:3001/auth/login', usuario)
   return { type: POST_LOGIN, payload: request };
 }
 export function postLogout(usuario) {      //agrega un nuevo usuario
-  const request = axios.post('http://localhost:3001/auth/logout', usuario)
+  const request = _axios.post('http://localhost:3001/auth/logout', usuario)
   return { type: POST_LOGOUT, payload: request };
 }
 
