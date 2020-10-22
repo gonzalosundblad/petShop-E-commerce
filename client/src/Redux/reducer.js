@@ -150,7 +150,7 @@ export default (state = initialState, action) => {
       case POST_REVIEW:
         return {
           ...state,
-          reviews :state.carrito.concat(action.payload)
+          reviews: state.carrito.concat(action.payload)
         }
       case PUT_REVIEW:
         return {

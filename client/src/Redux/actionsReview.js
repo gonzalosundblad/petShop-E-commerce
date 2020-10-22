@@ -1,18 +1,23 @@
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW} from './constantsReview';
 import axios from 'axios';
 
-export function postReview(review){//va a REDUCER
-  return {
-  type : POST_REVIEW,
-  payload : review
-}}
+// export function postReview(review){//va a REDUCER
+//   console.log(review)
+//   return {
+//   type : POST_REVIEW,
+//   payload : review
+// }}
 export function postReviewRequest(idProducto, post){//Crear ruta para crear/agregar Review
 //productID y paquete con userId
-  return (dispatch) => {
-    axios.post(`http://localhost:3001/reviews/product/${idProducto}/review`, {post})
-      .then(response => {dispatch(postReview(response.data))})
-      .catch(error => {console.log(error)})
-  }
+console.log(post)
+  // return (dispatch) => {
+    // const request = axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
+    // return { type: POST_CARRO , payload : request } ; }
+    const request = axios.post(`http://localhost:3001/reviews/product/${idProducto}/review`, post)
+      // .then(response => {dispatch(postReview(response.data))})
+      // .catch(error => {console.log(error)})
+      return { type: POST_REVIEW, payload: request }
+  // }
 }
 //product/:id/review
 // const product_id = req.params.id;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Style from '../Estilos/reviews.module.css';
-import {getAllReviewsRequest} from '../Redux/actionsReview';
+import {deleteReview, getAllReviewsRequest, postReviewRequest, putReview} from '../Redux/actionsReview';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -10,16 +10,16 @@ function Reviews({id, reviews, getAllReviewsRequest}){
 
   const [state, setState] = useState({
       qualification: "",
-      description: "",
+      description: ""
     });
 
-  useEffect(() =>{
-      getAllReviewsRequest(id)
-    },[])
+  // useEffect(() =>{
+  //     getAllReviewsRequest(id)
+  //   },[])
 
     var prom=[];//hago promedio
       function promedio(){
-        console.log(reviews);
+        // console.log(reviews);
         var value = []
         reviews.map(e => {value.push(e.qualification)})
         var total  = value.reduce(function(a,b){
@@ -39,30 +39,30 @@ function Reviews({id, reviews, getAllReviewsRequest}){
       function handleSubmit(e){
           e.preventDefault();
       }
-      function onDelete(){
-        var idProduct = 1
-        var idReview = 2
-      //  deleteReviewRequest(idProduct, idReview)
-      }
-      function onPut(){
-        var id = 1
-        var idReview = 2
-        var post = {
-          qualification: state.qualification,
-          description: state.description,
-          user_id : 2
-          };
-        //  putReviewRequest(id, idReview, post)
-      }
-      function onSend(){
-        var id = '1'
-        var post = {
-          qualification: "jdjddd",
-          description: "sshshshshshshshshs",
-          user_id : 2
-          };
-        //  postReviewRequest(id, post);
-      }
+      // function onDelete(){
+      //   var idProduct = 1
+      //   var idReview = 2
+      // //  deleteReviewRequest(idProduct, idReview)
+      // }
+      // function onPut(){
+      //   var id = 1
+      //   var idReview = 2
+      //   var post = {
+      //     qualification: state.qualification,
+      //     description: state.description,
+      //     user_id : 2
+      //     };
+      //   //  putReviewRequest(id, idReview, post)
+      // }
+      // function onSend(){
+      //   var id = '1'
+      //   var post = {
+      //     qualification: "jdjddd",
+      //     description: "sshshshshshshshshs",
+      //     user_id : 2
+      //     };
+      //   //  postReviewRequest(id, post);
+      // }
 
     return(
       <div className={Style.box}>
@@ -139,13 +139,22 @@ function Reviews({id, reviews, getAllReviewsRequest}){
               <input className={Style.inputt}type="text" name="description" placeholder="Cuentanos mas sobre el producto"
                   onChange={handleChange} />
               <hr/>
-              <button name="enviar" onClick={onSend}className={Style.botton} type="submit">
+              {/* <button name="enviar" onClick={onSend}className={Style.botton} type="submit">
                 Enviar comentario
               </button>
               <button name="modificar" onClick={onPut}className={Style.botton} type="submit">
                 Modificar comentario
               </button>
               <button name="eliminar" onClick={onDelete}className={Style.botton} type="submit">
+                Eliminar comentario
+              </button> */}
+               <button name="enviar" onClick={() => postReviewRequest(id, state)} className={Style.botton} type="submit">
+                Enviar comentario
+              </button>
+              <button name="modificar" onClick={() => putReview(state)} className={Style.botton} type="submit">
+                Modificar comentario
+              </button>
+              <button name="eliminar" onClick={() => deleteReview()} className={Style.botton} type="submit">
                 Eliminar comentario
               </button>
             </form>
@@ -164,11 +173,19 @@ const mapStateToProps = state => {
     reviews: state.reviews
   }
 }
-const mapDispatchToProps = dispatch => {
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     dispatch,
+//     ...bindActionCreators({getAllReviewsRequest}, dispatch)
+//   }
+// }
+
+function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
-    ...bindActionCreators({getAllReviewsRequest}, dispatch)
-  }
+    postReviewRequest: rev => dispatch(postReviewRequest(rev)),
+    putReview: rev => dispatch(putReview(rev)),
+    deleteReview: rev => dispatch(deleteReview(rev))
+  };
 }
 
 export default connect(
