@@ -4,7 +4,7 @@ import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } fr
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW} from './constantsReview';
 import {SET_SESSION} from './constantsUser.js';
 
- const initialState = {
+export const initialState = {
   products : [],
   categories : [],
   users: [],
@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
     case GET_ID: //obtener un producto segun su id
     return {
       ...state,
-      products : action.products,
+      products : action.product,
     }
     case POST_PRODUCT: // agregar producto
     return {
@@ -90,21 +90,26 @@ export default (state = initialState, action) => {
         ...state,
         users : state.users.concat(action.users)
       }
+
     case GET_USER:
       return {
         ...state,
         users : action.users
       }
+
     case PUT_USER:
       return {
         ...state,
-        user : state.users.map(user => user.id === action.payload.id ? action.payload : user)
+        users : state.users.map(user => user.id === action.payload.id ? action.payload : user)
       }
+
     case  DELETE_USER:
       return {
         ...state,
-        user : state.users.filter(prod =>  prod.id !== action.payload )
+        users : state.users.filter(prod =>  prod.id !== action.payload )
         }
+
+
       //-----------------------------------------------------Carrito
       case GET_CARRO:
       return {
@@ -177,4 +182,5 @@ export default (state = initialState, action) => {
       }
     default : return state
   }
+
   };

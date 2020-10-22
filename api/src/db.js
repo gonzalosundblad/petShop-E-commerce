@@ -42,7 +42,8 @@ Product.belongsToMany(Category, {through: 'productcategory'});
 Category.belongsToMany(Product, {through: 'productcategory'});
 
 //USER - ORDER
-User.hasMany(Order);
+User.hasMany(Order, { foreignKey: 'userId' });
+Order.belongsTo(User, { foreignKey: 'userId' });
 
 //PRODUCT - ORDER
 Product.belongsToMany(Order, { through: LineaDeOrden, as: 'orders', foreignKey:'product_id' });
@@ -56,7 +57,11 @@ Review.belongsTo(Product,{ foreignKey:'product_id' });
 User.hasMany(Review,{ foreignKey: 'user_id' });
 Review.belongsTo(User,{ foreignKey:'user_id' });
 
+Review.belongsTo(Product,{foreignKey:'product_id'})
+Product.hasMany(Review, {foreignKey:'product_id'})
 
+Review.belongsTo(User,{foreignKey:'user_id'})
+User.hasMany(Review, {foreignKey:'user_id'})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -10,11 +10,11 @@ import {connect} from 'react-redux'
 
 export function ModificayBorra({products}) {    //modifica y borra producto
   const [state, setState] = useState({
-      id: "",
-      name: "",
-      description: "",
-      price: "",
-      stock: ""
+    id: "",
+    name: "",
+    description: "",
+    price: "",
+    stock: ""
   });
   const [prodGuardados, setProdGuardados] = useState([])
 
@@ -64,12 +64,12 @@ export function ModificayBorra({products}) {    //modifica y borra producto
     document.getElementById("price").value = "";
     document.getElementById("stock").value = "";
   }
-  function reload(){
+  function reload() {
     window.location.reload()
   }
 
 
-  function delet (){
+  function delet() {
     deleteProduct(state.id).then(resp => {
       console.log(resp)
       reload()
