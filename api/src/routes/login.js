@@ -2,6 +2,7 @@ const server = require('express').Router();
 require('dotenv').config()
 const { User } = require('../db.js');
 const jwt = require("jsonwebtoken");
+const authentication = require('../jwt');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
@@ -49,10 +50,12 @@ server.post('/login', async (req, res) => {
   }
 })
 
-
-server.get('/me', (req, res) => {
-  res.json({ message: "Usted está autorizado correctamente!", user: req.isAuthenticated() });
+server.get('/logout', (req, res) => {
+  req.logout();
+  res.send('usted hizo logout correctamente')
 });
+
+
 
 module.exports = server;
 
