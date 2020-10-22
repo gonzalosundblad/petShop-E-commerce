@@ -10,8 +10,11 @@ import email from '../imagenes/email.png';
 import google from '../imagenes/google.png';
 import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
+import {loginRequest} from '../Redux/actionsLogin';
+import {connect} from 'react-redux'
 
-export default function User (){
+
+function Login ({user, isLoggedIn, loginRequest}){
     const [users, setUsers] = useState([])
     const [input, setInput] =useState ({
         email : "",
@@ -26,6 +29,16 @@ export default function User (){
         .then(resp => setUsers(resp.data))
 
     },[])
+
+    function loginUser(){
+      const data = {
+        email : input.email,
+        password : input.password
+        }
+      console.log(input)
+      console.log(data)
+      loginRequest(input.email, input.password)
+    }
 
 
     function validate(input) {
@@ -44,29 +57,9 @@ export default function User (){
       };
 
 
-    function loginUser(e){
-        if (input.password && input.email){
-            users.forEach((user) => {
-                if (user.email === input.email){
 
-                    if (user.password === input.password){
-                        window.location=`user/${user.id}`;
-                        x = true;
+                //        window.location=`user/${user.id}`;
 
-                    }
-                }
-            })
-            if (!x){
-
-                alert("Email o contraseña invalida.")
-            }
-
-        }else{
-            alert("Campos a completar.")
-        }
-
-
-    };
 
     const handleInputChange = function(e) {
         setInput({
@@ -85,24 +78,6 @@ export default function User (){
     getUser().payload
     .then(resp => setUsers(resp.data))
   }, [])
-
-// function loginUser(){
-//         users.map((user) => {
-//         if (user.email === input.email){
-//           if (user.password === input.password){
-//             console.log('ok');
-//             //  window.location.href=`https://www.google.com.ar/`
-//             window.location.href=`http://localhost:3000/user/`
-//           }
-//           if (user.password !== input.password){
-//             alert('Wrong Password')
-//           }
-//         }
-//         })
-
-//         };
-
-  //  window.location.href=`https://www.google.com.ar/`
     return (
       <div  id='aparecer'className={estilo.divOscuro}>
         <div className={estilo.x}>
@@ -159,3 +134,20 @@ export default function User (){
       </div>
     )
  }
+
+ const mapStateToProps = state => {
+   return {
+     user: state.user,
+     isLoggedIn: state.isLoggedIn
+   }
+ }
+ const mapDispatchToProps = dispatch => {
+   return {
+     loginRequest: () => dispatch(loginRequest()),
+   }
+ }
+
+ export default connect(
+   mapStateToProps,
+   mapDispatchToProps
+ )(Login)
