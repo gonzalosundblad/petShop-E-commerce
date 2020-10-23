@@ -10,7 +10,7 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
 
   const [state, setState] = useState({
       qualification: "",
-      description: "",
+      description: ""
     });
 
   useEffect(() =>{
@@ -151,7 +151,16 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
               </button>
               <button name="eliminar" onClick={onDelete}className={Style.bottton} type="submit">
                 Eliminar comentario
+              </button> 
+               {/* <button name="enviar" onClick={() => postReviewRequest(id, state)} className={Style.botton} type="submit">
+                Enviar comentario
               </button>
+              <button name="modificar" onClick={() => putReview(state)} className={Style.botton} type="submit">
+                Modificar comentario
+              </button>
+              <button name="eliminar" onClick={() => deleteReview()} className={Style.botton} type="submit">
+                Eliminar comentario
+              </button> */}
             </form>
             </td></tr>
           </table>
@@ -168,7 +177,14 @@ const mapStateToProps = state => {
     reviews: state.reviews
   }
 }
-const mapDispatchToProps = dispatch => {
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     dispatch,
+//     ...bindActionCreators({getAllReviewsRequest}, dispatch)
+//   }
+// }
+
+function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     ...bindActionCreators({getAllReviewsRequest, postReviewRequest}, dispatch)
