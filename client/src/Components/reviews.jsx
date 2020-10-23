@@ -13,9 +13,9 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
       description: ""
     });
 
-  // useEffect(() =>{
-  //     getAllReviewsRequest(id)
-  //   },[])
+  useEffect(() =>{
+      getAllReviewsRequest(id)
+    },[])
 
     var prom=[];//hago promedio
     var list = [{uno: [], dos : [], tres : [], cuatro : [], cinco : []}]
@@ -152,7 +152,7 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
               <button name="eliminar" onClick={onDelete}className={Style.bottton} type="submit">
                 Eliminar comentario
               </button> 
-               <button name="enviar" onClick={() => postReviewRequest(id, state)} className={Style.botton} type="submit">
+               {/* <button name="enviar" onClick={() => postReviewRequest(id, state)} className={Style.botton} type="submit">
                 Enviar comentario
               </button>
               <button name="modificar" onClick={() => putReview(state)} className={Style.botton} type="submit">
@@ -160,7 +160,7 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
               </button>
               <button name="eliminar" onClick={() => deleteReview()} className={Style.botton} type="submit">
                 Eliminar comentario
-              </button>
+              </button> */}
             </form>
             </td></tr>
           </table>
