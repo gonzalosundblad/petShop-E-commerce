@@ -6,11 +6,12 @@ export function ListaDesplegable(){
     return (
         <div id='header'>
             <ul className='lista'>
-                <li> <a href=''>Ajustes</a>
-                    <ul>
-                        <li><a href=''>Productos</a>
+                <li class="nav-item dropdown" > <a href=''>Ajustes</a>
+                    <ul >
+                        <li ><a href=''>Productos</a>
                             <ul>
                                 <li><a href='/admin/products/crud/'>Agregar Productos</a></li>
+                            
                                 <li><a href='/admin/ModificarProducto/'>Modificar/Borrar</a></li>
                             </ul>
                         </li>
@@ -21,12 +22,12 @@ export function ListaDesplegable(){
                             </ul>
                         </li>
                         <li><a href=''>Ordenes</a>
-                            <ul className="orden">
+                            <ul>
                                 <li><a href='/admin/ordenes'>Ordenes</a></li>
                             </ul>
                         </li>
                         <li><a href=''>Usuarios</a>
-                            <ul className="orden">
+                            <ul>
                                 <li><a href='/admin/usuarios'>Usuarios</a></li>
                             </ul>
                         </li>

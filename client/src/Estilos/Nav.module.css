@@ -13,7 +13,6 @@
     display: flex;
     align-items: center;
     position: fixed;
-    background-color:rgb(0, 131, 141, 0.7);
     width: 100%;
     justify-content: center;
     z-index: 2;
@@ -23,7 +22,6 @@
     flex-direction: column;
     margin-top: 104px;
     width: 100%;
-    background-color:rgb(0, 131, 141, 0.7);
     display: flex;
     text-decoration: none;
     width: 100%;

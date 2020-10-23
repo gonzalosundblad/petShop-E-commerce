@@ -16,14 +16,22 @@ export function MostrarCategorias (){                  //Muestra las categorias 
   }, []);
       
   return (
-      <div >
-          {
-          categorias.map(n => {
-              if (n.name !== 'Sin Categoria'){ 
-                  return  <CategoriaCard nombre={n.name} id={n.id} /> 
-              }
-          })
-          }
+      <div class='bg-success'>      
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <button type="button" class="btn btn-success"><h6 class='text-white'>Todas las Categorias</h6></button>
+          <div class="btn-group" role="group">
+            <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop2" >
+                {
+                 categorias.map(n => {
+                  if (n.name !== 'Sin Categoria'){
+                  return (
+                  <a class="dropdown-item" height='30px' href={`/products/category/${n.name}`}>{n.name}</a>)
+                }})
+                }
+              </div>
+          </div>
+        </div>     
       </div>  
   )
 };

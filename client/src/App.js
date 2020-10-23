@@ -21,7 +21,10 @@ import Carrito from './Containers/carrito';
 import Usuarios from './Components/usuarios';
 import Perfil from './Components/perfil';
 import OrdenUsuario from './Containers/ordenUsuario';
-import OrdenAdmin from './Components/ordenAdmin'
+import OrdenAdmin from './Components/ordenAdmin';
+import {Fondo} from './Containers/fondo';
+
+
 function App() {
   const [resultados, setResultados] = useState([]);
 
@@ -34,19 +37,21 @@ function App() {
      }
 
   return (
-
-    <div className= {StyleApp.App}>
+    
+    <div >
       <BrowserRouter>
-      <div>
-        <Route path="/" render={() =>  <Nav onSearch={onSearch}  />} />
+      <Route path="/" render={() =>  <Nav onSearch={onSearch}  />} />
+      <div className= {StyleApp.App}>
+        
         <Route path="/" render = {() => <Catalogo productos = {resultados} /> } />
-        <div className= {StyleApp.padding}>
+        <Route exact path="/" render = {() => <Fondo /> } />
+        
           <Route exact path="/" component={MostrarCategorias}/>
-          <Route exact path="/" render={() =>  <ControlledCarousel />} />
+          {/* <Route exact path="/" render={() =>  <ControlledCarousel />} /> */}
           <Route exact path={`/products/category/:Categoria`} render={({match}) => <ProductosPorCategoria name={match.params.Categoria}/>}/>
           <Route exact path="/login" render={() =>  <User />} />
           <Route exact path="/register" render={() => <AgregarUsuario/> } />
-            <div className= {StyleApp.padding}>
+           
               <Route exact path="/products" component={MostrarCatalogo} />
               <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />}/>
               <Route exact path="/carrito" render={() => <Carrito/>} />
@@ -60,8 +65,8 @@ function App() {
               <Route exact path="/admin/usuarios" render={() => <Usuarios /> } />
               <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } />
               <Route exact path="/order/:id" render={({match}) => <OrdenUsuario id={match.params.id} /> } />
-            </div>
-        </div>
+            
+        
       </div>
       </BrowserRouter>
     </div>
