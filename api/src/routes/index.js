@@ -5,7 +5,7 @@ const searchRouter = require('./searchProduct.js');
 const usersRouter = require('./users');
 const ordersRouter = require('./orders');
 const reviewsRouter = require('./reviews');
-const logRouter = require('./login')
+const logRouter = require('./auth')
 
 var router = Router();
 
