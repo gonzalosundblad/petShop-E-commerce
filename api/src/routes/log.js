@@ -3,13 +3,14 @@ require ( 'dotenv' ).config()
 const {  User } = require('../db.js');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const { checkIsAdmin } = require('../utils');
 
 const checkPassword = async(user, password) => {
 	const comparacion = await bcrypt.compare(password, user.password)
 	return comparacion
 };
 
-server.post("/login",( req, res, next ) => {
+server.post("/login", ( req, res, next ) => {
 	const email = req.body.email
 	const password = req.body.password
 	User.findOne({
@@ -44,5 +45,11 @@ server.post("/login",( req, res, next ) => {
             res.status(400).json("Ocurrio un error :(")
         })
 });
+
+
+server.post('/logout', (req, res) => {
+    
+})
+
 
 module.exports = server

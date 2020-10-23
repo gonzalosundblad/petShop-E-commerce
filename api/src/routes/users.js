@@ -11,6 +11,7 @@ server.post('/', (req, res) => {                                        //S34 : 
     }
     User.create({
         name,
+        last_name,
         email,
         password
     }).then(user => {
