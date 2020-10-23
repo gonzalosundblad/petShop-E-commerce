@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import Catalogo from '../Components/CatalogoComp';
 import CategoriaCard from '../Components/CategoriaComp';
 import {getProductByCategory, getCategories} from '../Redux/actions.js';
-import {deleteCategory} from '../Redux/actions'; 
+import {deleteCategory} from '../Redux/actions';
 import {postCategory} from '../Redux/actions';
 import {putCategoryId} from '../Redux/actions.js';
 import estilo from '../Estilos/forms.module.css';
+import {connect} from 'react-redux'
 
 export function MostrarCategorias (){                  //Muestra las categorias en el home
   const [categorias, setCategoria] = useState([]);
@@ -14,24 +15,24 @@ export function MostrarCategorias (){                  //Muestra las categorias 
     getCategories().payload
     .then(resp => setCategoria(resp.data))
   }, []);
-      
+
   return (
       <div >
           {
           categorias.map(n => {
-              if (n.name !== 'Sin Categoria'){ 
-                  return  <CategoriaCard nombre={n.name} id={n.id} /> 
+              if (n.name !== 'Sin Categoria'){
+                  return  <CategoriaCard nombre={n.name} id={n.id} />
               }
           })
           }
-      </div>  
+      </div>
   )
 };
 
 export function ProductosPorCategoria({ name }) {         //Muestra los productos segun la categoria
 
 const [products, setProducts] = useState([]);
-  
+
 useEffect(() => {
   getProductByCategory(name).payload
   .then(resp => setProducts(resp.data))
@@ -51,19 +52,19 @@ export function AgregarCategoria() {                  //agrega categoria
   function handleChange (event){
     setNueva( event.target.value );
   }
- 
+
   function handleChange2 (event){
     setDescription( event.target.value )
   }
- 
+
   function handleSubmit (event){
     event.preventDefault();
-    
+
      const usuario = {
        name: nueva,
        description: description
     };
-    
+
 
     postCategory(usuario).payload
     .then(function(resp){
@@ -71,14 +72,14 @@ export function AgregarCategoria() {                  //agrega categoria
       borrarInput()
     })
 
-    
+
   }
   function borrarInput(){
     document.getElementById("name").value = "";
     document.getElementById("description").value = "";
   }
-  
- 
+
+
 return (
   <div className={estilo.formsAgregarCategoria}>
     <div>
@@ -171,7 +172,7 @@ export function ModificaCategoria() {                   //modifica categoria y b
                           <label>Id:</label>
                           <input type="text" value={encontrado.id} />
                         </div>
-                        
+
                         <div className={estilo.nombre}>
                           <label>Nombre:</label>
                           <input type="text" value={encontrado.name} />
@@ -186,7 +187,7 @@ export function ModificaCategoria() {                   //modifica categoria y b
             }
         </div>
         <hr/>
-        
+
           <div>
             <h2>Ingrese los datos que desea modificar o liminar</h2>
           </div>
@@ -217,6 +218,13 @@ export function ModificaCategoria() {                   //modifica categoria y b
               <button className={estilo.botonBorrar} onClick={delet} >Eliminar</button>
             </div>
         </div>
-      
+
     );
+}
+export function mapStateToProps(state) {
+  console.log(state.auth);
+  const { user } = state.auth.user;
+  return {
+    user,
+  };
 }

@@ -8,9 +8,10 @@ import {ListaDesplegable} from '../Components/ListaDesplegable';
 import Changito from '../imagenes/changuito2.png';
 import {getCarrito} from '../Redux/actionsCarrito';
 import UsuarioLogeado from '../Components/UsuarioLogeado';
+import {connect} from 'react-redux'
 
-
-export default function NavBar({funcionCatag, onSearch}) {
+function NavBar({user, funcionCatag, onSearch}) {
+console.log(user.role);
 
   const [carro, setCarro] = useState([])
 
@@ -33,6 +34,7 @@ export default function NavBar({funcionCatag, onSearch}) {
     window.location.reload()
   }
 
+  if(user.role === 'user'){console.log('no podessssssssss');}
 
   return (
     <div className={StyleNav.nav}>
@@ -43,17 +45,17 @@ export default function NavBar({funcionCatag, onSearch}) {
           </Link>
         </div>
         <div>
-          <Search funcion={onSearch}/> 
+          <Search funcion={onSearch}/>
         </div>
         <a className={StyleNav.botonCarrito} href='/carrito'>
             <img className={StyleNav.img} src={Changito}/>
             <h5>${total}</h5>
-          </a> 
+          </a>
           <div className={StyleNav.botones}>
             <UsuarioLogeado />
             <a className={StyleNav.botones} href='/login'>
             <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
-          </a> 
+          </a>
           </div>
       </div>
       <div className={StyleNav.divBotones}>
@@ -61,17 +63,21 @@ export default function NavBar({funcionCatag, onSearch}) {
           <a className={StyleNav.botones} href='/products'>
             <span className={StyleNav.botonCatalogo} >Catálogo</span>
           </a>
-          {/* <a className={StyleNav.botones} href='/register'>
-            <span className={StyleNav.botonCatalogo} >Registrarse</span>
-          </a> */}
-          {/* <a className={StyleNav.botones} href='/login'>
-            <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
-          </a>  */}
-          <ListaDesplegable/> 
-        </div>   
+
+          <ListaDesplegable/>
+        </div>
       </div>
-      
-      {/* // <SearchBar2 onSearch={onSearch} productos={resultados} /> */}
+
     </div>
   );
 };
+
+function mapStateToProps(state) {
+  console.log(state.auth);
+  const { user } = state.auth.user;
+  return {
+    user,
+  };
+}
+
+export default connect(mapStateToProps)(NavBar);

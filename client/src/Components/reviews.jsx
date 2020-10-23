@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Style from '../Estilos/reviews.module.css';
-import {getAllReviewsRequest, postReviewRequest} from '../Redux/actionsReview';
+import {getAllReviewsRequest, postReviewRequest, putReviewRequest, deleteReviewRequest} from '../Redux/actionsReview';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
+import axios from 'axios';
 
 function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
-
-   var opiniones = [{date: "15/11" , user: "jorge", id:159, estrellas:5, title:"por ahora muy bueno", description: "Compre semillas."}, {date: "02/03" , user: "ana", id:241, estrellas:2, title:"Veremos las de perejil", description: "Explotaron de crecimiento"}]
 
   const [state, setState] = useState({
       qualification: "",
@@ -21,7 +20,6 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
     var list = [{uno: [], dos : [], tres : [], cuatro : [], cinco : []}]
 
       function promedio(){
-        console.log(reviews);
             var value = []
             if(reviews && reviews.length === 0){value.push(0)}
             reviews && reviews.map(e => {value.push(e.qualification)})
@@ -46,19 +44,26 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
           e.preventDefault();
       }
       function onDelete(){
-        var idProduct = 1
-        var idReview = 2
-      //  deleteReviewRequest(idProduct, idReview)
+        //var idProduct = 1
+        console.log(reviews);
+        var idReview = 4
+      //deleteReviewRequest(id, idReview)
+      axios.delete(`http://localhost:3001/reviews/product/${id}/review/${idReview}`)
+      .then(response => {console.log(response.data)})
+      window.location.reload()
       }
+
       function onPut(){
-        var id = 1
-        var idReview = 2
+        //var id = 1
+        var idReview = 1
         var post = {
           qualification: state.qualification,
           description: state.description,
           user_id : 2
           };
-        //  putReviewRequest(id, idReview, post)
+        //putReviewRequest(id, idReview, post)
+        axios.put(`http://localhost:3001/reviews/product/${id}/review/${idReview}`, post)
+          .then(resp => console.log(resp))
       }
 
       function onSend(){
@@ -165,7 +170,6 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
 }
 
 const mapStateToProps = state => {
-  console.log(state.reducer);
   return {
     reviews: state.reducer.reviews
   }
@@ -173,7 +177,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({getAllReviewsRequest, postReviewRequest}, dispatch)
+    ...bindActionCreators({getAllReviewsRequest, postReviewRequest, putReviewRequest, deleteReviewRequest}, dispatch)
   }
 }
 

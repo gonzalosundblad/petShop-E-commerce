@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 //============================USUARIOS=============================
 
-server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
+server.post('/', (req, res) => {//S34 : Crear Ruta para creación de Usuario
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     return res.status(400).send("Campos requeridos")
@@ -22,7 +22,7 @@ server.post('/', (req, res) => {                                        //S34 : 
   })
 });
 
-server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
+server.put('/:id', (req, res) => {  //S35 : Crear Ruta para modificar Usuario segun id
   const { id } = req.params;
   const { name, email, password, newPassword, last_name } = req.body;
   User.update({
@@ -49,7 +49,7 @@ server.put('/:id', (req, res) => {                                      //S35 : 
   })
 });
 
-server.get('/', (req, res) => {                                         //S36 : Crear Ruta que retorne todos los Usuarios
+server.get('/', (req, res) => {//S36 : Crear Ruta que retorne todos los Usuarios
   User.findAll()
     .then(users => {
       res.json(users);
@@ -59,7 +59,7 @@ server.get('/', (req, res) => {                                         //S36 : 
     });
 });
 
-server.delete('/:id', (req, res) => {                                   //S37 : Crear Ruta para eliminar Usuario
+server.delete('/:id', (req, res) => { //S37 : Crear Ruta para eliminar Usuario
   var userId = req.params.id;
   if (!userId) {
     res.status(404).send('Debes ingresar un ID')
@@ -141,7 +141,7 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
   })
 });
 
-server.get('/:idUser/cart/orders', (req, res) => {                      //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
+server.get('/:idUser/cart/orders', (req, res) => {                      //SCREADA : Crear Ruta que retorne todos los items de la orden creada
   const { idUser } = req.params;
   Order.findAll({
     where: {

@@ -4,7 +4,7 @@ import OrdenUsuario from '../Containers/ordenUsuario';
 import {getUser, deleteUser, putUser} from '../Redux/actionsOrden'
 import Estilo from '../Estilos/Perfil.module.css'
 
-export default function Perfil (id){
+export default function Perfil (id, user){
   const [state, setState] = useState({
       name: "",
       email: "",
@@ -12,7 +12,6 @@ export default function Perfil (id){
       oldPassword: ""
   });
   const [users, setUsers] = useState([])
-
   const id2 = parseInt(id.id)
   var datos = []
 

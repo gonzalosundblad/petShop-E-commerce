@@ -20,7 +20,7 @@ class AuthService {
   }
 
   register(username, email, password) {
-    return axios.post(API_URL , {
+    return axios.post('http://localhost:3001/users/' , {
       username,
       email,
       password,

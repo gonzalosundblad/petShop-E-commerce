@@ -19,7 +19,7 @@ import  Ordenes from './Containers/Orden';
 import { search } from './Redux/actions'
 import Carrito from './Containers/carrito';
 import Usuarios from './Components/usuarios';
-import Perfil from './Components/perfil';
+import Perfil from './Components/perfil2';
 import OrdenUsuario from './Containers/ordenUsuario';
 import OrdenAdmin from './Components/ordenAdmin'
 function App() {
@@ -60,6 +60,9 @@ function App() {
               <Route exact path="/admin/usuarios" render={() => <Usuarios /> } />
               <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } />
               <Route exact path="/order/:id" render={({match}) => <OrdenUsuario id={match.params.id} /> } />
+              <Route exact path="/Perfil" render={({match}) => <Perfil id={match.params.id} /> } />
+              <Route exact path="/user/orden" render={({match}) => <OrdenUsuario id={match.params.id} /> } />
+
             </div>
         </div>
       </div>

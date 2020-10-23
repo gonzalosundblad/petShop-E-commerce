@@ -25,24 +25,24 @@ console.log('// REVIEW: ');
   payload : review
 }}
 export function putReviewRequest(id, idReview, post){//Crear ruta para Modificar Review
-console.log('putReviewRequest');
+console.log(id, idReview, post);
   return (dispatch) => {
-    axios.put(`http://localhost:3001/product/${id}/review/${idReview}`, post)
+    axios.put(`http://localhost:3001/reviews/product/${id}/review/${idReview}`, post)
     .then(response => {dispatch(putReview(response.data))})
     .catch(err => {console.log(err)})
   }
 }
 //---------------------------------------------------------------------
 export function deleteReview(review){//va a REDUCER
-console.log('// REVIEW: ');
+console.log('// delete2: ');
   return {
   type : DELETE_REVIEW,
   payload : review
 }}
 export function deleteReviewRequest(id, idReview){//S56 : Crear Ruta para eliminar Review
-console.log(idReview);
+console.log('delete');
   return (dispatch) => {
-    axios.delete(`http://localhost:3001/product/${id}/review/${idReview}`)
+    axios.delete(`http://localhost:3001/reviews/product/${id}/review/${idReview}`)
     .then(response => {dispatch(deleteReview(response.data))})
     .catch(err => {console.log(err)})
   }

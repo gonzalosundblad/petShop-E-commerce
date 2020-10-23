@@ -15,7 +15,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 
-function Login ({dispatch, user, isLoggedIn, loginRequest}){
+function Login ({user, isLoggedIn, loginRequest}){
     const [users, setUsers] = useState([])
     const [input, setInput] =useState ({
         email : "",
@@ -61,6 +61,8 @@ function Login ({dispatch, user, isLoggedIn, loginRequest}){
     function loginUser(){
       loginRequest(input.email, input.password)
       if (isLoggedIn) {
+        console.log('******-----LOGUEADO-----*******');
+      window.location.replace(`http://localhost:3000/perfil`);
       }
     }
   useEffect(() => {
@@ -125,7 +127,7 @@ function Login ({dispatch, user, isLoggedIn, loginRequest}){
  }
 
  const mapStateToProps = state => {
-   console.log(state.auth.user.user.user_id);
+//   console.log(state.auth.user.user.user_id);
    return {
      isLoggedIn: state.auth.isLoggedIn
    }

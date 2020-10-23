@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {postUser} from '../Redux/actions';
 
-
-
 export function AgregarUsuario() {                  //agrega usuario
     const [ nombre, setNombre] = useState([]);
     const [ email, setEmail] = useState([])
@@ -10,7 +8,6 @@ export function AgregarUsuario() {                  //agrega usuario
     const [errors, setErrors] = useState({});
 
 function validate(input) {
-  console.log(input);
       let errors = {};
       if (nombre.length === 0) {
         errors.nombre = 'Username is required';
@@ -29,18 +26,15 @@ function validate(input) {
     };
 
     function handleChange (event){
-      console.log(event.target.value);
       setNombre( event.target.value );
       setErrors(validate( nombre )
       );
       }
     function handleChange2 (event){
-      console.log(event.target.value);
       setEmail( event.target.value );
       setErrors(validate(email ));
       }
     function handleChange3 (event){
-      console.log(event.target.value);
         setContraseña( event.target.value );
         setErrors(validate(contraseña));
         }

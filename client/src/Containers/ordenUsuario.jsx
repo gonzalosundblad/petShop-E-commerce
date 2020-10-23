@@ -3,10 +3,13 @@ import { useState, useEffect } from 'react'
 import {getProdOrder} from '../Redux/actionsCarrito'
 import { putOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
+import { connect } from "react-redux";
 
-export default function OrdenUsuario(id){
+function OrdenUsuario(props){
   const [productOrder, setproductOrder] = useState([])
-  
+  console.log('hhhhhhhhhhhhhhhhhh');
+console.log(props);
+const id = 3
   useEffect(() => {
     getProdOrder(2).payload
     .then(res => {
@@ -77,3 +80,12 @@ export default function OrdenUsuario(id){
     </div>
   )
 }
+
+function mapStateToProps(state) {
+  const { user } = state.auth.user;
+  return {
+    user,
+  };
+}
+
+export default connect(mapStateToProps)(OrdenUsuario);
