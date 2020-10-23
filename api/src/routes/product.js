@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
+const isAdmin = require('../middlewares/isAdmin')
+
 
 server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
 	Product.findAll()
@@ -63,18 +65,18 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 	})
 })
 
-server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
+server.post('/', isAdmin, (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	const {name, description, price, stock, categoryId, image} = req.body;
 	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
-		Product.create({ 
-			name, 
-			description, 
-			price, 
-			stock, 
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token` 
+		Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
 																							// SLICE EN 12 SOLO SIRVE PARA MI COMPUTADORA?
 		 })
 			.then(function(productSinId) {
@@ -87,12 +89,12 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 				id: categoryId
 			}
 		})
-		var producto = Product.create({ 
-			name, 
-			description, 
-			price, 
-			stock, 
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token` 
+		var producto = Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
 		 })
 		Promise.all([category, producto])
 			.then(values => {
@@ -107,11 +109,11 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 			}).catch(err => {
 				console.log('Error: ', err)
 				res.send('Ocurrio un error :(').status(404)
-			})	
+			})
 	}
 })
-	
-server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
+
+server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
 		include: { model: Category },
@@ -120,23 +122,16 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 		if(product[0].categories[0].id === 0) {		//Si tiene categoryId 0 (Sin categoria) le asigna el categoryId recibido por params
 			product[0].setCategories(idCategoria)
 			res.json(product)
-		} else {									
+		} else {
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
 			console.log(product[0])
 			res.json(product)
 		}
 	})
-	// Product.findByPk(idProducto)
-	// .then(data => {
-	// 	data.addCategories(idCategoria)
-	// 	res.send('categoria agregada')
-	// }).catch(err => {
-	// 	console.log('Error: ', err)
-	// 	res.send('Ese producto o categoria no existe :(')
-	// })
+
 })
 
-server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
+server.post('/category', isAdmin, (req, res) => {		//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body ;
   console.log(req.body)
 	if(!name){
@@ -152,22 +147,11 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 	})
 })
 
-// server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
-// 	const { idProducto, idCategoria } = req.params;
-// 	Product.findByPk(idProducto)
-// 	.then(data => {
-// 		data.removeCategories(idCategoria)
-// 		res.send('La categoria fue eliminada del producto')
-// 	}).catch(err => {
-// 		console.log('Error: ', err)
-// 		res.send('Ocurrio un error :(')
-// 	})
-// })
 
-server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
+server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
-		include: { model: Category },									
+		include: { model: Category },
 		where: { id: idProducto }
 	}).then(data => {
 		var arr = [];
@@ -188,7 +172,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 	})
 })
 
-server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
+server.put('/:id', isAdmin, function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
     const {name, description, price, stock } = req.body;
 
 		Product.findByPk(req.params.id)
@@ -220,9 +204,9 @@ server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
     })
 });
 
-server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID
+server.put('/category/:id', isAdmin, function(req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID
 	const {name, description} = req.body;
-	Category.update({ 
+	Category.update({
 		name,
 		description
 	},{
@@ -236,7 +220,7 @@ server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA
 	})
 });
 
-server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
+server.delete('/:id', isAdmin, (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
 	var productId = req.params.id;
 	if(!productId){
 		res.status(404).send('Debes ingresar un ID')
@@ -251,9 +235,9 @@ server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
 			})
 	}
 })
-server.delete('/category/:id', (req, res) => {		//ELIMINA UNA CATEGORIA
+server.delete('/category/:id', isAdmin, (req, res) => {		//ELIMINA UNA CATEGORIA
 	var categoryId = req.params.id;
-    if(!categoryId){ 
+    if(!categoryId){
         res.status(404).send('Debes ingresar un ID')
     } else {
         Category.findByPk(categoryId)

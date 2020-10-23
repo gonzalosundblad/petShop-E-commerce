@@ -10,8 +10,11 @@ import email from '../imagenes/email.png';
 import google from '../imagenes/google.png';
 import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
+import {loginRequest} from '../Redux/actionsLogin';
+import {connect} from 'react-redux'
 
-export default function User (){
+
+function Login ({user, isLoggedIn, loginRequest}){
     const [users, setUsers] = useState([])
     const [input, setInput] =useState ({
         email : "",
@@ -26,6 +29,16 @@ export default function User (){
         .then(resp => setUsers(resp.data))
 
     },[])
+
+    function loginUser(){
+      const data = {
+        email : input.email,
+        password : input.password
+        }
+      console.log(input)
+      console.log(data)
+      loginRequest(input.email, input.password)
+    }
 
 
     function validate(input) {
@@ -44,29 +57,9 @@ export default function User (){
       };
 
 
-    function loginUser(e){
-        if (input.password && input.email){
-            users.forEach((user) => {
-                if (user.email === input.email){
 
-                    if (user.password === input.password){
-                        window.location=`user/${user.id}`;
-                        x = true;
+                //        window.location=`user/${user.id}`;
 
-                    }
-                }
-            })
-            if (!x){
-
-                alert("Email o contraseña invalida.")
-            }
-
-        }else{
-            alert("Campos a completar.")
-        }
-
-
-    };
 
     const handleInputChange = function(e) {
         setInput({
@@ -85,32 +78,14 @@ export default function User (){
     getUser().payload
     .then(resp => setUsers(resp.data))
   }, [])
-
-// function loginUser(){
-//         users.map((user) => {
-//         if (user.email === input.email){
-//           if (user.password === input.password){
-//             console.log('ok');
-//             //  window.location.href=`https://www.google.com.ar/`
-//             window.location.href=`http://localhost:3000/user/`
-//           }
-//           if (user.password !== input.password){
-//             alert('Wrong Password')
-//           }
-//         }
-//         })
-
-//         };
-
-  //  window.location.href=`https://www.google.com.ar/`
     return (
       <div  id='aparecer'className={estilo.divOscuro}>
         <div className={estilo.x}>
           <a href='/'>
             <span className={estilo.cerrar} > X </span>
-          </a> 
+          </a>
         </div>
-        <div className={estilo.divTodo}>  
+        <div className={estilo.divTodo}>
           <div>
             <img src={imagen} className={estilo.imagen}/>
           </div>
@@ -118,17 +93,17 @@ export default function User (){
             <img src={HenryPet} className={estilo.imgHenryPet}/>
           </div>
           <div  className={estilo.divCuadro}>
-            <div className={estilo.divIzquierda}> 
+            <div className={estilo.divIzquierda}>
               <h2>Iniciar Sesion</h2>
                 <Form.Row className={estilo.formRow}>
                   <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridEmail">
                     <img src={email} className={estilo.icono}/>
-                    <Form.Control className={estilo.input} value={input.email} type="email" onChange={handleInputChange} placeholder="Introduzca el email" name="email" /> 
+                    <Form.Control className={estilo.input} value={input.email} type="email" onChange={handleInputChange} placeholder="Introduzca el email" name="email" />
                   </Form.Group>
                   {errors.email && (<h4 className="danger"> {errors.email} </h4>)}
                   <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridPassword">
                     <img src={candado} className={estilo.icono}/>
-                    <Form.Control className={estilo.input} value={input.password} onChange={handleInputChange} type="password" placeholder="Contraseña" name="password"/> 
+                    <Form.Control className={estilo.input} value={input.password} onChange={handleInputChange} type="password" placeholder="Contraseña" name="password"/>
                   </Form.Group>
                   {errors.password && (<h4 className="danger">{errors.password}</h4>)}
                 </Form.Row>
@@ -138,7 +113,7 @@ export default function User (){
                   <a  href='/register'>
                     <span  >Registrate</span>
                   </a>
-                </div> 
+                </div>
             </div>
             <div>
               <hr width="2" size="200"/>
@@ -153,9 +128,26 @@ export default function User (){
                 <img src={GitHub} className={estilo.imgGitHub}/>
                 <h5>Iniciar con GitHub</h5>
               </div>
-            </div> 
+            </div>
           </div>
         </div>
       </div>
     )
  }
+
+ const mapStateToProps = state => {
+   return {
+     user: state.user,
+     isLoggedIn: state.isLoggedIn
+   }
+ }
+ const mapDispatchToProps = dispatch => {
+   return {
+     loginRequest: () => dispatch(loginRequest()),
+   }
+ }
+
+ export default connect(
+   mapStateToProps,
+   mapDispatchToProps
+ )(Login)
