@@ -8,7 +8,7 @@ const passport = require('passport');
 
 server.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
+console.log(' quiero entrar y no me deja tira error');
   if (email && password) {
     let user = await User.findOne({
       where: {

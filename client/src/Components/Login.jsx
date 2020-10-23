@@ -12,9 +12,10 @@ import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
 import {loginRequest} from '../Redux/actionsLogin';
 import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router-dom';
 
-
-function Login ({user, isLoggedIn, loginRequest}){
+function Login ({dispatch, user, isLoggedIn, loginRequest}){
     const [users, setUsers] = useState([])
     const [input, setInput] =useState ({
         email : "",
@@ -30,50 +31,38 @@ function Login ({user, isLoggedIn, loginRequest}){
 
     },[])
 
-    function loginUser(){
-      const data = {
-        email : input.email,
-        password : input.password
-        }
-      console.log(input)
-      console.log(data)
-      loginRequest(input.email, input.password)
-    }
-
-
     function validate(input) {
-        let errors = {};
-        if (!input.email) {
-          errors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-          errors.email = 'Email is invalid';
-        }
-        if (!input.password) {
-          errors.password = 'Password is required';
-        } else if(input.password.length < 4) {
-          errors.password = 'Password is invalid';
-        }
-        return errors;
-      };
-
-
-
-                //        window.location=`user/${user.id}`;
-
-
-    const handleInputChange = function(e) {
-        setInput({
-          ...input,
-          [e.target.name]: e.target.value
-        });
-        setErrors(validate({
-            ...input,
-            [e.target.name]: e.target.value
-            }));
-
+      let errors = {};
+      if (!input.email) {
+        errors.email = 'Email is required';
+      } else if (!/\S+@\S+\.\S+/.test(input.email)) {
+        errors.email = 'Email is invalid';
       }
-
-
+      if (!input.password) {
+        errors.password = 'Password is required';
+      } else if(input.password.length < 4) {
+        errors.password = 'Password is invalid';
+      }
+      return errors;
+    };
+    const handleInputChange = function(e) {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value
+      });
+      setErrors(validate({
+        ...input,
+        [e.target.name]: e.target.value
+      }));
+    }
+     function handleLogin(e){
+       e.preventDefault();
+       }
+    function loginUser(){
+      loginRequest(input.email, input.password)
+      if (isLoggedIn) {
+      }
+    }
   useEffect(() => {
     getUser().payload
     .then(resp => setUsers(resp.data))
@@ -95,8 +84,8 @@ function Login ({user, isLoggedIn, loginRequest}){
           <div  className={estilo.divCuadro}>
             <div className={estilo.divIzquierda}>
               <h2>Iniciar Sesion</h2>
-                <Form.Row className={estilo.formRow}>
-                  <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridEmail">
+                <Form.Row className={estilo.formRow} onSubmit={handleLogin}>
+                  <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridEmail" >
                     <img src={email} className={estilo.icono}/>
                     <Form.Control className={estilo.input} value={input.email} type="email" onChange={handleInputChange} placeholder="Introduzca el email" name="email" />
                   </Form.Group>
@@ -136,14 +125,15 @@ function Login ({user, isLoggedIn, loginRequest}){
  }
 
  const mapStateToProps = state => {
+   console.log(state.auth.user.user.user_id);
    return {
-     user: state.user,
-     isLoggedIn: state.isLoggedIn
+     isLoggedIn: state.auth.isLoggedIn
    }
  }
  const mapDispatchToProps = dispatch => {
    return {
-     loginRequest: () => dispatch(loginRequest()),
+     dispatch,
+     ...bindActionCreators({loginRequest}, dispatch)
    }
  }
 

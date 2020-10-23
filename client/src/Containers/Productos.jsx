@@ -192,7 +192,7 @@ var firebaseConfig = {                                        //agrega productos
 
   const mapStateToProps = state => {
     return {
-      products: state.products
+      products: state.reducer.products
     }
   }
   const mapDispatchToProps = dispatch => {

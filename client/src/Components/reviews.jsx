@@ -21,9 +21,10 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
     var list = [{uno: [], dos : [], tres : [], cuatro : [], cinco : []}]
 
       function promedio(){
+        console.log(reviews);
             var value = []
-            if(reviews.length === 0){value.push(0)}
-            reviews.map(e => {value.push(e.qualification)})
+            if(reviews && reviews.length === 0){value.push(0)}
+            reviews && reviews.map(e => {value.push(e.qualification)})
             var total  = value.reduce(function(a,b){return a + b}, 0)
             prom = Math.round(total/value.length).toFixed(2);
             value.map(e => e === 1 ? list[0].uno.push(e) : null)
@@ -164,8 +165,9 @@ function Reviews({id, reviews, getAllReviewsRequest, postReviewRequest}){
 }
 
 const mapStateToProps = state => {
+  console.log(state.reducer);
   return {
-    reviews: state.reviews
+    reviews: state.reducer.reviews
   }
 }
 const mapDispatchToProps = dispatch => {
