@@ -5,6 +5,7 @@ import {getProductByCategory, getCategories} from '../Redux/actions.js';
 import {deleteCategory} from '../Redux/actions'; 
 import {postCategory} from '../Redux/actions';
 import {putCategoryId} from '../Redux/actions.js';
+import estilo from '../Estilos/forms.module.css';
 
 export function MostrarCategorias (){                  //Muestra las categorias en el home
   const [categorias, setCategoria] = useState([]);
@@ -43,36 +44,6 @@ return (
     )
 };
 
-// export function BorrarCategoria() {                      //borra categoria
-
-//   const [idCambiado, setID] = useState ([]);
-
-//   function handleChange (e)  {
-//       setID(e.target.value);
-//     }
-    
-//     function handleSubmit (event){
-//       event.preventDefault();
-//     }
-    
-//     deleteCategory(idCambiado).payload
-//     .then(function(resp){
-//     console.log(resp.data);
-//   })
-
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           ID De la categoria:
-//           <input type="text" name="id" onChange={handleChange} />
-//         </label>
-//         <button type="submit">Borrar</button>
-//       </form>
-//     </div>
-//   )
-// };
-
 export function AgregarCategoria() {                  //agrega categoria
   const [ nueva, setNueva] = useState([]);
   const [ description, setDescription] = useState([])
@@ -109,19 +80,26 @@ export function AgregarCategoria() {                  //agrega categoria
   
  
 return (
-  <div>
-    <form id="miForm" onSubmit={handleSubmit}>
-      <label>Nombre de Categoría: </label>
+  <div className={estilo.formsAgregarCategoria}>
+    <div>
+      <h1>Agregar Categoria:</h1>
+    </div>
+    <form  onSubmit={handleSubmit}>
+      <div className={estilo.labelInput}>
+        <label>Categoría: </label>
         <input id="name" type="text" name="name" onChange={handleChange} />
+      </div>
+      <div className={estilo.labelInput}>
         <label>Descripción: </label>
         <input id="description" type="text" description="description" onChange={handleChange2} />
+      </div>
       <button type="submit">Agregar</button>
     </form>
   </div>
 )
 };
 
-export function ModificaCategoria() {                   //modifica categoria
+export function ModificaCategoria() {                   //modifica categoria y borra categoria
     const [state, setState] = useState({
         id: "",
         name: ""
@@ -177,53 +155,68 @@ export function ModificaCategoria() {                   //modifica categoria
     }
 
    return (
-      <div className="form-class">
+      <div className={estilo.formsModificarCategoria }>
         <div>
-          <h3>Lista de productos disponibles para modificar</h3>
+          <h3>Categorias disponibles para modificar o eliminar:</h3>
         </div>
         <div>
             {
             CategGuardada && CategGuardada.map(encontrado => {
               if(encontrado.id !== 0){
                 return (
-                  <form key={encontrado.id}>
-                    <label>Id:</label>
-                    <input type="text" value={encontrado.id} />
-                    <label>Nombre:</label>
-                    <input type="text" value={encontrado.name} />
-                  </form>
+                  <div>
+                    <form  key={encontrado.id}>
+                      <div className={estilo.labelInputModificar}>
+                        <div className={estilo.id}>
+                          <label>Id:</label>
+                          <input type="text" value={encontrado.id} />
+                        </div>
+                        
+                        <div className={estilo.nombre}>
+                          <label>Nombre:</label>
+                          <input type="text" value={encontrado.name} />
+                        </div>
+                      </div>
+                    </form>
+                    <hr/>
+                  </div>
                   )
                 }
               })
             }
         </div>
-        <div className="modificador">
-          <h3>Ingrese los datos que desea modificar</h3>
-          <form className="text-left" onSubmit={handleSubmit}>
-            <div className="camposformulario">
-              <label>Id:</label>
-                <input
-                    type="number" id="id" name="id" className="form-control"
-                    placeholder="Ingrese id de la categoría"
-                    onChange={handleChange}
-                />
+        <hr/>
+        
+          <div>
+            <h2>Ingrese los datos que desea modificar o liminar</h2>
+          </div>
+          <div>
+            <form  onSubmit={handleSubmit}>
+              <div className={estilo.labelInputModificar}>
+                <div className={estilo.id}>
+                  <label>Id:</label>
+                    <input
+                          name="id" id='id'
+                        placeholder="Nº"
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className={estilo.nombre}>
+                  <label> Nombre: </label>
+                  <input
+                      type="text" id="name" name="name"
+                      placeholder="Nombre"
+                      onChange={handleChange}
+                  />
+                </div>
+              </div>
+              </form>
             </div>
-            <br /><br />
-            <div className="camposformulario">
-              <label> Nombre: </label>
-              <input
-                  type="text" id="name" name="name" className="form-control"
-                  placeholder="Ingrese nombre de la categoría"
-                  onChange={handleChange}
-              />
+            <div className={estilo.botones}>
+              <button  className={estilo.botonModificar} type="submit" value="Actualizar"> Modificar </button>
+              <button className={estilo.botonBorrar} onClick={delet} >Eliminar</button>
             </div>
-            <br /><br />
-            <button type="submit" value="Actualizar">
-                Modificar Categoría
-            </button>
-            <button onClick={delet} >Borrar</button>
-          </form>
         </div>
-      </div>
+      
     );
 }

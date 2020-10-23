@@ -50,6 +50,7 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 		for (let i = 0; i < data.categories.length; i++) {
 			arr.push(data.categories[i].name)
 		}
+		console.log(data)
 		res.json({
 			name: data.name,
 			description: data.description,
@@ -59,12 +60,14 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 			categories: arr
 		})
 	}).catch(err => {
+		console.log('Error: ', err)
 		res.send('No existe ese producto :(')
 	})
 })
 
 server.post('/', isAdmin, (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 	const {name, description, price, stock, categoryId, image} = req.body;
+	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
 	} else if(!categoryId) {
@@ -74,6 +77,7 @@ server.post('/', isAdmin, (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 			price,
 			stock,
 			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
+																							// SLICE EN 12 SOLO SIRVE PARA MI COMPUTADORA?
 		 })
 			.then(function(productSinId) {
 				productSinId.addCategories("0")
@@ -120,6 +124,7 @@ server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//AG
 			res.json(product)
 		} else {
 			product[0].addCategories(idCategoria)	//Si ya tenia un categoryId anteriormente le asigno otro existente a parte del que tenia
+			console.log(product[0])
 			res.json(product)
 		}
 	})
@@ -128,6 +133,7 @@ server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//AG
 
 server.post('/category', isAdmin, (req, res) => {		//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body ;
+  console.log(req.body)
 	if(!name){
 		return res.status(400).send('Campos requeridos')
 	}
@@ -152,6 +158,7 @@ server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//
 		for (let i = 0; i < data[0].categories.length; i++) {			//recorro todas las categorias del producto
 			arr.push(data[0].categories[i].id)
 		}
+		console.log(arr)//												   ----------------------------------------------------------
 		if(arr.length > 1) {	// <---------------Pregunto-------------- ||  si tiene mas de 1 categoria solo elimino la categoria ||
 			data[0].removeCategories(idCategoria)//						  ||--------------------------------------------------------||
 			res.send('Categoria eliminada')	// 						      ||  se elimina PERO se mantienen las demas categorias     ||
@@ -167,7 +174,11 @@ server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {		//
 
 server.put('/:id', isAdmin, function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
     const {name, description, price, stock } = req.body;
-    Product.update({
+
+		Product.findByPk(req.params.id)
+		.then(product => {
+			console.log(product)
+			product.update({
         name,
         description,
         price,
@@ -177,15 +188,19 @@ server.put('/:id', isAdmin, function(req, res) {       //MODIFICA UN PRODUCTO SE
         where: {
             id: req.params.id
         }
-    }).then(function(product) {
+    })
+	})
+		.then(function(product) {
 			console.log(product[1]);
         if(product[0] == 0) {
-			res.status(400).send('Error, campos requeridos')
-			return product[0]
+					res.status(400).send('Error, campos requeridos')
+					return product[0]
         }
-        res.status(200).json(product)
-    }).catch(err => {
+	        res.status(200).json(product)
+    })
+		.catch(err => {
         res.status(400)
+        console.log('Error: ', err)
     })
 });
 

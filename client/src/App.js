@@ -3,7 +3,7 @@ import StyleApp from './App.module.css';
 import { BrowserRouter, Route} from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo'
 import Nav from './Containers/Nav';
-import {CrudProduct} from './Containers/Productos';
+import {CrudProduct} from './Containers/CrudProduct';
 import {MostrarCategorias} from './Containers/Categorias';
 import {ProductosPorCategoria} from './Containers/Categorias';
 // import {BorrarCategoria} from './Containers/Categorias';
@@ -54,7 +54,7 @@ function App() {
               <Route exact path='/admin/ModificarProducto/' render={() => <ModificayBorra/>}/>
               <Route exact path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />}/>
               <Route exact path='/admin/products/crud/' render={() => <CrudProduct/>}/>
-              <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } /> 
+              <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} /> } />
               <Route exact path="/admin/ordenes" render={() => <Ordenes /> } />
               <Route exact path="/admin/ordenes/:id" render={({match}) => <OrdenAdmin id={match.params.id} /> } />
               <Route exact path="/admin/usuarios" render={() => <Usuarios /> } />
