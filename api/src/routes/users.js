@@ -5,22 +5,44 @@ const bcrypt = require('bcrypt');
 
 //============================USUARIOS=============================
 
-server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
+// server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
+//   const { name, email, password } = req.body;
+//   if (!name || !email || !password) {
+//     return res.status(400).send("Campos requeridos")
+//   }
+
+//   User.create({
+//     name,
+//     email,
+//     password
+//   }).then(user => {
+//     res.status(200).json(user)
+//   }).catch(err => {
+//     console.log('Error: ', err)
+//   })
+// });
+
+
+server.post('/', (req, res) => {                             //S34 : Crear Ruta para creación de Usuario (CON HASHEO ASYNC)
+  
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     return res.status(400).send("Campos requeridos")
   }
-
+  bcrypt.hash(req.body.password, 10).then(hashedPassword => {
   User.create({
     name,
     email,
-    password
-  }).then(user => {
+    password: hashedPassword
+  })
+  })
+  .then(user => {
     res.status(200).json(user)
   }).catch(err => {
     console.log('Error: ', err)
   })
 });
+
 
 server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
   const { id } = req.params;

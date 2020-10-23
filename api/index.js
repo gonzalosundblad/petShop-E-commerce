@@ -21,23 +21,31 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { Category, Product, User } = require('./src/db');
 
+
+// para hashear las contrasenas del hardcodeo de usuarios
+const bcrypt = require('bcrypt');
+var hash = function(pass) {
+  var a = bcrypt.hashSync(pass, 10);
+  return a;
+}
+
 var arrayDeUsuarios = [{
   name: "Eric",
   last_name: "Gomez",
   email: "eric@gmail.com",
-  password: "1234",
+  password: hash('1234'), 
   rol: "admin"
 },{
   name: "Gonza",
   last_name: "Sundblad",
   email: "gonza@gmail.com",
-  password: "1234",
+  password: hash('1234'),
   role: "admin"
 },{
   name: "Gaby",
   last_name: "Marciano",
   email: "gaby@gmail.com",
-  password: "1234"
+  password: hash('1234'),
 }];
 var arrayProductosPerros = [{
   name: "Eukanuba Small",
