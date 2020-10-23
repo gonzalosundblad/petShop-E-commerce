@@ -25,7 +25,8 @@ var arrayDeUsuarios = [{
   name: "Eric",
   last_name: "Gomez",
   email: "eric@gmail.com",
-  password: "1234"
+  password: "1234",
+  rol: "admin"
 },{
   name: "Gonza",
   last_name: "Sundblad",
