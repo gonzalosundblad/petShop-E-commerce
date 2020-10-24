@@ -1,6 +1,5 @@
 const server = require('express').Router();
 const { Product, Category, productcategory, User, Order, LineaDeOrden } = require('../db.js');
-const isUser = require('../middlewares/isUser.js');
 
 
 //   '/orders'
@@ -12,7 +11,7 @@ const isUser = require('../middlewares/isUser.js');
 //cuando modifico una orden solo cambio su estado ? creo q deberia poder agregar o sacar productos tmbbbb
 
 
-server.get('/', isUser, (req, res) => {       //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
+server.get('/', (req, res) => {       //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
     if(req.query.state) {
         Order.findAll({
             where: {

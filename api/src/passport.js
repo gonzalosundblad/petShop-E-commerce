@@ -9,8 +9,8 @@ function isAuthenticated(req, res, next) {
 }
   
 function isNotAuthenticated(req, res, next) {
-  if(!req.isAuthenticated())
-    return next();
+  if(req.isAuthenticated()) return res.send({message: "Ya estas loguado flac@"});
+  if(!req.isAuthenticated()) return next();
   else
     return res.status(401).send();
 }
