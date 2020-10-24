@@ -60,8 +60,8 @@ function Login ({user, isLoggedIn, loginRequest}){
        }
     function loginUser(){
       loginRequest(input.email, input.password)
-      //window.location.replace(`http://localhost:3000/perfil`);
-          }
+      window.location.href = '/perfil'
+      }
   useEffect(() => {
     getUser().payload
     .then(resp => setUsers(resp.data))
