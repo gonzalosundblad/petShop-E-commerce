@@ -1,9 +1,14 @@
 .listaCategoria{
   width: 150px;
   display: flex;
+  z-index: -1;
+  margin-top: 2%;
+  
 }
 
-
+.listaCompleta{
+  position: absolute;
+}
 
 
 

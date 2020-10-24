@@ -50,18 +50,18 @@
 }
 
 .categoria{
-    opacity: 80%;
+    opacity: 85%;
 }
 .categoria:hover{
     opacity: 100%;
     transform: scale(1.02);
-    transition: 0.5s;
+    transition: 0.2s;
 }
 
 .imgIcono{
     width: 100px;
     height: 100px;
-    opacity: 80%;
+    opacity: 85%;
 }
 
 .imgIcono:hover{
@@ -71,7 +71,7 @@
 
 
 .imagenes{
-    width: 500px;
+    width: 520px;
     height: 450px;
 }
 

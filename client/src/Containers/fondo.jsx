@@ -11,11 +11,10 @@ import perroYgato from '../imagenes/perroYgato.png';
 import conejo from '../imagenes/conejoPrincipal.png';
 
 export function Fondo (){
-    return (
-        
-        <div >
+    return ( 
+        <div>
             <div className={estilo.fondo} >
-                <img src={fondo} width='100%'></img>
+                <img src={fondo} width='100%' height="600px"></img>
             </div>
             <div className={estilo.perrito}>
                 <img  className={estilo.imgPerrito} src={perrito}></img>
@@ -48,15 +47,15 @@ export function Animales(){
     return(
         <div className={estilo.divImagenes} >
             <div className={estilo.divImagenTexto}>
-                <img src={peces} width='500px' height='480px'/>
+                <img src={peces} width='500px' height='550px'/>
                 <h1>Variedad de productos!</h1>
             </div>
             <div className={estilo.divImagenDerecha}>
                 <h1>Compra seguro desde tu casa!</h1>
-                <img src={perroYgato} width='550px' height='500px'/>
+                <img src={perroYgato} width='560px' height="550px"/>
             </div>
             <div className={estilo.divImagenTexto}>
-                <img src={conejo} width='500px' height='480px'/>
+                <img src={conejo} width='520px' height='550px'/>
                 <h1>Miles de productos disponibles!</h1>
             </div>
         </div>
