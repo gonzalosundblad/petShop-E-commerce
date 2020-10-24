@@ -7,8 +7,10 @@ import Carrito from '../Containers/carrito';
 import { postCarrito } from '../Redux/actionsCarrito';
 import Changuito from '../imagenes/carrito+.png'
 import Reviews from './reviews.jsx'
+import {connect} from 'react-redux';
 
-export default function Product ({ id2 }){
+
+function Product ({user, id2 }){
 //  {id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
@@ -17,7 +19,6 @@ export default function Product ({ id2 }){
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
-
 
         useEffect(() => {
           getProductById(id2).payload
@@ -35,23 +36,27 @@ export default function Product ({ id2 }){
       function handleChange(e) {
         setQuantity(e.target.value);
       }
-
-
-
-
     function subirCarrito(){
-
-      postCarrito(2, {
-        product_id: id2,
-        quantity: quantity,
-        price: price}).payload
-      .then(function(resp){
-        console.log(resp.data)
-        window.location.replace("http://localhost:3000/carrito")
-      })
-
+      if(user.isLoggedIn){
+          postCarrito(user.user.user.user_id, {
+            product_id: id2,
+            quantity: quantity,
+            price: price}).payload
+          .then(function(resp){
+            console.log(resp.data)
+            window.location.replace("http://localhost:3000/carrito")
+          })}
+      if(user.isLoggedIn === false){
+        postCarrito(2, {
+          product_id: id2,
+          quantity: quantity,
+          price: price}).payload
+        .then(function(resp){
+          console.log(resp.data)
+          window.location.replace("http://localhost:3000/carrito")
+        })
+      }
  }
-
 
    if(stock <= 0){
      return(
@@ -112,3 +117,12 @@ export default function Product ({ id2 }){
   )
 }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  }
+}
+export default connect(
+  mapStateToProps,
+)(Product)

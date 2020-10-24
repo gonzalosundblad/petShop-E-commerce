@@ -6,7 +6,7 @@ import Carrito from '../Containers/carrito';
 
 export default function ProductCard ({id, name, price, image, stock}){
   // const [card, setCard] = useState()
-  console.log(stock)
+  //console.log(stock)
 if(stock === 0){
   return (
     <div className={StyleProductCard.divSinStock}>

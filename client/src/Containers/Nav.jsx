@@ -13,9 +13,8 @@ import {connect} from 'react-redux'
 function NavBar({user, funcionCatag, onSearch}) {
 //console.log(user.user.role);
   const [carro, setCarro] = useState([])
-
   useEffect(() => {
-    getCarrito(2).payload
+    getCarrito(user.user.user_id).payload
     .then(res => {
       if(!res.data[0]){
         console.log('no hay productos')
@@ -55,7 +54,7 @@ function NavBar({user, funcionCatag, onSearch}) {
           </a>
 
           <div className={StyleNav.botones}>
-            {user !== null ? <UsuarioLogeado /> : null}
+            {user !== null ? <UsuarioLogeado />  : null}
 
             {user === null ? <a className={StyleNav.botones} href='/login'>
             <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
