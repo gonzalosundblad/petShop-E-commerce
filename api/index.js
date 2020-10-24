@@ -37,7 +37,10 @@ var arrayDeUsuarios = [{
   name: "Gaby",
   last_name: "Marciano",
   email: "gaby@gmail.com",
-  password: "febrero86"
+  password: "1234",
+  role: "admin"
+
+
 }];
 var arrayProductosPerros = [{
   name: "Eukanuba Small",
