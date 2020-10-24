@@ -14,6 +14,16 @@ server.get('/', (req, res) => {  											//TRAE TODOS LOS PRODUCTOS
 		});
 });
 
+server.get('/category', (req, res) => {										//TRAE TODAS LAS CATEGORIAS
+	Category.findAll()
+		.then(function(categ) {
+			res.json(categ)
+		}).catch(err => {
+			console.log('Error: ', err)
+			res.send('No hay categorias o ocurrio un error :(').status(400)
+		})
+})
+
 server.get('/:id', (req, res) => {											//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 	var arr = [];
 	Product.findByPk(req.params.id, {
@@ -148,16 +158,6 @@ server.delete('/:id', isAdmin, (req, res) => {								//ELIMINA UN PRODUCTO SEGU
 })
 
 //=========================================CATEGORIAS===========================================
-	
-server.get('/category', (req, res) => {										//TRAE TODAS LAS CATEGORIAS
-	Category.findAll()
-		.then(function(categ) {
-			res.json(categ)
-		}).catch(err => {
-			console.log('Error: ', err)
-			res.send('No hay categorias o ocurrio un error :(').status(400)
-		})
-})
 
 server.get('/category/:nombreCat', (req, res) => {  						//TRAE TODOS LOS PRODUCTOS DE X CATEGORIA
 	const nombreCat = req.params.nombreCat
