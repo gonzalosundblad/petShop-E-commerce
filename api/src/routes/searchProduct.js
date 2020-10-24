@@ -3,8 +3,6 @@ const { Product, Category } = require('../db.js');
 const Sequelize = require('sequelize');
 const {or, and, gt, lt} = Sequelize.Op;
 
-
-
 server.get('/', function(req, res) {    //UN SEARCH PARA BUSCAR TODOS LOS PRODUCTOS QUE MATCHEEN CON EL QUERY PARAMS
 console.log(req.query.products)
     Product.findAll({
@@ -26,9 +24,5 @@ console.log(req.query.products)
         res.send('No se encontro lo que buscaba :(').status(404)
     })
 });
-
-
-
-
 
 module.exports = server;

@@ -1,8 +1,10 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
+const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
+//==========================================PRODUCTOS===========================================
 
-server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
+server.get('/', (req, res) => {  											//TRAE TODOS LOS PRODUCTOS
 	Product.findAll()
 		.then(products => {
 			res.json(products);
@@ -12,34 +14,7 @@ server.get('/', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS
 		});
 });
 
-server.get('/category', (req, res) => {
-	Category.findAll()
-		.then(function(categ) {
-			res.json(categ)
-		}).catch(err => {
-			console.log('Error: ', err)
-			res.send('No hay categorias o ocurrio un error :(').status(400)
-		})
-})
-
-server.get('/category/:nombreCat', (req, res, next) => {  //TRAE TODOS LOS PRODUCTOS DE X CATEGORIA
-	const nombreCat = req.params.nombreCat
-	Category.findAll({
-		include : {
-			model : Product
-		},
-		where : {
-			name : nombreCat
-		}
-	}).then(data => {
-		res.json(data[0].products);
-	}).catch(err => {
-		console.log('Error: ', err)
-		res.send('No existe esa categoria :(').status(404)
-	})
-})
-
-server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
+server.get('/:id', (req, res) => {											//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 	var arr = [];
 	Product.findByPk(req.params.id, {
 		include: {
@@ -64,11 +39,24 @@ server.get('/:id', (req, res) => {			//TRAE EL PRODUCTO DEL CORRESPONDIENTE ID
 	})
 })
 
-server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
+server.post('/',  isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
 	const {name, description, price, stock, categoryId, image} = req.body;
 	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
+	} else if(!image) {
+		Product.create({
+			name,
+			description,
+			price,
+			stock,											//IMAGEN POR DEFECTO 
+			image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2Fgris.jpg?alt=media&token"
+		}).then(function(productoSinImg) {
+			if(!categoryId){
+				productoSinImg.addCategories("0")
+			}
+			res.json(productoSinImg)
+		})
 	} else if(!categoryId) {
 		Product.create({
 			name,
@@ -76,42 +64,119 @@ server.post('/', (req, res) => {		//AGREGA NUEVOS PRODUCTOS
 			price,
 			stock,
 			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
-		 })
-			.then(function(productSinId) {
-				productSinId.addCategories("0")
-				res.json(productSinId)
-			})
-	} else {
-		var category = Category.findAll({
-			where: {
-				id: categoryId
-			}
+		}).then(function(productSinId) {
+			productSinId.addCategories("0")
+			res.json(productSinId)
 		})
-		var producto = Product.create({
+	} else {
+			var category = Category.findAll({
+				where: {
+					id: categoryId
+				}
+			})
+			var producto = Product.create({
+				name,
+				description,
+				price,
+				stock,
+				image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
+			})
+
+			Promise.all([category, producto])
+				.then(values => {
+					var category = values[0]
+					var producto = values[1]
+					if(category && producto) {
+						producto.addCategories(category)
+						res.json(producto)
+					} else {
+						res.json(producto)
+					}
+				}).catch(err => {
+					console.log('Error: ', err)
+					res.send('Ocurrio un error :(').status(404)
+				})
+		}
+	})
+
+server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
+    const {name, description, price, stock } = req.body;
+	
+	Product.findByPk(req.params.id)
+	.then(product => {
+		console.log(product)
+		product.update({
 			name,
 			description,
 			price,
-			stock,
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
-		 })
-		Promise.all([category, producto])
-			.then(values => {
-				var category = values[0]
-				var producto = values[1]
-				if(category && producto) {
-					producto.addCategories(category)
-					res.json(producto)
-				} else {
-					res.json(producto)
-				}
-			}).catch(err => {
-				console.log('Error: ', err)
-				res.send('Ocurrio un error :(').status(404)
-			})
+			stock
+    	},{
+			returning: true,
+			where: {
+				id: req.params.id
+			}
+    	})
+	})
+	.then(function(product) {
+		console.log(product[1]);
+		if(product[0] == 0) {
+			res.status(400).send('Error, campos requeridos')
+				return product[0]
+			}
+			res.status(200).json(product)
+    })
+	.catch(err => {
+		res.status(400)
+        console.log('Error: ', err)
+    })
+});
+
+server.delete('/:id', isAdmin, (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID
+	var productId = req.params.id;
+	if(!productId){
+		res.status(404).send('Debes ingresar un ID')
+	} else {
+		Product.findByPk(productId)
+		.then(value => {
+			value.destroy()
+		}).then(value2 => {
+			res.status(200).send('Borrado exitosamente');
+		}).catch(err => {
+			res.status(404).send('Este producto nunca existió');
+		})
 	}
 })
 
-server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA CATEGORIA A UN PRODUCTO
+//=========================================CATEGORIAS===========================================
+	
+server.get('/category', (req, res) => {										//TRAE TODAS LAS CATEGORIAS
+	Category.findAll()
+		.then(function(categ) {
+			res.json(categ)
+		}).catch(err => {
+			console.log('Error: ', err)
+			res.send('No hay categorias o ocurrio un error :(').status(400)
+		})
+})
+
+server.get('/category/:nombreCat', (req, res) => {  						//TRAE TODOS LOS PRODUCTOS DE X CATEGORIA
+	const nombreCat = req.params.nombreCat
+	Category.findAll({
+		include : {
+			model : Product
+		},
+		where : {
+			name : nombreCat
+		}
+	}).then(data => {
+		res.json(data[0].products);
+	}).catch(err => {
+		console.log('Error: ', err)
+		res.send('No existe esa categoria :(').status(404)
+	})
+})
+
+server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {	//AGREGA UNA CATEGORIA A UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
 		include: { model: Category },
@@ -125,13 +190,11 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {		//AGREGA UNA 
 			console.log(product[0])
 			res.json(product)
 		}
-	})
-
+	})	
 })
 
-server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
-  const { name, description } = req.body ;
-  console.log(req.body)
+server.post('/category', isAdmin, (req, res) => {							//AGREGA NUEVAS CATEGORIAS
+	const { name, description } = req.body ;
 	if(!name){
 		return res.status(400).send('Campos requeridos')
 	}
@@ -145,8 +208,7 @@ server.post('/category', (req, res) => {		//AGREGA NUEVAS CATEGORIAS
 	})
 })
 
-
-server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA UNA CATEGORIA DE UN PRODUCTO
+server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {//ELIMINA UNA CATEGORIA DE UN PRODUCTO
 	const { idProducto, idCategoria } = req.params;
 	Product.findAll({
 		include: { model: Category },
@@ -170,39 +232,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 	})
 })
 
-server.put('/:id', function(req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
-    const {name, description, price, stock } = req.body;
-
-		Product.findByPk(req.params.id)
-		.then(product => {
-			console.log(product)
-			product.update({
-        name,
-        description,
-        price,
-        stock
-    },{
-        returning: true,
-        where: {
-            id: req.params.id
-        }
-    })
-	})
-		.then(function(product) {
-			console.log(product[1]);
-        if(product[0] == 0) {
-					res.status(400).send('Error, campos requeridos')
-					return product[0]
-        }
-	        res.status(200).json(product)
-    })
-		.catch(err => {
-        res.status(400)
-        console.log('Error: ', err)
-    })
-});
-
-server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID
+server.put('/category/:id', isAdmin, (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN ID
 	const {name, description} = req.body;
 	Category.update({
 		name,
@@ -218,35 +248,20 @@ server.put('/category/:id', function(req, res, next) {		//MODIFICA UNA CATEGORIA
 	})
 });
 
-server.delete('/:id', (req, res) => {		//ELIMINA UN PRODUCTO SEGUN ID
-	var productId = req.params.id;
-	if(!productId){
-		res.status(404).send('Debes ingresar un ID')
-	} else {
-		Product.findByPk(productId)
-			.then(value => {
-				value.destroy()
-			}).then(value2 => {
-				res.status(200).send('Borrado exitosamente');
-			}).catch(err => {
-				res.status(404).send('Este producto nunca existió');
-			})
-	}
-})
-server.delete('/category/:id', (req, res) => {		//ELIMINA UNA CATEGORIA
+server.delete('/category/:id', isAdmin, (req, res) => {						//ELIMINA UNA CATEGORIA
 	var categoryId = req.params.id;
     if(!categoryId){
-        res.status(404).send('Debes ingresar un ID')
+		res.status(404).send('Debes ingresar un ID')
     } else {
-        Category.findByPk(categoryId)
-            .then(value => {
-                value.destroy()
-            }).then(value2 => {
-                res.status(200).send('Borrado exitosamente');
-            }).catch(err => {
-                res.status(500).send('Error interno');
-            })
-    }
+		Category.findByPk(categoryId)
+		.then(value => {
+			value.destroy()
+		}).then(value2 => {
+			res.status(200).send('Borrado exitosamente');
+		}).catch(err => {
+			res.status(500).send('Error interno');
+        })
+	}
 });
 
 module.exports = server;
