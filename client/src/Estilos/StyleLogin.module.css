@@ -1,0 +1,30 @@
+
+
+.botones {
+    display: flex;
+    text-decoration: none;
+    justify-content: center;  
+
+}
+
+.botonCatalogo {
+    background-color: #00848dc0;
+    width: 110px;
+    height: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    /* opacity: 70%; */
+}
+
+.botonCatalogo:hover {
+    background-color: rgba(255, 255, 255, 0.685);
+    opacity: 100%;
+    color: #056b72;
+}
+
+

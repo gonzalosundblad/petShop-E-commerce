@@ -1,24 +1,22 @@
-import React  from 'react';
+import React from 'react';
 import ProductCard from './ProductCard';
-import StyleCatalogo from '../Estilos/ProductCard.module.css'
+import StyleCatalogo from '../Estilos/CatalogoComp.module.css'
 
-function Catalogo({productos}) {
-  console.log(productos)
-    if(productos.length >= 1){
-      return (
-        <div className={StyleCatalogo.display}>
-          {productos.map(p => 
-          <ProductCard 
-                img={p.img}
-                name={p.name}
-                price={p.price}
-                />
-            )}
-        </div>
-        );
-    } else return '';
-  
-  };
+function Catalogo({ productos }) {
+  return (
+    <div className={StyleCatalogo.display}>
+      {productos.map(p =>
+        <ProductCard
+          key={p.id}
+          id={p.id}
+          image={p.image}
+          name={p.name}
+          price={p.price}
+          stock={p.stock}
+        />
+      )}
+    </div>
+  );
+};
 
-
- export default Catalogo;
+export default Catalogo;

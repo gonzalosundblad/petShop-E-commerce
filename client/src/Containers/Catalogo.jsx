@@ -1,35 +1,36 @@
-import React, { useState } from 'react';
-import ProductCard from '../Components/ProductCard';
-import '../Estilos/catalogo.css';
+import React, { useState, useEffect } from 'react';
+import Catalogo from '../Components/CatalogoComp'
+import { getProductsRequest } from '../Redux/actions';
+import { connect } from 'react-redux'
 
+function MostrarCatalogo() {
+  const [state, setState] = useState([])
 
+  useEffect(() => {
+    getProductsRequest().payload
+      .then(resp => {
+        setState(resp.data)
+      })
+  }, []);
 
-export default function Catalogo({ products, categ}){
-  
-  const [prod, setProd] = useState(products);
-  // const [categories, setCategories] = useState(categ);
-  // useEffect(() => {
-  // })
-
-
-  function filtrarCategoria(event, products) {
-    // event.preventDefault();
-    const arrayCat = products.filter( product => product.cat === event.value)
-    setProd(arrayCat);
-  }
-  return(
-    <div>
-      <select onChange={e =>filtrarCategoria(e.target, products)}>
-        {categ.map((c, i) => ( <option className="opciones" key={i}> {c} </option>))}
-      </select>
-      {prod.map(p => 
-        <ProductCard 
-          key = {p.id} 
-          imagen= {p.imagen} 
-          name= {p.name}
-          price= {p.price}
-        />
-      )}
+  return (
+    <div >
+      <Catalogo productos={state} />
     </div>
-  )
+  );
+};
+const mapStateToProps = state => {
+  return {
+    products: state.reducer.products
+  }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    getProductsRequest: () => dispatch(getProductsRequest()),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MostrarCatalogo)

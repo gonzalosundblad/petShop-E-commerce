@@ -1,84 +1,117 @@
+import { Link, Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import Style from '../Estilos/Product.module.css';
+import { getProductById } from '../Redux/actions.js'
+import img from '../imagenes/comida.jpg'
+import Carrito from '../Containers/carrito';
+import { postCarrito } from '../Redux/actionsCarrito';
+import Changuito from '../imagenes/carrito+.png'
+import Reviews from './reviews.jsx'
 
-
-import React  from 'react';
-// import '../Estilos/product.css';
-
-
-export default function Product ({id, name, description, price, stock, imagen}){
-  //{id, name, description, price, stock, imagen }
-//  const [producto, setProduct] = useState(product)
- 
-  return (
-    <div>
-      <figure>
-        <img/>
-      </figure>
-      <h1>{name}</h1>
-      <p>Description: {description}</p>
-      <ul> 
-        <li>Precio: {price}</li>
-        <li>Stock: {stock}</li>
-      </ul>
-    </div>
-)};
-
-
-{/* import React, { useState, useEffect } from 'react';
-import  axios from 'axios';
-import './product.css'
-
-
-export default function Product ({ produc }){
- //{id, name, description, price, stock, imagen }
+export default function Product({ id2, idUser }) {
+  //  {id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [id, setId] = useState();
+  const [product_id, setId] = useState();
   const [price, setPrice] = useState();
-  const [stock, setStock] = useState();;
+  const [stock, setStock] = useState();
+  const [quantity, setQuantity] = useState();
 
-  
 
-  
   useEffect(() => {
-    async function detProd() {
-      const response = await axios.get(`http://localhost:3001/products/${produc}`)
-      const json = await response.data;    
-      console.log(json) 
-      setName(json.name);
-      setDescription(json.description); 
-      setImage(json.image); 
-      setId(json.id); 
-      setPrice(json.price); 
-      setStock(json.stock); 
-    }
-    detProd();
-    }, []);
-      
-  
+    getProductById(id2).payload
+      .then(function (resp) {
+        setName(resp.data.name);
+        setDescription(resp.data.description);
+        setImage(resp.data.image);
+        setId(resp.data.id);
+        setPrice(resp.data.price);
+        setStock(resp.data.stock)
+      }
+      )
+  }, []);
 
-    
-    
-  
+  function handleChange(e) {
+    setQuantity(e.target.value);
+  }
 
-  
- 
-  return(
-  <div className="producto">
-     <figure>
+  if (!idUser) {
+    idUser = 1
+  }
 
-       <img className="producto-img-top" src={image} alt="imagen de perro"/>
-     </figure>
-    <h1 className="producto-title">{name}</h1>
-     <p className="producto-texto">Description: {description}</p>
-     <ul> 
-       <li className="producto-text">Precio: {price}</li>
-       <li className="producto-text">Stock: {stock}</li>
-       {/* <img src={product.imagen} alt="imagen de perro"/> */}
-    
-    
-     {/* </ul> 
 
-  </div> */}
-  {/* )
-} */} 
+  function subirCarrito() {
+
+    postCarrito(idUser, {
+      product_id: id2,
+      quantity: quantity,
+      price: price
+    }).payload
+      .then(function (resp) {
+        console.log(resp.data)
+        window.location.replace("http://localhost:3000/carrito")
+      })
+
+  }
+
+
+  if (stock <= 0) {
+    return (
+      <div className={Style.product}>
+        <div className={Style.contenedor}>
+          <img className={Style.img} src={image} alt="" />
+          <div className={Style.imgNameCart}>
+            <div className={Style.containerLyrics}>
+              <h1>{name}</h1>
+              <h2>${price}</h2>
+            </div>
+            <div className={Style.cantidadStock}>
+              <div className={Style.stock}>
+                <h6>No hay Stock</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={Style.description}>
+          <h3>Descripción:</h3>
+          <hr />
+          <h4>{description}</h4>
+        </div>
+      </div>
+    )
+  } else {
+
+    return (
+      <div className={Style.product}>
+        <div className={Style.contenedor}>
+          <img className={Style.img} src={image} alt="" />
+          <div className={Style.imgNameCart}>
+            <div className={Style.containerLyrics}>
+              <h1>{name}</h1>
+              <h2>${price}</h2>
+            </div>
+            <div className={Style.cantidadStock}>
+              <div className={Style.cantidad}>
+                <label>Seleccione Cantidad:</label>
+                <input classname={Style.input} type="number" min='0' max={stock} placeholder='Nº' onChange={handleChange} />
+                <button className={Style.boton} onClick={subirCarrito}>
+                  <img className={Style.changuito} src={Changuito} />
+                </button>
+              </div>
+              <div className={Style.stock}>
+                <h5>Stock diponible: {stock} unidades</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={Style.description}>
+          <h3>Descripción:</h3>
+          <hr />
+          <h4>{description}</h4>
+        </div>
+        <Reviews id={id2} />
+      </div>
+    )
+  }
+}
