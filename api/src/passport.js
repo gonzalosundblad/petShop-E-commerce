@@ -1,59 +1,32 @@
-// const LocalStrategy = require("passport-local").Strategy;
-// const { User } = require('./db');
-// const bcrypt = require("bcrypt");
-
-// module.exports = function initialize(passport) {
-//   console.log("inicializando");
-//   const authenticateUser = (email, password, done) => {
-//     User.findOne({ where: { email: email } })
-//       .then(user => {
-//         if (!user) {
-//           return done(null, false, {
-//             message: 'El correo electrónico no existe.',
-//           });
-//         }
-//         bcrypt.compare(password, user.password, (err, isMatch) => {
-//           if (err) {
-//             console.log(err);
-//           }
-//           if (isMatch) {
-
-//             return done(null, user);
-//           } else {
-//             return done(null, false, { message: "Contraseña Incorrecta" });
-//           }
-//         });
-
-//       })
-//       .catch(err => {
-//         if (err) {
-//           console.log('error en Servidor');
-//           return done(err);
-//         }
-//       });
-//   };
-
-//   passport.use(new LocalStrategy(
-//     { usernameField: "email", passwordField: "password" },
-//     authenticateUser
-//   ));
-
-//   passport.serializeUser((user, done) => done(null, user.id));
-
-//   passport.deserializeUser((id, done) => {
-//     User.findOne({ where: { id: id } })
-//       .then(user => {
-//         if (user) {
-//           return done(null, user);
-//         }
-//       })
-//       .catch(err => {
-//         if (err) {
-//           console.log('error');
-//           return done(err);
-//         }
-//       })
-//   });
-// }
-
-
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  else
+    return res.status(401).send({ message: 'Necesita loguearse primero' });
+}
+function isNotAuthenticated(req, res, next) {
+  if (!req.isAuthenticated())
+    return next();
+  else
+    return res.status(401).send();
+}
+function isAdmin(req, res, next) {
+  if (req.user && req.user.role === "admin") {
+    return next();
+  } else {
+    return res.status(401).send();
+  }
+}
+function isNotAdmin(req, res, next) {
+  if (!!req.user === false || req.user.role !== "admin") {
+    return next;
+  } else {
+    return res.status(401).send();
+  }
+}
+module.exports = {
+  isAuthenticated,
+  isNotAuthenticated,
+  isAdmin,
+  isNotAdmin
+}

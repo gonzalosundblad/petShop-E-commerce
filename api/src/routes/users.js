@@ -3,23 +3,28 @@ const { Product, User, Order, LineaDeOrden } = require('../db.js');
 const bcrypt = require('bcrypt');
 
 
-//============================USUARIOS=============================
+//============================USUARIOS==============================
 
-server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario
-  const { name, email, password } = req.body;
+server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario (CON HASHEO ASYNC)
+
+  const { name, email, password, last_name } = req.body;
   if (!name || !email || !password) {
     return res.status(400).send("Campos requeridos")
   }
-
-  User.create({
-    name,
-    email,
-    password
-  }).then(user => {
-    res.status(200).json(user)
+  bcrypt.hash(req.body.password, 10).then(hashedPassword => {
+    User.create({
+      name,
+      last_name,
+      email,
+      role: 'user',
+      password: hashedPassword
+    }).then(user => {
+      res.status(200).json(user)
+    })
   }).catch(err => {
     console.log('Error: ', err)
   })
+
 });
 
 server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
@@ -75,22 +80,25 @@ server.delete('/:id', (req, res) => {                                   //S37 : 
   }
 })
 
-//===========================Contraseña Nueva ====================
+//===========================PASSWORD RESET=========================
+
 server.put('/:id/passwordReset', async (req, res) => {
   const { id } = req.params;
   const { password } = req.body;
-  User.update({
-    password: password
-  }, {
-    returning: true,
-    where: {
-      user_id: id
-    }
+  bcrypt.hash(req.body.password, 10).then(hashedPassword => {
+    return User.update({
+      password: hashedPassword
+    }, {
+      returning: true,
+      where: {
+        user_id: id
+      }
+    })
   }).then((user) => {
-    res.json(user)
-  })
-    .then(user => {
-      return res.status(201).json(user)
+      res.send(user[1])
+    }).catch(err => {
+      console.log(err)
+      res.send(err)
     })
 })
 
@@ -99,13 +107,13 @@ server.put('/:id/passwordReset', async (req, res) => {
 server.post('/:idUser/cart', (req, res) => {                            //S38 : Crear Ruta para agregar Item al Carrito
   const { idUser } = req.params;
   const { product_id, quantity, price } = req.body;
+
   Order.findOrCreate({
     where: {
       userId: idUser,
       orderState: 'carrito'
     }
   }).then(ord => {
-    // console.log(ord[0])
     const order_id = ord[0].id;
     return LineaDeOrden.create({
       product_id,
@@ -120,6 +128,7 @@ server.post('/:idUser/cart', (req, res) => {                            //S38 : 
     res.status(400)
     console.log('Error: ', err)
   })
+  
 });
 
 server.get('/:idUser/cart', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito
