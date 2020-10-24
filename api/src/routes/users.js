@@ -85,7 +85,7 @@ server.delete('/:id', (req, res) => {                                   //S37 : 
 server.put('/:id/passwordReset', async (req, res) => {
   const { id } = req.params;
   const { password } = req.body;
-  bcrypt.hash(req.body.password, 10).then(hashedPassword => {
+  bcrypt.hash(password, 10).then(hashedPassword => {
     return User.update({
       password: hashedPassword
     }, {
@@ -95,11 +95,11 @@ server.put('/:id/passwordReset', async (req, res) => {
       }
     })
   }).then((user) => {
-      res.send(user[1])
-    }).catch(err => {
-      console.log(err)
-      res.send(err)
-    })
+    res.send(user[1])
+  }).catch(err => {
+    console.log(err)
+    res.send(err)
+  })
 })
 
 //============================CARRITO===============================
@@ -128,7 +128,7 @@ server.post('/:idUser/cart', (req, res) => {                            //S38 : 
     res.status(400)
     console.log('Error: ', err)
   })
-  
+
 });
 
 server.get('/:idUser/cart', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito

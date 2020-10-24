@@ -3,15 +3,19 @@ import Catalogo from '../Components/CatalogoComp'
 import { getProductsRequest } from '../Redux/actions';
 import { connect } from 'react-redux'
 
-function MostrarCatalogo({ products, getProductsRequest }) {
+function MostrarCatalogo() {
+  const [state, setState] = useState([])
 
   useEffect(() => {
-    getProductsRequest()
+    getProductsRequest().payload
+      .then(resp => {
+        setState(resp.data)
+      })
   }, []);
 
   return (
     <div >
-      <Catalogo productos={products} />
+      <Catalogo productos={state} />
     </div>
   );
 };

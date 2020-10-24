@@ -7,15 +7,12 @@ import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 export default function OrdenUsuario(id, idUser) {
   const [productOrder, setproductOrder] = useState([])
 
-  if (!idUser) {
-    idUser = 1
-    var id3 = idUser.id
-  }
+  idUser = 1
 
   useEffect(() => {
-    getProdOrder(id3).payload
+
+    getProdOrder(idUser).payload
       .then(res => {
-        console.log(res.data)
         if (!res.data[0]) {
           alert('No hay Ordenes')
         } else {
@@ -24,6 +21,7 @@ export default function OrdenUsuario(id, idUser) {
         }
       })
   }, [])
+
   // var total = 0
 
 

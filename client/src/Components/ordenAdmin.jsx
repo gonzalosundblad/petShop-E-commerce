@@ -11,11 +11,11 @@ export default function OrdenAdmin(id, idUser) {
   console.log(id2)
 
   if (!idUser.id) {
-    idUser.id = 1
+    idUser = 1
   }
 
   useEffect(() => {
-    getProdOrder(idUser.id).payload
+    getProdOrder(idUser).payload
       .then(res => {
         if (!res.data[0]) {
           alert('No hay Ordenes')

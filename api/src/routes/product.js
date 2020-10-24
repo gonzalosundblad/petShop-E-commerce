@@ -173,34 +173,26 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {		//ELIMINA U
 
 server.put('/:id', function (req, res) {       //MODIFICA UN PRODUCTO SEGUN SU ID
   const { name, description, price, stock } = req.body;
-
-  Product.findByPk(req.params.id)
-    .then(product => {
-      console.log(product)
-      product.update({
-        name,
-        description,
-        price,
-        stock
-      }, {
-        returning: true,
-        where: {
-          id: req.params.id
-        }
-      })
-    })
-    .then(function (product) {
-      console.log(product[1]);
-      if (product[0] == 0) {
-        res.status(400).send('Error, campos requeridos')
-        return product[0]
-      }
-      res.status(200).json(product)
-    })
-    .catch(err => {
-      res.status(400)
-      console.log('Error: ', err)
-    })
+  Product.update({
+    name,
+    description,
+    price,
+    stock
+  }, {
+    returning: true,
+    where: {
+      id: req.params.id
+    }
+  }).then(function (product) {
+    if (product[0] == 0) {
+      res.status(400).send('Error, campos requeridos')
+      return product[0]
+    }
+    res.status(200).json(product)
+  }).catch(err => {
+    res.status(400)
+    console.log('Error: ', err)
+  })
 });
 
 server.put('/category/:id', function (req, res, next) {		//MODIFICA UNA CATEGORIA SEGUN ID
