@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Catalogo from '../Components/CatalogoComp'
-import {getProductsRequest} from '../Redux/actions';
-import {connect} from 'react-redux'
+import { getProductsRequest } from '../Redux/actions';
+import { connect } from 'react-redux'
 
-function MostrarCatalogo ({products, getProductsRequest}) {
+function MostrarCatalogo({ products, getProductsRequest }) {
 
   useEffect(() => {
     getProductsRequest()
@@ -11,13 +11,13 @@ function MostrarCatalogo ({products, getProductsRequest}) {
 
   return (
     <div >
-      <Catalogo productos = {products} />
+      <Catalogo productos={products} />
     </div>
   );
 };
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.reducer.products
   }
 }
 const mapDispatchToProps = dispatch => {

@@ -1,25 +1,40 @@
 import axios from 'axios';
-import { SET_SESSION } from './constantsLogin';
- //API_LOGIN = localhost//3000...etc
+import { SET_SESSION, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './constantsLogin';
+import AuthService from "../services/auth.service";
 
+ var _axios = axios.create({
+   withCredentials: true
+ })
+ export const loginRequest = (email, password) => (dispatch) => {
+   return AuthService.login(email, password).then(
+     (data) => {
+       dispatch({
+         type: LOGIN_SUCCESS,
+         payload: { user: data },
+       });
+       return Promise.resolve();
+     },
+     (error) => {
+       const message =
+         (error.response &&
+           error.response.data &&
+           error.response.data.message) ||
+         error.message ||
+         error.toString();
 
-export const login = ({ email, password }) => (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-        axios.post(API_LOGIN,{ email, password })
-            .then((respJson) => {
-                //si todo sale bien guardamos el user y token en localstore
-                dispatch({
-                    type: SET_SESSION,
-                    user: respJson.data.user,
-                    token: respJson.data.token
-                })
-                return resolve(respJson.data)
-            })
-            .catch( (err) => {
-                if(err.response && err.response.data)
-                    return reject(err.response.data)
-                else
-                    return reject({ error : true, message : "Ocurrio un error por favor intenta más tarde."});
-            });
-    });
-}
+       dispatch({
+         type: LOGIN_FAIL,
+       });
+
+       return Promise.reject();
+     }
+   );
+ };
+
+ export const logout = () => (dispatch) => {
+   AuthService.logout();
+
+   dispatch({
+     type: LOGOUT,
+   });
+ };

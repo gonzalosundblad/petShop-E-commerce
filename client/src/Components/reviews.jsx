@@ -165,8 +165,9 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
 }
 
 const mapStateToProps = state => {
+  console.log(state.reducer);
   return {
-    reviews: state.reviews
+    reviews: state.reducer.reviews
   }
 }
 const mapDispatchToProps = dispatch => {

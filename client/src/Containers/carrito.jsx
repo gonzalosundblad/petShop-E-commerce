@@ -4,14 +4,21 @@ import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '.
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 
-export default function Carrito() {
+export default function Carrito({ idUser }) {
   const [products, setProducts] = useState([])
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
 
+  var product_id = 2
+
+  if (!idUser) {
+    idUser = 1
+  }
+
+  console.log()
 
   useEffect(() => {
-    getCarrito(2).payload
+    getCarrito(idUser).payload
       .then(res => {
         if (!res.data[0]) {
           console.log("agregar")
@@ -28,7 +35,7 @@ export default function Carrito() {
   }
 
   function vaciar() {
-    deleteCarrito(2).then(resp => {
+    deleteCarrito(idUser).then(resp => {
       reload()
     })
   }
@@ -39,10 +46,10 @@ export default function Carrito() {
     // // setBorrado(products.splice(index, 1))
     // var borrado = products.splice(index, 1)
 
-    var product_id = 2
+
 
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    deleteCarritoUno(2, product_id)
+    deleteCarritoUno(idUser, product_id)
       .then(resp => {
         console.log(resp)
       })
