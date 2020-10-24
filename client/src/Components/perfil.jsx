@@ -4,6 +4,7 @@ import OrdenUsuario from '../Containers/ordenUsuario';
 import {getUser, deleteUser, putUser} from '../Redux/actionsOrden'
 import Estilo from '../Estilos/Perfil.module.css'
 import {connect} from 'react-redux'
+import { getMe } from '../Redux/actionsLog'
 
 
 function Perfil (user){
@@ -23,17 +24,17 @@ function Perfil (user){
   var datos = []
 
   useEffect(() => {
-    getUser().payload
+    getMe().payload
     .then((resp) => {
       setUsers(resp.data)
     })
   }, [])
 
   function handle(){
-    users.map((user) => {
-      if(user.id === id2){
-        datos = user;
-      }});
+    // users.map((user) => {
+    //   if(user.id === id2){
+    //     datos = user;
+    //   }});
   }
   handle()
 
