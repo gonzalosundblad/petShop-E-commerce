@@ -40,14 +40,14 @@ export function putOrder(id, estado) {
   })
 }
 
-export function deleteOrder(id) {      //borrar un  usuario
+export function deleteOrder(id) {      //
   return axios.delete(`http://localhost:3001/users/${id}`).then((resp) => {
     return { type: DELETE_USER, payload: resp }
   })
 }
 
 //-----Reset Password-----
-export function postPass(id, password) {      //agrega un nuevo usuario
+export function postPass(id, password) {      //
   const request = axios.post(`http://localhost:3001/users/${id}/passwordReset`, password)
   return { type: POST_PASSWORD, payload: request };
 }

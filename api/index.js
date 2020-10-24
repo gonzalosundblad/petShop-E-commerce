@@ -24,7 +24,7 @@ const { Category, Product, User } = require('./src/db');
 
 // para hashear las contrasenas del hardcodeo de usuarios
 const bcrypt = require('bcrypt');
-var hash = function(pass) {
+var hash = function (pass) {
   var a = bcrypt.hashSync(pass, 10);
   return a;
 }
@@ -34,13 +34,13 @@ var arrayDeUsuarios = [{
   last_name: "Gomez",
   email: "eric@gmail.com",
   password: hash('1234')
-},{
+}, {
   name: "Gonza",
   last_name: "Sundblad",
   email: "gonza@gmail.com",
   password: hash('1234'),
   role: "admin"
-},{
+}, {
   name: "Gaby",
   last_name: "Marciano",
   email: "gaby@gmail.com",
@@ -49,21 +49,21 @@ var arrayDeUsuarios = [{
 var arrayProductosPerros = [{
   name: "Eukanuba Small",
   description: "comida para el perrito",
-  price: 750, 
+  price: 750,
   stock: 100,
   categoryId: 1,
   image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FEukanuba%20Small.jpg?alt=media&token"
-},{
+}, {
   name: "Dog Chow BIG",
   description: "comida para el PERROTE",
-  price: 780, 
+  price: 780,
   stock: 100,
   categoryId: 1,
   image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FDogChowBig.jpg?alt=media&token"
-},{
+}, {
   name: "Pedigree MEDIUM",
   description: "comida para el perrito",
-  price: 150, 
+  price: 150,
   stock: 100,
   categoryId: 1,
   image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2Fcomida.jpg?alt=media&token"
@@ -71,14 +71,14 @@ var arrayProductosPerros = [{
 var arrayProductosGatos = [{
   name: "Cat Chow",
   description: "comida para el michi de la ciudad",
-  price: 750, 
+  price: 750,
   stock: 100,
   categoryId: 2,
   image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FCatChow.jpg?alt=media&token"
-},{
+}, {
   name: "WHISKAS",
   description: "comida para el michi cheto",
-  price: 600, 
+  price: 600,
   stock: 100,
   categoryId: 2,
   image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FCatChow.jpg?alt=media&token"
@@ -87,33 +87,33 @@ var arrayProductosGatos = [{
 const force = true;
 conn.sync({ force }).then(() => {
   server.listen(3001, () => {            //MODIFIQUE EL PUERTO EN EL QUE SE ESCUCHA EL SERVIDOR PARA PODER TENER FRONT Y BACK ABIERTOS
-    
-    console.log('%s listening at 3001'); // eslint-disable-line no-console 
-       
-    var SinCategoria =  Category.create({
+
+    console.log('%s listening at 3001'); // eslint-disable-line no-console
+
+    var SinCategoria = Category.create({
       name: "Sin Categoria",
       description: "Producto sin categoria",
       id: "0"
     });
-    var Perros =  Category.create({
+    var Perros = Category.create({
       name: "Perros",
       description: "Categoria que habla sobre perros"
     });
-  
-    var Gatos =  Category.create({
+
+    var Gatos = Category.create({
       name: "Gatos",
       description: "Categoria que habla sobre gatos"
     });
-  
-    var Aves =  Category.create({
+
+    var Aves = Category.create({
       name: "Aves",
       description: "Categoria que habla sobre aves"
     });
 
     var AlimentoPerro = arrayProductosPerros.map(e => {
-      if(!e.categoryId){
+      if (!e.categoryId) {
         Product.create(e)
-          .then(function(e) {
+          .then(function (e) {
             e.addCategories('0')
           })
       } else {
@@ -125,9 +125,9 @@ conn.sync({ force }).then(() => {
     });
 
     var AlimentoGato = arrayProductosGatos.map(e => {
-      if(!e.categoryId){
+      if (!e.categoryId) {
         Product.create(e)
-          .then(function(e) {
+          .then(function (e) {
             e.addCategories('0')
           })
       } else {
@@ -148,4 +148,3 @@ conn.sync({ force }).then(() => {
       });
   });
 });
-

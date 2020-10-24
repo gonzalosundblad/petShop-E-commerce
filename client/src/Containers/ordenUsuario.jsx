@@ -1,23 +1,27 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import {getProdOrder} from '../Redux/actionsCarrito'
+import { getProdOrder } from '../Redux/actionsCarrito'
 import { putOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 
-export default function OrdenUsuario(id){
+export default function OrdenUsuario(id, idUser) {
   const [productOrder, setproductOrder] = useState([])
-  
+
+  idUser = 1
+
   useEffect(() => {
-    getProdOrder(2).payload
-    .then(res => {
-      if(!res.data[0]){
-        alert('No hay Ordenes')
-      }else{
-        console.log(res.data[0].products)
-        setproductOrder(res.data[0].products)
-      }
-    })
+
+    getProdOrder(idUser).payload
+      .then(res => {
+        if (!res.data[0]) {
+          alert('No hay Ordenes')
+        } else {
+          console.log(res.data[0].products)
+          setproductOrder(res.data[0].products)
+        }
+      })
   }, [])
+
   // var total = 0
 
 
@@ -27,53 +31,55 @@ export default function OrdenUsuario(id){
   //   return a + b
   // }, 0)
 
+  console.log(productOrder)
 
   var id2 = id.id
   console.log(id2)
 
-  const estado = {orderState:'creada'}
+  const estado = { orderState: 'creada' }
 
-  function cambioEstado(){
+  function cambioEstado() {
 
     putOrder(id2, estado)
-    .then(resp => {
-      console.log(resp)
-      alert('Compra Exitosa')
-      window.location='/'
-    })
+      .then(resp => {
+        console.log(resp)
+        alert('Compra Exitosa')
+        window.location = '/'
+      })
   }
 
-  const estado2 = {orderState:'cancelada'}
+  const estado2 = { orderState: 'cancelada' }
 
-  function cambioEstado2(){
+  function cambioEstado2() {
     putOrder(id2, estado2)
-    .then(resp => {
-      console.log(resp)
-      alert('Pedido Cancelado')
-      window.location='/'
-    })
+      .then(resp => {
+        console.log(resp)
+        alert('Pedido Cancelado')
+        window.location = '/'
+      })
   }
 
-  return(
+  return (
     <div>
       <h1 className={StyleOrden.tuOrden} >Tu Orden</h1>
       {productOrder && productOrder.map(e => {
-        return(
+        return (
           <div className={StyleOrden.producto} >
             <h2>{e.name}</h2>
             <h2>${e.price * e.LineaDeOrden.quantity}</h2>
             <h3> Cantidad:{e.LineaDeOrden.quantity}</h3>
           </div>
-          )}
-          )
-        }
-        <div  className={StyleOrden.inputBoton}>
-         <h2 >Total: </h2>
-         </div>
-         <div className={StyleOrden.botonesFinales} >
-    <button onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido</button>
-    <button onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</button>
-         </div>
+        )
+      }
+      )
+      }
+      <div className={StyleOrden.inputBoton}>
+        <h2 >Total: </h2>
+      </div>
+      <div className={StyleOrden.botonesFinales} >
+        <button onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido</button>
+        <button onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</button>
+      </div>
     </div>
   )
 }

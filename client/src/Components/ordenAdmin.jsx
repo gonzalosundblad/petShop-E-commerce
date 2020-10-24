@@ -3,15 +3,19 @@ import { useState, useEffect } from 'react'
 import { getProdOrder } from '../Redux/actionsCarrito'
 import Estilo from '../Estilos/ordenesUsuario.module.css'
 
-export default function OrdenAdmin(id) {
+export default function OrdenAdmin(id, idUser) {
   const [orderUser, setOrderUser] = useState([])
 
   const id2 = id.id - 1
 
   console.log(id2)
 
+  if (!idUser.id) {
+    idUser = 1
+  }
+
   useEffect(() => {
-    getProdOrder(2).payload
+    getProdOrder(idUser).payload
       .then(res => {
         if (!res.data[0]) {
           alert('No hay Ordenes')
