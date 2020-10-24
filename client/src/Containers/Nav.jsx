@@ -11,8 +11,7 @@ import UsuarioLogeado from '../Components/UsuarioLogeado';
 import {connect} from 'react-redux'
 
 function NavBar({user, funcionCatag, onSearch}) {
-console.log(user.role);
-
+console.log(user);
   const [carro, setCarro] = useState([])
 
   useEffect(() => {
@@ -34,8 +33,6 @@ console.log(user.role);
     window.location.reload()
   }
 
-  if(user.role === 'user'){console.log('no podessssssssss');}
-
   return (
     <div className={StyleNav.nav}>
       <div className={StyleNav.divFixed}>
@@ -51,11 +48,14 @@ console.log(user.role);
             <img className={StyleNav.img} src={Changito}/>
             <h5>${total}</h5>
           </a>
+
           <div className={StyleNav.botones}>
-            <UsuarioLogeado />
-            <a className={StyleNav.botones} href='/login'>
+            {user !== null ? <UsuarioLogeado /> : null}
+
+            {user === null ? <a className={StyleNav.botones} href='/login'>
             <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
-          </a>
+          </a> : null}
+
           </div>
       </div>
       <div className={StyleNav.divBotones}>
@@ -63,8 +63,7 @@ console.log(user.role);
           <a className={StyleNav.botones} href='/products'>
             <span className={StyleNav.botonCatalogo} >Catálogo</span>
           </a>
-
-          <ListaDesplegable/>
+           <ListaDesplegable/>
         </div>
       </div>
 
@@ -73,8 +72,8 @@ console.log(user.role);
 };
 
 function mapStateToProps(state) {
-  console.log(state.auth);
-  const { user } = state.auth.user;
+ console.log(state.auth);
+  const { user } = state.auth;
   return {
     user,
   };

@@ -60,11 +60,8 @@ function Login ({user, isLoggedIn, loginRequest}){
        }
     function loginUser(){
       loginRequest(input.email, input.password)
-      if (isLoggedIn) {
-        console.log('******-----LOGUEADO-----*******');
-      window.location.replace(`http://localhost:3000/perfil`);
-      }
-    }
+      //window.location.replace(`http://localhost:3000/perfil`);
+          }
   useEffect(() => {
     getUser().payload
     .then(resp => setUsers(resp.data))
