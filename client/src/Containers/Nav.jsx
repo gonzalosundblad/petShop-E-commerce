@@ -11,7 +11,7 @@ import UsuarioLogeado from '../Components/UsuarioLogeado';
 import {connect} from 'react-redux'
 
 function NavBar({user, funcionCatag, onSearch}) {
-console.log(user);
+//console.log(user.user.role);
   const [carro, setCarro] = useState([])
 
   useEffect(() => {
@@ -32,6 +32,11 @@ console.log(user);
   function recargar() {
     window.location.reload()
   }
+
+    let admin;
+    if(user !== null && user.user.role === 'admin'){
+      admin = <ListaDesplegable/>
+    }
 
   return (
     <div className={StyleNav.nav}>
@@ -63,16 +68,18 @@ console.log(user);
           <a className={StyleNav.botones} href='/products'>
             <span className={StyleNav.botonCatalogo} >Catálogo</span>
           </a>
-           <ListaDesplegable/>
+          {admin}
+
         </div>
       </div>
 
     </div>
   );
+
 };
 
 function mapStateToProps(state) {
- console.log(state.auth);
+// console.log(state.auth);
   const { user } = state.auth;
   return {
     user,

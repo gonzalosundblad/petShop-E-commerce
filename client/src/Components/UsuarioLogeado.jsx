@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux';
 
 function UsuarioLogeado({ user , logout}) {
-console.log(user);
+//console.log(user);
 
   function cerrarSesion() {
     logout()
