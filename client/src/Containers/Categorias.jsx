@@ -228,3 +228,28 @@ export function ModificaCategoria() {                   //modifica categoria y b
       
     );
 }
+
+
+export function ListaCategorias(){                     //lista de categorias en el catalogo
+  const [categorias, setCategoria] = useState([]);
+
+  useEffect(() => {
+    getCategories().payload
+    .then(resp => setCategoria(resp.data))
+  }, []);
+
+  return (
+    <div className={estilo.listaCategorias}>
+      <div class="list-group" style={{width: "150px"}}>
+        <a href="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</a>
+          {
+            categorias.map(n => {
+              if (n.name !== 'Sin Categoria'){
+              return (
+                <a href={`/products/category/${n.name}`} class="list-group-item list-group-item-action">{n.name}</a>
+              )
+          }})}
+      </div>
+    </div>
+  )
+}

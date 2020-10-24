@@ -6,6 +6,9 @@ import perroBlanco from '../imagenes/perroBlanco.png';
 import PerroIcono from '../imagenes/perritoIcono.png';
 import GatoIcono from '../imagenes/gatitoIcono.png';
 import AveIcono from '../imagenes/aveIcono.png';
+import peces from '../imagenes/pecesPrincipal.png';
+import perroYgato from '../imagenes/perroYgato.png';
+import conejo from '../imagenes/conejoPrincipal.png';
 
 export function Fondo (){
     return (
@@ -38,7 +41,45 @@ export function Fondo (){
                 </div>
             </div>
         </div>
-            
-      
+    )
+}
+
+export function Animales(){
+    return(
+        <div className={estilo.divImagenes} >
+            <div className={estilo.divImagenTexto}>
+                <img src={peces} width='500px' height='480px'/>
+                <h1>Variedad de productos!</h1>
+            </div>
+            <div className={estilo.divImagenDerecha}>
+                <h1>Compra seguro desde tu casa!</h1>
+                <img src={perroYgato} width='550px' height='500px'/>
+            </div>
+            <div className={estilo.divImagenTexto}>
+                <img src={conejo} width='500px' height='480px'/>
+                <h1>Miles de productos disponibles!</h1>
+            </div>
+        </div>
+    )
+};
+
+export function PieDePagina(){
+    return (
+        <div>
+            <div className={estilo.pieDePagina} >
+                <div className={estilo.grilla}>
+                    <div >
+                        <h6>Sobre nosotros</h6>
+                    </div>
+                    <div >
+                    <h6>Contacto</h6>
+                    </div>
+                    <div >
+                    <h6>Redes Sociales</h6>
+                    </div>
+                </div>
+            </div>
+            <div style={{backgroundColor: "orange"}} height="50px" width="100%">.</div>
+         </div>
     )
 }
