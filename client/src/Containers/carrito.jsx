@@ -10,8 +10,8 @@ function Carrito(user) {
   const [products, setProducts] = useState([])
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
-console.log(user.user.isLoggedIn);
-console.log(user.user.user.user.user_id);
+// console.log(user.user.isLoggedIn);
+// console.log(user.user.user.user.user_id);
 
 useEffect(()=>{
   if(user.user.isLoggedIn){

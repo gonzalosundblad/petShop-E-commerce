@@ -22,7 +22,6 @@ function Login ({user, isLoggedIn, loginRequest}){
         password : "",
     })
     const [errors, setErrors] = useState({});
-    const [aUser, setAUser] = useState([])
     var x = false;
 
     useEffect(() => {

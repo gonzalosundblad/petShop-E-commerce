@@ -21,9 +21,9 @@ export default function Usuarios() {
 
   function admin(e) {
     const id = e.target.value;
-    postAdmin(id).payload
-    .then(resp => console.log(resp))
-    .catch(err => console.log(err))
+    postAdmin(id)
+    // .then(resp => console.log(resp))
+    // .catch(err => console.log(err))
   }
 
   return (

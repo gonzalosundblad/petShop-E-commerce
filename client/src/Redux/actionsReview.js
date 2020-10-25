@@ -19,7 +19,7 @@ export function postReviewRequest(id, post){//Crear ruta para crear/agregar Revi
 // const { qualification, description, user_id } = req.body;
 //--------------------------------------------------------------------
 export function putReview(review){//va a REDUCER
-console.log('// REVIEW: ');
+console.log(review);
   return {
   type : PUT_REVIEW,
   payload : review
@@ -49,7 +49,6 @@ console.log('delete');
 }
 //---------------------------------------------------------------------------
 export function getAllReviews(reviews){//va a REDUCER
-//  console.log(reviews);
   return {
   type : GET_ALL_REVIEW,
   payload : reviews

@@ -14,6 +14,8 @@ function NavBar({user, funcionCatag, onSearch}) {
 //console.log(user.user.role);
   const [carro, setCarro] = useState([])
   useEffect(() => {
+    if(null){console.log('null')}
+    if(user && user.user.user_id){
     getCarrito(user.user.user_id).payload
     .then(res => {
       if(!res.data[0]){
@@ -21,7 +23,7 @@ function NavBar({user, funcionCatag, onSearch}) {
       }else{
         setCarro(res.data[0].products)
       }
-    })
+    })}
   }, [])
   var precio = carro.map(e => e.price * e.LineaDeOrden.quantity)
   var total = precio.reduce(function(a, b){
