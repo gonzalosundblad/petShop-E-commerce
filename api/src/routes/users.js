@@ -1,7 +1,7 @@
 const server = require('express').Router();
 const { Product, User, Order, LineaDeOrden } = require('../db.js');
 const bcrypt = require('bcrypt');
-
+const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
 //============================USUARIOS==============================
 
@@ -27,7 +27,7 @@ server.post('/', (req, res) => {                                        //S34 : 
 
 });
 
-server.put('/:id', (req, res) => {                                      //S35 : Crear Ruta para modificar Usuario segun id
+server.put('/:id', isAuthenticated, (req, res) => {                     //S35 : Crear Ruta para modificar Usuario segun id
   const { id } = req.params;
   const { name, email, password, newPassword, last_name } = req.body;
   User.update({
@@ -54,7 +54,7 @@ server.put('/:id', (req, res) => {                                      //S35 : 
   })
 });
 
-server.get('/', (req, res) => {                                         //S36 : Crear Ruta que retorne todos los Usuarios
+server.get('/', isAdmin, (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
   User.findAll()
     .then(users => {
       res.json(users);
@@ -64,7 +64,7 @@ server.get('/', (req, res) => {                                         //S36 : 
     });
 });
 
-server.delete('/:id', (req, res) => {                                   //S37 : Crear Ruta para eliminar Usuario
+server.delete('/:id', isAuthenticated, (req, res) => {                  //S37 : Crear Ruta para eliminar Usuario
   var userId = req.params.id;
   if (!userId) {
     res.status(404).send('Debes ingresar un ID')
@@ -150,7 +150,7 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
   })
 });
 
-server.get('/:idUser/cart/orders', (req, res) => {                      //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
+server.get('/:idUser/cart/orders', isAuthenticated, (req, res) => {     //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
   const { idUser } = req.params;
   Order.findAll({
     where: {
@@ -190,7 +190,7 @@ server.delete('/:idUser/cart', (req, res) => {                          //S40 : 
   })
 });
 
-server.put('/:idUser/cart', function (req, res) {                         //S41 : Crear Ruta para editar las cantidades del carrito
+server.put('/:idUser/cart', function (req, res) {                       //S41 : Crear Ruta para editar las cantidades del carrito
   const idUser = req.params.idUser;
   const { product_id, quantity } = req.body;
   Order.findOne({
@@ -239,7 +239,7 @@ server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMIN
 
 //===========================Ordenes================================
 
-server.get('/:id/orders', (req, res) => {                               //S45: Crear Ruta que retorne todas las Ordenes de los usuarios
+server.get('/:id/orders', isAuthenticated, (req, res) => {               //S45: Crear Ruta que retorne todas las Ordenes de un usuarios
   Order.findAll({
     where: {
       userId: req.params.id
