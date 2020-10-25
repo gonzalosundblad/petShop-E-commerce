@@ -1,0 +1,52 @@
+
+* {
+    margin:0px;
+    padding:0px;
+}
+
+
+ul, ol {
+    list-style:none;
+}
+
+.lista > li {
+    float:left;
+}
+
+.lista li a {
+    background-color:#00848d;
+    color:white;
+    text-decoration:none;
+    padding:10px 12px;
+    display:block;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.lista li a:hover {
+    background-color: rgba(255, 255, 255, 0.925);;
+    color:#00838d;
+}
+
+.lista li ul {
+    display:none;
+    position:absolute;
+    min-width:140px;
+}
+
+.lista li:hover > ul {
+    display:block;
+}
+
+.lista li ul li {
+    position:relative;
+}
+
+.lista li ul li ul {
+    right:-166px;
+    top:0px;
+}
+.lista li ul li .orden {
+    right:-140px;
+    top:0px;
+}

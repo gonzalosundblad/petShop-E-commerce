@@ -1,0 +1,20 @@
+.danger{
+    border-color:red;
+    color: red;
+}
+
+.form-class{
+  padding-top: 10%;
+}
+ p{
+    font-size: 5px;
+    margin-bottom:  0 px;
+}
+
+.form-class{
+    display: block;
+}
+
+.form-group{
+    margin-bottom: 5px;
+}

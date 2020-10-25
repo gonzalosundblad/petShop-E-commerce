@@ -1,0 +1,120 @@
+.nav {
+    display: flex;
+    /* background-color:rgb(0, 131, 141, 0.7); */
+    /* justify-content: space-between; */
+    align-items: center;
+    width: 100%;
+    height: 160px;
+    /* box-shadow: 0px -10px 50px rgb(10, 2, 22); */
+    flex-direction: column;
+}
+
+.divFixed{
+    display: flex;
+    align-items: center;
+    position: fixed;
+    background-color:rgb(0, 131, 141, 0.7);
+    width: 100%;
+    justify-content: center;
+    z-index: 2;
+}
+
+.divBotones{
+    flex-direction: column;
+    margin-top: 104px;
+    width: 100%;
+    background-color:rgb(0, 131, 141, 0.7);
+    display: flex;
+    text-decoration: none;
+    width: 100%;
+    justify-content: center;
+    z-index: 1;
+}
+
+.logo{
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+}
+
+.botones {
+    display: flex;
+    text-decoration: none;
+    justify-content: center;  
+
+}
+
+.botonCatalogo {
+    background-color: #00848dc0;
+    width: 110px;
+    height: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    /* opacity: 70%; */
+}
+
+.botonCatalogo:hover {
+    background-color: rgba(255, 255, 255, 0.685);
+    opacity: 100%;
+    color: #056b72;
+}
+
+.botonAddProduct {
+    background-color: #00838d;
+    width: 150px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #004e53;
+    opacity: 70%;
+}
+
+.botonAddProduct:hover {
+    background-color: #00575e;
+    opacity: 100%;
+    color: white;
+}
+
+
+.searchBar {
+    width: 360px;
+}
+
+.botonCarrito{
+    background-color: #e8eb3b ;
+    width: 140px;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    opacity: 80%;
+}
+
+.botonCarrito:hover{
+    opacity: 100%;
+    
+
+}
+
+.img{
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    
+}
+
+.botonCarrito h5{
+    margin: 10px;
+    font-size: 22px;
+    color: rgb(0, 0, 0);
+}
