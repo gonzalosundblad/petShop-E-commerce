@@ -25,7 +25,6 @@ server.put('/product/:id/review/:idReview', (req, res) => {              //S55 :
         description: description
     },{
         where:{
-            product_id: id,
             review_id: idReview
         }
     }).then(data => {
