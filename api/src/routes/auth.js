@@ -1,10 +1,10 @@
 const server = require('express').Router();
-const { User } = require('../db.js'); 
+const { User } = require('../db.js');
 require('dotenv').config()
 const passport = require('passport');
 const { isAuthenticated, isAdmin } = require("../passport");
 
-server.post( "/login", passport.authenticate("local"), (req, res) => {
+server.post( "/login", isNotAuthenticated, passport.authenticate("local"), (req, res) => {      // S63 : Crear ruta de Login
         console.log(req.user)
         res.send({ user: req.user, logged: true });
     }

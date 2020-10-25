@@ -1,25 +1,31 @@
 const server = require('express').Router();
 const { Product, User, Order, LineaDeOrden } = require('../db.js');
 const bcrypt = require('bcrypt');
+const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
 
 //============================USUARIOS=============================
 
-server.post('/', (req, res) => {//S34 : Crear Ruta para creación de Usuario
-  const { name, email, password } = req.body;
+server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario (CON HASHEO ASYNC)
+
+  const { name, email, password, last_name } = req.body;
   if (!name || !email || !password) {
     return res.status(400).send("Campos requeridos")
   }
-
-  User.create({
-    name,
-    email,
-    password
-  }).then(user => {
-    res.status(200).json(user)
+  bcrypt.hash(req.body.password, 10).then(hashedPassword => {
+    User.create({
+      name,
+      last_name,
+      email,
+      role: 'user',
+      password: hashedPassword
+    }).then(user => {
+      res.status(200).json(user)
+    })
   }).catch(err => {
     console.log('Error: ', err)
   })
+
 });
 
 server.put('/:id', (req, res) => {  //S35 : Crear Ruta para modificar Usuario segun id
@@ -79,19 +85,21 @@ server.delete('/:id', (req, res) => { //S37 : Crear Ruta para eliminar Usuario
 server.put('/:id/passwordReset', async (req, res) => {
   const { id } = req.params;
   const { password } = req.body;
-  User.update({
-    password: password
-  }, {
-    returning: true,
-    where: {
-      user_id: id
-    }
-  }).then((user) => {
-    res.json(user)
-  })
-    .then(user => {
-      return res.status(201).json(user)
+  bcrypt.hash(password, 10).then(hashedPassword => {
+    return User.update({
+      password: hashedPassword
+    }, {
+      returning: true,
+      where: {
+        user_id: id
+      }
     })
+  }).then((user) => {
+    res.send(user[1])
+  }).catch(err => {
+    console.log(err)
+    res.send(err)
+  })
 })
 
 //============================CARRITO===============================
