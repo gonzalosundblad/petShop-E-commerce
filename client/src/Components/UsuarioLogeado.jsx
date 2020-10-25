@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import StyleUsuarioLogeado from '../Estilos/UsuarioLogeado.module.css';
 import userLogo from '../imagenes/userLogo.png'
-import { logout } from '../Redux/actionsLogin'
+import { postLogo } from '../Redux/actionsLog'
 
 
 export default function UsuarioLogeado({ id }) {
 
   function cerrarSesion() {
-    logout()
+    postLogo()
   }
 
   return (

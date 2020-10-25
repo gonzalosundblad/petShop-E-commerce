@@ -13,16 +13,16 @@ import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
-import { loginRequest } from '../Redux/actionsLogin'
+import { postLog, postLogin } from '../Redux/actionsLog'
 
-function Login({ dispatch, user, isLoggedIn, loginRequest }) {
+function Login({ dispatch, user, isLoggedIn, postLog }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
   })
   const [errors, setErrors] = useState({});
 
-
+  console.log(user)
 
 
   function validate(input) {
@@ -54,7 +54,7 @@ function Login({ dispatch, user, isLoggedIn, loginRequest }) {
 
 
   function loginUser() {
-    loginRequest(input.email, input.password)
+    postLog(input.email, input.password)
 
   }
 
@@ -119,14 +119,15 @@ function Login({ dispatch, user, isLoggedIn, loginRequest }) {
 }
 
 const mapStateToProps = state => {
+  console.log(state.auth)
   return {
-    isLoggedIn: state.auth.isLoggedIn
+
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest }, dispatch)
+    ...bindActionCreators({ postLog }, dispatch)
   }
 }
 
