@@ -10,11 +10,10 @@ import email from '../imagenes/email.png';
 import google from '../imagenes/google.png';
 import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
-import { loginRequest } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
-import { postLogin } from '../Redux/actionsLog'
+import { loginRequest } from '../Redux/actionsLogin'
 
 function Login({ dispatch, user, isLoggedIn, loginRequest }) {
   const [input, setInput] = useState({
@@ -55,10 +54,8 @@ function Login({ dispatch, user, isLoggedIn, loginRequest }) {
 
 
   function loginUser() {
-    postLogin(input)
-    window.location.href = '/perfil'
-    if (isLoggedIn) {
-    }
+    loginRequest(input.email, input.password)
+
   }
 
   return (

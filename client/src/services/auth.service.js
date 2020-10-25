@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_URL = "http://localhost:3001/auth/login";
+// const API_URL2 = "http://localhost:3001/auth/me";
 
 class AuthService {
   login(email, password) {
@@ -15,12 +16,22 @@ class AuthService {
       });
   }
 
+  // authMe() {
+  //   return axios
+  //     .get(API_URL2)
+  //     .then(resp => {
+  //       if (resp.data.user) {
+  //         localStorage.setItem("user", JSON.stringify(resp.data.user))
+  //       }
+  //     })
+  // }
+
   logout() {
     localStorage.removeItem("user");
   }
 
   register(username, email, password) {
-    return axios.post(API_URL , {
+    return axios.post(API_URL, {
       username,
       email,
       password,

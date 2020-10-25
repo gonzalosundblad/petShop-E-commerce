@@ -17,11 +17,12 @@ export default function Perfil() {
   const [users, setUsers] = useState([])
 
 
-  useEffect(() => {
-    getMe().payload
-      .then(resp =>
-        setUsers(resp.data.user))
-  }, [])
+  // useEffect(() => {
+  //   getMe().payload
+  //     .then(resp => {
+  //       setUsers(resp.data.user)
+  //     })
+  // }, [])
 
 
   function handleChange(e) {
