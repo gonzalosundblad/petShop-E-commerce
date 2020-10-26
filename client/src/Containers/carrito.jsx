@@ -73,6 +73,8 @@ function Carrito(user) {
 
   const order_id = products.map(id => id.LineaDeOrden.order_id)
 
+  console.log(order_id);
+
 
   if (!products || products.length === 0) {
     return (

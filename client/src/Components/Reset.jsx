@@ -5,14 +5,14 @@ import { postPass } from '../Redux/actionsOrden';
 export default function Reset() {
 
   const [input, setInput] = useState({
-    email: "",
+    id: "",
     password: ""
   })
 
   const handleChange = function (e) {
     setInput({
       ...input,
-      email: e.target.value
+      id: e.target.value
     });
   }
   const handleChange2 = function (e) {
@@ -23,9 +23,10 @@ export default function Reset() {
   }
 
   function reset() {
-    postPass(input.email, input.password).payload
+    postPass(input.id, input.password).payload
       .then(resp => {
         console.log(resp.data);
+        window.location.href = '/login'
       })
   }
 
@@ -34,8 +35,8 @@ export default function Reset() {
 
   return (
     <div>
-      <label>Email: </label>
-      <input id="email" type="email" description="email" onChange={handleChange} />
+      <label>Id: </label>
+      <input id="id" type="number" description="email" onChange={handleChange} />
       <label>Contraseña: </label>
       <input id="password" type="password" description="password" onChange={handleChange2} />
       <button onClick={reset} >Cambiar</button>

@@ -51,8 +51,8 @@ export function deleteOrder(id) {      //borrar un  usuario
 }
 
 //-----Reset Password-----
-export function postPass(email, password) {      //agrega un nuevo usuario
-  const request = axios.put(`http://localhost:3001/users/passwordReset`, { email, password })
+export function postPass(id, password) {      //agrega un nuevo usuario
+  const request = axios.put(`http://localhost:3001/users/${id}/passwordReset`, { password })
   return { type: POST_PASSWORD, payload: request };
 }
 

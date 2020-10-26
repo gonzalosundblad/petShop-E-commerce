@@ -108,11 +108,11 @@ function Perfil(user) {
               </div>
               <div className={Estilo.password}>
                 <label>Contraseña vieja(tenga en cuenta que si no es correcta la vieja contraseña, esta no se modificara):</label>
-                <input type="text" placeholder="Ingrese antigua contraseña" name="oldPassword" onChange={handleChange} className={Estilo.password2} />
+                <input type="password" placeholder="Ingrese antigua contraseña" name="oldPassword" onChange={handleChange} className={Estilo.password2} />
               </div>
               <div>
                 <label>Nueva Contraseña:</label>
-                <input type="text" placeholder="Ingrese nueva contraseña" name="password" onChange={handleChange} className={Estilo.password2} />
+                <input type="password" placeholder="Ingrese nueva contraseña" name="password" onChange={handleChange} className={Estilo.password2} />
               </div>
 
               <div className={Estilo.botonesFinales} >
