@@ -1,16 +1,8 @@
 const server = require('express').Router();
 const { Product, Category, productcategory, User, Order, LineaDeOrden } = require('../db.js');
+const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
-//   '/orders'
-//Si un usuario completa una orden, esa orden debe mantener el precio del item al momento de la compra, sin importar que el precio del producto cambie después.
-//PREGUNTA OLIVER RUTA MODIFICAR ORDEN S47
-// EN LOS UPDATE, SI HAGO RES.SEND(RESULTADO DE PROMESA) ESTOY MANDANDO EL ARRAY CON ARRAY[0]=1 Y ARRAY[1]=EL OBJETO Q QUIERO MANDAR. CREO QUE DEBERIA RES.SENDEAR SOLO EL ARRAY[1]
-// poruqe postman anda raro?
-// que es una orden? que es el carrito? un usuario puede tener muchas ordenes dentro de un solo carrito? puede tener dos carritos? estado carrito?
-//cuando modifico una orden solo cambio su estado ? creo q deberia poder agregar o sacar productos tmbbbb
-
-
-server.get('/', (req, res) => {       //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
+server.get('/', isAdmin, (req, res) => {                //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
     if(req.query.state) {
         Order.findAll({
             where: {
@@ -33,7 +25,7 @@ server.get('/', (req, res) => {       //S44 : Crear ruta que retorne todas las o
 		});
 })
 
-server.get('/:id', (req, res) => {    //S46 : Crear Ruta que retorne una orden en particular.
+server.get('/:id', isAuthenticated, (req, res) => {     //S46 : Crear Ruta que retorne una orden en particular.
     Order.findByPk(req.params.id)
         .then(order => {
             res.json(order)
@@ -43,7 +35,7 @@ server.get('/:id', (req, res) => {    //S46 : Crear Ruta que retorne una orden e
         })
 })
 
-server.put('/:id', (req, res) => {    //S47 : Crear Ruta para modificar una Orden ..... modifica solo el state?????
+server.put('/:id', isAuthenticated, (req, res) => {     //S47 : Crear Ruta para modificar una Orden
     const { orderState } = req.body
     Order.update({
         orderState

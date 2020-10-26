@@ -1,8 +1,7 @@
-import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH } from './constants';
-import { GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA } from './constantsCarro'
-import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from './constantesOrden'
-import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW } from './constantsReview';
-import { SET_SESSION, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './constantsLogin.js';
+import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH } from '../constants';
+import { GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA } from '../constantsCarro'
+import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from '../constantesOrden'
+import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW } from '../constantsReview';
 
 export const initialState = {
   products: [],
@@ -11,14 +10,11 @@ export const initialState = {
   carrito: [],
   order: [],
   reviews: [],
-  usuariosEnLinea: [],
-  user: null,
-  isLoggedIn: false
 
 };
 
 export default (state = initialState, action) => {
-  console.log(action.payload)
+  console.log(action)
   switch (action.type) {
     case GET_PRODUCTS: //obtener todos los productos
       return {
@@ -164,30 +160,19 @@ export default (state = initialState, action) => {
     case PUT_REVIEW:
       return {
         ...state,
-        reviews: state.reviews.map(rev => rev.id === action.payload.id ? action.payload : rev)
+        reviews: state.reviews.map(ord => ord.id === action.payload.id ? action.payload : ord)
       }
     case DELETE_REVIEW:
       return {
         ...state,
-        reviews: state.reviews.filter(rev => rev.id !== action.payload)
+        reviews: state.reviews.filter(cart => cart.id !== action.payload)
       }
     case GET_ALL_REVIEW:
       return {
         ...state,
         reviews: action.payload
       }
-    case LOGIN_SUCCESS:
-      return {
-        ...state,
-        isLoggedIn: true,
-        user: action.payload,
-      };
-    //----------Promote---------
-    case HACER_ADMIN:
-      return {
-        ...state,
-        users: state.users.map(user => user.id === action.payload.id ? action.payload : user)
-      }
+
     default: return state
   }
 

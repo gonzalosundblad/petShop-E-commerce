@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StyleApp from './App.module.css';
-import { BrowserRouter, Route} from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo'
 import Nav from './Containers/Nav';
 import {CrudProduct} from './Containers/CrudProduct';
@@ -14,8 +14,8 @@ import Product from './Components/Product';
 import Catalogo from './Components/CatalogoComp';
 import User from './Components/Login';
 import ControlledCarousel from './Components/Carousel';
-import {AgregarUsuario} from './Containers/Usuarios';
-import  Ordenes from './Containers/Orden';
+import { AgregarUsuario } from './Containers/Usuarios';
+import Ordenes from './Containers/Orden';
 import { search } from './Redux/actions'
 import Carrito from './Containers/carrito';
 import Usuarios from './Components/usuarios';

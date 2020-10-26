@@ -38,23 +38,27 @@ const { Product, Category, Review, User, Order, LineaDeOrden } = sequelize.model
 // BelongsTo, BelongsToMany, HasMany, HasOne
 
 //PRODUCT - CATEGORY
-Product.belongsToMany(Category, {through: 'productcategory'});
-Category.belongsToMany(Product, {through: 'productcategory'});
+Product.belongsToMany(Category, { through: 'productcategory' });
+Category.belongsToMany(Product, { through: 'productcategory' });
 
 //USER - ORDER
-User.hasMany(Order);
+User.hasMany(Order, { foreignKey: 'userId' });
+Order.belongsTo(User, { foreignKey: 'userId' });
 
 //PRODUCT - ORDER
-Product.belongsToMany(Order, { through: LineaDeOrden, as: 'orders', foreignKey:'product_id' });
-Order.belongsToMany(Product, { through: LineaDeOrden, as: 'products', foreignKey:'order_id' });
+Product.belongsToMany(Order, { through: LineaDeOrden, as: 'orders', foreignKey: 'product_id' });
+Order.belongsToMany(Product, { through: LineaDeOrden, as: 'products', foreignKey: 'order_id' });
 
 //PRODUCT - REVIEW
-Product.hasMany(Review,{ foreignKey: 'product_id' });
-Review.belongsTo(Product,{ foreignKey:'product_id' });
+Product.hasMany(Review, { foreignKey: 'product_id' });
+Review.belongsTo(Product, { foreignKey: 'product_id' });
 
 //USER - REVIEW
-User.hasMany(Review,{ foreignKey: 'user_id' });
-Review.belongsTo(User,{ foreignKey:'user_id' });
+User.hasMany(Review, { foreignKey: 'user_id' });
+Review.belongsTo(User, { foreignKey: 'user_id' });
+
+Product.hasMany(Review, { foreignKey: 'product_id' })
+Review.belongsTo(Product, { foreignKey: 'product_id' })
 
 
 
