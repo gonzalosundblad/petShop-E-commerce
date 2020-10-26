@@ -25,6 +25,7 @@ import OrdenAdmin from './Components/ordenAdmin';
 import {Fondo} from './Containers/fondo';
 import {Animales} from './Containers/fondo';
 import {PieDePagina} from './Containers/fondo';
+import Carrusel from './Components/Carousel'
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route exact path="/" render = {() => <Fondo /> } />
         <Route exact path="/" component={MostrarCategorias}/>
         <Route exact path="/" component={Animales}/>
+        <Route exact path="/" component={Carrusel}/>
         <Route exact path="/" component={PieDePagina}/>
           {/* <Route exact path="/" render={() =>  <ControlledCarousel />} /> */}
         
