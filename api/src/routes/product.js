@@ -60,7 +60,7 @@ server.post('/',  isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
 			description,
 			price,
 			stock,											//IMAGEN POR DEFECTO 
-			image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2Fgris.jpg?alt=media&token"
+			image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FPorDefecto.jpg?alt=media&token"
 		}).then(function(productoSinImg) {
 			if(!categoryId){
 				productoSinImg.addCategories("0")
