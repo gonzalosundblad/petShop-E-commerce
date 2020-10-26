@@ -22,6 +22,7 @@ export default function Usuarios() {
   function admin(e) {
     const id = e.target.value;
     postAdmin(id)
+    window.location.reload()
   }
 
   return (

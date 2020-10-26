@@ -48,6 +48,23 @@ server.post('/login', async (req, res) => {
   }
 })
 
+server.post('/promote/:id', (req, res) => {                                             // S67 : Crear ruta /promote (Promote convierte al usuario con ID: id a Admin.)
+  var user_id = req.params.id;
+  console.log(user_id)
+  User.update({
+    role: "admin"
+  }, {
+    returning: true,
+    where: {
+      user_id
+    }
+  }).then(admin => {
+    res.status(200).json(admin[1]);
+  }).catch(err => {
+    res.status(400).send('errorrororor');
+  })
+})
+
 
 server.get('/me', (req, res) => {
   res.json({ message: "Usted está autorizado correctamente!", user: req.isAuthenticated() });
