@@ -89,9 +89,8 @@
 
 .botonCarrito{
     background-color: #e8eb3b ;
-    width: 140px;
+    width: 100px;
     display: flex;
-    text-decoration: none;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
@@ -105,9 +104,9 @@
 }
 
 .img{
-    width: 40px;
-    height: 40px;
-    margin: 5px;
+    width: 30px;
+    height: 33px;
+    margin: 3px;
     
 }
 
@@ -118,6 +117,6 @@
 }
 
 .imagen{
-    width: 200px;
+    width: 220px;
     height: 64px;
 }

@@ -64,7 +64,7 @@ export default function NavBar({ funcionCatag, onSearch, idUser }) {
       <img className={StyleNav.img} src={Changito}/>
       <h5>${total}</h5>
     </a>
-    
+   
   </div>
 </nav>
 
