@@ -15,15 +15,13 @@ export default function Usuarios() {
         setProductsGuardados(res.data)
       })
   }, [])
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault()
   }
 
   function admin(e) {
     const id = e.target.value;
-    postAdmin(id).payload
-    .then(resp => console.log(resp))
-    .catch(err => console.log(err))
+    postAdmin(id)
   }
 
   return (
@@ -47,3 +45,4 @@ export default function Usuarios() {
     </div>
   )
 }
+

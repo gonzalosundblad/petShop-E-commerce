@@ -18,6 +18,7 @@ export function postAdmin(user_id) {
   return { type: HACER_ADMIN, payload: request }
 }
 
+
 export function getMe() {      //
   const request = _axios.get('http://localhost:3001/auth/me')
   return { type: GET_ME, payload: request };
