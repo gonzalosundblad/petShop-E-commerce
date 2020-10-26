@@ -21,7 +21,7 @@ export function putReview(id, idReview, post) {
   return { type: PUT_REVIEW, payload: request };
 }
 //---------------------------------------------------------------------
-export function deleteReview(id, idReview) {      //borrar un  usuario
+export function deleteReview(id, idReview) {      //
   return axios.delete(`http://localhost:3001/reviews/product/${id}/review/${idReview}`).then((resp) => {
     return { type: DELETE_REVIEW, payload: resp }
   })

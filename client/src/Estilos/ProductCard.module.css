@@ -1,4 +1,28 @@
-.productCard {
+.productCard{
+    opacity: 100%;
+}
+.productCard:hover{
+    opacity: 80%;
+    transform: scale(0.99);
+}
+
+.changuito{
+    width: 35px;
+    height: 35px;
+}
+
+/* .boton{
+    height: 50px;
+    border-radius: 5px;
+    width: 60px;
+    background-color: none;
+  
+  } */
+
+
+
+
+/* .productCard {
     
     display: flex;
     position: relative;
@@ -11,9 +35,7 @@
     overflow: hidden;
     
 }
-/* .contenedor{
-    position: absolute;
-} */
+
 
 .productCard h3{
     color: rgb(126, 126, 126);
@@ -27,7 +49,7 @@
 
 .productCard h1{
     color: black;
-    /* position: relative; */
+  
     margin-top: -135px;
     background-color: gray;
     font-size: 25px;
@@ -141,4 +163,4 @@
     width: 185px;
     margin-top: 20px;
     border-radius: 30px 30px 0px 0px;
-}
+} */

@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import OrdenUsuario from '../Containers/ordenUsuario';
-import { getMe } from '../Redux/actionsLog'
+import { getMe, getUser } from '../Redux/actionsLog'
 import { putUser, deleteUser } from '../Redux/actionsOrden'
 import Estilo from '../Estilos/Perfil.module.css'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default function Perfil() {
+function Perfil({ user }) {
   const [state, setState] = useState({
     id: "",
     name: "",
@@ -18,10 +20,11 @@ export default function Perfil() {
 
 
   useEffect(() => {
-    getMe().payload
-      .then(resp =>
-        setUsers(resp.data.user))
+    getMe()
   }, [])
+
+  console.log(getMe())
+  console.log(user)
 
 
   function handleChange(e) {
@@ -112,3 +115,27 @@ export default function Perfil() {
   )
 }
 
+const mapStateToProps = state => {
+  console.log(state.auth.user);
+  return {
+    user: state.reducer.users
+  }
+}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     dispatch,
+//     ...bindActionCreators({getAllReviewsRequest}, dispatch)
+//   }
+// }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getMe }, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Perfil)

@@ -7,6 +7,9 @@
 
 ul, ol {
     list-style:none;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
 }
 
 .lista > li {
@@ -14,24 +17,28 @@ ul, ol {
 }
 
 .lista li a {
-    background-color:#00848d;
-    color:white;
+    background-color: orange;
+    color:rgba(255, 255, 255, 0.692);
     text-decoration:none;
     padding:10px 12px;
     display:block;
-    border-radius: 5px;
-    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    /* border-radius: 5px; */
 }
 
 .lista li a:hover {
-    background-color: rgba(255, 255, 255, 0.925);;
-    color:#00838d;
+    color: white;
 }
 
 .lista li ul {
     display:none;
     position:absolute;
-    min-width:140px;
+    width:120px;
+    background-color: white;
+    color: orange;
+    justify-content: center;
+    align-items: center;
 }
 
 .lista li:hover > ul {
@@ -40,13 +47,18 @@ ul, ol {
 
 .lista li ul li {
     position:relative;
+    align-items: center;
+    justify-content: center;
 }
 
 .lista li ul li ul {
-    right:-166px;
+    right:-155px;
     top:0px;
+    width: 170px;
+    
+    
 }
-.lista li ul li .orden {
-    right:-140px;
+/* .lista li ul li .orden {
+    right:-130px;
     top:0px;
-}
+} */

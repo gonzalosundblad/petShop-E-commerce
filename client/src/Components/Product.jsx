@@ -7,6 +7,7 @@ import Carrito from '../Containers/carrito';
 import { postCarrito } from '../Redux/actionsCarrito';
 import Changuito from '../imagenes/carrito+.png'
 import Reviews from './reviews.jsx'
+import { loadState, saveState } from '../Redux/reducer/localStorage';
 
 export default function Product({ id2, idUser }) {
   //  {id, name, description, price, stock, imagen }
@@ -18,6 +19,7 @@ export default function Product({ id2, idUser }) {
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
 
+  const [array, setArray] = useState(loadState())
 
   useEffect(() => {
     getProductById(id2).payload
@@ -36,24 +38,32 @@ export default function Product({ id2, idUser }) {
     setQuantity(e.target.value);
   }
 
-  if (!idUser) {
-    idUser = 1
-  }
-
 
   function subirCarrito() {
 
-    postCarrito(idUser, {
-      product_id: id2,
-      quantity: quantity,
-      price: price
-    }).payload
-      .then(function (resp) {
-        console.log(resp.data)
-        window.location.replace("http://localhost:3000/carrito")
-      })
-
+    if (idUser) {
+      postCarrito(idUser, {
+        product_id: id2,
+        quantity: quantity,
+        price: price
+      }).payload
+        .then(function (resp) {
+          console.log(resp.data)
+          window.location.replace("http://localhost:3000/carrito")
+        })
+    } else {
+      // localStorage.clear()
+      setArray([...array, {
+        product_id: id2,
+        quantity: quantity,
+        price: price
+      }])
+      saveState(array)
+    }
   }
+
+
+
 
 
   if (stock <= 0) {

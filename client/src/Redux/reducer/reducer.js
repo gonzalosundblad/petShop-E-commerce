@@ -2,12 +2,13 @@ import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PR
 import { GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA } from '../constantsCarro'
 import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID } from '../constantesOrden'
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW } from '../constantsReview';
+import { loadState, saveState } from "./localStorage"
 
 export const initialState = {
   products: [],
   categories: [],
   users: [],
-  carrito: [],
+  carrito: loadState === undefined ? [] : loadState(),
   order: [],
   reviews: [],
 
