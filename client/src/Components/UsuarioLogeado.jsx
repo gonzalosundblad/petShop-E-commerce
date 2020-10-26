@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import StyleUsuarioLogeado from '../Estilos/UsuarioLogeado.module.css';
 import userLogo from '../imagenes/userLogo.png'
-import { postLogout } from '../Redux/actionsLog'
+import { postLogo } from '../Redux/actionsLog'
 
 
 export default function UsuarioLogeado({ id }) {
 
   function cerrarSesion() {
-    postLogout().payload
-      .then(resp => {
-        console.log(resp)
-      })
+    postLogo()
   }
 
   return (
