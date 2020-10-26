@@ -66,8 +66,8 @@ server.post('/promote/:id', (req, res) => {                                     
 })
 
 
-server.get('/me', (req, res) => {
-  res.json({ message: "Usted está autorizado correctamente!", user: req.isAuthenticated() });
+server.get('/me', (req, res) => {                                              // S65 : Crear ruta /me
+  res.json({ message: "Usted se ha logueado correctamente!", user: req.user });
 });
 
 module.exports = server;

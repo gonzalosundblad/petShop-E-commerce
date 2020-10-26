@@ -18,6 +18,8 @@ function Perfil(user) {
   });
   const [users, setUsers] = useState([])
 
+  console.log(user)
+
   const id = user.user.user.user_id
   const name = user.user.user.name
   const email = user.user.user.email
@@ -28,7 +30,7 @@ function Perfil(user) {
   useEffect(() => {
     getMe().payload
       .then((resp) => {
-        setUsers(resp.data)
+        console.log(resp)
       })
   }, [])
 
@@ -47,21 +49,23 @@ function Perfil(user) {
     });
   }
 
+  console.log(user.user.user.user_id)
+
   function handleSubmit(e) {
     e.preventDefault();
     const cambios = {
       name: state.name,
       email: state.email,
-      password: state.password,
-      oldPassword: state.oldPassword
+      newPassword: state.password,
+      password: state.oldPassword
     }
     if (cambios.name.length === 0) { cambios.name = name }
     if (cambios.email.length === 0) { cambios.email = email }
 
-    const id = datos.id
+    const id = user.user.user.user_id
     putUser(id, cambios).payload
       .then(resp => {
-        console.log('cambio realizado');
+        console.log(resp);
         reload()
       })
       .catch(err => console.log(err))
@@ -70,11 +74,11 @@ function Perfil(user) {
     window.location.reload()
   }
 
+
   function onDelete() {
-    const id = datos.id
+    const id = user.user.user.user_id
     deleteUser(id)
       .then(resp => {
-        console.log(resp)
         reload()
       })
   }
@@ -92,7 +96,7 @@ function Perfil(user) {
         <h1 className={Estilo.bienvenido} >Bienvenido {name} ! </h1>
         <h2 className={Estilo.producto} >Tu email : {email}  </h2>
         <div>
-          <form onSubmit={handleSubmit}>
+          <form >
             <div>
               <div className={Estilo.nombre}>
                 <label >Nombre:</label>
@@ -112,7 +116,7 @@ function Perfil(user) {
               </div>
 
               <div className={Estilo.botonesFinales} >
-                <button type="submit" value="Actualizar" className={Estilo.botoncitos} >
+                <button onClick={handleSubmit} className={Estilo.botoncitos} >
                   Modificar datos
                       </button>
                 <button type="submit" onClick={onDelete} className={Estilo.botoncitos2}  >

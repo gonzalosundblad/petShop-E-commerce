@@ -25,6 +25,7 @@ server.post('/', (req, res) => {//S34 : Crear Ruta para creación de Usuario
 server.put('/:id', (req, res) => {  //S35 : Crear Ruta para modificar Usuario segun id
   const { id } = req.params;
   const { name, email, password, newPassword, last_name } = req.body;
+  console.log(req.body)
   User.update({
     name,
     last_name,
@@ -33,8 +34,7 @@ server.put('/:id', (req, res) => {  //S35 : Crear Ruta para modificar Usuario se
   }, {
     returning: true,
     where: {
-      user_id: id,
-      password
+      user_id: id
     }
   }).then(function (user) {
     console.log(user)

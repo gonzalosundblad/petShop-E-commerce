@@ -3,15 +3,17 @@ import { Link } from "react-router-dom";
 import StyleUsuarioLogeado from '../Estilos/UsuarioLogeado.module.css';
 import userLogo from '../imagenes/userLogo.png'
 import { logout } from '../Redux/actionsLogin'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-function UsuarioLogeado({ user , logout}) {
-//console.log(user);
+function UsuarioLogeado({ user, logout }) {
+  //console.log(user);
 
   function cerrarSesion() {
     logout()
   }
+
+  var id = user.user.user_id
 
   return (
     <div id='header'>
@@ -24,7 +26,7 @@ function UsuarioLogeado({ user , logout}) {
               {/* window.location=`user/${user.id}` */}
             </li>
             <li >
-              <a href='/user/:id/ordenes'>Mis compras</a>
+              <a href={`/user/${id}/ordenes`}>Mis compras</a>
             </li>
             <li>
               <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>
@@ -47,7 +49,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({logout}, dispatch)
+    ...bindActionCreators({ logout }, dispatch)
   }
 }
 

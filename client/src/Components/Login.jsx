@@ -16,20 +16,14 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 
 function Login({ user, isLoggedIn, loginRequest }) {
-  const [users, setUsers] = useState([])
   const [input, setInput] = useState({
     email: "",
     password: "",
   })
   const [errors, setErrors] = useState({});
-  const [aUser, setAUser] = useState([])
   var x = false;
 
-  useEffect(() => {
-    getUser().payload
-      .then(resp => setUsers(resp.data))
 
-  }, [])
 
   function validate(input) {
     let errors = {};
@@ -64,10 +58,7 @@ function Login({ user, isLoggedIn, loginRequest }) {
       window.location.href = '/perfil'
     }
   }
-  useEffect(() => {
-    getUser().payload
-      .then(resp => setUsers(resp.data))
-  }, [])
+
   return (
     <div id='aparecer' className={estilo.divOscuro}>
       <div className={estilo.x}>
@@ -104,7 +95,7 @@ function Login({ user, isLoggedIn, loginRequest }) {
                 <span  >Registrate</span>
               </a>
             </div>
-            <a href='/register'>
+            <a href='/reset'>
               <span  >Olvidé mi Contraseña</span>
             </a>
           </div>

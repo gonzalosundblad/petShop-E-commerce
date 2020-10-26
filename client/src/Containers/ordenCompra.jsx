@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
 
-function OrdenUsuario(props) {
+function OrdenCompra(props) {
   const [productOrder, setproductOrder] = useState([])
   console.log('hhhhhhhhhhhhhhhhhh');
   console.log(props);
@@ -28,16 +28,16 @@ function OrdenUsuario(props) {
         }
       })
   }, [])
-  // var total = 0
+  var total = 0
 
 
-  // var precio = productOrder.map(e => e.price * e.LineaDeOrden.quantity)
+  var precio = productOrder.map(e => e.price * e.LineaDeOrden.quantity)
 
-  // var total = precio.reduce(function(a, b){
-  //   return a + b
-  // }, 0)
+  var total = precio.reduce(function (a, b) {
+    return a + b
+  }, 0)
 
-  console.log(props.id);
+  console.log(productOrder);
 
 
   const estado = { orderState: 'creada' }
@@ -87,10 +87,9 @@ function OrdenUsuario(props) {
         )
         }
         <div className={StyleOrden.inputBoton}>
-          <h2 >Total: </h2>
+          <h2 >Total: {total} </h2>
         </div>
         <div className={StyleOrden.botonesFinales} >
-          <button onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido</button>
           <button onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</button>
         </div>
       </div>
@@ -109,8 +108,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ OrdenUsuario }, dispatch)
+    ...bindActionCreators({ OrdenCompra }, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrdenUsuario);
+export default connect(mapStateToProps, mapDispatchToProps)(OrdenCompra);
