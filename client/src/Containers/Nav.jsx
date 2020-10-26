@@ -9,6 +9,7 @@ import Changito from '../imagenes/changuito2.png';
 import {getCarrito} from '../Redux/actionsCarrito';
 import UsuarioLogeado from '../Components/UsuarioLogeado';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import HenryPet from '../imagenes/HenryPet2.png';
 
 
 export default function NavBar({funcionCatag, onSearch}) {
@@ -37,6 +38,9 @@ export default function NavBar({funcionCatag, onSearch}) {
 
   return (
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top " style={{backgroundColor: "orange"}}>
+      <Link to='/'>
+        <img src={HenryPet} className={StyleNav.imagen}/>
+      </Link>
   {/* <a class="navbar-brand" href="#">Navbar</a> */}
   {/* <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -44,26 +48,18 @@ export default function NavBar({funcionCatag, onSearch}) {
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
-      {/* <li class="nav-item active">
-        <a class="nav-link" href="/products">CATALOGO
-          <span class="sr-only">(current)</span>
-        </a>
-      </li> */}
       <li class="nav-item">
         <a class="nav-link" href="/products">Catalogo</a>
       </li>
       <ListaDesplegable/> 
     </ul>
     <form class="form-inline my-2 my-lg-0">
-    <Search funcion={onSearch}/>
-      {/* <input class="form-control mr-sm-2" type="text" placeholder="Search"/>
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> */}
+      <Search funcion={onSearch}/>
     </form>
-    <a className={StyleNav.botonCarrito} href='/carrito'>
-            <img className={StyleNav.img} src={Changito}/>
-            
-            <h5>${total}</h5>
-          </a>
+    <a className={StyleNav.botonCarrito} href='/carrito' style={{textDecoration: 'none'}}>
+      <img className={StyleNav.img} src={Changito}/>
+      <h5>${total}</h5>
+    </a>
   </div>
 </nav>
 
