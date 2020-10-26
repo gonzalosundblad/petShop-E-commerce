@@ -55,7 +55,6 @@ function Login({ dispatch, user, isLoggedIn, postLog }) {
 
   function loginUser() {
     postLog(input.email, input.password)
-
   }
 
   return (

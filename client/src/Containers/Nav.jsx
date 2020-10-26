@@ -64,6 +64,9 @@ export default function NavBar({ funcionCatag, onSearch, idUser }) {
       <img className={StyleNav.img} src={Changito}/>
       <h5>${total}</h5>
     </a>
+    <a className={StyleNav.botones} href='/login'>
+      <span className={StyleNav.botonCatalogo} >Iniciar Sesión</span>
+    </a>
    
   </div>
 </nav>
