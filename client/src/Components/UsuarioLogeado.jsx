@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
 import StyleUsuarioLogeado from '../Estilos/UsuarioLogeado.module.css';
 import userLogo from '../imagenes/userLogo.png'
 import { postLogo } from '../Redux/actionsLog'

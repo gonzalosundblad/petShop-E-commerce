@@ -49,7 +49,7 @@ server.get('/:id', (req, res) => {											//TRAE EL PRODUCTO DEL CORRESPONDIE
 	})
 })
 
-server.post('/',  isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
+server.post('/', (req, res) => {									//AGREGA NUEVOS PRODUCTOS
 	const {name, description, price, stock, categoryId, image} = req.body;
 	console.log(req.body)
 	if( !name || !description ){
@@ -109,7 +109,7 @@ server.post('/',  isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
 		}
 	})
 
-server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
+server.put('/:id',  (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
     const {name, description, price, stock } = req.body;
 	
 	Product.findByPk(req.params.id)
@@ -141,7 +141,7 @@ server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO 
     })
 });
 
-server.delete('/:id', isAdmin, (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID
+server.delete('/:id',  (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID
 	var productId = req.params.id;
 	if(!productId){
 		res.status(404).send('Debes ingresar un ID')
@@ -193,7 +193,7 @@ server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {	//AGR
 	})	
 })
 
-server.post('/category', isAdmin, (req, res) => {							//AGREGA NUEVAS CATEGORIAS
+server.post('/category',  (req, res) => {							//AGREGA NUEVAS CATEGORIAS
 	const { name, description } = req.body ;
 	if(!name){
 		return res.status(400).send('Campos requeridos')
@@ -232,7 +232,7 @@ server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {//EL
 	})
 })
 
-server.put('/category/:id', isAdmin, (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN ID
+server.put('/category/:id',  (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN ID
 	const {name, description} = req.body;
 	Category.update({
 		name,
@@ -248,7 +248,7 @@ server.put('/category/:id', isAdmin, (req, res) => {						//MODIFICA UNA CATEGOR
 	})
 });
 
-server.delete('/category/:id', isAdmin, (req, res) => {						//ELIMINA UNA CATEGORIA
+server.delete('/category/:id', (req, res) => {						//ELIMINA UNA CATEGORIA
 	var categoryId = req.params.id;
     if(!categoryId){
 		res.status(404).send('Debes ingresar un ID')

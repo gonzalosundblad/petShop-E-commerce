@@ -1,0 +1,14 @@
+.grillaProductos{
+  display: grid;
+  grid-template-columns: 10% 35% 35% 10% 10%;
+  justify-content: center;
+  align-items: center;
+}
+
+.grillaCategorias{
+  display: grid;
+  grid-template-columns: 20% 80%;
+  justify-content: center;
+  align-items: center;
+}
+

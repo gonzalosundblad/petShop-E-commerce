@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
 import { getUser } from '../Redux/actionsOrden';
 import { Link } from 'react-router-dom'
-import StyleLogin from '../Estilos/StyleLogin.module.css';
 import estilo from '../Estilos/Login.module.css';
 import imagen from '../imagenes/PerroYgatito.png';
 import candado from '../imagenes/candado.png';

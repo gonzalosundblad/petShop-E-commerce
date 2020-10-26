@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import {putId, getProducts, deleteProduct, getCategories } from '../Redux/actions.js'
-import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
-import Estilo from '../Estilos/ModificarProd.module.css'
-import Estilos from '../Estilos/AgregarProd.module.css'
 import firebase, { storage } from 'firebase';
 import {getProductsRequest} from '../Redux/actions';
 import {connect} from 'react-redux'
@@ -109,8 +106,9 @@ export function CrudProduct( ){
 
 
     return(
-      <div className={Estilos.forms} >
-        <form onSubmit={(e) => {
+      <div class="container" style={{display: "flex", justifyContent: "center"}} >
+        <form style={{width: "80%", border: "solid 1px"}}
+        onSubmit={(e) => {
           e.preventDefault();
           axios.post(`http://localhost:3001/products/`,  input )
             .then(res => {
@@ -123,52 +121,93 @@ export function CrudProduct( ){
                 price: "",
                 image: "",
                 categoryId: 1,
-
               })
             })
           }}>
-          <div>
-            <h2>Agrega un producto:</h2>
-          </div>
-          <div>
-            <div className={Estilos.resultado} controlId="formGridName" >
-              <label>Producto: </label>
-              <input autoComplete="false" value={input.name} onChange={handleInputChange} name="name"/>
+          <fieldset>
+            <legend>Agregar Productos</legend>
+            <div class="form-group" >
+              <fieldset>
+                <div style={{display: "flex", flexDirection: "column", margin: "10px"}}>
+                  <label class="control-label" for="readOnlyInput" style={{textDecoration: "none"}}>Nombre del Producto</label>
+                  <input 
+                    class="form-control" 
+                    type="text" 
+                    placeholder="Nombre..." 
+                    autoComplete="false" 
+                    value={input.name} 
+                    onChange={handleInputChange} 
+                    name="name"/>
+                </div>
+              </fieldset>
+              {!errors.name ? null : <p className="danger">{errors.name}</p>}
             </div>
-            {!errors.name ? null : <p className="danger">{errors.name}</p>}
-
-            <div className={Estilos.resultado} controlId="formGridState">
-              <label>Categoria</label>
-              <Form.Control className={Estilos.inputCategoria} as="select" name="categoryId"
-                onChange={e => getIdCategory(e)}
-                >
+            <div class="form-group" style={{display: "flex", flexDirection: "column", margin: "10px"}}>
+              <label for="exampleSelect1" style={{textDecoration: "none"}}>Categoria</label>
+              <select class="form-control" id="exampleSelect1" as="select" name="categoryId" onChange={e => getIdCategory(e)}>
                 {categories.map((category, i) => <option key={category.id} id={i} >{category.name}</option>)}
-              </Form.Control>
+              </select>
             </div>
-
-            <div  className={Estilos.resultado} controlId="formGridName" >
-              <label>Description: </label>
-              <input autoComplete={false} value={input.description} onChange={handleInputChange} name="description"/>
-            </div>
-
-            <div  className={Estilos.resultado}  controlId="formGridPrice">
-              <label>Price:</label>
-              <input autoComplete={false}  value={input.price} onChange={handleInputChange} name="price" />
-            </div>
-            {!errors.price ? null : <p className="danger">{errors.price} </p>}
-
-            <div className={Estilos.resultado}  controlId="formGridStock">
-              <label>Stock:</label>
-              <input autoComplete={false}  value={input.stock} onChange={handleInputChange} name="stock" />
+            <div class="form-group" style={{display: "flex", flexDirection: "column", margin: "10px"}}>
+                <label class="control-label" for="readOnlyInput" style={{textDecoration: "none"}}>Stock</label>
+                <input class="form-control"
+                  min="0" 
+                  type="number" 
+                  placeholder="Stock..."
+                  autoComplete={false} 
+                  value={input.stock} 
+                  onChange={handleInputChange} 
+                  name="stock"/> 
             </div>
             {!errors.stock ? null : <p className="danger">{errors.stock}</p>}
-
-            <input  type="file" value={input.image} onChange={handleUpload}  name="image" accept="image/png, .jpeg, .jpg, image/gif"/>
-
-            <div  >
-              <button  enabled={!handleSubmit()} variant="primary" type="submit"  > Agregar </button>
+            <div class="form-group" style={{display: "flex", flexDirection: "column", margin: "10px"}}>
+              <label class="control-label" style={{textDecoration: "none"}}>Precio</label>
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="$$$$$$" 
+                    aria-label="Amount (to the nearest dollar)"
+                    autoComplete={false}  
+                    value={input.price} 
+                    onChange={handleInputChange} 
+                    name="price" />
+                  <div class="input-group-append">
+                    <span class="input-group-text">.00</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+            {!errors.price ? null : <p className="danger">{errors.price} </p>}
+            <div class="form-group" style={{display: "flex", flexDirection: "column", margin: "10px"}}>
+              <label for="exampleTextarea" style={{textDecoration: "none"}}>Descripcion</label>
+              <textarea 
+                class="form-control" 
+                id="exampleTextarea" 
+                rows="3" 
+                autoComplete={false} 
+                value={input.description} 
+                onChange={handleInputChange} 
+                name="description" />
+            </div>
+            <label for="exampleTextarea" style={{textDecoration: "none"}}>Agregar Imagen</label>
+            <div class="form-group">
+              <input 
+                type="file" 
+                class="btn btn-primary" 
+                id="exampleInputFile" 
+                aria-describedby="fileHelp"
+                value={input.image} 
+                onChange={handleUpload}  
+                name="image" 
+                accept="image/png, .jpeg, .jpg, image/gif"/>
+            </div>
+            <button type="submit" class="btn btn-primary" enabled={!handleSubmit()} variant="primary" style={{margin: "10px"}}>Agregar</button>
+          </fieldset>
         </form>
       </div>
     )
