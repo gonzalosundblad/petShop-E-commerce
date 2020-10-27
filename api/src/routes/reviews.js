@@ -1,6 +1,6 @@
 const server = require('express').Router();
 const { Product, Review, User } = require('../db.js');
-const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
+const { isAuthenticated } = require("../passport");
 
 server.post('/product/:id/review', isAuthenticated, (req, res) => {                       //S54 : Crear ruta para crear/agregar Review
     const product_id = req.params.id;
