@@ -68,7 +68,7 @@ function App() {
         <Route exact path="/admin/ordenes" render={() => <Ordenes /> } />
         <Route exact path="/admin/ordenes/:id" render={({match}) => <OrdenAdmin id={match.params.id} /> } />
         <Route exact path="/admin/usuarios" render={() => <Usuarios /> } />
-        <Route exact path="/user/:id" render={({match}) => <Perfil id={match.params.id} /> } />
+        <Route exact path="/perfil" render={({match}) => <Perfil />}/>
         <Route exact path="/order/:id" render={({match}) => <OrdenUsuario id={match.params.id} /> } /> 
       </div>
       </BrowserRouter>

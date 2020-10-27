@@ -5,6 +5,7 @@ import Antipulgas from '../imagenes/antipulgas.jpg';
 import img4 from '../imagenes/juguetesPortada2.jpg';
 import banner1 from '../imagenes/envioExpress.png';
 import banner2 from '../imagenes/banner2.png';
+import banner3 from '../imagenes/banner3.png';
 
 export default function ControlledCarousel() {
 
@@ -22,9 +23,9 @@ export default function ControlledCarousel() {
         <div class="carousel-item">
           <img src={banner2} class="d-block w-100" alt="..."/>
         </div>
-        {/* <div class="carousel-item">
-          <img src={Misy} class="d-block w-100" alt="..."/>
-        </div> */}
+        <div class="carousel-item">
+          <img src={banner3} class="d-block w-100" alt="..."/>
+        </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
