@@ -12,26 +12,47 @@ import { connect } from 'react-redux'
 
 function NavBar({ user, funcionCatag, onSearch }) {
   //console.log(user.user.role);
-  const [carro, setCarro] = useState([])
+  const [carro, setCarro] = useState([]);
+  const [precio , setPrecio] =useState ([]);
   useEffect(() => {
+    var pre = [];
     if (user === null) {
-      user = 1
+      let x = []
+      //recorro el local storage
+      for(var i = 0; i < localStorage.length; i++){
+        let clave = localStorage.key(i);
+        let prod = JSON.parse(localStorage.getItem(clave));
+            if(typeof(parseInt(clave)) === "number" ){
+                x.push(prod)
+            }     
+             
+              
+      }
+      setCarro(x);
+      pre = x.map(e => {
+        return parseInt(e.price) * parseInt(e.quantity)
+      })   
     } else {
-      user = user.user.user_id
-    }
-    getCarrito(user).payload
+      user = user.user.user_id;
+      getCarrito(user).payload
       .then(res => {
         if (!res.data[0]) {
           console.log('no hay productos')
         } else {
           setCarro(res.data[0].products)
+          pre = carro.map(e => e.price * e.LineaDeOrden.quantity)
         }
+        
       })
-  }, [])
-  var precio = carro.map(e => e.price * e.LineaDeOrden.quantity)
-  var total = precio.reduce(function (a, b) {
-    return a + b
+    }
+    var total = pre.reduce(function (a, b) {
+      return a + b
   }, 0)
+    setPrecio(total)
+    }, [])
+  
+  
+    
 
   function recargar() {
     window.location.reload()
@@ -55,7 +76,7 @@ function NavBar({ user, funcionCatag, onSearch }) {
         </div>
         <a className={StyleNav.botonCarrito} href='/carrito'>
           <img className={StyleNav.img} src={Changito} />
-          <h5>${total}</h5>
+          <h5>${precio}</h5>
         </a>
 
         <div className={StyleNav.botones}>

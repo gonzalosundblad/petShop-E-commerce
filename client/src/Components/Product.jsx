@@ -47,17 +47,10 @@ function Product({ user, id2 }) {
           console.log(resp.data)
           window.location.replace("http://localhost:3000/carrito")
         })
-    }
-    if (user.isLoggedIn === false) {
-      postCarrito(2, {
-        product_id: id2,
-        quantity: quantity,
-        price: price
-      }).payload
-        .then(function (resp) {
-          console.log(resp.data)
-          window.location.replace("http://localhost:3000/carrito")
-        })
+    }else {
+      localStorage.setItem(id2, JSON.stringify({product_id: id2, quantity: quantity, price: price, image, name}))
+      window.location.replace("http://localhost:3000/carrito")
+        
     }
   }
 

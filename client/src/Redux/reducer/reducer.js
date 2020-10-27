@@ -2,6 +2,7 @@ import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PR
 import { GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA } from '../constantsCarro'
 import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID, GET_ORDENIDUSER } from '../constantesOrden'
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW } from '../constantsReview';
+import { GET_CARRO_SIN_USER } from '../constantsCarrosinUser';
 
 export const initialState = {
   products: [],
@@ -177,6 +178,39 @@ export default (state = initialState, action) => {
         ...state,
         reviews: action.payload
       }
+    
+     //-----------------------------------------------------Carrito sin Usuario
+     case GET_CARRO_SIN_USER:
+      return {
+        ...state,
+        carrito: action.carrito,
+      }
+    // case GET_CREADA:
+    //   return {
+    //     ...state,
+    //     carrito: action.carrito,
+    //   }
+    // case POST_CARRO:  //agrega un producto al carrito
+    //   return {
+    //     ...state,
+    //     carrito: state.carrito.concat(action.carrito)
+    //   }
+    // case PUT_CANTIDAD_CARRO:
+    //   return {
+    //     ...state,
+    //     carrito: state.carrito.map(cart => cart.id === action.payload.id ? action.payload : cart)
+    //   }
+    // case DELETE_CARRITO:
+    //   return {
+    //     ...state,
+    //     carrito: state.carrito.filter(cart => cart.id !== action.payload)
+    //   }
+    // case DELETE_CARRITOUNO:
+    //   return {
+    //     ...state,
+    //     carrito: state.carrito.filter(cart => cart.id !== action.payload)
+    //   }  
+
 
     default: return state
   }

@@ -40,7 +40,8 @@ export default function ProductoCarritocard({id, image, name, price, LineaDeOrde
                 </div>
                 <div className={Estilo.inputBoton}>
                     <h3>Cantidad: </h3>
-                    <h4>{LineaDeOrden} unidades</h4>
+                    {LineaDeOrden ? <h4>{LineaDeOrden} unidades</h4> : <h4>{LineaDeOrden} unidades</h4>}
+                    
                     <input type="text" onChange={handleChange} className={Estilo.Cambio} />
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
@@ -50,7 +51,7 @@ export default function ProductoCarritocard({id, image, name, price, LineaDeOrde
                 <div className={Estilo.botonBorrar}>
                     
 
-                    <   button onClick={funcionDelete} value={id} >
+                    <   button onClick={() => funcionDelete(id)} value={id} >
                         <img className={Estilo.basura} src={Basura} alt=""/>
                     </button>
                 </div>
