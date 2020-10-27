@@ -62,12 +62,28 @@ export function postCategory(data) {   //agrega una categoria
 }
 //----------------------------------------
 // PutId FUNCIONA
-export function putId(id, cambios) { //modifica un producto
-  return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
-    return ({ type: PUT_ID, payload: response })
-    console.log(response);
-  })
+// export function putId(id, cambios) { //modifica un producto
+//   return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
+//     return ({ type: PUT_ID, payload: response })
+//     console.log(response);
+//   })
+// }
+export function putProduct(cambio) {//va a REDUCER
+  console.log('Cambios');
+  return {
+    type: PUT_ID,
+    payload: cambio
+  }
 }
+export function putId(id, cambios) {//Va a Catalogo2.jsx
+  console.log('getProductsRequest');
+  return (dispatch) => {
+    axios.put(`http://localhost:3001/products/${id}`, cambios)
+      .then(response => { dispatch(putProduct(response.data)) })
+      .catch(err => { console.log(err) })
+  }
+}
+
 export function putCategoryId(id, cambios) {  //modifica una categoria
   return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
     return ({ type: PUT_CATEGORY_ID, payload: response })
