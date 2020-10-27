@@ -1,5 +1,8 @@
 
 
+
+/* 
+
 .formsAgregarCategoria{                               
   display: flex;
   align-items: center;
@@ -17,6 +20,8 @@
 .formsAgregarCategoria label{
   text-decoration: none;
   font-size: 20px;
+  color: black;
+  font-weight: bold;
 }
 
 .formsAgregarCategoria input{
@@ -114,20 +119,14 @@
   font-weight: bold;
 }
 
-/* .formsModificarCategoria input {
-  width: 80px;
-  height: 30px;
-} */
+
 
 .labelInputModificar label{
   text-decoration: none;
+  font-weight: bold;
+  color: black;
 }
-/* 
-.forms{
-  width: 290px;
-  height: 46px;
-  display: flex;
-} */
+
 
 .botones{
   width: 280px;
@@ -157,4 +156,4 @@
 
 .botonBorrar{
   background-color: rgb(247, 82, 82);
-}
+} */

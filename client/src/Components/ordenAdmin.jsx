@@ -6,7 +6,7 @@ import Estilo from '../Estilos/ordenesUsuario.module.css'
 export default function OrdenAdmin(id, idUser) {
   const [orderUser, setOrderUser] = useState([])
 
-  const id2 = id.id - 1
+  const id2 = id.id - 2
 
   console.log(id2)
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ORDER, GET_USER, GET_ORDENID, POST_USER, PUT_USER, DELETE_USER, PUT_ORDER, POST_PASSWORD } from './constantesOrden'
+import { GET_ORDER, GET_USER, GET_ORDENID, POST_USER, PUT_USER, DELETE_USER, PUT_ORDER, POST_PASSWORD, GET_ORDENIDUSER } from './constantesOrden'
 
 export function getOrder() { //obtener todos los productos
   const request = axios.get('http://localhost:3001/orders/')
@@ -33,6 +33,10 @@ export function getOrderId(id) {
   const request = axios.get(`http://localhost:3001/orders/${id}`)
   return { type: GET_ORDENID, payload: request }
 }
+export function getOrderIdUser(idUser) {
+  const request = axios.get(`http://localhost:3001/orders/${idUser}/orders'`)
+  return { type: GET_ORDENIDUSER, payload: request }
+}
 
 export function putOrder(id, estado) {
   return axios.put(`http://localhost:3001/orders/${id}`, estado).then((resp) => {
@@ -47,8 +51,8 @@ export function deleteOrder(id) {      //
 }
 
 //-----Reset Password-----
-export function postPass(id, password) {      //
-  const request = axios.post(`http://localhost:3001/users/${id}/passwordReset`, password)
+export function postPass(id, password) {      //agrega un nuevo usuario
+  const request = axios.put(`http://localhost:3001/users/${id}/passwordReset`, { password })
   return { type: POST_PASSWORD, payload: request };
 }
 

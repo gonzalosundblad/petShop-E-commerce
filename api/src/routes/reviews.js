@@ -20,7 +20,6 @@ server.post('/product/:id/review', isAuthenticated, (req, res) => {             
 server.put('/product/:id/review/:idReview', isAuthenticated, (req, res) => {              //S55 : Crear ruta para Modificar Review
     const {id, idReview} = req.params;
     const { qualification ,description } = req.body
-
     Review.update({
         qualification: qualification,
         description: description

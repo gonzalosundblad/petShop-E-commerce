@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import Catalogo from '../Components/CatalogoComp'
 import { getProductsRequest } from '../Redux/actions';
 import { connect } from 'react-redux'
+import store from '../Redux/store'
+import { ModificayBorra } from './Productos';
 
-function MostrarCatalogo() {
-  const [state, setState] = useState([])
+
+
+function MostrarCatalogo({ products, getProductsRequest }) {
 
   useEffect(() => {
-    getProductsRequest().payload
-      .then(resp => {
-        setState(resp.data)
-      })
+    getProductsRequest()
   }, []);
 
+  console.log(products)
   return (
     <div >
-      <Catalogo productos={state} />
+      <Catalogo productos={products} />
     </div>
   );
 };

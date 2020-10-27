@@ -1,9 +1,9 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { getUser } from '../Redux/actionsOrden'
-import Estilo from '../Estilos/forms.module.css'
-import { postAdmin } from '../Redux/actionsLog'
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getUser } from '../Redux/actionsOrden';
+import Estilo from '../Estilos/forms.module.css';
+import { postAdmin } from '../Redux/actionsLog';
 
 export default function Usuarios() {
   const [productsGuardados, setProductsGuardados] = useState([])
@@ -12,21 +12,24 @@ export default function Usuarios() {
   useEffect(() => {
     getUser().payload
       .then(res => {
-        console.log(res.data)
         setProductsGuardados(res.data)
       })
   }, [])
+  function handleSubmit(e) {
+    e.preventDefault()
+  }
 
   function admin(e) {
     const id = e.target.value;
     postAdmin(id)
+    window.location.reload()
   }
 
   return (
     <div className={Estilo.forms} > {
       productsGuardados && productsGuardados.map(encontrado => {
         return (
-          <form className={Estilo.resultado} key={encontrado.user_id}>
+          <form className={Estilo.resultado} key={encontrado.user_id} onSubmit={handleSubmit}>
             <label>Id Usuario:</label>
             <input type="text" value={encontrado.user_id} className={Estilo.inputs} />
             <label>Nombre Usuario:</label>
@@ -43,3 +46,4 @@ export default function Usuarios() {
     </div>
   )
 }
+
