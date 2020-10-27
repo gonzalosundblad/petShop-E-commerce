@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';

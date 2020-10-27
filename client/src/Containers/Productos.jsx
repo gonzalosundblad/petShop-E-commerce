@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { putId, getProductsRequest, deleteProduct, getCategories, getProductos } from '../Redux/actions.js'
-import Estilo from '../Estilos/ModificarProd.module.css'
+import { putId, getProductsRequest, deleteProduct, getCategories, getProducts } from '../Redux/actions.js'
+import Estilo from '../Estilos/Modificar.module.css'
 import { connect } from 'react-redux'
 import store from '../Redux/store'
 
@@ -69,14 +69,14 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
     <div>
       <div className={Estilo.forms}>
         <div>
-          <h3>Lista de productos disponibles para modificar/eliminar</h3>
+          <legend>Lista de productos disponibles para modificar/eliminar</legend>
         </div>
-        <div className={Estilo.titulos}>
-          <h1>ID</h1>
-          <h1>Nombre</h1>
-          <h1>Descripcion</h1>
-          <h1>Precio</h1>
-          <h1>Stock</h1>
+        <div className={Estilo.grillaProductos}>
+          <h4>ID</h4>
+          <h4>Nombre</h4>
+          <h4>Descripcion</h4>
+          <h4>Precio</h4>
+          <h4>Stock</h4>
         </div>
         <div>
           {
@@ -84,23 +84,23 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
               return (
                 <div >
                   <form key={encontrado.id} >
-                    <div className={Estilo.labelInput}>
+                    <fieldset style={{ height: "32px" }}>
                       <div >
-                        <input className={Estilo.inputId} type="text" value={encontrado.id} />
+                        <table class="table table-hover">
+                          <tbody>
+                            <tr class="table-secondary">
+                              <div className={Estilo.grillaProductos}>
+                                <td >{encontrado.id}</td>
+                                <td>{encontrado.name}</td>
+                                <td>{encontrado.description}</td>
+                                <td>${encontrado.price}</td>
+                                <td>{encontrado.stock}</td>
+                              </div>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                      <div >
-                        <input className={Estilo.inputNombre} type="text" value={encontrado.name} />
-                      </div>
-                      <div>
-                        <input className={Estilo.inputNombre} type="text" value={encontrado.description} />
-                      </div>
-                      <div>
-                        <input className={Estilo.inputPrecio} type="text" value={`$ ${encontrado.price}`} />
-                      </div>
-                      <div>
-                        <input className={Estilo.inputPrecio} type="text" value={encontrado.stock} />
-                      </div>
-                    </div>
+                    </fieldset>
                   </form>
                   <hr />
                 </div>
@@ -109,8 +109,51 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
           }
         </div>
       </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <form style={{ width: "50%", border: "solid 1px" }}>
+          <fieldset>
+            <legend>Ingrese los datos que desea modificar/eliminar</legend>
 
-      <div className={Estilo.formsModificar}>
+            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+              <label style={{ textDecoration: 'none' }} for="exampleInputEmail1">Id</label>
+              <input type="number" class="form-control" aria-describedby="emailHelp" placeholder="Id del producto" id="id" name="id" onChange={handleChange} />
+            </div>
+
+            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+              <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre del producto" id="name" name="name" onChange={handleChange} />
+            </div>
+
+            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+              <label style={{ textDecoration: 'none' }} for="exampleTextarea">Descripcion</label>
+              <textarea class="form-control" rows="3" id="description" name="description" placeholder="Ingrese una descripción" onChange={handleChange} />
+            </div>
+
+            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }} >
+              <label style={{ textDecoration: 'none' }} class="control-label">Precio</label>
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="price" name="price" placeholder="Ingrese Precio" onChange={handleChange} />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+              <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Stock</label>
+              <input type="number" class="form-control" placeholder="Ingrese cantidad" id="stock" name="stock" onChange={handleChange} />
+            </div>
+            <div>
+              <button onClick={modificar} type="submit" value="Actualizar" class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
+              <button onClick={delet} class="btn btn-outline-danger" style={{ margin: "10px" }}>Borrar</button>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+      {/* <div className={Estilo.formsModificar}>
         <div>
           <h3>Ingrese los datos que desea modificar/eliminar</h3>
         </div>
@@ -162,6 +205,7 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
           <button onClick={delet} className={Estilo.botonBorrar} >Eliminar</button>
         </div>
       </div>
+    </div> */}
     </div>
   );
 }

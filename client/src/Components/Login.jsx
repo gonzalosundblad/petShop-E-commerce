@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
 import { getUser } from '../Redux/actionsOrden';
 import { Link } from 'react-router-dom'
-import StyleLogin from '../Estilos/StyleLogin.module.css';
 import estilo from '../Estilos/Login.module.css';
 import imagen from '../imagenes/PerroYgatito.png';
 import candado from '../imagenes/candado.png';
@@ -60,10 +59,10 @@ function Login({ user, isLoggedIn, loginRequest }) {
   }
 
   return (
-    <div id='aparecer' className={estilo.divOscuro}>
+    <div className={estilo.divOscuro}>
       <div className={estilo.x}>
         <a href='/'>
-          <span className={estilo.cerrar} > X </span>
+          X
         </a>
       </div>
       <div className={estilo.divTodo}>
@@ -75,42 +74,49 @@ function Login({ user, isLoggedIn, loginRequest }) {
         </div>
         <div className={estilo.divCuadro}>
           <div className={estilo.divIzquierda}>
-            <h2>Iniciar Sesion</h2>
-            <Form.Row className={estilo.formRow} onSubmit={handleLogin}>
-              <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridEmail" >
-                <img src={email} className={estilo.icono} />
-                <Form.Control className={estilo.input} value={input.email} type="email" onChange={handleInputChange} placeholder="Introduzca el email" name="email" />
-              </Form.Group>
-              {errors.email && (<h4 className="danger"> {errors.email} </h4>)}
-              <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridPassword">
-                <img src={candado} className={estilo.icono} />
-                <Form.Control className={estilo.input} value={input.password} onChange={handleInputChange} type="password" placeholder="Contraseña" name="password" />
-              </Form.Group>
-              {errors.password && (<h4 className="danger">{errors.password}</h4>)}
-            </Form.Row>
-            <Button className={estilo.boton} variant="primary" type="button" onClick={loginUser}> Iniciar </Button>
-            <div className={estilo.divAbajo}>
-              <h3>¿No tenes cuenta?</h3>
-              <a href='/register'>
-                <span  >Registrate</span>
-              </a>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <form  >
+                <fieldset>
+                  <legend>Iniciar sesion:</legend>
+                  <div class="form-group" style={{ display: "flex", alignItems: "center", margin: "10px" }}>
+                    <svg width="23px" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
+                    </svg>
+                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Ingrese su email" id="name" name="email" value={input.email} onChange={handleInputChange} />
+                  </div>
+                  <div class="form-group" style={{ display: "flex", alignItems: "center", margin: "10px" }}>
+                    <svg width="23px" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+                      <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+                    </svg>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
+                  </div>
+                  <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button>
+                </fieldset>
+              </form>
             </div>
-            <a href='/reset'>
-              <span  >Olvidé mi Contraseña</span>
-            </a>
           </div>
           <div>
             <hr width="2" size="200" />
           </div>
           <div className={estilo.divDerecha}>
             <h3>Iniciar sesion con:</h3>
-            <div className={estilo.google}>
-              <img src={google} className={estilo.imgGoogle} />
-              <h5>Iniciar con Google</h5>
+            <div >
+              <button type="button" class="btn btn-danger" style={{ margin: "10px" }}>
+                <div style={{ display: "flex", width: "90px", justifyContent: "space-around", alignItems: "center" }}>
+                  <img src={google} className={estilo.imgGoogle} />
+                  <h6>Google</h6>
+                </div>
+              </button>
+
             </div>
-            <div className={estilo.gitHub}>
-              <img src={GitHub} className={estilo.imgGitHub} />
-              <h5>Iniciar con GitHub</h5>
+            <div >
+              <button type="button" class="btn btn-secondary" style={{ margin: "10px" }}>
+                <div style={{ display: "flex", width: "90px", justifyContent: "space-around", alignItems: "center" }}>
+                  <img src={GitHub} className={estilo.imgGoogle} />
+                  <h6>GitHub</h6>
+                </div>
+              </button>
             </div>
           </div>
         </div>

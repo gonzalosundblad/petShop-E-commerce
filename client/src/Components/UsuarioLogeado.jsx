@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
 import StyleUsuarioLogeado from '../Estilos/UsuarioLogeado.module.css';
 import userLogo from '../imagenes/userLogo.png'
 import { logout } from '../Redux/actionsLogin'
@@ -13,7 +12,7 @@ function UsuarioLogeado({ user, logout }) {
     logout()
   }
 
-  var id = user.user.user_id
+  var id = 1
 
   return (
     <div id='header'>

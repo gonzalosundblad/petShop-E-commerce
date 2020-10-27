@@ -34,7 +34,7 @@ ul, ol {
 .lista li ul {
     display:none;
     position:absolute;
-    width:120px;
+    width:130px;
     background-color: white;
     color: orange;
     justify-content: center;

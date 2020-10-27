@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Catalogo from '../Components/CatalogoComp';
-import CategoriaCard from '../Components/CategoriaComp';
 import { getProductByCategory, getCategories } from '../Redux/actions.js';
 import { deleteCategory } from '../Redux/actions';
 import { postCategory } from '../Redux/actions';
@@ -90,20 +89,20 @@ export function AgregarCategoria() {                  //agrega categoria
 
 
   return (
-    <div className={estilo.formsAgregarCategoria}>
-      <div>
-        <h1>Agregar Categoria:</h1>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className={estilo.labelInput}>
-          <label>Categoría: </label>
-          <input id="name" type="text" name="name" onChange={handleChange} />
-        </div>
-        <div className={estilo.labelInput}>
-          <label>Descripción: </label>
-          <input id="description" type="text" description="description" onChange={handleChange2} />
-        </div>
-        <button type="submit">Agregar</button>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <form onSubmit={handleSubmit} style={{ width: "50%", border: "solid 1px" }}>
+        <fieldset>
+          <legend>Agregar Categoria</legend>
+          <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+            <label style={{ textDecoration: 'none' }} for="exampleInputEmail1">Nombre</label>
+            <input type="texto" class="form-control" aria-describedby="emailHelp" placeholder="Nombre de la categoria" id="name" name="name" onChange={handleChange} />
+          </div>
+          <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+            <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Description</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese una descripcion" id="description" description="description" onChange={handleChange2} />
+          </div>
+          <button type="submit" class="btn btn-outline-success" style={{ margin: "10px" }}>Agregar</button>
+        </fieldset>
       </form>
     </div>
   )
@@ -165,70 +164,71 @@ export function ModificaCategoria() {                   //modifica categoria y b
   }
 
   return (
-    <div className={estilo.formsModificarCategoria}>
-      <div>
-        <h3>Categorias disponibles para modificar o eliminar:</h3>
-      </div>
-      <div>
-        {
-          CategGuardada && CategGuardada.map(encontrado => {
-            if (encontrado.id !== 0) {
-              return (
-                <div>
-                  <form key={encontrado.id}>
-                    <div className={estilo.labelInputModificar}>
-                      <div className={estilo.id}>
-                        <label>Id:</label>
-                        <input type="text" value={encontrado.id} />
-                      </div>
-
-                      <div className={estilo.nombre}>
-                        <label>Nombre:</label>
-                        <input type="text" value={encontrado.name} />
-                      </div>
-                    </div>
-                  </form>
-                  <hr />
-                </div>
-              )
+    <div >
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ width: "50%", border: "solid 1px" }}>
+          <div>
+            <legend>Lista de categorias disponibles para modificar/eliminar</legend>
+          </div>
+          <div className={estilo.grillaCategorias}>
+            <h4>ID</h4>
+            <h4>Nombre</h4>
+          </div>
+          <div>
+            {
+              CategGuardada.map(c => {
+                return (
+                  <div >
+                    <form key={c.id} >
+                      <fieldset style={{ height: "32px" }}>
+                        <div >
+                          <table class="table table-hover">
+                            <tbody>
+                              <tr class="table-secondary">
+                                <div className={estilo.grillaCategorias}>
+                                  <td >{c.id}</td>
+                                  <td>{c.name}</td>
+                                </div>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </fieldset>
+                    </form>
+                    <hr />
+                  </div>
+                )
+              })
             }
-          })
-        }
+          </div>
+        </div>
       </div>
       <hr />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <form onSubmit={handleSubmit} style={{ width: "50%", border: "solid 1px" }}>
+          <fieldset>
+            <legend>Ingrese los datos que desea modificar/eliminar</legend>
 
-      <div>
-        <h2>Ingrese los datos que desea modificar o liminar</h2>
-      </div>
-      <div>
-        <form >
-          <div className={estilo.labelInputModificar}>
-            <div className={estilo.id}>
-              <label>Id:</label>
-              <input
-                name="id" id='id'
-                placeholder="Nº"
-                onChange={handleChange}
-              />
+            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+              <label style={{ textDecoration: 'none' }} for="exampleInputEmail1">Id</label>
+              <input type="number" class="form-control" aria-describedby="emailHelp" placeholder="Id del producto" id="id" name="id" onChange={handleChange} />
             </div>
-            <div className={estilo.nombre}>
-              <label> Nombre: </label>
-              <input
-                type="text" id="name" name="name"
-                placeholder="Nombre"
-                onChange={handleChange}
-              />
+
+            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+              <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre del producto" id="name" name="name" onChange={handleChange} />
             </div>
-          </div>
+
+            <div>
+              <button onClick={handleSubmit} type="submit" value="Actualizar" class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
+              <button onClick={delet} class="btn btn-outline-danger" style={{ margin: "10px" }}>Borrar</button>
+            </div>
+
+          </fieldset>
         </form>
       </div>
-      <div className={estilo.botones}>
-        <button className={estilo.botonModificar} onClick={handleSubmit} > Modificar </button>
-        <button className={estilo.botonBorrar} onClick={delet} >Eliminar</button>
-      </div>
     </div>
-
-  );
+  )
 }
 
 
@@ -245,6 +245,7 @@ export function ListaCategorias() {                     //lista de categorias en
       <div className={estilo.listaCategorias}>
         <div class="list-group" style={{ width: "150px" }}>
           <a href="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</a>
+          <a href='/products' class="list-group-item list-group-item-action">Todas</a>
           {
             categorias.map(n => {
               if (n.name !== 'Sin Categoria') {

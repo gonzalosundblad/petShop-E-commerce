@@ -1,9 +1,9 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { getUser } from '../Redux/actionsOrden'
-import Estilo from '../Estilos/forms.module.css'
-import { postAdmin } from '../Redux/actionsLog'
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { getUser } from '../Redux/actionsOrden';
+import Estilo from '../Estilos/forms.module.css';
+import { postAdmin } from '../Redux/actionsLog';
 
 export default function Usuarios() {
   const [productsGuardados, setProductsGuardados] = useState([])

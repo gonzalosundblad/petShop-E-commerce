@@ -1,8 +1,6 @@
-import { Link, Redirect } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Style from '../Estilos/Product.module.css';
 import { getProductById } from '../Redux/actions.js'
-import img from '../imagenes/comida.jpg'
 import Carrito from '../Containers/carrito';
 import { postCarrito } from '../Redux/actionsCarrito';
 import Changuito from '../imagenes/carrito+.png'

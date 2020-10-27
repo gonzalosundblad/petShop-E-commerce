@@ -12,12 +12,20 @@ import conejo from '../imagenes/conejoPrincipal.png';
 
 export function Fondo (){
     return ( 
-        <div>
+        <div style={{marginTop: "-10px"}}>
             <div className={estilo.fondo} >
                 <img src={fondo} width='100%' height="600px"></img>
             </div>
             <div className={estilo.perrito}>
-                <img  className={estilo.imgPerrito} src={perrito}></img>
+                
+                <img  className={estilo.imgPerrito} src={perrito}/>
+                
+                <div className={estilo.divCatalogo}>
+                    <h1>Los mejores productos para tu mascota!</h1>
+                    <h3>¡Hecha un vistazo!</h3>
+                    <a href="/products"><button type="button" class="btn btn-danger btn-lg">CATALOGO</button></a>
+                </div>
+               
             </div>
             <div className={estilo.icono}>
                 <div className={estilo.categoria}>
@@ -68,17 +76,17 @@ export function PieDePagina(){
             <div className={estilo.pieDePagina} >
                 <div className={estilo.grilla}>
                     <div >
-                        <h6>Sobre nosotros</h6>
+                        <h6 class="text-secondary">Sobre nosotros</h6>
                     </div>
                     <div >
-                    <h6>Contacto</h6>
+                    <h6 class="text-secondary">Contacto</h6>
                     </div>
                     <div >
-                    <h6>Redes Sociales</h6>
+                    <h6 class="text-secondary">Redes Sociales</h6>
                     </div>
                 </div>
             </div>
-            <div style={{backgroundColor: "orange"}} height="50px" width="100%">.</div>
+            <div style={{backgroundColor: "orange", opacity: "70%"}} height="50px" width="100%">.</div>
          </div>
     )
 }

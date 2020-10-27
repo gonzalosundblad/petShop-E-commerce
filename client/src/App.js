@@ -27,6 +27,8 @@ import { Animales } from './Containers/fondo';
 import { PieDePagina } from './Containers/fondo';
 import Reset from './Components/Reset';
 import OrdenCompra from './Containers/ordenCompra';
+import Carrusel from './Components/Carousel'
+
 
 function App() {
   const [resultados, setResultados] = useState([]);
@@ -50,7 +52,6 @@ function App() {
           <Route exact path="/" component={MostrarCategorias} />
           <Route exact path="/" component={Animales} />
           <Route exact path="/" component={PieDePagina} />
-          <Route exact path="/" render={() => <ControlledCarousel />} />
 
           <Route exact path="/login" render={() => <User />} />
           <Route exact path="/register" render={() => <AgregarUsuario />} />
@@ -73,7 +74,7 @@ function App() {
           <Route exact path="/user/:id/ordenes" render={({ match }) => <OrdenCompra id={match.params.id} />} />
         </div>
       </BrowserRouter>
-    </div>
+    </div >
   );
 }
 
