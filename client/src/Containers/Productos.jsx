@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import { putId, getProductsRequest, deleteProduct, getCategories, getProductos } from '../Redux/actions.js'
-import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
 import Estilo from '../Estilos/ModificarProd.module.css'
-import Estilos from '../Estilos/AgregarProd.module.css'
-import firebase, { storage } from 'firebase';
 import { connect } from 'react-redux'
+import store from '../Redux/store'
 
 
-export function ModificayBorra({ products }) {    //modifica y borra producto
+export function ModificayBorra({ products, getProductsRequest }) {    //modifica y borra producto
   const [state, setState] = useState({
     id: "",
     name: "",
@@ -19,11 +16,10 @@ export function ModificayBorra({ products }) {    //modifica y borra producto
   const [prodGuardados, setProdGuardados] = useState([])
 
   useEffect(() => {
-    getProductos().payload
-      .then(resp => {
-        setProdGuardados(resp.data)
-      })
+    getProductsRequest()
+    console.log(products)
   }, []);
+
 
   function handleChange(e) {
     setState({
@@ -50,7 +46,6 @@ export function ModificayBorra({ products }) {    //modifica y borra producto
       .then(resp => {
         console.log(resp.data)
       })
-    reload()
   }
 
   function borrarInput() {
@@ -68,6 +63,7 @@ export function ModificayBorra({ products }) {    //modifica y borra producto
       reload()
     })
   }
+
 
   return (
     <div>
@@ -170,27 +166,15 @@ export function ModificayBorra({ products }) {    //modifica y borra producto
   );
 }
 
-var firebaseConfig = {                                        //agrega productos
-  apiKey: "AIzaSyBE3Y03cTrnOwM9DkcGpUklWYkjESBaH3A",
-  authDomain: "petshopfiles.firebaseapp.com",
-  databaseURL: "https://petshopfiles.firebaseio.com",
-  projectId: "petshopfiles",
-  storageBucket: "petshopfiles.appspot.com",
-  messagingSenderId: "332756429714",
-  appId: "1:332756429714:web:fbfb632f36b580b7682f4b",
-  measurementId: "G-Q2NHZVYZ1F"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
 const mapStateToProps = state => {
   return {
-    products: state.reducer.products
+    products: state.reducer
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    getProductsRequest: () => dispatch(getProductsRequest())
+    getProductsRequest: () => dispatch(getProductsRequest()),
   }
 }
 

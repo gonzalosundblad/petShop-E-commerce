@@ -26,10 +26,7 @@ export function getProductsRequest() {//Va a Catalogo2.jsx
 //   }
 // }
 //------
-export function getProductos() { //obtener todos los productos
-  const request = axios.get('http://localhost:3001/products')
-  return { type: GET_PRODUCTS, payload: request };
-}
+
 
 
 export function getCategories() { //obtener todas las categorias
