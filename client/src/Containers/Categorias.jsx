@@ -6,6 +6,7 @@ import { deleteCategory } from '../Redux/actions';
 import { postCategory } from '../Redux/actions';
 import { putCategoryId } from '../Redux/actions.js';
 import estilo from '../Estilos/forms.module.css';
+import { connect } from 'react-redux'
 
 export function MostrarCategorias() {                  //Muestra las categorias en el home
   const [categorias, setCategoria] = useState([]);
@@ -16,23 +17,24 @@ export function MostrarCategorias() {                  //Muestra las categorias 
   }, []);
 
   return (
-      <div class='bg-success'>      
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <button type="button" class="btn btn-success"><h6 class='text-white'>Todas las Categorias</h6></button>
-          <div class="btn-group" role="group">
-            <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-              <div class="dropdown-menu" aria-labelledby="btnGroupDrop2" >
-                {
-                 categorias.map(n => {
-                  if (n.name !== 'Sin Categoria'){
+    <div class='bg-success'>
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button type="button" class="btn btn-success"><h6 class='text-white'>Todas las Categorias</h6></button>
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop2" >
+            {
+              categorias.map(n => {
+                if (n.name !== 'Sin Categoria') {
                   return (
-                  <a class="dropdown-item" height='30px' href={`/products/category/${n.name}`}>{n.name}</a>)
-                }})
+                    <a class="dropdown-item" height='30px' href={`/products/category/${n.name}`}>{n.name}</a>)
                 }
-              </div>
+              })
+            }
           </div>
-        </div>     
-      </div>  
+        </div>
+      </div>
+    </div>
   )
 };
 
@@ -196,10 +198,10 @@ export function ModificaCategoria() {                   //modifica categoria y b
       <hr />
 
       <div>
-        <h2>Ingrese los datos que desea modificar o eliminar</h2>
+        <h2>Ingrese los datos que desea modificar o liminar</h2>
       </div>
       <div>
-        <form>
+        <form >
           <div className={estilo.labelInputModificar}>
             <div className={estilo.id}>
               <label>Id:</label>
@@ -221,7 +223,7 @@ export function ModificaCategoria() {                   //modifica categoria y b
         </form>
       </div>
       <div className={estilo.botones}>
-        <button className={estilo.botonModificar} type="submit" value="Actualizar" onClick={handleSubmit} > Modificar </button>
+        <button className={estilo.botonModificar} onClick={handleSubmit} > Modificar </button>
         <button className={estilo.botonBorrar} onClick={delet} >Eliminar</button>
       </div>
     </div>
@@ -230,28 +232,36 @@ export function ModificaCategoria() {                   //modifica categoria y b
 }
 
 
-export function ListaCategorias(){                     //lista de categorias en el catalogo
+export function ListaCategorias() {                     //lista de categorias en el catalogo
   const [categorias, setCategoria] = useState([]);
 
   useEffect(() => {
     getCategories().payload
-    .then(resp => setCategoria(resp.data))
+      .then(resp => setCategoria(resp.data))
   }, []);
 
   return (
-    <div style={{position: "absolute"}}>
+    <div style={{ position: "absolute" }}>
       <div className={estilo.listaCategorias}>
-        <div class="list-group" style={{width: "150px"}}>
+        <div class="list-group" style={{ width: "150px" }}>
           <a href="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</a>
-            {
-              categorias.map(n => {
-                if (n.name !== 'Sin Categoria'){
+          {
+            categorias.map(n => {
+              if (n.name !== 'Sin Categoria') {
                 return (
                   <a href={`/products/category/${n.name}`} class="list-group-item list-group-item-action">{n.name}</a>
                 )
-            }})}
+              }
+            })}
         </div>
       </div>
     </div>
   )
+}
+export function mapStateToProps(state) {
+  console.log(state.auth);
+  const { user } = state.auth.user;
+  return {
+    user,
+  };
 }

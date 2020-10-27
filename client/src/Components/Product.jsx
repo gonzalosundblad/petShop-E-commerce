@@ -7,9 +7,10 @@ import Carrito from '../Containers/carrito';
 import { postCarrito } from '../Redux/actionsCarrito';
 import Changuito from '../imagenes/carrito+.png'
 import Reviews from './reviews.jsx'
-import { loadState, saveState } from '../Redux/reducer/localStorage';
+import { connect } from 'react-redux';
 
-export default function Product({ id2, idUser }) {
+
+function Product({ user, id2 }) {
   //  {id, name, description, price, stock, imagen }
   const [name, setName] = useState();
   const [description, setDescription] = useState();
@@ -18,8 +19,6 @@ export default function Product({ id2, idUser }) {
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();
   const [quantity, setQuantity] = useState();
-
-  const [array, setArray] = useState(loadState())
 
   useEffect(() => {
     getProductById(id2).payload
@@ -37,12 +36,9 @@ export default function Product({ id2, idUser }) {
   function handleChange(e) {
     setQuantity(e.target.value);
   }
-
-
   function subirCarrito() {
-
-    if (idUser) {
-      postCarrito(idUser, {
+    if (user.isLoggedIn) {
+      postCarrito(user.user.user.user_id, {
         product_id: id2,
         quantity: quantity,
         price: price
@@ -51,20 +47,19 @@ export default function Product({ id2, idUser }) {
           console.log(resp.data)
           window.location.replace("http://localhost:3000/carrito")
         })
-    } else {
-      // localStorage.clear()
-      setArray([...array, {
+    }
+    if (user.isLoggedIn === false) {
+      postCarrito(2, {
         product_id: id2,
         quantity: quantity,
         price: price
-      }])
-      saveState(array)
+      }).payload
+        .then(function (resp) {
+          console.log(resp.data)
+          window.location.replace("http://localhost:3000/carrito")
+        })
     }
   }
-
-
-
-
 
   if (stock <= 0) {
     return (
@@ -125,3 +120,12 @@ export default function Product({ id2, idUser }) {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  }
+}
+export default connect(
+  mapStateToProps,
+)(Product)

@@ -1,10 +1,34 @@
 import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH, POST_USER, GET_USERS, PUT_USER, DELETE_USER, POST_PASSWORD } from './constants';
 import axios from 'axios';
 
-
-export function getProductsRequest() {//
-  const request = axios.get(`http://localhost:3001/products`)
-  return { type: GET_PRODUCTS, payload: request }
+export function getProducts(allProducts) {//va a REDUCER
+  console.log('allProducts');
+  return {
+    type: GET_PRODUCTS,
+    payload: allProducts
+  }
+}
+export function getProductsRequest() {//Va a Catalogo2.jsx
+  console.log('getProductsRequest');
+  return (dispatch) => {
+    axios.get(`http://localhost:3001/products`)
+      .then(response => { dispatch(getProducts(response.data)) })
+      .catch(err => { console.log(err) })
+  }
+}
+// export function fetchPost(valor) {  // va a POST.jsx
+//   return function (dispatch) {
+//     dispatch(getPost());
+//     axios.get(`https://jsonplaceholder.typicode.com/todos/${valor}`)
+//       .then(r => r.data)
+//       .then(d => dispatch(receivePost(d)))
+//       .catch(e => console.log(e));
+//   }
+// }
+//------
+export function getProductos() { //obtener todos los productos
+  const request = axios.get('http://localhost:3001/products')
+  return { type: GET_PRODUCTS, payload: request };
 }
 
 

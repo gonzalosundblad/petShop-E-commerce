@@ -1,27 +1,36 @@
 import axios from 'axios';
-import { ME, LOGIN_SUCCESS, LOGOUT, HACER_ADMIN } from './constantsLogin'
+import { GET_ME, POST_LOGIN, POST_LOGOUT, HACER_ADMIN } from './constantesLog'
+import { LOGIN_SUCCESS } from './constantsLogin';
 var _axios = axios.create({
   withCredentials: true
 })
 
-export function postLogin(user) {//va a REDUCER
-  console.log(user)
+// export function postLog(usuario) {      //Login
+//   const request = _axios.post('http://localhost:3001/auth/login', usuario)
+//   return { type: POST_LOGIN, payload: request };
+// }
+
+export function postLog(user) {//va a REDUCER
   return {
     type: LOGIN_SUCCESS,
     payload: user
   }
 }
-export function postLog(email, password) {//Crear ruta para crear/agregar Review
+export function postLogin(usuario) {//Crear ruta para crear/agregar Review
   return (dispatch) => {
-    _axios.post('http://localhost:3001/auth/login', { email, password })
-      .then(response => { dispatch(postLogin(response.data)) })
+    _axios.post('http://localhost:3001/auth/login', usuario)
+      .then(response => {
+        dispatch(postLog(response.data));
+        localStorage.setItem("user", JSON.stringify(response.data));
+      })
       .catch(error => { console.log(error) })
   }
 }
 
-export function postLogo() {      //
+export function postLogout() {      //
   const request = _axios.post('http://localhost:3001/auth/logout')
-  return { type: LOGOUT, payload: request };
+  localStorage.removeItem("user");
+  return { type: POST_LOGOUT, payload: request };
 }
 
 export function postAdmin(user_id) {
@@ -29,21 +38,8 @@ export function postAdmin(user_id) {
   return { type: HACER_ADMIN, payload: request }
 }
 
-// export function getMe() {      //
-//   const request = _axios.get('http://localhost:3001/auth/me')
-//   return { type: ME, payload: request };
-// }
 
-
-export function getMe() {//S57 : Crear Ruta para obtener todas las reviews de un producto.
-  return (dispatch) => {
-    _axios.get(`http://localhost:3001/auth/me`)
-      .then(response => {
-        dispatch({
-          type: ME,
-          payload: response.data
-        })
-      })
-      .catch(err => { console.log(err) })
-  }
+export function getMe() {      //
+  const request = _axios.get('http://localhost:3001/auth/me')
+  return { type: GET_ME, payload: request };
 }

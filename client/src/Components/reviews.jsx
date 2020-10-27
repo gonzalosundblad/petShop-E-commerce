@@ -153,12 +153,6 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
                 <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
                   Enviar comentario
               </button>
-                <button name="modificar" onClick={onPut} className={Style.bottton} type="submit">
-                  Modificar comentario
-              </button>
-                <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit">
-                  Eliminar comentario
-              </button>
                 {/* <button name="enviar" onClick={() => postReviewRequest(id, state)} className={Style.botton} type="submit">
                 Enviar comentario
               </button>

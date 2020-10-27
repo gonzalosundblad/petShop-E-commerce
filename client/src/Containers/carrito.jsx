@@ -1,32 +1,41 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
+import { connect } from 'react-redux';
 
-export default function Carrito({ idUser }) {
+
+function Carrito(user) {
   const [products, setProducts] = useState([])
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
 
-  var product_id = 2
-
-  if (!idUser) {
-    idUser = 1
-  }
-
-  console.log()
 
   useEffect(() => {
-    getCarrito(idUser).payload
-      .then(res => {
-        if (!res.data[0]) {
-          console.log("agregar")
-        }
-        else {
-          setProducts(res.data[0].products)
-        }
-      })
+    if (user.user.isLoggedIn) {
+      getCarrito(user.user.user.user.user_id).payload
+        .then(res => {
+          if (!res.data[0]) {
+            console.log("agregar")
+          }
+          else {
+            setProducts(res.data[0].products)
+          }
+        })
+    }
+    if (user.user.isLoggedIn === false) {
+      getCarrito(2).payload
+        .then(res => {
+          if (!res.data[0]) {
+            console.log("agregar")
+          }
+          else {
+            setProducts(res.data[0].products)
+          }
+        })
+    }
   }, [])
 
 
@@ -35,9 +44,16 @@ export default function Carrito({ idUser }) {
   }
 
   function vaciar() {
-    deleteCarrito(idUser).then(resp => {
-      reload()
-    })
+    if (user.user.isLoggedIn) {
+      deleteCarrito(user.user.user.user.user_id).then(resp => {
+        reload()
+      })
+    }
+    if (user.user.isLoggedIn === false) {
+      deleteCarrito(2).then(resp => {
+        reload()
+      })
+    }
   }
   function onDelete() {
     // console.log(e)
@@ -46,10 +62,10 @@ export default function Carrito({ idUser }) {
     // // setBorrado(products.splice(index, 1))
     // var borrado = products.splice(index, 1)
 
-
+    var product_id = 2
 
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    deleteCarritoUno(idUser, product_id)
+    deleteCarritoUno(2, product_id)
       .then(resp => {
         console.log(resp)
       })
@@ -57,6 +73,8 @@ export default function Carrito({ idUser }) {
 
 
   const order_id = products.map(id => id.LineaDeOrden.order_id)
+
+  console.log(order_id);
 
 
   if (!products || products.length === 0) {
@@ -75,7 +93,6 @@ export default function Carrito({ idUser }) {
           <h2 >Tus productos</h2>
         </div>
         {products && products.map(e => {
-          console.log(products)
           return (
             <div>
               <ProductoCarrito
@@ -104,3 +121,11 @@ export default function Carrito({ idUser }) {
     )
   }
 }
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  }
+}
+export default connect(
+  mapStateToProps,
+)(Carrito)

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { putId, getProductsRequest, deleteProduct, getCategories, getProducts } from '../Redux/actions.js'
+import { putId, getProductsRequest, deleteProduct, getCategories, getProductos } from '../Redux/actions.js'
 import { Form, Col, Row, Button, Carousel } from 'react-bootstrap';
 import Estilo from '../Estilos/ModificarProd.module.css'
 import Estilos from '../Estilos/AgregarProd.module.css'
@@ -8,7 +8,7 @@ import firebase, { storage } from 'firebase';
 import { connect } from 'react-redux'
 
 
-export function ModificayBorra() {    //modifica y borra producto
+export function ModificayBorra({ products }) {    //modifica y borra producto
   const [state, setState] = useState({
     id: "",
     name: "",
@@ -19,13 +19,11 @@ export function ModificayBorra() {    //modifica y borra producto
   const [prodGuardados, setProdGuardados] = useState([])
 
   useEffect(() => {
-    getProductsRequest().payload
+    getProductos().payload
       .then(resp => {
         setProdGuardados(resp.data)
       })
   }, []);
-
-
 
   function handleChange(e) {
     setState({
@@ -34,33 +32,25 @@ export function ModificayBorra() {    //modifica y borra producto
     });
   }
 
-  console.log(state)
-
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-  }
 
   function reload() {
     window.location.reload()
   }
 
-  function modificar(e) {
+  function modificar() {
     const id = state.id
-    console.log(id)
-    var cambio = {
+
+    putId(id, {
       description: state.description,
+      id: state.id,
       name: state.name,
       price: state.price,
       stock: state.stock
-    }
-    console.log(cambio)
-    putId(id, cambio)
+    })
       .then(resp => {
-        console.log(resp)
-        reload()
+        console.log(resp.data)
       })
+    reload()
   }
 
   function borrarInput() {
@@ -128,7 +118,7 @@ export function ModificayBorra() {    //modifica y borra producto
         <div>
           <h3>Ingrese los datos que desea modificar/eliminar</h3>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className={Estilo.labelInputModificar}>
             <label>Id:</label>
             <input
@@ -172,7 +162,7 @@ export function ModificayBorra() {    //modifica y borra producto
           </div>
         </form>
         <div className={Estilo.botones} >
-          <button onClick={modificar} type="submit" value="Actualizar" className={Estilo.botonModificar}> Modificar</button>
+          <button onClick={modificar} className={Estilo.botonModificar}> Modificar</button>
           <button onClick={delet} className={Estilo.botonBorrar} >Eliminar</button>
         </div>
       </div>

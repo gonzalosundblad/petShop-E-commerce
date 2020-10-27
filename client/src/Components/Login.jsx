@@ -10,30 +10,32 @@ import email from '../imagenes/email.png';
 import google from '../imagenes/google.png';
 import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
+import { loginRequest } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
-import { postLog, postLogin } from '../Redux/actionsLog'
 
-function Login({ dispatch, user, isLoggedIn, postLog }) {
+function Login({ user, isLoggedIn, loginRequest }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
   })
   const [errors, setErrors] = useState({});
+  var x = false;
 
-  console.log(user)
 
 
   function validate(input) {
     let errors = {};
     if (!input.email) {
-      errors.email = 'Email requerido';
+      errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-      errors.email = 'Email invalido';
+      errors.email = 'Email is invalid';
     }
     if (!input.password) {
-      errors.password = 'Contraseña Requerida';
+      errors.password = 'Password is required';
+    } else if (input.password.length < 4) {
+      errors.password = 'Password is invalid';
     }
     return errors;
   };
@@ -50,12 +52,11 @@ function Login({ dispatch, user, isLoggedIn, postLog }) {
   function handleLogin(e) {
     e.preventDefault();
   }
-
-
-
   function loginUser() {
-    postLog(input.email, input.password)
-
+    loginRequest(input)
+    if (isLoggedIn) {
+      window.location.href = '/perfil'
+    }
   }
 
   return (
@@ -75,8 +76,8 @@ function Login({ dispatch, user, isLoggedIn, postLog }) {
         <div className={estilo.divCuadro}>
           <div className={estilo.divIzquierda}>
             <h2>Iniciar Sesion</h2>
-            <Form.Row className={estilo.formRow}>
-              <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridEmail">
+            <Form.Row className={estilo.formRow} onSubmit={handleLogin}>
+              <Form.Group className={estilo.inputYlabel} as={Col} controlId="formGridEmail" >
                 <img src={email} className={estilo.icono} />
                 <Form.Control className={estilo.input} value={input.email} type="email" onChange={handleInputChange} placeholder="Introduzca el email" name="email" />
               </Form.Group>
@@ -95,7 +96,7 @@ function Login({ dispatch, user, isLoggedIn, postLog }) {
               </a>
             </div>
             <a href='/reset'>
-              <span >Olvidé mi contraseña</span>
+              <span  >Olvidé mi Contraseña</span>
             </a>
           </div>
           <div>
@@ -119,7 +120,7 @@ function Login({ dispatch, user, isLoggedIn, postLog }) {
 }
 
 const mapStateToProps = state => {
-  console.log(state.auth)
+  //   console.log(state.auth.user.user.user_id);
   return {
 
   }
@@ -127,7 +128,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ postLog }, dispatch)
+    ...bindActionCreators({ loginRequest }, dispatch)
   }
 }
 
