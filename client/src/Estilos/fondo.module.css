@@ -21,7 +21,8 @@
 .perrito{
     z-index: 1;
     display: flex;
-    margin-left: 5%;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .imgPerrito{
