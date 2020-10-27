@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {Link } from "react-router-dom";
 import StyleSearchComp from '../Estilos/SearchBar.module.css';
-  
+// import lupa from './'
 
 export default function Search ({funcion}){
     const[producto, setProduct]= useState([]);
@@ -15,7 +15,7 @@ export default function Search ({funcion}){
                     value={producto} 
                     onChange={e => setProduct(e.target.value)}>
                 </input>
-                {/* <a href='/products/search'> */}
+                {/* <a class="nav-link" href='/search'> */}
                     <input className={StyleSearchComp.boton} type="submit" value="." />
                {/* </a> */}
             </div>

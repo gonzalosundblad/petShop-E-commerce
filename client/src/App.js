@@ -37,7 +37,6 @@ function App() {
     search(producto).payload
       .then(resp => {
         setResultados(resp.data)
-        window.location.replace("http://localhost:3000/search")
       })
   }
 
@@ -51,6 +50,7 @@ function App() {
           <Route exact path="/" render={() => <Fondo />} />
           <Route exact path="/" component={MostrarCategorias} />
           <Route exact path="/" component={Animales} />
+          <Route exact path="/" component={Carrusel} />
           <Route exact path="/" component={PieDePagina} />
 
           <Route exact path="/login" render={() => <User />} />
