@@ -1,6 +1,6 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
-const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
+const { isAdmin } = require("../passport");
 
 //==========================================PRODUCTOS===========================================
 
@@ -50,7 +50,7 @@ server.get('/:id', (req, res) => {											//TRAE EL PRODUCTO DEL CORRESPONDIE
 })
 
 server.post('/', isAdmin,(req, res) => {									//AGREGA NUEVOS PRODUCTOS
-	const {name, description, price, stock, categoryId, image} = req.body;
+	const { name, description, price, stock, categoryId, image } = req.body;
 	console.log(req.body)
 	if( !name || !description ){
 		return res.status(400).send("Nombre y descripcion son requeridos")
@@ -110,35 +110,30 @@ server.post('/', isAdmin,(req, res) => {									//AGREGA NUEVOS PRODUCTOS
 	})
 
 server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
-    const {name, description, price, stock } = req.body;
-	
-	Product.findByPk(req.params.id)
-	.then(product => {
-		console.log(product)
-		product.update({
-			name,
-			description,
-			price,
-			stock
-    	},{
-			returning: true,
-			where: {
-				id: req.params.id
-			}
-    	})
-	})
-	.then(function(product) {
-		console.log(product[1]);
-		if(product[0] == 0) {
-			res.status(400).send('Error, campos requeridos')
-				return product[0]
-			}
-			res.status(200).json(product)
-    })
-	.catch(err => {
-		res.status(400)
-        console.log('Error: ', err)
-    })
+    const { name, description, price, stock, image } = req.body;
+	const productId = req.params.id;
+
+	Product.findByPk(productId)
+		.then(product => {
+			console.log(product)
+			return product.update({
+				name,
+				description,
+				price,
+				stock,
+				image
+			},{
+				returning: true,
+				where: {
+					id: productId
+				}
+			})
+		}).then(function(product) {
+			res.status(200).send(product)
+		}).catch(err => {
+			res.status(400)
+			console.log('Error: ', err)
+		})
 });
 
 server.delete('/:id', isAdmin, (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID

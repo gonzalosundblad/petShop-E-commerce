@@ -67,7 +67,7 @@ server.get('/', isAdmin, (req, res) => {                                //S36 : 
 server.delete('/:id', isAuthenticated, (req, res) => {                  //S37 : Crear Ruta para eliminar Usuario
   var userId = req.params.id;
   if (!userId) {
-    res.status(404).send('Debes ingresar un ID')
+    res.status(404).send('No existe este usuario')
   } else {
     User.findByPk(userId)
       .then(value => {
@@ -121,12 +121,11 @@ server.post('/:idUser/cart', (req, res) => {                            //S38 : 
       quantity,
       price
     });
-  }).then((l) => {
-    console.log(l);
-    res.status(200).send(l)
+  }).then((data) => {
+    res.status(200).send(data);
   }).catch(err => {
-    res.status(400)
-    console.log('Error: ', err)
+    console.log('Error: ', err);
+    res.status(400);
   })
 
 });
