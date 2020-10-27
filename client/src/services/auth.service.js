@@ -3,17 +3,13 @@ import axios from "axios";
 const API_URL = "http://localhost:3001/auth/login";
 
 class AuthService {
-  login(email, password) {
-    return axios
-      .post(API_URL, { email, password })
-      .then((response) => {
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-
-        return response.data;
-      });
-  }
+  // login(email, password) {
+  //   return axios
+  //     .post(API_URL, { email, password })
+  //     .then((response) => {
+  //       localStorage.setItem("user", JSON.stringify(response.data));
+  //     });
+  // }
 
   logout() {
     localStorage.removeItem("user");

@@ -44,7 +44,7 @@ export function putOrder(id, estado) {
   })
 }
 
-export function deleteOrder(id) {      //borrar un  usuario
+export function deleteOrder(id) {      //
   return axios.delete(`http://localhost:3001/users/${id}`).then((resp) => {
     return { type: DELETE_USER, payload: resp }
   })

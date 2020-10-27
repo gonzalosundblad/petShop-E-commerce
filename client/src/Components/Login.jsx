@@ -14,6 +14,7 @@ import { loginRequest } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
+import { postLogin } from '../Redux/actionsLog'
 
 function Login({ user, isLoggedIn, loginRequest }) {
   const [input, setInput] = useState({
@@ -53,7 +54,7 @@ function Login({ user, isLoggedIn, loginRequest }) {
     e.preventDefault();
   }
   function loginUser() {
-    loginRequest(input.email, input.password)
+    loginRequest(input)
     if (isLoggedIn) {
       window.location.href = '/perfil'
     }

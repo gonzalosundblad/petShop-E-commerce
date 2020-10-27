@@ -4,9 +4,12 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  HACER_ADMIN,
+  ME
 } from "../constantsLogin.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
+console.log(user)
 
 const initialState = user
   ? { isLoggedIn: true, user }
@@ -45,6 +48,12 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
         user: null,
       };
+    case ME:
+      return {
+        ...state,
+        user: payload.user
+      }
+
     default:
       return state;
   }

@@ -33,7 +33,6 @@ export function ModificayBorra({ products }) {    //modifica y borra producto
   }
 
 
-
   function reload() {
     window.location.reload()
   }

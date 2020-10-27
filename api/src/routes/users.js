@@ -1,28 +1,33 @@
 const server = require('express').Router();
 const { Product, User, Order, LineaDeOrden } = require('../db.js');
 const bcrypt = require('bcrypt');
+const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
+//============================USUARIOS==============================
 
-//============================USUARIOS=============================
+server.post('/', (req, res) => {                                        //S34 : Crear Ruta para creación de Usuario (CON HASHEO ASYNC)
 
-server.post('/', (req, res) => {//S34 : Crear Ruta para creación de Usuario
-  const { name, email, password } = req.body;
+  const { name, email, password, last_name } = req.body;
   if (!name || !email || !password) {
     return res.status(400).send("Campos requeridos")
   }
-
-  User.create({
-    name,
-    email,
-    password
-  }).then(user => {
-    res.status(200).json(user)
+  bcrypt.hash(req.body.password, 10).then(hashedPassword => {
+    User.create({
+      name,
+      last_name,
+      email,
+      role: 'user',
+      password: hashedPassword
+    }).then(user => {
+      res.status(200).json(user)
+    })
   }).catch(err => {
     console.log('Error: ', err)
   })
+
 });
 
-server.put('/:id', (req, res) => {  //S35 : Crear Ruta para modificar Usuario segun id
+server.put('/:id', isAuthenticated, (req, res) => {                     //S35 : Crear Ruta para modificar Usuario segun id
   const { id } = req.params;
   const { name, email, password, newPassword, last_name } = req.body;
   console.log(req.body)
@@ -49,7 +54,7 @@ server.put('/:id', (req, res) => {  //S35 : Crear Ruta para modificar Usuario se
   })
 });
 
-server.get('/', (req, res) => {//S36 : Crear Ruta que retorne todos los Usuarios
+server.get('/', isAdmin, (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
   User.findAll()
     .then(users => {
       res.json(users);
@@ -59,7 +64,7 @@ server.get('/', (req, res) => {//S36 : Crear Ruta que retorne todos los Usuarios
     });
 });
 
-server.delete('/:id', (req, res) => { //S37 : Crear Ruta para eliminar Usuario
+server.delete('/:id', isAuthenticated, (req, res) => {                  //S37 : Crear Ruta para eliminar Usuario
   var userId = req.params.id;
   if (!userId) {
     res.status(404).send('Debes ingresar un ID')
@@ -75,23 +80,26 @@ server.delete('/:id', (req, res) => { //S37 : Crear Ruta para eliminar Usuario
   }
 })
 
-//===========================Contraseña Nueva ====================
+//===========================PASSWORD RESET=========================
+
 server.put('/:id/passwordReset', async (req, res) => {
   const { id } = req.params;
   const { password } = req.body;
-  User.update({
-    password: password
-  }, {
-    returning: true,
-    where: {
-      user_id: id
-    }
-  }).then((user) => {
-    res.json(user)
-  })
-    .then(user => {
-      return res.status(201).json(user)
+  bcrypt.hash(password, 10).then(hashedPassword => {
+    return User.update({
+      password: hashedPassword
+    }, {
+      returning: true,
+      where: {
+        user_id: id
+      }
     })
+  }).then((user) => {
+    res.send(user[1])
+  }).catch(err => {
+    console.log(err)
+    res.send(err)
+  })
 })
 
 //============================CARRITO===============================
@@ -99,13 +107,13 @@ server.put('/:id/passwordReset', async (req, res) => {
 server.post('/:idUser/cart', (req, res) => {                            //S38 : Crear Ruta para agregar Item al Carrito
   const { idUser } = req.params;
   const { product_id, quantity, price } = req.body;
+
   Order.findOrCreate({
     where: {
       userId: idUser,
       orderState: 'carrito'
     }
   }).then(ord => {
-    // console.log(ord[0])
     const order_id = ord[0].id;
     return LineaDeOrden.create({
       product_id,
@@ -120,6 +128,7 @@ server.post('/:idUser/cart', (req, res) => {                            //S38 : 
     res.status(400)
     console.log('Error: ', err)
   })
+
 });
 
 server.get('/:idUser/cart', (req, res) => {                             //S39 : Crear Ruta que retorne todos los items del Carrito
@@ -141,7 +150,7 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
   })
 });
 
-server.get('/:idUser/cart/orders', (req, res) => {                      //SCREADA : Crear Ruta que retorne todos los items de la orden creada
+server.get('/:idUser/cart/orders', isAuthenticated, (req, res) => {     //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
   const { idUser } = req.params;
   Order.findAll({
     where: {
@@ -181,7 +190,7 @@ server.delete('/:idUser/cart', (req, res) => {                          //S40 : 
   })
 });
 
-server.put('/:idUser/cart', function (req, res) {                         //S41 : Crear Ruta para editar las cantidades del carrito
+server.put('/:idUser/cart', function (req, res) {                       //S41 : Crear Ruta para editar las cantidades del carrito
   const idUser = req.params.idUser;
   const { product_id, quantity } = req.body;
   Order.findOne({
@@ -230,7 +239,7 @@ server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMIN
 
 //===========================Ordenes================================
 
-server.get('/:id/orders', (req, res) => {                               //S45: Crear Ruta que retorne todas las Ordenes de los usuarios
+server.get('/:id/orders', isAuthenticated, (req, res) => {               //S45: Crear Ruta que retorne todas las Ordenes de un usuarios
   Order.findAll({
     where: {
       userId: req.params.id

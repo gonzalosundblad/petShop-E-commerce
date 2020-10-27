@@ -1,18 +1,18 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
-import { getProductById } from '../Redux/actions';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
-import { postCarrito } from '../Redux/actionsCarrito';
+
 
 function Carrito(user) {
   const [products, setProducts] = useState([])
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
-  // console.log(user.user.isLoggedIn);
-  // console.log(user.user.user.user.user_id);
+
+
   useEffect(() => {
     if (user.user.isLoggedIn) {
       getCarrito(user.user.user.user.user_id).payload
@@ -26,33 +26,15 @@ function Carrito(user) {
         })
     }
     if (user.user.isLoggedIn === false) {
-      let carrito = JSON.parse(localStorage.getItem("carrito"));
-      setProducts(carrito)
-      // getCarrito(2).payload
-      // .then(res => {
-      //   if(!res.data[0]){
-      //     console.log("agregar")
-      //   }
-      //   else{
-      //     setProducts(res.data[0].products)
-      //   }
-      // })
-    }
-    if (localStorage.getItem("carrito") !== null && user.user.isLoggedIn) {
-      let carrito = JSON.parse(localStorage.getItem("carrito"));
-      setProducts(carrito)
-      carrito.map((e) => {
-        postCarrito(user.user.user.user.user_id, {
-          product_id: e.product_id,
-          quantity: e.LineaDeOrden.quantity,
-          price: e.price
-        }).payload
-          .then(function (resp) {
-            console.log(resp.data)
-            window.location.replace("http://localhost:3000/carrito")
-          })
-      })
-
+      getCarrito(2).payload
+        .then(res => {
+          if (!res.data[0]) {
+            console.log("agregar")
+          }
+          else {
+            setProducts(res.data[0].products)
+          }
+        })
     }
   }, [])
 
@@ -69,11 +51,9 @@ function Carrito(user) {
     }
     if (user.user.isLoggedIn === false) {
       deleteCarrito(2).then(resp => {
-
         reload()
       })
     }
-    localStorage.removeItem("carrito");
   }
   function onDelete() {
     // console.log(e)
@@ -91,7 +71,11 @@ function Carrito(user) {
       })
   }
 
-  const order_id = products && products.map(id => id.LineaDeOrden.order_id)
+
+  const order_id = products.map(id => id.LineaDeOrden.order_id)
+
+  console.log(order_id);
+
 
   if (!products || products.length === 0) {
     return (
@@ -129,13 +113,9 @@ function Carrito(user) {
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
-          {user.user.isLoggedIn ?
-            <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
-              <span className={Estilo.botoncitos}  >Finalizar Compra</span>
-            </a> : <a className={Estilo.botonesFinales} href='/login' >
-              <span className={Estilo.botoncitos}  >Finalizar Compra</span>
-            </a>}
-
+          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+            <span className={Estilo.botoncitos}  >Finalizar Compra</span>
+          </a>
         </div>
       </div>
     )
@@ -148,5 +128,4 @@ const mapStateToProps = state => {
 }
 export default connect(
   mapStateToProps,
-
 )(Carrito)

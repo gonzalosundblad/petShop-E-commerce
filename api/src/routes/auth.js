@@ -2,25 +2,25 @@ const server = require('express').Router();
 const { User } = require('../db.js');
 require('dotenv').config()
 const passport = require('passport');
+const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
-server.post("/login", passport.authenticate("local"), (req, res) => {      // S63 : Crear ruta de Login
+server.post("/login", isNotAuthenticated, passport.authenticate("local"), (req, res) => {      // S63 : Crear ruta de Login
   console.log(req.user)
   res.send({ user: req.user, logged: true });
 }
 );
 
-server.post("/logout", (req, res) => {                                         // S64 : Crear ruta de logout
+server.post("/logout", isAuthenticated, (req, res) => {                                         // S64 : Crear ruta de logout
   req.logOut();
   res.send({ message: "Has cerrado sesión" });
 });
 
-server.get('/me', (req, res) => {                                              // S65 : Crear ruta /me
+server.get('/me', isAuthenticated, (req, res) => {                                              // S65 : Crear ruta /me
   res.json({ message: "Usted se ha logueado correctamente!", user: req.user });
 });
 
-server.post('/promote/:id', (req, res) => {                                             // S67 : Crear ruta /promote (Promote convierte al usuario con ID: id a Admin.)
+server.post('/promote/:id', isAdmin, (req, res) => {                                             // S67 : Crear ruta /promote (Promote convierte al usuario con ID: id a Admin.)
   var user_id = req.params.id;
-  console.log(user_id)
   User.update({
     role: "admin"
   }, {

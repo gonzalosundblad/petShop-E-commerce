@@ -33,18 +33,18 @@ var arrayDeUsuarios = [{
   name: "Eric",
   last_name: "Gomez",
   email: "eric@gmail.com",
-  password: '1234'
+  password: hash('1234')
 }, {
   name: "Gonza",
   last_name: "Sundblad",
   email: "gonza@gmail.com",
-  password: '1234',
+  password: hash('1234'),
   role: "admin"
 }, {
   name: "Gaby",
   last_name: "Marciano",
   email: "gaby@gmail.com",
-  password: '1234'
+  password: hash('1234')
 }];
 var arrayProductosPerros = [{
   name: "Eukanuba Small",

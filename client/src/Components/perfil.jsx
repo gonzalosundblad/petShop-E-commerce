@@ -48,6 +48,7 @@ function Perfil(user) {
       [e.target.name]: e.target.value,
     });
   }
+  //name, email, password, newPassword, last_name
 
   console.log(user.user.user.user_id)
 

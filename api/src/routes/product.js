@@ -1,5 +1,6 @@
 const server = require('express').Router();
 const { Product, Category } = require('../db.js');
+const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
 //==========================================PRODUCTOS===========================================
 
@@ -48,7 +49,7 @@ server.get('/:id', (req, res) => {											//TRAE EL PRODUCTO DEL CORRESPONDIE
   })
 })
 
-server.post('/', (req, res) => {									//AGREGA NUEVOS PRODUCTOS
+server.post('/', isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
   const { name, description, price, stock, categoryId, image } = req.body;
   console.log(req.body)
   if (!name || !description) {
@@ -108,7 +109,7 @@ server.post('/', (req, res) => {									//AGREGA NUEVOS PRODUCTOS
   }
 })
 
-server.put('/:id', (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
+server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
   const { name, description, price, stock } = req.body;
 
   Product.findByPk(req.params.id)
@@ -140,7 +141,7 @@ server.put('/:id', (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU 
     })
 });
 
-server.delete('/:id', (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID
+server.delete('/:id', isAdmin, (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID
   var productId = req.params.id;
   if (!productId) {
     res.status(404).send('Debes ingresar un ID')
@@ -175,7 +176,7 @@ server.get('/category/:nombreCat', (req, res) => {  						//TRAE TODOS LOS PRODU
   })
 })
 
-server.post('/:idProducto/category/:idCategoria', (req, res) => {	//AGREGA UNA CATEGORIA A UN PRODUCTO
+server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {	//AGREGA UNA CATEGORIA A UN PRODUCTO
   const { idProducto, idCategoria } = req.params;
   Product.findAll({
     include: { model: Category },
@@ -192,7 +193,7 @@ server.post('/:idProducto/category/:idCategoria', (req, res) => {	//AGREGA UNA C
   })
 })
 
-server.post('/category', (req, res) => {							//AGREGA NUEVAS CATEGORIAS
+server.post('/category', isAdmin, (req, res) => {							//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body;
   if (!name) {
     return res.status(400).send('Campos requeridos')
@@ -207,7 +208,7 @@ server.post('/category', (req, res) => {							//AGREGA NUEVAS CATEGORIAS
   })
 })
 
-server.delete('/:idProducto/category/:idCategoria', (req, res) => {//ELIMINA UNA CATEGORIA DE UN PRODUCTO
+server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {//ELIMINA UNA CATEGORIA DE UN PRODUCTO
   const { idProducto, idCategoria } = req.params;
   Product.findAll({
     include: { model: Category },
@@ -231,7 +232,7 @@ server.delete('/:idProducto/category/:idCategoria', (req, res) => {//ELIMINA UNA
   })
 })
 
-server.put('/category/:id', (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN ID
+server.put('/category/:id', isAdmin, (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN ID
   const { name, description } = req.body;
   Category.update({
     name,
@@ -247,7 +248,7 @@ server.put('/category/:id', (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN 
   })
 });
 
-server.delete('/category/:id', (req, res) => {						//ELIMINA UNA CATEGORIA
+server.delete('/category/:id', isAdmin, (req, res) => {						//ELIMINA UNA CATEGORIA
   var categoryId = req.params.id;
   if (!categoryId) {
     res.status(404).send('Debes ingresar un ID')

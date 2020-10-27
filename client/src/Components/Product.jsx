@@ -49,33 +49,16 @@ function Product({ user, id2 }) {
         })
     }
     if (user.isLoggedIn === false) {
-      //localStorage.clear()
-      var productofantasma = [{
+      postCarrito(2, {
         product_id: id2,
-        LineaDeOrden: { quantity: quantity },
-        price: price,
-        name: name,
-        description: description,
-        image: image
-      }]
-      //getProductById(id2).payload
-
-      const carrito = JSON.parse(localStorage.getItem("carrito"));
-      if (carrito === null) {
-        console.log('es nullllllllll');
-        localStorage.setItem("carrito", JSON.stringify(productofantasma));
-      }
-      if (carrito !== null) {
-        console.log('noooooo es nulllll');
-        localStorage.removeItem('carrito');
-        carrito.push(productofantasma[0])
-
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-      }
-      window.location.replace("http://localhost:3000/carrito")
-
+        quantity: quantity,
+        price: price
+      }).payload
+        .then(function (resp) {
+          console.log(resp.data)
+          window.location.replace("http://localhost:3000/carrito")
+        })
     }
-    window.location.replace("http://localhost:3000/carrito")
   }
 
   if (stock <= 0) {
