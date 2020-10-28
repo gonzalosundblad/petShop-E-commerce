@@ -28,6 +28,7 @@ import { PieDePagina } from './Containers/fondo';
 import Reset from './Components/Reset';
 import OrdenCompra from './Containers/ordenCompra';
 import Carrusel from './Components/Carousel'
+import ForgotPassword from './Components/ForgotPassword';
 
 
 function App() {
@@ -72,6 +73,8 @@ function App() {
           <Route exact path="/order/:id" render={({ match }) => <OrdenUsuario id={match.params.id} />} />
           <Route exact path="/reset" render={() => <Reset />} />
           <Route exact path="/user/:id/ordenes" render={({ match }) => <OrdenCompra id={match.params.id} />} />
+          <Route exact path="/forgot" render={() => <ForgotPassword />} />
+
         </div>
       </BrowserRouter>
     </div >
