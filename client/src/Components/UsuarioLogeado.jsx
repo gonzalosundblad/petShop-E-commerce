@@ -4,6 +4,7 @@ import userLogo from '../imagenes/userLogo.png'
 import { logout } from '../Redux/actionsLogin'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
 function UsuarioLogeado({ user, logout }) {
   //console.log(user);
@@ -24,14 +25,14 @@ function UsuarioLogeado({ user, logout }) {
           </svg>
           <ul>
             <li>
-              <a href='/perfil'>Detalles de cuenta</a>
+              <NavLink to='/perfil'>Detalles de cuenta</NavLink>
               {/* window.location=`user/${user.id}` */}
             </li>
             <li >
-              <a href={`/user/${id}/ordenes`}>Mis compras</a>
+              <NavLink to={`/user/${id}/ordenes`}>Mis compras</NavLink>
             </li>
             <li>
-              <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>
+              <NavLink to='/' onClick={cerrarSesion} >Cerrar Sesión</NavLink>
             </li>
 
           </ul>

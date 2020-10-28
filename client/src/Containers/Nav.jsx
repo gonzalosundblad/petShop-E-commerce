@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import '../Estilos/SearchBar.module.css';
 import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
@@ -48,9 +48,9 @@ function NavBar({ user, funcionCatag, onSearch }) {
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top row" style={{ backgroundColor: "orange", height: "100px" }}>
       <div className={StyleNav.nav}>
         <div className={StyleNav.divIzquierda}>
-          <Link to='/'>
+          <NavLink to='/'>
             <img src={HenryPet} className={StyleNav.imagen} />
-          </Link>
+          </NavLink>
           <ListaDesplegable />
         </div>
         <div className={StyleNav.divMedio}>
@@ -60,13 +60,13 @@ function NavBar({ user, funcionCatag, onSearch }) {
 
         </div>
         <div className={StyleNav.divDerecho}>
-          <a className={StyleNav.botonCarrito} href='/carrito' style={{ textDecoration: 'none' }}>
+          <NavLink className={StyleNav.botonCarrito} to='/carrito' style={{ textDecoration: 'none' }}>
             <img className={StyleNav.img} src={Changito} />
             <h5>${total}</h5>
-          </a>
+          </NavLink>
           <UsuarioLogeado />
           <div className={StyleNav.iniciarSesion}>
-            <a class="nav-link text-white" href='/login' >Iniciar Sesión</a>
+            <NavLink class="nav-link text-white" to='/login' >Iniciar Sesión</NavLink>
           </div>
         </div>
       </div>

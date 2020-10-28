@@ -37,6 +37,8 @@ server.get('/:id', isAuthenticated, (req, res) => {     //S46 : Crear Ruta que r
 
 server.put('/:id', isAuthenticated, (req, res) => {     //S47 : Crear Ruta para modificar una Orden
   const { orderState } = req.body
+  console.log(orderState);
+  console.log(req.params.id);
   Order.update({
     orderState
   }, {

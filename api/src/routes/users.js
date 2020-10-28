@@ -54,7 +54,7 @@ server.put('/:id', isAuthenticated, (req, res) => {                     //S35 : 
   })
 });
 
-server.get('/', isAdmin, (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
+server.get('/', (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
   User.findAll()
     .then(users => {
       res.json(users);

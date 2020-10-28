@@ -19,7 +19,7 @@ server.get('/me', isAuthenticated, (req, res) => {                              
   res.json({ message: "Usted se ha logueado correctamente!", user: req.user });
 });
 
-server.post('/promote/:id', isAdmin, (req, res) => {                                             // S67 : Crear ruta /promote (Promote convierte al usuario con ID: id a Admin.)
+server.post('/promote/:id', (req, res) => {                                             // S67 : Crear ruta /promote (Promote convierte al usuario con ID: id a Admin.)
   var user_id = req.params.id;
   User.update({
     role: "admin"

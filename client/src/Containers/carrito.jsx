@@ -4,6 +4,7 @@ import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '.
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 
 function Carrito(user) {
@@ -80,7 +81,7 @@ function Carrito(user) {
     return (
       <div>
         <h1>Agregar productos al carrito</h1>
-        <a href="/products">Ir al Catálogo</a>
+        <NavLink to="/products">Ir al Catálogo</NavLink>
       </div>
     )
   } else {
@@ -109,12 +110,12 @@ function Carrito(user) {
         }
         <div className={Estilo.botonesFinales}>
           <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
-          <a className={Estilo.botonesFinales} href='/products'>
+          <NavLink className={Estilo.botonesFinales} to='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
-          </a>
-          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+          </NavLink>
+          <NavLink className={Estilo.botonesFinales} to={`/order/${order_id[0]}`} >
             <span className={Estilo.botoncitos}  >Finalizar Compra</span>
-          </a>
+          </NavLink>
         </div>
       </div>
     )

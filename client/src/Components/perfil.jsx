@@ -4,12 +4,14 @@ import OrdenUsuario from '../Containers/ordenUsuario';
 import { getUser, deleteUser, putUser } from '../Redux/actionsOrden'
 import Estilo from '../Estilos/Perfil.module.css'
 import { connect } from 'react-redux'
-import { getMe } from '../Redux/actionsLog'
+import { getMe } from '../Redux/actionsLogin'
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
 
 
-function Perfil({ putUser, user, deleteUser }) {
+
+function Perfil({ putUser, deleteUser, getMe, user }) {
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -17,19 +19,13 @@ function Perfil({ putUser, user, deleteUser }) {
     oldPassword: ""
   });
 
-  console.log(user, "hola")
-
-  const id = user.user.user.user_id
-  const name = user.user.user.name
-  const email = user.user.user.email
-
-
   useEffect(() => {
-    getMe().payload
-      .then((resp) => {
-        console.log(resp)
-      })
+    getMe()
   }, [])
+
+  console.log(user.user)
+
+  var user = user.user
 
   function handle() {
     // users.map((user) => {
@@ -56,44 +52,44 @@ function Perfil({ putUser, user, deleteUser }) {
       newPassword: state.password,
       password: state.oldPassword
     }
-    if (cambios.name.length === 0) { cambios.name = name }
-    if (cambios.email.length === 0) { cambios.email = email }
+    if (cambios.name.length === 0) { cambios.name = user.name }
+    if (cambios.email.length === 0) { cambios.email = user.email }
 
-    const id = user.user.user.user_id
-    console.log(id, "chau")
-    putUser(id, cambios)
+
+
+    putUser(user.user_id, cambios)
 
   }
 
 
 
   function onDelete() {
-    const id = user.user.user.user_id
+    const id = user.user_id
     deleteUser(id)
   }
   if (user === null) {
     return (
       <div>
         <h1>Debes iniciar sesión o registrarte para ver tu perfil</h1>
-        <a href="/register">Registrarme</a>
-        <a href="/login">Iniciar Sesión</a>
+        <NavLink href="/register">Registrarme</NavLink>
+        <NavLink href="/login">Iniciar Sesión</NavLink>
       </div>
     )
   } else {
     return (
       <div className={Estilo.productoGrande} >
-        <h1 className={Estilo.bienvenido} >Bienvenido {name} ! </h1>
-        <h2 className={Estilo.producto} >Tu email : {email}  </h2>
+        <h1 className={Estilo.bienvenido} >Bienvenido {user.name} ! </h1>
+        <h2 className={Estilo.producto} >Tu email : {user.email}  </h2>
         <div>
           <form >
             <div>
               <div className={Estilo.nombre}>
                 <label >Nombre:</label>
-                <input type="text" placeholder={name} name="name" onChange={handleChange} className={Estilo.nombre2} />
+                <input type="text" placeholder={user.name} name="name" onChange={handleChange} className={Estilo.nombre2} />
               </div>
               <div className={Estilo.email}>
                 <label>Email:</label>
-                <input type="email" placeholder={email} name="email" onChange={handleChange} className={Estilo.email2} />
+                <input type="email" placeholder={user.email} name="email" onChange={handleChange} className={Estilo.email2} />
               </div>
               <div className={Estilo.password}>
                 <label>Contraseña vieja(tenga en cuenta que si no es correcta la vieja contraseña, esta no se modificara):</label>
@@ -121,14 +117,14 @@ function Perfil({ putUser, user, deleteUser }) {
 }
 function mapStateToProps(state) {
   return {
-    user: state.auth
+    user: state.auth.user
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putUser, deleteUser }, dispatch)
+    ...bindActionCreators({ putUser, deleteUser, getMe }, dispatch)
   }
 }
 

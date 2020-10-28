@@ -5,11 +5,10 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   HACER_ADMIN,
-  ME
+  GET_ME
 } from "../constantsLogin.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
-console.log(user.user)
 
 const initialState = {
   user: user
@@ -34,7 +33,12 @@ export default function (state = initialState, action) {
         ...state,
         user: null
       };
-    case ME:
+    case GET_ME:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case HACER_ADMIN:
       return {
         ...state,
         user: action.payload

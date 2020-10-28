@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { getUser } from '../Redux/actionsOrden';
 import Estilo from '../Estilos/forms.module.css';
-import { postAdmin } from '../Redux/actionsLog';
+import { postAdmin } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
@@ -23,7 +23,6 @@ function Usuarios({ getUser, users }) {
   function admin(e) {
     const id = e.target.value;
     postAdmin(id)
-    window.location.reload()
   }
 
   return (

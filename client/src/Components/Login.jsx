@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Col, Row, Button } from 'react-bootstrap';
-import { getUser } from '../Redux/actionsOrden';
-import { Link } from 'react-router-dom'
 import estilo from '../Estilos/Login.module.css';
 import imagen from '../imagenes/PerroYgatito.png';
 import candado from '../imagenes/candado.png';
@@ -13,8 +10,10 @@ import { loginRequest } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-function Login({ user, isLoggedIn, loginRequest }) {
+
+function Login({ user, isLoggedIn, loginRequest, users }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -22,7 +21,7 @@ function Login({ user, isLoggedIn, loginRequest }) {
   const [errors, setErrors] = useState({});
   var x = false;
 
-
+  console.log(users)
 
   function validate(input) {
     let errors = {};
@@ -53,17 +52,14 @@ function Login({ user, isLoggedIn, loginRequest }) {
   }
   function loginUser() {
     loginRequest(input)
-    if (isLoggedIn) {
-      window.location.href = '/perfil'
-    }
   }
 
   return (
     <div className={estilo.divOscuro}>
       <div className={estilo.x}>
-        <a href='/'>
+        <NavLink to='/'>
           X
-        </a>
+        </NavLink>
       </div>
       <div className={estilo.divTodo}>
         <div>
@@ -128,7 +124,8 @@ function Login({ user, isLoggedIn, loginRequest }) {
 const mapStateToProps = state => {
   //   console.log(state.auth.user.user.user_id);
   return {
-
+    user: state.auth,
+    users: state.auth.user
   }
 }
 const mapDispatchToProps = dispatch => {
