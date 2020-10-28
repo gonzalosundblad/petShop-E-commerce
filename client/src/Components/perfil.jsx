@@ -9,23 +9,20 @@ import { bindActionCreators } from 'redux';
 
 
 
-function Perfil(user) {
+function Perfil({ putUser, user, deleteUser }) {
   const [state, setState] = useState({
     name: "",
     email: "",
     password: "",
     oldPassword: ""
   });
-  const [users, setUsers] = useState([])
 
-  console.log(user)
+  console.log(user, "hola")
 
   const id = user.user.user.user_id
   const name = user.user.user.name
   const email = user.user.user.email
 
-  const id2 = parseInt(id.id)
-  var datos = []
 
   useEffect(() => {
     getMe().payload
@@ -50,7 +47,6 @@ function Perfil(user) {
   }
   //name, email, password, newPassword, last_name
 
-  console.log(user.user.user.user_id)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -64,24 +60,16 @@ function Perfil(user) {
     if (cambios.email.length === 0) { cambios.email = email }
 
     const id = user.user.user.user_id
-    putUser(id, cambios).payload
-      .then(resp => {
-        console.log(resp);
-        reload()
-      })
-      .catch(err => console.log(err))
+    console.log(id, "chau")
+    putUser(id, cambios)
+
   }
-  function reload() {
-    window.location.reload()
-  }
+
 
 
   function onDelete() {
     const id = user.user.user.user_id
     deleteUser(id)
-      .then(resp => {
-        reload()
-      })
   }
   if (user === null) {
     return (
@@ -120,7 +108,7 @@ function Perfil(user) {
                 <button onClick={handleSubmit} className={Estilo.botoncitos} >
                   Modificar datos
                       </button>
-                <button type="submit" onClick={onDelete} className={Estilo.botoncitos2}  >
+                <button onClick={onDelete} className={Estilo.botoncitos2}  >
                   Eliminar Cuenta
                       </button>
               </div>
@@ -132,17 +120,15 @@ function Perfil(user) {
   }
 }
 function mapStateToProps(state) {
-  //console.log(state.auth);
-  const { user } = state.auth;
   return {
-    user,
+    user: state.auth
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ Perfil }, dispatch)
+    ...bindActionCreators({ putUser, deleteUser }, dispatch)
   }
 }
 

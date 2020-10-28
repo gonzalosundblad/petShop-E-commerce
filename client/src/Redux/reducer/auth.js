@@ -9,21 +9,20 @@ import {
 } from "../constantsLogin.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
-console.log(user)
+console.log(user.user)
 
 const initialState = {
-  user: []
+  user: user
 }
 
 export default function (state = initialState, action) {
   console.log(action)
-  const { type, payload } = action;
 
-  switch (type) {
+  switch (action.type) {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: payload.user
+        user: action.payload
       };
     case LOGIN_FAIL:
       return {
@@ -38,7 +37,7 @@ export default function (state = initialState, action) {
     case ME:
       return {
         ...state,
-        user: payload.user
+        user: action.payload
       }
 
     default:

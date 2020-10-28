@@ -30,12 +30,12 @@ export default (state = initialState, action) => {
     case GET_CATEGORIES_NOMBRECAT: // obtener todos los productos de cierta categoria
       return {
         ...state,
-        categories: action.categories.products,
+        categories: action.payload,
       }
     case GET_ID: //obtener un producto segun su id
       return {
         ...state,
-        products: action.product,
+        products: action.payload,
       }
     case POST_PRODUCT: // agregar producto
       return {
@@ -88,13 +88,13 @@ export default (state = initialState, action) => {
     case POST_USER:  //agrega un usuario
       return {
         ...state,
-        users: state.users.concat(action.users)
+        users: state.users.concat(action.payload)
       }
 
     case GET_USER:
       return {
         ...state,
-        users: action.users
+        users: action.payload
       }
 
     case PUT_USER:
@@ -114,12 +114,12 @@ export default (state = initialState, action) => {
     case GET_CARRO:
       return {
         ...state,
-        carrito: action.carrito,
+        carrito: action.payload,
       }
     case GET_CREADA:
       return {
         ...state,
-        carrito: action.carrito,
+        carrito: action.payload,
       }
     case POST_CARRO:  //agrega un producto al carrito
       return {
@@ -145,12 +145,12 @@ export default (state = initialState, action) => {
     case GET_ID:
       return {
         ...state,
-        order: action.order,
+        order: action.payload,
       }
     case GET_ORDENIDUSER:
       return {
         ...state,
-        order: action.order,
+        order: action.payload,
       }
     case PUT_ORDER:
       return {
