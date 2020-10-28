@@ -49,7 +49,6 @@ server.get('/:id', (req, res) => {											//TRAE EL PRODUCTO DEL CORRESPONDIE
   })
 })
 
-<<<<<<< HEAD
 server.post('/', isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
   const { name, description, price, stock, categoryId, image } = req.body;
   console.log(req.body)
@@ -92,50 +91,6 @@ server.post('/', isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
       stock,
       image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
     })
-=======
-server.post('/', (req, res) => {									//AGREGA NUEVOS PRODUCTOS
-	const {name, description, price, stock, categoryId, image} = req.body;
-	console.log(req.body)
-	if( !name || !description ){
-		return res.status(400).send("Nombre y descripcion son requeridos")
-	} else if(!image) {
-		Product.create({
-			name,
-			description,
-			price,
-			stock,											//IMAGEN POR DEFECTO 
-			image: "https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2FPorDefecto.jpg?alt=media&token"
-		}).then(function(productoSinImg) {
-			if(!categoryId){
-				productoSinImg.addCategories("0")
-			}
-			res.json(productoSinImg)
-		})
-	} else if(!categoryId) {
-		Product.create({
-			name,
-			description,
-			price,
-			stock,
-			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
-		}).then(function(productSinId) {
-			productSinId.addCategories("0")
-			res.json(productSinId)
-		})
-	} else {
-			var category = Category.findAll({
-				where: {
-					id: categoryId
-				}
-			})
-			var producto = Product.create({
-				name,
-				description,
-				price,
-				stock,
-				image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
-			})
->>>>>>> 51f4412f660ab6b9ee7838184d1bb7f72c3b5650
 
     Promise.all([category, producto])
       .then(values => {
@@ -154,7 +109,6 @@ server.post('/', (req, res) => {									//AGREGA NUEVOS PRODUCTOS
   }
 })
 
-<<<<<<< HEAD
 server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
   const { name, description, price, stock } = req.body;
 
@@ -172,33 +126,6 @@ server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO 
           id: req.params.id
         }
       })
-=======
-server.put('/:id',  (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
-    const {name, description, price, stock } = req.body;
-	
-	Product.findByPk(req.params.id)
-	.then(product => {
-		console.log(product)
-		product.update({
-			name,
-			description,
-			price,
-			stock
-    	},{
-			returning: true,
-			where: {
-				id: req.params.id
-			}
-    	})
-	})
-	.then(function(product) {
-		console.log(product[1]);
-		if(product[0] == 0) {
-			res.status(400).send('Error, campos requeridos')
-				return product[0]
-			}
-			res.status(200).json(product)
->>>>>>> 51f4412f660ab6b9ee7838184d1bb7f72c3b5650
     })
     .then(function (product) {
       console.log(product[1]);
@@ -214,7 +141,6 @@ server.put('/:id',  (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU
     })
 });
 
-<<<<<<< HEAD
 server.delete('/:id', isAdmin, (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID
   var productId = req.params.id;
   if (!productId) {
@@ -229,22 +155,6 @@ server.delete('/:id', isAdmin, (req, res) => {								//ELIMINA UN PRODUCTO SEGU
         res.status(404).send('Este producto nunca existió');
       })
   }
-=======
-server.delete('/:id',  (req, res) => {								//ELIMINA UN PRODUCTO SEGUN ID
-	var productId = req.params.id;
-	if(!productId){
-		res.status(404).send('Debes ingresar un ID')
-	} else {
-		Product.findByPk(productId)
-		.then(value => {
-			value.destroy()
-		}).then(value2 => {
-			res.status(200).send('Borrado exitosamente');
-		}).catch(err => {
-			res.status(404).send('Este producto nunca existió');
-		})
-	}
->>>>>>> 51f4412f660ab6b9ee7838184d1bb7f72c3b5650
 })
 
 //=========================================CATEGORIAS===========================================
@@ -283,7 +193,6 @@ server.post('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {	//AGR
   })
 })
 
-<<<<<<< HEAD
 server.post('/category', isAdmin, (req, res) => {							//AGREGA NUEVAS CATEGORIAS
   const { name, description } = req.body;
   if (!name) {
@@ -297,21 +206,6 @@ server.post('/category', isAdmin, (req, res) => {							//AGREGA NUEVAS CATEGORI
   }).catch(err => {
     console.log('Error: ', err)
   })
-=======
-server.post('/category',  (req, res) => {							//AGREGA NUEVAS CATEGORIAS
-	const { name, description } = req.body ;
-	if(!name){
-		return res.status(400).send('Campos requeridos')
-	}
-	Category.create({
-		name,
-		description
-	}).then(function(category){
-		res.json(category).status(200)
-	}).catch(err => {
-		console.log('Error: ', err)
-	})
->>>>>>> 51f4412f660ab6b9ee7838184d1bb7f72c3b5650
 })
 
 server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {//ELIMINA UNA CATEGORIA DE UN PRODUCTO
@@ -338,7 +232,6 @@ server.delete('/:idProducto/category/:idCategoria', isAdmin, (req, res) => {//EL
   })
 })
 
-<<<<<<< HEAD
 server.put('/category/:id', isAdmin, (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN ID
   const { name, description } = req.body;
   Category.update({
@@ -369,38 +262,6 @@ server.delete('/category/:id', isAdmin, (req, res) => {						//ELIMINA UNA CATEG
         res.status(500).send('Error interno');
       })
   }
-=======
-server.put('/category/:id',  (req, res) => {						//MODIFICA UNA CATEGORIA SEGUN ID
-	const {name, description} = req.body;
-	Category.update({
-		name,
-		description
-	},{
-		returning: true,
-		where: {
-			id: req.params.id
-		}
-	}).then(function([ rows, [updated] ]) {
-		res.status(200);
-		res.json(updated)
-	})
-});
-
-server.delete('/category/:id', (req, res) => {						//ELIMINA UNA CATEGORIA
-	var categoryId = req.params.id;
-    if(!categoryId){
-		res.status(404).send('Debes ingresar un ID')
-    } else {
-		Category.findByPk(categoryId)
-		.then(value => {
-			value.destroy()
-		}).then(value2 => {
-			res.status(200).send('Borrado exitosamente');
-		}).catch(err => {
-			res.status(500).send('Error interno');
-        })
-	}
->>>>>>> 51f4412f660ab6b9ee7838184d1bb7f72c3b5650
 });
 
 module.exports = server;

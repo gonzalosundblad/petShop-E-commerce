@@ -50,6 +50,10 @@ const User = (sequelize) => {
       //   this.setDataValue('password', hash);
       // }
     }
+    ,
+    resetPasswordToken: {
+      type: DataTypes.TEXT
+    }
   });
 };
 

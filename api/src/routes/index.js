@@ -7,6 +7,7 @@ const usersRouter = require('./users');
 const ordersRouter = require('./orders');
 const reviewsRouter = require('./reviews');
 const logRouter = require('./auth')
+const forgotPasswordRouter = require('./forgotPassword')
 
 var router = Router();
 
@@ -19,5 +20,6 @@ router.use('/users', usersRouter);           //AGREGAMOS RUTA  /users
 router.use('/orders', ordersRouter);        //AGREMGAMOS RUTA /orders
 router.use('/reviews', reviewsRouter);     //AGREGAMOS RUTA  /reviews
 router.use('/auth', logRouter);           // AGREGAMOS RUTA /log       
+router.use('/forgotPassword', forgotPasswordRouter)
 
 module.exports = router;
