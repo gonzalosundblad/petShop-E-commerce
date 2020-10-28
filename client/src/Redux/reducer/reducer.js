@@ -116,11 +116,6 @@ export default (state = initialState, action) => {
         ...state,
         carrito: action.payload,
       }
-    case GET_CREADA:
-      return {
-        ...state,
-        carrito: action.payload,
-      }
     case POST_CARRO:  //agrega un producto al carrito
       return {
         ...state,
@@ -143,6 +138,16 @@ export default (state = initialState, action) => {
       }
     //--------Orden------------
     case GET_ID:
+      return {
+        ...state,
+        order: action.payload,
+      }
+    case GET_CREADA:
+      return {
+        ...state,
+        order: action.payload,
+      }
+    case GET_ORDENID:
       return {
         ...state,
         order: action.payload,

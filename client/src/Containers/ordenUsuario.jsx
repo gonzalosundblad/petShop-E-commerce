@@ -1,29 +1,22 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { getProdOrder } from '../Redux/actionsCarrito'
-import { putOrder } from '../Redux/actionsOrden'
+import { getProdOrder, getCarro } from '../Redux/actionsCarrito'
+import { putOrder, getOrderId } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom'
 
 
-function OrdenUsuario({ id2, user, order, putOrder }) {
+function OrdenUsuario({ id2, user, order, carrito, putOrder, getCarro }) {
   const [productOrder, setproductOrder] = useState([])
   console.log('hhhhhhhhhhhhhhhhhh');
-  console.log(user.user.user_id);
+  // console.log(user.user.user_id);
+  // console.log(id2);
 
 
   useEffect(() => {
-    if (id === null) {
-      var id = 2
-    } else {
-      id = user.user.user_id
-    }
-    getProdOrder(id2).payload
-      .then(resp => {
-        console.log(resp)
-      })
+    getCarro(user.user.user_id)
   }, [])
 
   // var total = 0
@@ -35,7 +28,9 @@ function OrdenUsuario({ id2, user, order, putOrder }) {
   //   return a + b
   // }, 0)
 
-  console.log(order);
+  // const orders = order[0]
+
+  console.log(carrito, "hola");
 
 
   const estado = { orderState: 'creada' }
@@ -63,7 +58,7 @@ function OrdenUsuario({ id2, user, order, putOrder }) {
     return (
       <div>
         <h1 className={StyleOrden.tuOrden} >Tu Orden</h1>
-        {order && order.map(e => {
+        {carrito && carrito.map(e => {
           return (
             <div className={StyleOrden.producto} >
               <h2>{e.name}</h2>
@@ -91,14 +86,14 @@ function mapStateToProps(state) {
 
   return {
     user: state.auth.user,
-    order: state.reducer.order
+    carrito: state.reducer.carrito
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putOrder }, dispatch)
+    ...bindActionCreators({ putOrder, getCarro }, dispatch)
   }
 }
 

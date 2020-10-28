@@ -18,14 +18,14 @@ function Product({ user, id2, products, getProductById }) {
     getProductById(id2)
   }, []);
 
-  console.log(products.products.name, "hola")
+  console.log(user, "hola")
 
   function handleChange(e) {
     setQuantity(e.target.value);
   }
   function subirCarrito() {
-    if (user.isLoggedIn) {
-      postCarrito(user.user.user.user_id, {
+    if (user.logged) {
+      postCarrito(user.user.user_id, {
         product_id: id2,
         quantity: quantity,
         price: products.products.price
@@ -35,7 +35,7 @@ function Product({ user, id2, products, getProductById }) {
           window.location.replace("http://localhost:3000/carrito")
         })
     }
-    if (user.isLoggedIn === false) {
+    if (user.logged === false) {
       postCarrito(2, {
         product_id: id2,
         quantity: quantity,
@@ -110,7 +110,7 @@ function Product({ user, id2, products, getProductById }) {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth,
+    user: state.auth.user,
     products: state.reducer
   }
 }

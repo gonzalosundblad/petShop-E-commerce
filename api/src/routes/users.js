@@ -54,7 +54,7 @@ server.put('/:id', isAuthenticated, (req, res) => {                     //S35 : 
   })
 });
 
-server.get('/', (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
+server.get('/', isAdmin, (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
   User.findAll()
     .then(users => {
       res.json(users);
@@ -149,7 +149,7 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
   })
 });
 
-server.get('/:idUser/cart/orders', isAuthenticated, (req, res) => {     //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
+server.get('/:idUser/cart/orders', (req, res) => {     //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
   const { idUser } = req.params;
   Order.findAll({
     where: {
@@ -160,6 +160,7 @@ server.get('/:idUser/cart/orders', isAuthenticated, (req, res) => {     //SCREAD
       as: 'products'
     }
   }).then((items) => {
+    console.log(items)
     res.status(200).send(items)
   }).catch((err) => {
     res.status(404).send('Error')

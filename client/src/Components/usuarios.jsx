@@ -7,7 +7,7 @@ import { postAdmin } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-function Usuarios({ getUser, users }) {
+function Usuarios({ getUser, users, postAdmin }) {
 
 
 
@@ -57,7 +57,7 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getUser }, dispatch)
+    ...bindActionCreators({ getUser, postAdmin }, dispatch)
   }
 }
 

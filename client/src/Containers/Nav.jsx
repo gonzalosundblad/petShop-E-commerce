@@ -10,25 +10,21 @@ import UsuarioLogeado from '../Components/UsuarioLogeado';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-function NavBar({ user, funcionCatag, onSearch }) {
+
+function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
   //console.log(user.user.role);
   const [carro, setCarro] = useState([])
   useEffect(() => {
     if (user === null) {
       user = 1
     } else {
-      user = user
+      user = user.user.user_id
       // .user.user_id
     }
-    getCarrito(user).payload
-      .then(res => {
-        if (!res.data[0]) {
-          console.log('no hay productos')
-        } else {
-          setCarro(res.data[0].products)
-        }
-      })
+    getCarrito(user)
+
   }, [])
   var precio = carro.map(e => e.price * e.LineaDeOrden.quantity)
   var total = precio.reduce(function (a, b) {
@@ -77,10 +73,17 @@ function NavBar({ user, funcionCatag, onSearch }) {
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-  const { user } = state.auth;
+
   return {
-    user,
+    user: state.auth.user
   };
 }
 
-export default connect(mapStateToProps)(NavBar);
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getCarrito }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
