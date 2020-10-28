@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import { putId, getProducts, deleteProduct, getCategories } from '../Redux/actions.js'
+import { getCategories, postProduct } from '../Redux/actions.js'
 import firebase, { storage } from 'firebase';
-import { getProductsRequest } from '../Redux/actions';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-export function CrudProduct() {
+
+export function CrudProduct({ getCategories, postProduct, categories }) {
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -15,8 +15,11 @@ export function CrudProduct() {
     categoryId: 1,
   })
   const [errors, setErrors] = useState({});
-  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    getCategories()
+  }, []);
+  console.log(categories, "hola");
 
   function getIdCategory(event) {
     // event.preventDefault();
@@ -30,13 +33,7 @@ export function CrudProduct() {
   }
 
 
-  useEffect(() => {
-    function searchCategories() {
-      getCategories().payload
-        .then(resp => setCategories(resp.data))
-    }
-    searchCategories();
-  }, []);
+
 
   function validate(input) {
     let errors = {};
@@ -110,19 +107,15 @@ export function CrudProduct() {
       <form style={{ width: "80%", border: "solid 1px" }}
         onSubmit={(e) => {
           e.preventDefault();
-          axios.post(`http://localhost:3001/products/`, input)
-            .then(res => {
-              console.log(res);
-              console.log(res.data);
-              setInput({
-                name: "",
-                description: "",
-                stock: "",
-                price: "",
-                image: "",
-                categoryId: 1,
-              })
-            })
+          postProduct(input)
+          setInput({
+            name: "",
+            description: "",
+            stock: "",
+            price: "",
+            image: "",
+            categoryId: 1,
+          })
         }}>
         <fieldset>
           <legend>Agregar Productos</legend>
@@ -226,12 +219,14 @@ var firebaseConfig = {                                        //agrega productos
 };
 const mapStateToProps = state => {
   return {
-    products: state.reducer.products
+    categories: state.reducer.categories
   }
 }
-const mapDispatchToProps = dispatch => {
+
+function mapDispatchToProps(dispatch) {
   return {
-    getProductsRequest: () => dispatch(getProductsRequest())
+    dispatch,
+    ...bindActionCreators({ getCategories, postProduct }, dispatch)
   }
 }
 export default connect(

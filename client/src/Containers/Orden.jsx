@@ -3,17 +3,14 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import Estilo from '../Estilos/forms.module.css'
 import { getOrder } from '../Redux/actionsOrden'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-export default function Ordenes() {
-  const [orderGuardada, setOrderGuardada] = useState([])
+function Ordenes({ getOrder, order }) {
 
 
   useEffect(() => {
-    getOrder().payload
-      .then(res => {
-        console.log(res.data)
-        setOrderGuardada(res.data)
-      })
+    getOrder()
   }, [])
 
 
@@ -22,7 +19,7 @@ export default function Ordenes() {
   return (
     <div>
       <div className={Estilo.forms} > {
-        orderGuardada && orderGuardada.map(encontrado => {
+        order && order.map(encontrado => {
           return (
             <form key={encontrado.id} className={Estilo.resultado} >
               <label>Id orden:</label>
@@ -40,3 +37,21 @@ export default function Ordenes() {
     </div>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+    order: state.reducer.order
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getOrder }, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Ordenes)

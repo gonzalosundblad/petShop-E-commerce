@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { putId, getProductsRequest, deleteProduct, getCategories, getProducts } from '../Redux/actions.js'
+import { putId, getProductsRequest, deleteProduct, getCategories, getProductos } from '../Redux/actions.js'
 import Estilo from '../Estilos/Modificar.module.css'
 import { connect } from 'react-redux'
 import store from '../Redux/store'
+import { bindActionCreators } from 'redux';
 
 
-export function ModificayBorra({ products, getProductsRequest }) {    //modifica y borra producto
+
+export function ModificayBorra({ products, getProductsRequest, putId, deleteProduct }) {    //modifica y borra producto
   const [state, setState] = useState({
     id: "",
     name: "",
@@ -13,12 +15,12 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
     price: "",
     stock: ""
   });
-  const [prodGuardados, setProdGuardados] = useState([])
 
   useEffect(() => {
     getProductsRequest()
-    console.log(products)
   }, []);
+
+  console.log(products.products)
 
 
   function handleChange(e) {
@@ -29,39 +31,21 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
   }
 
 
-  function reload() {
-    window.location.reload()
-  }
-
   function modificar() {
-    const id = state.id
-
-    putId(id, {
+    var id = state.id
+    console.log(id)
+    var cambios = {
       description: state.description,
-      id: state.id,
       name: state.name,
       price: state.price,
       stock: state.stock
-    })
-      .then(resp => {
-        console.log(resp.data)
-      })
+    }
+    putId(id, cambios)
   }
-
-  function borrarInput() {
-    document.getElementById("id").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("stock").value = "";
-  }
-
 
   function delet() {
-    deleteProduct(state.id).then(resp => {
-      console.log(resp)
-      reload()
-    })
+    var id = state.id
+    deleteProduct(id)
   }
 
 
@@ -80,7 +64,7 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
         </div>
         <div>
           {
-            prodGuardados && prodGuardados.map(encontrado => {
+            products.products && products.products.map(encontrado => {
               return (
                 <div >
                   <form key={encontrado.id} >
@@ -146,66 +130,13 @@ export function ModificayBorra({ products, getProductsRequest }) {    //modifica
               <input type="number" class="form-control" placeholder="Ingrese cantidad" id="stock" name="stock" onChange={handleChange} />
             </div>
             <div>
-              <button onClick={modificar} type="submit" value="Actualizar" class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
+              <button onClick={modificar} class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
               <button onClick={delet} class="btn btn-outline-danger" style={{ margin: "10px" }}>Borrar</button>
             </div>
 
           </fieldset>
         </form>
       </div>
-      {/* <div className={Estilo.formsModificar}>
-        <div>
-          <h3>Ingrese los datos que desea modificar/eliminar</h3>
-        </div>
-        <form>
-          <div className={Estilo.labelInputModificar}>
-            <label>Id:</label>
-            <input
-              type="number" id="id" name="id"
-              placeholder="Nº"
-              onChange={handleChange}
-              className={Estilo.id2}
-            />
-          </div>
-          <div className={Estilo.labelInputModificar}>
-            <label> Nombre: </label>
-            <input
-              type="text" id="name" name="name"
-              placeholder="Ingrese nombre del producto"
-              onChange={handleChange}
-            />
-          </div>
-          <div className={Estilo.labelInputModificar}>
-            <label>Descripcion:</label>
-            <input
-              type="text" id="description" name="description"
-              placeholder="Ingrese una descripción"
-              onChange={handleChange}
-            />
-          </div>
-          <div className={Estilo.labelInputModificar}>
-            <label>Precio: </label>
-            <input
-              type="number" id="price" name="price"
-              placeholder="Ingrese Precio"
-              onChange={handleChange}
-            />
-          </div>
-          <div className={Estilo.labelInputModificar}>
-            <label> Stock:</label>
-            <input
-              type="number" id="stock" name="stock"
-              placeholder="Ingrese cantidad"
-              onChange={handleChange}
-            />
-          </div>
-        </form>
-        <div className={Estilo.botones} >
-          <button onClick={modificar} className={Estilo.botonModificar}> Modificar</button>
-          <button onClick={delet} className={Estilo.botonBorrar} >Eliminar</button>
-        </div>
-      </div>
-    </div> */}
     </div>
   );
 }
@@ -216,9 +147,11 @@ const mapStateToProps = state => {
     products: state.reducer
   }
 }
-const mapDispatchToProps = dispatch => {
+
+function mapDispatchToProps(dispatch) {
   return {
-    getProductsRequest: () => dispatch(getProductsRequest()),
+    dispatch,
+    ...bindActionCreators({ getProductsRequest, putId, deleteProduct }, dispatch)
   }
 }
 

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { postUser } from '../Redux/actions';
+import { NavLink } from 'react-router-dom';
+import { postUser } from '../Redux/actionsOrden';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-export function AgregarUsuario() {                  //agrega usuario
+export function AgregarUsuario({ postUser }) {                  //agrega usuario
   const [nombre, setNombre] = useState([]);
   const [email, setEmail] = useState([])
   const [contraseña, setContraseña] = useState([])
@@ -48,19 +51,11 @@ export function AgregarUsuario() {                  //agrega usuario
     };
 
 
-    postUser(usuario).payload
-      .then(function (resp) {
-        borrarInput()
-        window.location = '/login'
-      })
+    postUser(usuario)
 
 
   }
-  function borrarInput() {
-    document.getElementById("nombre").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
-  }
+
 
 
   return (
@@ -86,3 +81,21 @@ export function AgregarUsuario() {                  //agrega usuario
     </div>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+    products: state.reducer
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ postUser }, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AgregarUsuario)

@@ -80,8 +80,11 @@ passport.use(new LocalStrategy(
 passport.serializeUser((user, done) => done(null, user.user_id));
 
 passport.deserializeUser((user_id, done) => {
-  User.findOne({ where: { user_id: user_id } })
-    .then(user => {
+  User.findOne({ 
+    where: { 
+      user_id: user_id 
+    } 
+  }).then(user => {
       if (user) {
         return done(null, user);
       }
