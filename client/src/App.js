@@ -51,8 +51,8 @@ function App() {
           <Route exact path="/" render={() => <Fondo />} />
           <Route exact path="/" component={mostrarCategorias} />
           <Route exact path="/" component={Animales} />
+          <Route exact path="/" component={ControlledCarousel} />
           <Route exact path="/" component={PieDePagina} />
-
           <Route exact path="/login" render={() => <User />} />
           <Route exact path="/register" render={() => <AgregarUsuario />} />
           <Route path="/products" component={listaCategorias} />
