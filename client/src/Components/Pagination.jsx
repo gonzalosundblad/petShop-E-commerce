@@ -19,7 +19,7 @@ return (
                 <a class="page-link" href="#" onClick={() => paginas(number)}>{number}</a>
                 )}
             </li>
-            <li class="page-item">
+            <li class="page-item ">
             <a class="page-link" href="#">&raquo;</a>
             </li>
         </ul>

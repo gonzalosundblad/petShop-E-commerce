@@ -24,6 +24,7 @@ import OrdenUsuario from './Containers/ordenUsuario';
 import OrdenAdmin from './Components/ordenAdmin';
 import { Fondo } from './Containers/fondo';
 import { Animales } from './Containers/fondo';
+import { ParaComprar } from './Containers/fondo';
 import { PieDePagina } from './Containers/fondo';
 import Reset from './Components/Reset';
 import OrdenCompra from './Containers/ordenCompra';
@@ -51,6 +52,7 @@ function App() {
           <Route exact path="/" component={MostrarCategorias} />
           <Route exact path="/" component={Animales} />
           <Route exact path="/" component={Carrusel} />
+          <Route exact path="/" component={ParaComprar} />
           <Route exact path="/" component={PieDePagina} />
 
           <Route exact path="/login" render={() => <User />} />
