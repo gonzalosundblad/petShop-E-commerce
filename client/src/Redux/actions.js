@@ -16,23 +16,29 @@ export function getProductsRequest() {//Va a Catalogo2.jsx
       .catch(err => { console.log(err) })
   }
 }
-// export function fetchPost(valor) {  // va a POST.jsx
-//   return function (dispatch) {
-//     dispatch(getPost());
-//     axios.get(`https://jsonplaceholder.typicode.com/todos/${valor}`)
-//       .then(r => r.data)
-//       .then(d => dispatch(receivePost(d)))
-//       .catch(e => console.log(e));
-//   }
-// }
-//------
 
 
-
-export function getCategories() { //obtener todas las categorias
-  const request = axios.get('http://localhost:3001/products/category');
-  return { type: GET_CATEGORIES, payload: request };
+export function getCateg(categorias) {//va a REDUCER
+  console.log('categorias');
+  return {
+    type: GET_CATEGORIES,
+    payload: categorias
+  }
 }
+export function getCategories() {//Va a Catalogo2.jsx
+  console.log('getCategories');
+  return (dispatch) => {
+    axios.get('http://localhost:3001/products/category')
+      .then(response => { dispatch(getCateg(response.data)) })
+      .catch(err => { console.log(err) })
+  }
+}
+
+
+// export function getCategories() { //obtener todas las categorias
+//   const request = axios.get('http://localhost:3001/products/category');
+//   return { type: GET_CATEGORIES, payload: request };
+// }
 
 export function getProductByCategory(name) {//obtener todos los productos de una categoria
   const request = axios.get(`http://localhost:3001/products/category/${name}`)
@@ -54,20 +60,23 @@ export function postIdProdCatId(user, category) {   //agrega una categoria a un 
   const request = axios.post(`http://localhost:3001/products/${user}/category/${category}`)
   return { type: POST_IDPROD_CAT_IDCATEG, payload: request };
 }
-//-------------------------------------------
-//  postCategory TAMBIEN FUNCIONA
-export function postCategory(data) {   //agrega una categoria
-  const request = axios.post('http://localhost:3001/products/category', data)
-  return { type: POST_CATEGORY, payload: request };
+
+export function postCateg(categorie) {//va a REDUCER
+  console.log('Categoria');
+  return {
+    type: POST_CATEGORY,
+    payload: categorie
+  }
 }
-//----------------------------------------
-// PutId FUNCIONA
-// export function putId(id, cambios) { //modifica un producto
-//   return axios.put(`http://localhost:3001/products/${id}`, cambios).then((response) => {
-//     return ({ type: PUT_ID, payload: response })
-//     console.log(response);
-//   })
-// }
+export function postCategory(categoria) {//Crea una categoria
+  console.log('postCategory');
+  return (dispatch) => {
+    axios.post('http://localhost:3001/products/category', categoria)
+      .then(response => { dispatch(postCateg(response.data)) })
+      .catch(err => { console.log(err) })
+  }
+}
+
 export function putProduct(cambio) {//va a REDUCER
   console.log('Cambios');
   return {
@@ -75,8 +84,8 @@ export function putProduct(cambio) {//va a REDUCER
     payload: cambio
   }
 }
-export function putId(id, cambios) {//Va a Catalogo2.jsx
-  console.log('getProductsRequest');
+export function putId(id, cambios) {//Modifica producto segun id
+  console.log('putId');
   return (dispatch) => {
     axios.put(`http://localhost:3001/products/${id}`, cambios)
       .then(response => { dispatch(putProduct(response.data)) })
@@ -84,11 +93,28 @@ export function putId(id, cambios) {//Va a Catalogo2.jsx
   }
 }
 
-export function putCategoryId(id, cambios) {  //modifica una categoria
-  return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
-    return ({ type: PUT_CATEGORY_ID, payload: response })
-    console.log(response);
-  })
+// export function putCategoryId(id, cambios) {  //modifica una categoria
+//   return axios.put(`http://localhost:3001/products/category/${id}`, cambios).then((response) => {
+//     return ({ type: PUT_CATEGORY_ID, payload: response })
+//     console.log(response);
+//   })
+// }
+
+export function putCat(categ) {//va a REDUCER
+  console.log('Categoria Modificada');
+  return {
+    type: PUT_CATEGORY_ID,
+    payload: categ
+  }
+}
+export function putCategoryId(id, cambios) {//Modifica categoria segun id
+  console.log('putCategoryId');
+  console.log(id)
+  return (dispatch) => {
+    axios.put(`http://localhost:3001/products/category/${id}`, cambios)
+      .then(response => { dispatch(putCat(response.data)) })
+      .catch(err => { console.log(err) })
+  }
 }
 
 
@@ -98,12 +124,28 @@ export function deleteCatOfProduct(idP, idC) {   //elimina una categoria de un p
   })
 }
 
-export function deleteProduct(id) {   //elimina un producto segun id
-  return axios.delete(`http://localhost:3001/products/${id}`).then((resp) => {
-    return { type: DELETE_ID, payload: resp }
-    console.log(resp)
-  })
+export function delProduct(prod) {//va a REDUCER
+  console.log('Borrado');
+  return {
+    type: DELETE_ID,
+    payload: prod
+  }
 }
+export function deleteProduct(id) {//Va a Catalogo2.jsx
+  console.log('deleteProduct');
+  return (dispatch) => {
+    axios.delete(`http://localhost:3001/products/${id}`)
+      .then(response => { dispatch(delProduct(response.data)) })
+      .catch(err => { console.log(err) })
+  }
+}
+
+// export function deleteProduct(id) {   //elimina un producto segun id
+//   return axios.delete(`http://localhost:3001/products/${id}`).then((resp) => {
+//     return { type: DELETE_ID, payload: resp }
+//     console.log(resp)
+//   })
+// }
 export function deleteCategory(id) {   //elimina una categoria segun id
   return axios.delete(`http://localhost:3001/products/category/${id}`).then((resp) => {
     return { type: DELETE_ID, payload: resp }

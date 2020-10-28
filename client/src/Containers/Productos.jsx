@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 
 
 
-export function ModificayBorra({ products, getProductsRequest, putId }) {    //modifica y borra producto
+export function ModificayBorra({ products, getProductsRequest, putId, deleteProduct }) {    //modifica y borra producto
   const [state, setState] = useState({
     id: "",
     name: "",
@@ -15,7 +15,6 @@ export function ModificayBorra({ products, getProductsRequest, putId }) {    //m
     price: "",
     stock: ""
   });
-  const [prodGuardados, setProdGuardados] = useState([])
 
   useEffect(() => {
     getProductsRequest()
@@ -44,19 +43,9 @@ export function ModificayBorra({ products, getProductsRequest, putId }) {    //m
     putId(id, cambios)
   }
 
-  function borrarInput() {
-    document.getElementById("id").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("stock").value = "";
-  }
-
-
   function delet() {
-    deleteProduct(state.id).then(resp => {
-      console.log(resp)
-    })
+    var id = state.id
+    deleteProduct(id)
   }
 
 
@@ -162,7 +151,7 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getProductsRequest, putId }, dispatch)
+    ...bindActionCreators({ getProductsRequest, putId, deleteProduct }, dispatch)
   }
 }
 
