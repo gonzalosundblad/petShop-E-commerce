@@ -5,14 +5,15 @@ import { logout } from '../Redux/actionsLogin'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-function UsuarioLogeado({ user, logout }) {
+function UsuarioLogeado({ user, logout, logged }) {
   //console.log(user);
 
   function cerrarSesion() {
-    logout()
+    logout();
+    localStorage.removeItem("user")
   }
 
-  var id = 1
+  
 
   return (
     <div id='header'>
@@ -28,10 +29,12 @@ function UsuarioLogeado({ user, logout }) {
               {/* window.location=`user/${user.id}` */}
             </li>
             <li >
-              <a href={`/user/${id}/ordenes`}>Mis compras</a>
+              {user ? <a href={`/user/${user.id}/ordenes`}>Mis compras</a> :
+              <a href={`/user/${1}/ordenes`}>Mis compras</a>}
             </li>
             <li>
-              <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>
+              {logged ? null :  <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>}
+             
             </li>
 
           </ul>
@@ -43,9 +46,9 @@ function UsuarioLogeado({ user, logout }) {
 }
 
 function mapStateToProps(state) {
-  const { user } = state.auth;
+  const { user, logged } = state.auth;
   return {
-    user,
+    user, logged
   };
 }
 function mapDispatchToProps(dispatch) {

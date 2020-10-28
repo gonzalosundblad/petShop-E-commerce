@@ -23,20 +23,17 @@ export default function (state = initialState, action) {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: payload,
-        isLoggedIn: true
+        user: payload
       };
     case LOGIN_FAIL:
       return {
         ...state,
-        user: null,
-        isLoggedIn: false
+        user: null
       };
     case LOGOUT:
       return {
         ...state,
-        user: null,
-        isLoggedIn: false
+        user: null
       };
     case ME:
       return {

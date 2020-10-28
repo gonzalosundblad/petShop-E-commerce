@@ -11,19 +11,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
 
-function NavBar({ user, funcionCatag, onSearch }) {
+function NavBar({ user, logged, funcionCatag, onSearch }) {
   //console.log(user.user.role);
   const [carro, setCarro] = useState([])
   useEffect(() => {
-    if (user === null) {
-    //   user = 1
-    // } else {
-    //   user = user
-    //   // .user.user_id
-    }
-    console.log(user);
-    if (user.length < 0){
-      getCarrito(user.user.user.user.user_id).payload
+    
+    console.log(user)
+    if (logged){
+      getCarrito(user.user_id).payload
         .then(res => {
           if (!res.data[0]) {
             console.log('no hay productos')
@@ -32,7 +27,7 @@ function NavBar({ user, funcionCatag, onSearch }) {
           }
         })
 
-    }
+    }else {}
   }, [])
   var precio = carro.map(e => e.price * e.LineaDeOrden.quantity)
   var total = precio.reduce(function (a, b) {
@@ -70,7 +65,9 @@ function NavBar({ user, funcionCatag, onSearch }) {
           </a>
           <UsuarioLogeado />
           <div className={StyleNav.iniciarSesion}>
-            <a class="nav-link text-white" href='/login' >Iniciar Sesión</a>
+          {!logged ? 
+            <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> 
+            : null } 
           </div>
         </div>
       </div>
@@ -81,9 +78,10 @@ function NavBar({ user, funcionCatag, onSearch }) {
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-  const { user } = state.auth;
+  const { user, logged } = state.auth;
   return {
     user,
+    logged
   };
 }
 
