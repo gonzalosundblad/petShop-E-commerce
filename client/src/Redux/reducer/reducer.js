@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
     case GET_CATEGORIES: //obtener todas las categorias
       return {
         ...state,
-        categories: action.categories,
+        categories: action.payload,
       }
     case GET_CATEGORIES_NOMBRECAT: // obtener todos los productos de cierta categoria
       return {

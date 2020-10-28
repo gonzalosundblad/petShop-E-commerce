@@ -4,6 +4,9 @@ import Estilo from '../Estilos/Modificar.module.css'
 import { connect } from 'react-redux'
 import store from '../Redux/store'
 import { bindActionCreators } from 'redux';
+
+
+
 export function ModificayBorra({ products, getProductsRequest, putId, deleteProduct }) {    //modifica y borra producto
   const [state, setState] = useState({
     id: "",

@@ -16,19 +16,23 @@ function NavBar({ user, funcionCatag, onSearch }) {
   const [carro, setCarro] = useState([])
   useEffect(() => {
     if (user === null) {
-      user = 1
-    } else {
-      user = user
-      // .user.user_id
+    //   user = 1
+    // } else {
+    //   user = user
+    //   // .user.user_id
     }
-    getCarrito(user).payload
-      .then(res => {
-        if (!res.data[0]) {
-          console.log('no hay productos')
-        } else {
-          setCarro(res.data[0].products)
-        }
-      })
+    console.log(user);
+    if (user.length < 0){
+      getCarrito(user.user.user.user.user_id).payload
+        .then(res => {
+          if (!res.data[0]) {
+            console.log('no hay productos')
+          } else {
+            setCarro(res.data[0].products)
+          }
+        })
+
+    }
   }, [])
   var precio = carro.map(e => e.price * e.LineaDeOrden.quantity)
   var total = precio.reduce(function (a, b) {

@@ -157,11 +157,11 @@ function Carrito(user) {
   )
 }
 }
-// const mapDispatchToProps =  dispatch => {
-//   return {
-//     getCarritoSinUser: () => dispatch(getCarritoSinUser())
-//   }
-// }
+const mapDispatchToProps =  dispatch => {
+  return {
+    getCarrito: dispatch(getCarrito())
+  }
+}
 
 const mapStateToProps = state => {
   return {
@@ -171,5 +171,5 @@ const mapStateToProps = state => {
 }
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(Carrito)

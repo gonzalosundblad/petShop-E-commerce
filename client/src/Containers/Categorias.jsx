@@ -6,13 +6,14 @@ import { postCategory } from '../Redux/actions';
 import { putCategoryId } from '../Redux/actions.js';
 import estilo from '../Estilos/forms.module.css';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
 
 export function MostrarCategorias() {                  //Muestra las categorias en el home
   const [categorias, setCategoria] = useState([]);
 
   useEffect(() => {
-    getCategories().payload
-      .then(resp => setCategoria(resp.data))
+    getCategories()
   }, []);
 
   return (
@@ -53,7 +54,7 @@ export function ProductosPorCategoria({ name }) {         //Muestra los producto
   )
 };
 
-export function AgregarCategoria() {                  //agrega categoria
+function AgregarCategoria({ postCategory }) {                  //agrega categoria
   const [nueva, setNueva] = useState([]);
   const [description, setDescription] = useState([])
 
@@ -68,20 +69,15 @@ export function AgregarCategoria() {                  //agrega categoria
   function handleSubmit(event) {
     event.preventDefault();
 
-    const usuario = {
+    const categoria = {
       name: nueva,
       description: description
     };
 
 
-    postCategory(usuario).payload
-      .then(function (resp) {
-        console.log(resp.data);
-        borrarInput()
-      })
-
-
+    postCategory(categoria)
   }
+
   function borrarInput() {
     document.getElementById("name").value = "";
     document.getElementById("description").value = "";
@@ -108,137 +104,17 @@ export function AgregarCategoria() {                  //agrega categoria
   )
 };
 
-export function ModificaCategoria() {                   //modifica categoria y borra categoria
-  const [state, setState] = useState({
-    id: "",
-    name: ""
-  });
-  const [CategGuardada, setCategGuardada] = useState([])
-
-  useEffect(() => {
-    getCategories().payload
-      .then(resp => setCategGuardada(resp.data))
-  }, []);
-
-  function handleChange(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const cambios = {
-      key: state.id,
-      name: state.name
-    }
-    const headers = {
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      }
-    }
-    const id = state.id
-    putCategoryId(id, cambios)
-      .then(resp => {
-        console.log(resp)
-        borrarInput()
-        reload()
-      })
-
-  }
-  function borrarInput() {
-    document.getElementById("id").value = "";
-    document.getElementById("name").value = "";
-  }
-  function reload() {
-    window.location.reload()
-  }
-
-  function delet() {
-    deleteCategory(state.id).then(resp => {
-      console.log(resp)
-      reload()
-    })
-  }
-
-  return (
-    <div >
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ width: "50%", border: "solid 1px" }}>
-          <div>
-            <legend>Lista de categorias disponibles para modificar/eliminar</legend>
-          </div>
-          <div className={estilo.grillaCategorias}>
-            <h4>ID</h4>
-            <h4>Nombre</h4>
-          </div>
-          <div>
-            {
-              CategGuardada.map(c => {
-                return (
-                  <div >
-                    <form key={c.id} >
-                      <fieldset style={{ height: "32px" }}>
-                        <div >
-                          <table class="table table-hover">
-                            <tbody>
-                              <tr class="table-secondary">
-                                <div className={estilo.grillaCategorias}>
-                                  <td >{c.id}</td>
-                                  <td>{c.name}</td>
-                                </div>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </fieldset>
-                    </form>
-                    <hr />
-                  </div>
-                )
-              })
-            }
-          </div>
-        </div>
-      </div>
-      <hr />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <form onSubmit={handleSubmit} style={{ width: "50%", border: "solid 1px" }}>
-          <fieldset>
-            <legend>Ingrese los datos que desea modificar/eliminar</legend>
-
-            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
-              <label style={{ textDecoration: 'none' }} for="exampleInputEmail1">Id</label>
-              <input type="number" class="form-control" aria-describedby="emailHelp" placeholder="Id del producto" id="id" name="id" onChange={handleChange} />
-            </div>
-
-            <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
-              <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Nombre</label>
-              <input type="text" class="form-control" placeholder="Nombre del producto" id="name" name="name" onChange={handleChange} />
-            </div>
-
-            <div>
-              <button onClick={handleSubmit} type="submit" value="Actualizar" class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
-              <button onClick={delet} class="btn btn-outline-danger" style={{ margin: "10px" }}>Borrar</button>
-            </div>
-
-          </fieldset>
-        </form>
-      </div>
-    </div>
-  )
-}
 
 
-export function ListaCategorias() {                     //lista de categorias en el catalogo
+
+export function ListaCategorias({ getCategories, categories }) {                     //lista de categorias en el catalogo
   const [categorias, setCategoria] = useState([]);
 
   useEffect(() => {
-    getCategories().payload
-      .then(resp => setCategoria(resp.data))
+    getCategories()
   }, []);
+
+  console.log(categories, "hola")
 
   return (
     <div style={{ position: "absolute" }}>
@@ -247,7 +123,7 @@ export function ListaCategorias() {                     //lista de categorias en
           <a href="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</a>
           <a href='/products' class="list-group-item list-group-item-action">Todas</a>
           {
-            categorias.map(n => {
+            categories.map(n => {
               if (n.name !== 'Sin Categoria') {
                 return (
                   <a href={`/products/category/${n.name}`} class="list-group-item list-group-item-action">{n.name}</a>
@@ -259,10 +135,21 @@ export function ListaCategorias() {                     //lista de categorias en
     </div>
   )
 }
-export function mapStateToProps(state) {
-  console.log(state.auth);
-  const { user } = state.auth.user;
+const mapStateToProps = state => {
   return {
-    user,
-  };
+    categories: state.reducer.categories
+  }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ putCategoryId, postCategory, getCategories }, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListaCategorias)
+

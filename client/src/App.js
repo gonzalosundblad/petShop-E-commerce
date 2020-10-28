@@ -6,9 +6,9 @@ import Nav from './Containers/Nav';
 import { CrudProduct } from './Containers/CrudProduct';
 import { MostrarCategorias } from './Containers/Categorias';
 import { ProductosPorCategoria } from './Containers/Categorias';
-import { AgregarCategoria } from './Containers/Categorias';
-import { ModificaCategoria } from './Containers/Categorias';
-import { ListaCategorias } from './Containers/Categorias';
+import AgregarCategoria from './Containers/Categorias';
+import ModificaCategoria from './Containers/modifyborrCateg';
+import ListaCategorias from './Containers/Categorias';
 import ModificayBorra from './Containers/Productos';
 import Product from './Components/Product';
 import Catalogo from './Components/CatalogoComp';
@@ -62,7 +62,7 @@ function App() {
           <Route exact path="/carrito" render={() => <Carrito />} />
           <Route exact path="/admin/AgregarCategoria" render={() => <AgregarCategoria />} />
           <Route exact path='/admin/ModificarProducto/' component={ModificayBorra} />
-          <Route exact path='/admin/ModificarCategoria/' render={() => <ModificaCategoria />} />
+          <Route exact path='/admin/ModificarCategoria/' component={ModificaCategoria} />
           <Route exact path='/admin/products/crud/' render={() => <CrudProduct />} />
           <Route exact path="/admin/products/crud/:id" render={({ match }) => <CrudProduct prod={match.params.id} />} />
           <Route exact path="/admin/ordenes" render={() => <Ordenes />} />
