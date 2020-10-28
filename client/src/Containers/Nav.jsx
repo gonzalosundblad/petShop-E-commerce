@@ -35,10 +35,6 @@ function NavBar({ user, funcionCatag, onSearch }) {
     return a + b
   }, 0)
 
-  function recargar() {
-    window.location.reload()
-  }
-
   // let admin;
   // if (user !== null && user.user.role === 'admin') {
   //   admin = <ListaDesplegable />
@@ -83,4 +79,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(NavBar);
+export const Nav = connect(mapStateToProps)(NavBar)
+
+

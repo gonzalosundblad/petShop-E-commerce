@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route } from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo'
-import Nav from './Containers/Nav';
+import {Nav} from './Containers/Nav';
 import { CrudProduct } from './Containers/CrudProduct';
 import { MostrarCategorias } from './Containers/Categorias';
 import { ProductosPorCategoria } from './Containers/Categorias';
@@ -46,7 +46,7 @@ function App() {
       <BrowserRouter>
         <Route path="/" render={() => <Nav onSearch={onSearch} />} />
         <div className={StyleApp.App}>
-          <Route exact path="/search" render={() => <Catalogo productos={resultados} />} />
+          
           <Route exact path="/" render={() => <Fondo />} />
           <Route exact path="/" component={MostrarCategorias} />
           <Route exact path="/" component={Animales} />
@@ -57,6 +57,7 @@ function App() {
           <Route exact path="/register" render={() => <AgregarUsuario />} />
           <Route path="/products" component={ListaCategorias} />
           <Route exact path="/products" component={MostrarCatalogo} />
+          <Route exact path="/products/search" render={() => <Catalogo productos={resultados} />} />
           <Route exact path={`/products/category/:Categoria`} render={({ match }) => <ProductosPorCategoria name={match.params.Categoria} />} />
           <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />} />
           <Route exact path="/carrito" render={() => <Carrito />} />
