@@ -29,6 +29,7 @@ import Reset from './Components/Reset';
 import OrdenCompra from './Containers/ordenCompra';
 import Carrusel from './Components/Carousel'
 import ForgotPassword from './Components/ForgotPassword';
+import ResetPassword from './Components/ResetPassword';
 
 
 function App() {
@@ -74,6 +75,8 @@ function App() {
           <Route exact path="/reset" render={() => <Reset />} />
           <Route exact path="/user/:id/ordenes" render={({ match }) => <OrdenCompra id={match.params.id} />} />
           <Route exact path="/forgot" render={() => <ForgotPassword />} />
+          <Route exact path="/resetpassword/:token" render={() => <ResetPassword/>} />
+
 
         </div>
       </BrowserRouter>

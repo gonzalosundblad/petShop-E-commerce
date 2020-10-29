@@ -51,9 +51,8 @@ const User = (sequelize) => {
       // }
     }
     ,
-    resetPasswordToken: {
-      type: DataTypes.TEXT
-    }
+    resetPasswordToken: DataTypes.STRING,
+    resetPasswordExpires: DataTypes.DATE
   });
 };
 

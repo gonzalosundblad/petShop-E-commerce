@@ -72,26 +72,25 @@ class ForgotPassword extends Component {
       <div>
         <h1 title={title} />
         <form className="profile-form" onSubmit={this.sendEmail}>
+            <p>Le enviaremos un mail a su correo. Abralo y vaya al link que contiene</p>
           <input
             id="email"
             label="email"
             value={email}
             onChange={this.handleChange('email')}
-            placeholder="Email Address"
+            placeholder="Ingrese su email"
           />
-          <button>Quiero mi mail para resetear contrasenia</button>
+          <button>Enviar</button>
         </form>
         {showNullError && (
           <div>
-            <p>The email address cannot be null.</p>
+            <p>Debe ingresar un email</p>
           </div>
         )}
         {showError && (
           <div>
-            <p>
-              That email address isn&apos;t recognized. Please try again or
-              register for a new account.
-            </p>
+            <p>Esta direccion de mail no corresponde a un usuario.</p>
+            <p>Intente de nuevo o registrese con una nueva cuenta.</p>
             
         <NavLink to='/register' className="nav-link">Registrarme</NavLink>
 
@@ -99,7 +98,7 @@ class ForgotPassword extends Component {
         )}
         {messageFromServer === 'recovery email sent' && (
           <div>
-            <h3>Password Reset Email Successfully Sent!</h3>
+            <h3>Su mail ha sido enviado! Revise en su casilla</h3>
           </div>
         )}
         <NavLink to='/' className="nav-link">Volver al inicio</NavLink>

@@ -76,14 +76,14 @@ const nodemailer = require('nodemailer');
         });
 
         const mailOptions = {
-          from: 'sundbladgonzalo@gmail.com',
+          from: 'henrypetshop.2020@gmail.com',
           to: `${user.email}`,
           subject: 'Link To Reset Password',
           text:
-            'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
-            + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n'
-            + `http://localhost:3001/reset/${token}\n\n`
-            + 'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+            'Este es un mail para actualizar la contrasenia de su cuenta de HenryPet\n\n'
+            + 'Por favor cliquea en el siguiente link, o copielo y peguelo en el navegador para completar el proceso. La validez del link es de 60 minutos:\n\n'
+            + `http://localhost:3000/resetpassword/${token}\n\n`
+            + 'Si usted no hizo este pedido, por favor ignore este mail y su contrasenia sera conservada.\n',
         };
 
         console.log('sending mail');
@@ -93,7 +93,7 @@ const nodemailer = require('nodemailer');
             console.error('there was an error: ', err);
           } else {
             console.log('here is the res: ', response);
-            res.status(200).json('recovery email sent');
+            res.status(200).send('recovery email sent');
           }
         });
       }

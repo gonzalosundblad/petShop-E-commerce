@@ -13,6 +13,7 @@ import { loginRequest } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Login({ user, isLoggedIn, loginRequest }) {
   const [input, setInput] = useState({
@@ -92,6 +93,7 @@ function Login({ user, isLoggedIn, loginRequest }) {
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
                   </div>
                   <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button>
+                  <NavLink to='/forgot' class="btn btn-outline-danger" style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>
                 </fieldset>
               </form>
             </div>
