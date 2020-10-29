@@ -26,7 +26,7 @@ function Product({ user, id2 }) {
         setImage(resp.data.image);
         setId(resp.data.id);
         setPrice(resp.data.price);
-        setStock(resp.data.stock)
+        setStock(resp.data.stock);
       }
       )
   }, []);
