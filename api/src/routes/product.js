@@ -79,35 +79,34 @@ server.post('/', isAdmin,(req, res) => {									//AGREGA NUEVOS PRODUCTOS
 			res.json(productSinId)
 		})
 	} else {
-			var category = Category.findAll({
-				where: {
-					id: categoryId
+		var category = Category.findAll({
+			where: {
+				id: categoryId
+			}
+		})
+		var producto = Product.create({
+			name,
+			description,
+			price,
+			stock,
+			image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
+		})
+		Promise.all([category, producto])
+			.then(values => {
+				var category = values[0]
+				var producto = values[1]
+				if(category && producto) {
+					producto.addCategories(category)
+					res.json(producto)
+				} else {
+					res.json(producto)
 				}
+			}).catch(err => {
+				console.log('Error: ', err)
+				res.send('Ocurrio un error :(').status(404)
 			})
-			var producto = Product.create({
-				name,
-				description,
-				price,
-				stock,
-				image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
-			})
-
-			Promise.all([category, producto])
-				.then(values => {
-					var category = values[0]
-					var producto = values[1]
-					if(category && producto) {
-						producto.addCategories(category)
-						res.json(producto)
-					} else {
-						res.json(producto)
-					}
-				}).catch(err => {
-					console.log('Error: ', err)
-					res.send('Ocurrio un error :(').status(404)
-				})
 		}
-	})
+})
 
 server.put('/:id', isAdmin, (req, res) => {       							//MODIFICA UN PRODUCTO SEGUN SU ID
     const { name, description, price, stock, image } = req.body;

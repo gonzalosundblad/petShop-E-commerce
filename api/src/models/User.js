@@ -50,6 +50,9 @@ const User = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }
+    ,
+    resetPasswordToken: DataTypes.STRING,
+    resetPasswordExpires: DataTypes.DATE
   });
 };
 
