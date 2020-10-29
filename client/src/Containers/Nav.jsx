@@ -12,24 +12,55 @@ import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-
-function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
+function NavBar({ user, logged, funcionCatag, onSearch }) {
   //console.log(user.user.role);
-  const [carro, setCarro] = useState([])
+  const [carro, setCarro] = useState([]);
+  const [ total, setTotal ] = useState(0)
   useEffect(() => {
-    if (user === null) {
-      user = 1
-    } else {
-      user = user.user.user_id
-      // .user.user_id
-    }
-    getCarrito(user)
+    var precio = [];
+    console.log(user)
+    if (user){
+      getCarrito(user.user.user_id).payload
+        .then(res => {
+          if (!res.data[0]) {
+            console.log('no hay productos')
+          } else {
+            setCarro(res.data[0].products)
+          }
+        })
 
-  }, [])
-  var precio = carro.map(e => e.price * e.LineaDeOrden.quantity)
-  var total = precio.reduce(function (a, b) {
-    return a + b
-  }, 0)
+    }else if (localStorage.length > 0){
+       
+          let x = []
+          //recorro el local storage
+          for(var i = 0; i < localStorage.length; i++){
+            let clave = localStorage.key(i);
+            console.log(clave)
+            let prod = (localStorage.getItem(clave));
+                if(typeof(parseInt(clave)) === NaN ){
+                    x.push(prod)
+                }     
+                
+                  
+          }
+          setCarro(x);
+          precio = x.map(e => {
+            return parseInt(e.price) * parseInt(e.quantity)
+          }) 
+        }
+        else{
+          console.log("no hay valores en el local storage ni tampoco usuario");
+        }
+      
+        
+      setTotal(precio.reduce(function (a, b) {
+        return a + b
+      }, 0))
+    }, [])
+  
+  function recargar() {
+    window.location.reload()
+  }
 
   // let admin;
   // if (user !== null && user.user.role === 'admin') {
@@ -58,7 +89,9 @@ function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
           </NavLink>
           <UsuarioLogeado />
           <div className={StyleNav.iniciarSesion}>
-            <NavLink class="nav-link text-white" to='/login' >Iniciar Sesión</NavLink>
+          {!logged ? 
+            <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> 
+            : null } 
           </div>
         </div>
       </div>
@@ -69,9 +102,10 @@ function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-
+  const { user, logged } = state.auth;
   return {
-    user: state.auth.user
+    user,
+    logged
   };
 }
 

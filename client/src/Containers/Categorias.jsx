@@ -95,7 +95,8 @@ export function ListaCategorias({ getCategories, categories }) {                
 
   useEffect(() => {
     getCategories()
-    setCategoria(categories)
+    setCategoria(categorias)
+    console.log(categorias)
   }, []);
 
   return (

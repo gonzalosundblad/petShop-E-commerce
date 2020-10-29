@@ -7,10 +7,11 @@ import Changuito from '../imagenes/carrito+.png'
 import Reviews from './reviews.jsx'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { saveState } from '../Redux/reducer/localStorage';
 
 
 
-function Product({ user, id2, products, getProductById }) {
+function Product({ user, id2, products, postCarrito, getProductById }) {
 
   const [quantity, setQuantity] = useState();
 
@@ -22,30 +23,30 @@ function Product({ user, id2, products, getProductById }) {
 
   function handleChange(e) {
     setQuantity(e.target.value);
+
+    console.log(user);
   }
   function subirCarrito() {
-    if (user.logged) {
-      postCarrito(user.user.user_id, {
+    const {image, name, price} = products.products
+    console.log(user.user.logged)
+    console.log(image)
+    if (user.user.logged) {
+      postCarrito(user.user.user.user_id, {
         product_id: id2,
         quantity: quantity,
-        price: products.products.price
+        price
       }).payload
         .then(function (resp) {
           console.log(resp.data)
-          window.location.replace("http://localhost:3000/carrito")
+          window.location.replace("http://localhost:3000/products")
         })
+        .catch(err => "Error al cargar producto")
     }
-    if (user.logged === false) {
-      postCarrito(2, {
-        product_id: id2,
-        quantity: quantity,
-        price: products.products.price
-      }).payload
-        .then(function (resp) {
-          console.log(resp.data)
-          window.location.replace("http://localhost:3000/carrito")
-        })
-    }
+    else if(quantity >= 0 ){
+        saveState({product_id: id2, quantity, price, image, name, })
+        window.location.replace("http://localhost:3000/products")
+        }
+    
   }
 
   if (products.products.stock <= 0) {
@@ -118,7 +119,7 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getProductById }, dispatch)
+    ...bindActionCreators({ getProductById, postCarrito }, dispatch)
   }
 }
 

@@ -52,6 +52,10 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
   }
   function loginUser() {
     loginRequest(input)
+    console.log(user);
+    // if (user.user.isLoggedIn) {
+    //   window.location.href = '/'
+    // }
   }
 
   return (
@@ -122,13 +126,14 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
   )
 }
 
-const mapStateToProps = state => {
-  //   console.log(state.auth.user.user.user_id);
+function mapStateToProps(state) {
+  // console.log(state.auth);
+  const { user, isLoggedIn } = state.auth;
   return {
-    user: state.auth,
-    users: state.auth.user
-  }
+    user
+  }    
 }
+
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,

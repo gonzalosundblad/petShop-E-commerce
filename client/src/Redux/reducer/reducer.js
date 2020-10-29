@@ -8,7 +8,7 @@ export const initialState = {
   products: [],
   categories: [],
   users: [],
-  carrito: loadState === undefined ? [] : loadState(),
+  carrito: [],
   order: [],
   reviews: [],
 
