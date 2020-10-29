@@ -5,6 +5,7 @@ import { putOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
 
 function OrdenUsuario(props) {
@@ -91,8 +92,9 @@ function OrdenUsuario(props) {
           <h2 >Total: </h2>
         </div>
         <div className={StyleOrden.botonesFinales} >
-          <button onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido</button>
-          <button onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</button>
+          <NavLink to='/cancel' onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</NavLink>
+          <NavLink to='/checkoutlog' onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido(logueado)</NavLink>
+          <NavLink to='/checkoutguest' onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido(No logueado)</NavLink>
         </div>
       </div>
     )
