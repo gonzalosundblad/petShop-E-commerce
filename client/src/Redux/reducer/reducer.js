@@ -114,7 +114,7 @@ export default (state = initialState, action) => {
     case GET_CARRO:
       return {
         ...state,
-        carrito: action.payload,
+        carrito: action.payload
       }
     case GET_CREADA:
       return {
@@ -124,7 +124,7 @@ export default (state = initialState, action) => {
     case POST_CARRO:  //agrega un producto al carrito
       return {
         ...state,
-        carrito: state.carrito.concat(action.carrito)
+        carrito: state.carrito.concat(action.payload)
       }
     case PUT_CANTIDAD_CARRO:
       return {

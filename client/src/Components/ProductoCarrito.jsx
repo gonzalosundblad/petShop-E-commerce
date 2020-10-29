@@ -1,34 +1,53 @@
 import React, { useReducer } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import Basura from '../imagenes/basura.png';
-import { putCantidadOrden } from '../Redux/actionsCarrito';
+import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 
-export default function ProductoCarritocard({id, image, name, price, LineaDeOrden, funcionDelete, funcionInput}){
+function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcionDelete, funcionInput}){
 
     var total= price * LineaDeOrden;
 
   function handleChange(e){
     var quantity =  e.target.value
-    console.log(quantity)
-
-    var cambio = {
-      product_id: id,
-      quantity: quantity
-    }
-    function reload(){
-      window.location.reload()
-    }
-
-    putCantidadOrden(2, cambio)
-    .then(resp => {
-      console.log(cambio)
-      console.log(resp)
-     reload()
-    })
-
   }
+    // var cambio = {
+    //   product_id: id,
+    //   quantity: quantity
+    // }
+
+    // putCantidadOrden(2, cambio)
+    // .then(resp => {
+    //   console.log(cambio)
+    //   console.log(resp)
+    //  reload()
+    // })
+
   
 
+function reload(){
+  window.location.reload()
+}
+
+  function onDelete() {
+    // console.log(e)
+    // const f = (element) => element.id == e.target.value
+    // let index =  products.findIndex(f)
+    // // setBorrado(products.splice(index, 1))
+    // var borrado = products.splice(index, 1)
+
+
+    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+    if (user.logged) {
+      deleteCarritoProd(user.user.user_id, id)
+     } else {
+      localStorage.removeItem(id)
+    }
+    reload()
+  }
+  
+  
     return(
         <div className={Estilo.producto}>
             {/* <div key={id}> */}
@@ -52,7 +71,7 @@ export default function ProductoCarritocard({id, image, name, price, LineaDeOrde
                 <div className={Estilo.botonBorrar}>
                     
 
-                    <   button onClick={(id) => funcionDelete(id)} value={id} >
+                    <   button onClick={onDelete} value={id} >
                         <img className={Estilo.basura} src={Basura} alt=""/>
                     </button>
                 </div>
@@ -60,5 +79,23 @@ export default function ProductoCarritocard({id, image, name, price, LineaDeOrde
         </div>
         )
 }
+
+const mapDispatchToProps =  dispatch => {
+  return {
+    dispatch,
+    ...bindActionCreators({deleteCarritoProd} , dispatch)
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    carrito: state.reducer.carrito
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductoCarritocard)
 
 // export total;

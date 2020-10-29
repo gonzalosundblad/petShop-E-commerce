@@ -19,14 +19,15 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
     var precio = [];
     console.log(user)
     if (user){
-      getCarrito(user.user.user_id).payload
-        .then(res => {
-          if (!res.data[0]) {
-            console.log('no hay productos')
-          } else {
-            setCarro(res.data[0].products)
-          }
-        })
+      getCarrito(user.user.user_id)
+      // .payload
+      //   .then(res => {
+      //     if (!res.data[0]) {
+      //       console.log('no hay productos')
+      //     } else {
+      //       setCarro(res.data[0].products)
+      //     }
+      //   })
 
     }else if (localStorage.length > 0){
        
