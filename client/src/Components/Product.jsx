@@ -7,10 +7,11 @@ import Changuito from '../imagenes/carrito+.png'
 import Reviews from './reviews.jsx'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { saveState } from '../Redux/reducer/localStorage';
 
 
 
-function Product({ user, id2, products, getProductById }) {
+function Product({ user, id2, products, postCarrito, getProductById }) {
 
   const [quantity, setQuantity] = useState();
 
@@ -22,25 +23,28 @@ function Product({ user, id2, products, getProductById }) {
 
   function handleChange(e) {
     setQuantity(e.target.value);
+
+    console.log(user);
   }
   function subirCarrito() {
     const {image, name, price} = products.products
-    if (user.logged) {
+    console.log(user.user.logged)
+    console.log(image)
+    if (user.user.logged) {
       postCarrito(user.user.user.user_id, {
         product_id: id2,
         quantity: quantity,
-        price,
-        image
+        price
       }).payload
         .then(function (resp) {
           console.log(resp.data)
           window.location.replace("http://localhost:3000/products")
         })
+        .catch(err => "Error al cargar producto")
     }
-    else {
-        
-        localStorage.setItem(id2, JSON.stringify({product_id: id2, quantity, price, image, name, }))
-          window.location.replace("http://localhost:3000/products")
+    else if(quantity >= 0 ){
+        saveState({product_id: id2, quantity, price, image, name, })
+        window.location.replace("http://localhost:3000/products")
         }
     
   }

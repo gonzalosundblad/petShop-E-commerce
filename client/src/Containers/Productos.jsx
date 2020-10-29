@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 
 
 
+
 export function ModificayBorra({ products, getProductsRequest, putId, deleteProduct }) {    //modifica y borra producto
   const [state, setState] = useState({
     id: "",
@@ -18,7 +19,6 @@ export function ModificayBorra({ products, getProductsRequest, putId, deleteProd
   useEffect(() => {
     getProductsRequest()
   }, []);
-  console.log(products.products)
   function handleChange(e) {
     setState({
       ...state,

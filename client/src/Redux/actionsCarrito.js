@@ -11,6 +11,7 @@ export function getProdOrder(usuario) { //obtener todos los productos del carrit
   return { type:GET_CREADA, payload: request}; }
 
 export function postCarrito(usuario, products){ //Agregar productos al carrito
+  console.log(products)
   const request = axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
   return { type: POST_CARRO , payload : request } ; }
 //--

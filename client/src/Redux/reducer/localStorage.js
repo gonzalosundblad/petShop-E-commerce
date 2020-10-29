@@ -1,20 +1,21 @@
-// var array = []
+var array = []
 
-// export const loadState = () => {
-//   try {
-//     const serializedData = localStorage.getItem("carrito");
-//     if (serializedData === null) {
-//       return undefined;
-//     }
-//     return JSON.parse(serializedData);
-//   } catch (error) {
-//     return undefined;
-//   }
-// };
-// export const saveState = (state) => {
-//   try {
-//     let serializedData = JSON.stringify(state);
-//     localStorage.setItem("carrito", serializedData);
-//   } catch (error) {
-//   }
-// };
+export const loadState = () => {
+    const request = [];
+    for(var i = 0; i < localStorage.length; i++){
+      let clave = localStorage.key(i);
+      if(clave !== "carrito" && clave !== "user"){
+        let prod = JSON.parse(localStorage.getItem(clave));
+                request.push(prod)
+            console.log(request);
+      }
+    }
+    return request;
+};
+export const saveState = (state) => {
+  try {
+    let serializedData = JSON.stringify(state);
+    localStorage.setItem(state.product_id, serializedData);
+  } catch (error) {
+  }
+};

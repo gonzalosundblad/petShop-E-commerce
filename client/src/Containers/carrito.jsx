@@ -5,8 +5,9 @@ import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { loadState } from '../Redux/reducer/localStorage';
 
-function Carrito(user) {
+function Carrito({user, carrito, getCarrito, deleteCarrito, deleteCarritoUno}) {
   const [products, setProducts] = useState([])
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
@@ -14,7 +15,8 @@ function Carrito(user) {
 
   useEffect(() => {
       // si el usuario esta logueado
-    if (user.user.logged) {
+      console.log(user.logged)
+    if (user.logged) {
       getCarrito(user.user.user_id).payload
         .then(res => {
           if (!res.data[0]) {
@@ -26,19 +28,8 @@ function Carrito(user) {
         })
     }
     else{
-      const request = [];
-      for(var i = 0; i < localStorage.length; i++){
-        let clave = localStorage.key(i);
-        console.log(clave);
-        if(typeof(JSON.parse(localStorage.getItem(clave))) !== "string"){
-          let prod = JSON.parse(localStorage.getItem(clave));
-              if(typeof(parseInt(clave)) === "number" ){
-                  request.push(prod)
-              }     
-              console.log(request);
-        }
-      }
-      setProducts(request)
+      
+      setProducts(loadState())
     }
   }, [])
 
@@ -48,10 +39,11 @@ function Carrito(user) {
   }
 
   function vaciar() {
-    if (user.user.isLoggedIn) {
-      deleteCarrito(user.useruser_id).then(resp => {
-        
-      })
+    // Todavia no anda
+    if (user.logged) {
+      deleteCarrito(user.user.user_id)
+      .then (resp => console.log(resp))
+      
     } 
     else{
       localStorage.clear()
@@ -68,7 +60,7 @@ function Carrito(user) {
 
 
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    if (user.user.logged) {
+    if (user.logged) {
       console.log(user.user.id)
       deleteCarritoUno(user.user.user_id, id)
         .then(resp => {
@@ -89,7 +81,7 @@ function Carrito(user) {
         <a href="/products">Ir al Catálogo</a>
       </div>
     )
-  } else if(user.user.isLoggedIn){
+  } else if(user.logged){
     const order_id = products.map(id => id.LineaDeOrden.order_id)
     console.log('hay productos')
 
@@ -102,6 +94,7 @@ function Carrito(user) {
           return (
             <div>
               <ProductoCarrito
+                key = {e.id}
                 id={e.id}
                 name={e.name}
                 price={e.price}
@@ -136,6 +129,7 @@ function Carrito(user) {
         return (
           <div>
             <ProductoCarrito
+              key = {e.id}
               id={e.id}
               name={e.name}
               price={e.price}
@@ -164,14 +158,14 @@ function Carrito(user) {
 const mapDispatchToProps =  dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({getCarrito, deleteCarrito}, dispatch)
+    ...bindActionCreators({getCarrito, deleteCarrito,deleteCarritoUno} , dispatch)
   }
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.auth,
-    
+    user: state.auth.user,
+    carrito: state.reducer
   }
 }
 export default connect(
