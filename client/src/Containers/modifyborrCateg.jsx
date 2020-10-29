@@ -7,7 +7,7 @@ import estilo from '../Estilos/forms.module.css';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-function ModificaCategoria({ categories, putCategoryId, getCategories }) {                   //modifica categoria y borra categoria
+function ModificaCategoria({ categories, putCategoryId, getCategories, deleteCategory }) {                   //modifica categoria y borra categoria
   const [state, setState] = useState({
     id: "",
     name: ""
@@ -44,11 +44,8 @@ function ModificaCategoria({ categories, putCategoryId, getCategories }) {      
   }
 
 
-  function delet() {
-    deleteCategory(state.id).then(resp => {
-      console.log(resp)
-      
-    })
+  function onDelete() {
+    deleteCategory(state.id)
   }
 
   return (
@@ -108,8 +105,8 @@ function ModificaCategoria({ categories, putCategoryId, getCategories }) {      
             </div>
 
             <div>
-              <button onClick={handleSubmit} type="submit" value="Actualizar" class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
-              <button onClick={delet} class="btn btn-outline-danger" style={{ margin: "10px" }}>Borrar</button>
+              <button onClick={handleSubmit} class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
+              <button onClick={onDelete} class="btn btn-outline-danger" style={{ margin: "10px" }}>Borrar</button>
             </div>
 
           </fieldset>
@@ -134,7 +131,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putCategoryId, getCategories }, dispatch)
+    ...bindActionCreators({ putCategoryId, getCategories, deleteCategory }, dispatch)
   }
 }
 

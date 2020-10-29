@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
 
-export function MostrarCategorias() {                  //Muestra las categorias en el home
+export function MostrarCategorias({ getCategories, categories }) {                  //Muestra las categorias en el home
   const [categorias, setCategoria] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export function MostrarCategorias() {                  //Muestra las categorias 
           <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop2" >
             {
-              categorias.map(n => {
+              categories.map(n => {
                 if (n.name !== 'Sin Categoria') {
                   return (
                     <a class="dropdown-item" height='30px' href={`/products/category/${n.name}`}>{n.name}</a>)
@@ -38,21 +38,6 @@ export function MostrarCategorias() {                  //Muestra las categorias 
   )
 };
 
-export function ProductosPorCategoria({ name }) {         //Muestra los productos segun la categoria
-
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getProductByCategory(name).payload
-      .then(resp => setProducts(resp.data))
-  }, []);
-
-  return (
-    <div >
-      <Catalogo productos={products} />
-    </div>
-  )
-};
 
 function AgregarCategoria({ postCategory }) {                  //agrega categoria
   const [nueva, setNueva] = useState([]);
@@ -78,10 +63,7 @@ function AgregarCategoria({ postCategory }) {                  //agrega categori
     postCategory(categoria)
   }
 
-  function borrarInput() {
-    document.getElementById("name").value = "";
-    document.getElementById("description").value = "";
-  }
+
 
 
   return (
@@ -112,6 +94,8 @@ export function ListaCategorias({ getCategories, categories }) {                
 
   useEffect(() => {
     getCategories()
+    setCategoria(categorias)
+    console.log(categorias)
   }, []);
 
   console.log(categories, "hola")
@@ -123,7 +107,7 @@ export function ListaCategorias({ getCategories, categories }) {                
           <a href="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</a>
           <a href='/products' class="list-group-item list-group-item-action">Todas</a>
           {
-            categories.map(n => {
+            categorias.map(n => {
               if (n.name !== 'Sin Categoria') {
                 return (
                   <a href={`/products/category/${n.name}`} class="list-group-item list-group-item-action">{n.name}</a>
@@ -144,12 +128,25 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putCategoryId, postCategory, getCategories }, dispatch)
+    ...bindActionCreators({ putCategoryId, postCategory, getCategories, getProductByCategory }, dispatch)
   }
 }
 
-export default connect(
+export const agregarCategoria = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AgregarCategoria)
+
+export const listaCategorias = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ListaCategorias)
+
+export const mostrarCategorias = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MostrarCategorias)
+
+
+
 
