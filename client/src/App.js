@@ -31,8 +31,9 @@ import Carrusel from './Components/Carousel'
 import ForgotPassword from './Components/ForgotPassword';
 import ResetPassword from './Components/ResetPassword';
 import Cancel from './Components/Cancel';
-import CheckoutLogeado from './Components/CheckoutLogeado';
+import Checkout from './Components/Checkout';
 import CheckoutNoLog from './Components/CheckoutNoLog';
+import Pagos from './Components/Pagos';
 
 
 function App() {
@@ -80,9 +81,10 @@ function App() {
           <Route exact path="/forgot" render={() => <ForgotPassword />} />
           <Route exact path="/resetpassword/:token" render={() => <ResetPassword/>} />
           <Route exact path="/perfil" render={() => <Perfil />} />
-          <Route path='/cancel' render={() => <Cancel/>} />
-          <Route path='/checkoutlog' render={() => <CheckoutLogeado/>} />
-          <Route path='/checkoutguest' render={() => <CheckoutNoLog/>} />
+          <Route exact path='/cancel' render={() => <Cancel/>} />
+          <Route exact path='/checkout' render={() => <Checkout/>} />
+          {/* <Route exact path='/checkoutGuest' render={() => <CheckoutNoLog/>} /> */}
+          <Route exact path='/checkout/pago' render={() => <Pagos/>} />
 
 
 

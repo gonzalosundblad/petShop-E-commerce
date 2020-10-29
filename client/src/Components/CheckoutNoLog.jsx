@@ -1,6 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { NavLink } from 'react-router-dom';
 
+
+// AL FINAL CREO QUE NO SE USA ESTE COMPONENTE. EN EL OTRO COMP DE CHECKOUT HAGO UN RENDERIZADO CONDICIONAL DE SI ESTA LOGEADO O NO Y LISTO
+// NO BORRAR X LAS DUDAS
 
 function CheckoutNoLog() {
     return (
@@ -89,7 +93,7 @@ function CheckoutNoLog() {
   </div>
   </div>
     <hr/>
-    <button type="submit" class="btn btn-primary">Continuar</button>
+    <NavLink to='/checkout/pago' type="submit" class="btn btn-primary">Continuar</NavLink>
   </form>
       </div>
     );

@@ -93,8 +93,7 @@ function OrdenUsuario(props) {
         </div>
         <div className={StyleOrden.botonesFinales} >
           <NavLink to='/cancel' onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</NavLink>
-          <NavLink to='/checkoutlog' onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido(logueado)</NavLink>
-          <NavLink to='/checkoutguest' onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido(No logueado)</NavLink>
+          <NavLink to='/checkout' onClick={cambioEstado} className={StyleOrden.botoncitos} >Realizar Pedido</NavLink>
         </div>
       </div>
     )
