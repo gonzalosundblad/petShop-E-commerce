@@ -31,10 +31,6 @@ function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
     return a + b
   }, 0)
 
-  function recargar() {
-    window.location.reload()
-  }
-
   // let admin;
   // if (user !== null && user.user.role === 'admin') {
   //   admin = <ListaDesplegable />
@@ -87,3 +83,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+
+
+// export const Nav = connect(mapStateToProps)(NavBar)
+
+
