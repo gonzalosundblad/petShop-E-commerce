@@ -6,51 +6,40 @@ import { postCarrito } from '../Redux/actionsCarrito';
 import Changuito from '../imagenes/carrito+.png'
 import Reviews from './reviews.jsx'
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 
-function Product({ user, id2 }) {
-  //  {id, name, description, price, stock, imagen }
-  const [name, setName] = useState();
-  const [description, setDescription] = useState();
-  const [image, setImage] = useState();
-  const [product_id, setId] = useState();
-  const [price, setPrice] = useState();
-  const [stock, setStock] = useState();
+
+function Product({ user, id2, products, getProductById }) {
+
   const [quantity, setQuantity] = useState();
 
   useEffect(() => {
-    getProductById(id2).payload
-      .then(function (resp) {
-        setName(resp.data.name);
-        setDescription(resp.data.description);
-        setImage(resp.data.image);
-        setId(resp.data.id);
-        setPrice(resp.data.price);
-        setStock(resp.data.stock);
-      }
-      )
+    getProductById(id2)
   }, []);
+
+  console.log(user, "hola")
 
   function handleChange(e) {
     setQuantity(e.target.value);
   }
   function subirCarrito() {
-    if (user.isLoggedIn) {
-      postCarrito(user.user.user.user_id, {
+    if (user.logged) {
+      postCarrito(user.user.user_id, {
         product_id: id2,
         quantity: quantity,
-        price: price
+        price: products.products.price
       }).payload
         .then(function (resp) {
           console.log(resp.data)
           window.location.replace("http://localhost:3000/carrito")
         })
     }
-    if (user.isLoggedIn === false) {
+    if (user.logged === false) {
       postCarrito(2, {
         product_id: id2,
         quantity: quantity,
-        price: price
+        price: products.products.price
       }).payload
         .then(function (resp) {
           console.log(resp.data)
@@ -59,15 +48,15 @@ function Product({ user, id2 }) {
     }
   }
 
-  if (stock <= 0) {
+  if (products.products.stock <= 0) {
     return (
       <div className={Style.product}>
         <div className={Style.contenedor}>
-          <img className={Style.img} src={image} alt="" />
+          <img className={Style.img} src={products.products.image} alt="" />
           <div className={Style.imgNameCart}>
             <div className={Style.containerLyrics}>
-              <h1>{name}</h1>
-              <h2>${price}</h2>
+              <h1>{products.products.name}</h1>
+              <h2>${products.products.price}</h2>
             </div>
             <div className={Style.cantidadStock}>
               <div className={Style.stock}>
@@ -79,7 +68,7 @@ function Product({ user, id2 }) {
         <div className={Style.description}>
           <h3>Descripción:</h3>
           <hr />
-          <h4>{description}</h4>
+          <h4>{products.products.description}</h4>
         </div>
       </div>
     )
@@ -88,22 +77,22 @@ function Product({ user, id2 }) {
     return (
       <div className={Style.product}>
         <div className={Style.contenedor}>
-          <img className={Style.img} src={image} alt="" />
+          <img className={Style.img} src={products.products.image} alt="" />
           <div className={Style.imgNameCart}>
             <div className={Style.containerLyrics}>
-              <h1>{name}</h1>
-              <h2>${price}</h2>
+              <h1>{products.products.name}</h1>
+              <h2>${products.products.price}</h2>
             </div>
             <div className={Style.cantidadStock}>
               <div className={Style.cantidad}>
                 <label>Seleccione Cantidad:</label>
-                <input classname={Style.input} type="number" min='0' max={stock} placeholder='Nº' onChange={handleChange} />
+                <input classname={Style.input} type="number" min='0' max={products.products.stock} placeholder='Nº' onChange={handleChange} />
                 <button className={Style.boton} onClick={subirCarrito}>
                   <img className={Style.changuito} src={Changuito} />
                 </button>
               </div>
               <div className={Style.stock}>
-                <h5>Stock diponible: {stock} unidades</h5>
+                <h5>Stock diponible: {products.products.stock} unidades</h5>
               </div>
             </div>
           </div>
@@ -111,7 +100,7 @@ function Product({ user, id2 }) {
         <div className={Style.description}>
           <h3>Descripción:</h3>
           <hr />
-          <h4>{description}</h4>
+          <h4>{products.products.description}</h4>
         </div>
         <Reviews id={id2} />
       </div>
@@ -121,9 +110,20 @@ function Product({ user, id2 }) {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth
+    user: state.auth.user,
+    products: state.reducer
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getProductById }, dispatch)
+  }
+}
+
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Product)

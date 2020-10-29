@@ -3,18 +3,19 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { getUser } from '../Redux/actionsOrden';
 import Estilo from '../Estilos/forms.module.css';
-import { postAdmin } from '../Redux/actionsLog';
+import { postAdmin } from '../Redux/actionsLogin';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-export default function Usuarios() {
-  const [productsGuardados, setProductsGuardados] = useState([])
+function Usuarios({ getUser, users, postAdmin }) {
+
 
 
   useEffect(() => {
-    getUser().payload
-      .then(res => {
-        setProductsGuardados(res.data)
-      })
+    getUser()
   }, [])
+
+  console.log(users)
   function handleSubmit(e) {
     e.preventDefault()
   }
@@ -22,12 +23,11 @@ export default function Usuarios() {
   function admin(e) {
     const id = e.target.value;
     postAdmin(id)
-    window.location.reload()
   }
 
   return (
     <div className={Estilo.forms} > {
-      productsGuardados && productsGuardados.map(encontrado => {
+      users && users.map(encontrado => {
         return (
           <form className={Estilo.resultado} key={encontrado.user_id} onSubmit={handleSubmit}>
             <label>Id Usuario:</label>
@@ -47,3 +47,21 @@ export default function Usuarios() {
   )
 }
 
+
+const mapStateToProps = state => {
+  return {
+    users: state.reducer.users
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getUser, postAdmin }, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Usuarios)

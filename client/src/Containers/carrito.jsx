@@ -4,36 +4,24 @@ import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '.
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 
 
-function Carrito(user) {
+
+function Carrito({ user, getCarrito }) {
   const [products, setProducts] = useState([])
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
 
+  console.log(user, "hola")
 
   useEffect(() => {
-    if (user.user.isLoggedIn) {
-      getCarrito(user.user.user.user.user_id).payload
-        .then(res => {
-          if (!res.data[0]) {
-            console.log("agregar")
-          }
-          else {
-            setProducts(res.data[0].products)
-          }
-        })
+    if (user.logged) {
+      getCarrito(user.user.user_id)
     }
-    if (user.user.isLoggedIn === false) {
-      getCarrito(2).payload
-        .then(res => {
-          if (!res.data[0]) {
-            console.log("agregar")
-          }
-          else {
-            setProducts(res.data[0].products)
-          }
-        })
+    if (user.logged === false) {
+      getCarrito(2)
     }
   }, [])
 
@@ -43,32 +31,32 @@ function Carrito(user) {
   }
 
   function vaciar() {
-    if (user.user.isLoggedIn) {
-      deleteCarrito(user.user.user.user.user_id).then(resp => {
+    if (user.logged) {
+      deleteCarrito(user.user.user_id).then(resp => {
         reload()
       })
     }
-    if (user.user.isLoggedIn === false) {
+    if (user.logged === false) {
       deleteCarrito(2).then(resp => {
         reload()
       })
     }
   }
-  function onDelete() {
-    // console.log(e)
-    // const f = (element) => element.id == e.target.value
-    // let index =  products.findIndex(f)
-    // // setBorrado(products.splice(index, 1))
-    // var borrado = products.splice(index, 1)
+  // function onDelete() {
+  //   // console.log(e)
+  //   // const f = (element) => element.id == e.target.value
+  //   // let index =  products.findIndex(f)
+  //   // // setBorrado(products.splice(index, 1))
+  //   // var borrado = products.splice(index, 1)
 
-    var product_id = 2
+  //   var product_id = 2
 
-    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    deleteCarritoUno(2, product_id)
-      .then(resp => {
-        console.log(resp)
-      })
-  }
+  //   //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+  //   deleteCarritoUno(2, product_id)
+  //     .then(resp => {
+  //       console.log(resp)
+  //     })
+  // }
 
 
   const order_id = products.map(id => id.LineaDeOrden.order_id)
@@ -80,7 +68,7 @@ function Carrito(user) {
     return (
       <div>
         <h1>Agregar productos al carrito</h1>
-        <a href="/products">Ir al Catálogo</a>
+        <NavLink to="/products">Ir al Catálogo</NavLink>
       </div>
     )
   } else {
@@ -100,7 +88,6 @@ function Carrito(user) {
                 price={e.price}
                 image={e.image}
                 LineaDeOrden={e.LineaDeOrden.quantity}
-                funcionDelete={onDelete}
               />
             </div>
           )
@@ -109,22 +96,35 @@ function Carrito(user) {
         }
         <div className={Estilo.botonesFinales}>
           <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
-          <a className={Estilo.botonesFinales} href='/products'>
+          <NavLink className={Estilo.botonesFinales} to='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
-          </a>
-          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+          </NavLink>
+          <NavLink className={Estilo.botonesFinales} to={`/order/${order_id[0]}`} >
             <span className={Estilo.botoncitos}  >Finalizar Compra</span>
-          </a>
+          </NavLink>
         </div>
       </div>
     )
   }
 }
-const mapStateToProps = state => {
+
+
+function mapStateToProps(state) {
+  // console.log(state.auth);
+
   return {
     user: state.auth
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getCarrito }, dispatch)
   }
 }
+
 export default connect(
-  mapStateToProps,
+  mapDispatchToProps,
+  mapStateToProps
 )(Carrito)

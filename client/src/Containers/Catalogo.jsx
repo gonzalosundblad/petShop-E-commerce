@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Catalogo from '../Components/CatalogoComp'
 import { getProductsRequest } from '../Redux/actions';
 import { connect } from 'react-redux'
-import store from '../Redux/store'
-import { ModificayBorra } from './Productos';
+import ProductCard from '../Components/ProductCard';
+import StyleCatalogo from '../Estilos/CatalogoComp.module.css'
+
 
 
 
@@ -15,8 +15,17 @@ function MostrarCatalogo({ products, getProductsRequest }) {
 
   console.log(products)
   return (
-    <div >
-      <Catalogo productos={products} />
+    <div className={StyleCatalogo.display}>
+      {products.map(p =>
+        <ProductCard
+          key={p.id}
+          id={p.id}
+          image={p.image}
+          name={p.name}
+          price={p.price}
+          stock={p.stock}
+        />
+      )}
     </div>
   );
 };

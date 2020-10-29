@@ -1,6 +1,6 @@
 import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH } from '../constants';
 import { GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA } from '../constantsCarro'
-import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID, GET_ORDENIDUSER } from '../constantesOrden'
+import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID, GET_ORDENIDUSER, DELETE_ORDER } from '../constantesOrden'
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW } from '../constantsReview';
 import { loadState, saveState } from "./localStorage"
 
@@ -25,17 +25,17 @@ export default (state = initialState, action) => {
     case GET_CATEGORIES: //obtener todas las categorias
       return {
         ...state,
-        categories: action.categories,
+        categories: action.payload,
       }
     case GET_CATEGORIES_NOMBRECAT: // obtener todos los productos de cierta categoria
       return {
         ...state,
-        categories: action.categories.products,
+        categories: action.payload,
       }
     case GET_ID: //obtener un producto segun su id
       return {
         ...state,
-        products: action.product,
+        products: action.payload,
       }
     case POST_PRODUCT: // agregar producto
       return {
@@ -88,13 +88,13 @@ export default (state = initialState, action) => {
     case POST_USER:  //agrega un usuario
       return {
         ...state,
-        users: state.users.concat(action.users)
+        users: state.users.concat(action.payload)
       }
 
     case GET_USER:
       return {
         ...state,
-        users: action.users
+        users: action.payload
       }
 
     case PUT_USER:
@@ -114,12 +114,7 @@ export default (state = initialState, action) => {
     case GET_CARRO:
       return {
         ...state,
-        carrito: action.carrito,
-      }
-    case GET_CREADA:
-      return {
-        ...state,
-        carrito: action.carrito,
+        carrito: action.payload,
       }
     case POST_CARRO:  //agrega un producto al carrito
       return {
@@ -145,17 +140,32 @@ export default (state = initialState, action) => {
     case GET_ID:
       return {
         ...state,
-        order: action.order,
+        order: action.payload,
+      }
+    case GET_CREADA:
+      return {
+        ...state,
+        order: action.payload,
+      }
+    case GET_ORDENID:
+      return {
+        ...state,
+        order: action.payload,
       }
     case GET_ORDENIDUSER:
       return {
         ...state,
-        order: action.order,
+        order: action.payload,
       }
     case PUT_ORDER:
       return {
         ...state,
         order: state.order.map(ord => ord.id === action.payload.id ? action.payload : ord)
+      }
+    case DELETE_ORDER:
+      return {
+        ...state,
+        order: state.order.filter(ord => ord.id !== action.payload.id)
       }
     //reviews-----------------------
     case POST_REVIEW:
