@@ -76,6 +76,7 @@ function App() {
           <Route exact path="/user/:id/ordenes" render={({ match }) => <OrdenCompra id={match.params.id} />} />
           <Route exact path="/forgot" render={() => <ForgotPassword />} />
           <Route exact path="/resetpassword/:token" render={() => <ResetPassword/>} />
+          <Route exact path="/perfil" render={() => <Perfil />} />
 
 
         </div>

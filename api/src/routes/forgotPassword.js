@@ -1,48 +1,13 @@
-// import crypto from 'crypto';
-// import User from '../sequelize';
 const server = require('express').Router();
 const { User } = require('../db.js');
-
 const crypto = require('crypto');
-
 require('dotenv').config();
-const {
-    EMAIL_ADDRESS, 
-    EMAIL_PASSWORD
-  } = process.env;
-
-/**
- * @swagger
- * /forgotPassword:
- *   post:
- *     tags:
- *       - Users
- *     name: Forgot Password
- *     summary: Sends an email with a reset password link when a user inevitably forgets their password
- *     consumes:
- *       - application/json
- *     parameters:
- *      - name: body
- *        in: body
- *        schema:
- *          $ref: '#/definitions/User'
- *          type: object
- *          properties:
- *            email:
- *              type: string
- *        required:
- *          - email
- *     responses:
- *       '200':
- *         description: Reset email sent
- *       '400':
- *         description: Email required
- *       '403':
- *         description: Email not found in db
- *
- */
-
 const nodemailer = require('nodemailer');
+
+const {
+        EMAIL_ADDRESS, 
+        EMAIL_PASSWORD
+      } = process.env;
 
 
   server.post('/', (req, res) => {
@@ -78,12 +43,12 @@ const nodemailer = require('nodemailer');
         const mailOptions = {
           from: 'henrypetshop.2020@gmail.com',
           to: `${user.email}`,
-          subject: 'Link To Reset Password',
+          subject: 'Link para resetear contraseña',
           text:
-            'Este es un mail para actualizar la contrasenia de su cuenta de HenryPet\n\n'
+            'Este es un mail para actualizar la contraseña de su cuenta de HenryPet\n\n'
             + 'Por favor cliquea en el siguiente link, o copielo y peguelo en el navegador para completar el proceso. La validez del link es de 60 minutos:\n\n'
             + `http://localhost:3000/resetpassword/${token}\n\n`
-            + 'Si usted no hizo este pedido, por favor ignore este mail y su contrasenia sera conservada.\n',
+            + 'Si usted no hizo este pedido, por favor ignore este mail y su contraseña sera conservada.\n',
         };
 
         console.log('sending mail');

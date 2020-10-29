@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 
@@ -25,6 +25,7 @@ export default class ResetPassword extends Component {
       updated: false,
       isLoading: true,
       error: false,
+      empty: ''
     };
   }
 
@@ -63,14 +64,33 @@ export default class ResetPassword extends Component {
   }
 
   handleChange = name => (event) => {
+    const { password, empty } = this.state;
     this.setState({
       [name]: event.target.value,
+       empty: event.target.value
     });
+    console.log(empty)
+    console.log(password.length)
+    if(password !== '') {
+        this.setState({
+            empty: false
+        })
+    if(password.length < 3) {
+        this.setState({
+            empty: true
+        })
+    }
+    }
   };
 
   updatePassword = async (e) => {
     e.preventDefault();
-    const { name, password } = this.state;
+    const { name, password, empty } = this.state;
+    if(empty === true || empty === '') {
+         return this.setState({
+            empty: true
+        })
+    }
     // const {
     //   match: {
     //     params: { token },
@@ -108,7 +128,7 @@ export default class ResetPassword extends Component {
 
   render() {
     const {
- password, error, isLoading, updated 
+ password, error, isLoading, updated, empty
 } = this.state;
 console.log(this.state);
     if (error) {
@@ -124,13 +144,32 @@ console.log(this.state);
       );
     }
     if (isLoading) {
-      return (
-        <div>
+        return (
+            <div>
           <h1 title={title} />
           <div style={loading}>Cargando datos de usuario...</div>
         </div>
       );
     }
+    
+//     if(empty === 'damn its empty') {
+//         return (
+//           <div>
+//         <p>Debe ingresar una contraseña valida</p>
+//           </div>
+//        )
+//    }
+    if(updated) {
+        return (
+        <div>
+        <p>
+            Su contraseña se actualizo exitosamente :) Intente iniciar sesion de nuevo
+        </p>
+        <div><NavLink to='/login'>Iniciar sesion</NavLink></div>
+        <div><NavLink to='/'>Ir al inicio</NavLink></div>
+        </div>
+    )}
+   
     return (
       <div>
         <h1 title={title} />
@@ -146,17 +185,15 @@ console.log(this.state);
           <button>Actualizar contraseña</button>
         </form>
 
-        {updated && (
-          <div>
-            <p>
-              Su contraseña se actualizo exitosamente :) Intente iniciar sesion de nuevo
-            </p>
-            <NavLink to='/login'>Iniciar sesion</NavLink>
-          </div>
+        {empty && (
+                <div>
+            <p>Debe ingresar una contraseña valida</p>
+                 </div>
         )}
-        <NavLink to='/'>Ir al inicio</NavLink>
       </div>
     );
+ 
+        
   }
 }
 
