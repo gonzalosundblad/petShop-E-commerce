@@ -34,6 +34,7 @@ import ResetPassword from './Components/ResetPassword';
 import Cancel from './Components/Cancel';
 import CheckoutLogeado from './Components/CheckoutLogeado';
 import CheckoutNoLog from './Components/CheckoutNoLog';
+import Pagos from './Components/Pagos';
 
 
 function App() {
@@ -85,6 +86,8 @@ function App() {
           <Route path='/cancel' render={() => <Cancel/>} />
           <Route path='/checkoutlog' render={() => <CheckoutLogeado/>} />
           <Route path='/checkoutguest' render={() => <CheckoutNoLog/>} />
+          <Route path='/pago' render={() => <Pagos/>} />
+
 
 
 

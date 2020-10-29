@@ -88,13 +88,6 @@ export function postProduct(input) {//Agrega un producto nuevo Pero falta que ag
       .catch(err => { console.log(err) })
   }
 }
-<<<<<<< HEAD
-
-//----------------------------------------------------
-
-
-=======
->>>>>>> 24bc8536616f99fb6b19017bd63b10b64dd216d9
 export function postIdProdCatId(user, category) {   //agrega una categoria a un producto
   const request = axios.post(`http://localhost:3001/products/${user}/category/${category}`)
   return { type: POST_IDPROD_CAT_IDCATEG, payload: request };
@@ -159,24 +152,11 @@ export function putCategoryId(id, cambios) {//Modifica categoria segun id
       .catch(err => { console.log(err) })
   }
 }
-<<<<<<< HEAD
-
-//----------------------------------------------------
-
-=======
->>>>>>> 24bc8536616f99fb6b19017bd63b10b64dd216d9
 export function deleteCatOfProduct(idP, idC) {   //elimina una categoria de un producto
   return axios.delete(`http://localhost:3001/products/${idP}/category/${idC}`).then((resp) => {
     return { type: DELETE_IDPROD_CAT_IDCATEG, payload: resp }
   })
 }
-<<<<<<< HEAD
-
-//----------------------------------------------------
-
-
-=======
->>>>>>> 24bc8536616f99fb6b19017bd63b10b64dd216d9
 export function delProduct(prod) {//va a REDUCER
   console.log('Borrado');
   return {

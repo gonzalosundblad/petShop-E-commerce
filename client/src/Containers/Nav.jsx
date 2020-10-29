@@ -19,17 +19,18 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
   useEffect(() => {
     var precio = [];
     console.log(user)
-    if (user){
-      getCarrito(user.user.user_id).payload
-        .then(res => {
-          if (!res.data[0]) {
-            console.log('no hay productos')
-          } else {
-            setCarro(res.data[0].products)
-          }
-        })
+    // if (user){
+    //   getCarrito(user.user.user_id).payload
+    //     .then(res => {
+    //       if (!res.data[0]) {
+    //         console.log('no hay productos')
+    //       } else {
+    //         setCarro(res.data[0].products)
+    //       }
+    //     })
 
-    }else if (localStorage.length > 0){
+    // }else 
+    if (localStorage.length > 0){
        
           let x = []
           //recorro el local storage
@@ -119,6 +120,6 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
 
 
-// export const Nav = connect(mapStateToProps)(NavBar)
+export const Nav = connect(mapStateToProps)(NavBar)
 
 
