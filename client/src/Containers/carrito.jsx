@@ -6,6 +6,7 @@ import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadState } from '../Redux/reducer/localStorage';
+import { NavLink } from 'react-router-dom';
 
 function Carrito({user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd}) {
   const [products, setProducts] = useState([])
@@ -34,13 +35,13 @@ function Carrito({user, carrito, getCarritoRequest, deleteCarrito, deleteCarrito
     // Todavia no anda
     if (user.logged) {
       deleteCarrito(user.user.user_id)
-      .then (resp => console.log(resp))
       
     } 
     else{
       localStorage.clear()
       
     }
+    reload()
   }
   
 

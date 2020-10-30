@@ -44,10 +44,9 @@ function reload(){
      } else {
       localStorage.removeItem(id)
     }
-    reload()
   }
   
-  
+    console.log(user.user.user_id)
     return(
         <div className={Estilo.producto}>
             {/* <div key={id}> */}
@@ -90,7 +89,7 @@ const mapDispatchToProps =  dispatch => {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    carrito: state.reducer.carrito
+    // carrito: state.reducer.carrito
   }
 }
 export default connect(
