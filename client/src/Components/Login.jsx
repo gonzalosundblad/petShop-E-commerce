@@ -21,8 +21,6 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
   const [errors, setErrors] = useState({});
   var x = false;
 
-  console.log(users)
-
   function validate(input) {
     let errors = {};
     if (!input.email) {
@@ -88,6 +86,9 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
                   </div>
                   <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button>
+
+                  {user.user.logged ? <Redirect to="/perfil" /> : null}
+
                 </fieldset>
               </form>
             </div>
