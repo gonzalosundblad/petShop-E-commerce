@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
@@ -6,11 +7,11 @@ import Basura from '../imagenes/basura.png';
 import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 
 function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcionDelete, funcionInput}){
-    
+    const [ quantity, setQuantity ] = useState(LineaDeOrden);
     var total= price * LineaDeOrden;
 
   function handleChange(e){
-    var quantity =  e.target.value
+    setQuantity (e.target.value)
   }
 
 
@@ -53,13 +54,13 @@ function reload(){
                     <input type="text" onChange={handleChange} className={Estilo.Cambio} />
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
-                    <input type="number" value={LineaDeOrden} />
+                    <input type="number" value={LineaDeOrden} onChange={handleChange}/>
 
                 </div>
                 <div className={Estilo.botonBorrar}>
                     
 
-                    <   button onClick={() => funcionDelete(id)} value={id} >
+                    <   button onClick={() => funcionDelete(id)} value={quantity} name="quantity" >
                         <img className={Estilo.basura} src={Basura} alt=""/>
                     </button>
                 </div>

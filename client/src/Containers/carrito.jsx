@@ -124,7 +124,7 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
                 price={e.price}
                 image={e.image}
                 LineaDeOrden={e.quantity}
-                // funcionDelete={onDelete}
+                funcionDelete={onDelete}
               />
             </div>
           )
