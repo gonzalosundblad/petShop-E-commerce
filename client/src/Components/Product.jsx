@@ -7,7 +7,7 @@ import Changuito from '../imagenes/carrito+.png'
 import Reviews from './reviews.jsx'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import Contador from './Contador';
 
 
 function Product({ user, id2, products, getProductById }) {
@@ -50,59 +50,79 @@ function Product({ user, id2, products, getProductById }) {
 
   if (products.products.stock <= 0) {
     return (
-      <div className={Style.product}>
+      <div >
         <div className={Style.contenedor}>
-          <img className={Style.img} src={products.products.image} alt="" />
-          <div className={Style.imgNameCart}>
-            <div className={Style.containerLyrics}>
+          <div className={Style.imagen}>
+            <img src={products.products.image} width= "450px" height= "450px" alt="" />
+          </div>
+          <div className={Style.divDerecha}>
+            <div className={Style.nombreYprecio}>
               <h1>{products.products.name}</h1>
               <h2>${products.products.price}</h2>
             </div>
-            <div className={Style.cantidadStock}>
-              <div className={Style.stock}>
-                <h6>No hay Stock</h6>
-              </div>
+            <hr/>
+            <div>
+              <h3 class="text-gray">No hay Stock</h3>
             </div>
           </div>
         </div>
-        <div className={Style.description}>
-          <h3>Descripción:</h3>
+        <div className= {Style.description}>
+          <ul class="nav nav-tabs" style={{display: "flex", justifyContent: "end", width: "100%"}}>
+            <li>
+              <a class="nav-link active" data-toggle="tab"><h5>Descripcion</h5></a>
+            </li> 
+          </ul>
+          <h5 style={{marginTop: "10px"}}>{products.products.description}</h5>
           <hr />
-          <h4>{products.products.description}</h4>
+        </div>
+        <div>
+          <Reviews id={id2} />
         </div>
       </div>
     )
   } else {
 
     return (
-      <div className={Style.product}>
+      <div >
         <div className={Style.contenedor}>
-          <img className={Style.img} src={products.products.image} alt="" />
-          <div className={Style.imgNameCart}>
-            <div className={Style.containerLyrics}>
+          <div className={Style.imagen}>
+            <img src={products.products.image} width= "450px" height= "450px" alt="" />
+          </div>
+          <div className={Style.divDerecha}>
+            <div className={Style.nombreYprecio}>
               <h1>{products.products.name}</h1>
               <h2>${products.products.price}</h2>
             </div>
-            <div className={Style.cantidadStock}>
-              <div className={Style.cantidad}>
-                <label>Seleccione Cantidad:</label>
-                <input classname={Style.input} type="number" min='0' max={products.products.stock} placeholder='Nº' onChange={handleChange} />
-                <button className={Style.boton} onClick={subirCarrito}>
+            <hr/>
+            <div>
+              <div style={{display: "flex", flexDirection: "column", marginTop: "40px"}}>
+                <h6 style={{display: "flex", justifyContent: "end"}}>Seleccione Cantidad:</h6>
+                <Contador funcion={handleChange}/>
+                {/* <input classname={Style.input} type="number" min='0' max={products.products.stock} placeholder='Nº' onChange={handleChange} /> */}
+                <button class="btn btn-success" onClick={subirCarrito} style={{width: "150px", marginTop: "10px"}}>
+                  Agregar
                   <img className={Style.changuito} src={Changuito} />
                 </button>
               </div>
-              <div className={Style.stock}>
-                <h5>Stock diponible: {products.products.stock} unidades</h5>
+              <div style={{display: "flex", justifyContent: "end", marginTop: "10px"}}>
+                <h6 style={{fontSize: "12px"}}>Stock diponible: {products.products.stock} unidades</h6>
+                {/* <p>{products.products.stock} unidades</p> */}
               </div>
             </div>
           </div>
         </div>
-        <div className={Style.description}>
-          <h3>Descripción:</h3>
+        <div className= {Style.description}>
+          <ul class="nav nav-tabs" style={{display: "flex", justifyContent: "end", width: "100%"}}>
+            <li>
+              <a class="nav-link active" data-toggle="tab"><h5>Descripcion</h5></a>
+            </li> 
+          </ul>
+          <h5 style={{marginTop: "10px"}}>{products.products.description}</h5>
           <hr />
-          <h4>{products.products.description}</h4>
         </div>
-        <Reviews id={id2} />
+        <div>
+          <Reviews id={id2} />
+        </div>
       </div>
     )
   }

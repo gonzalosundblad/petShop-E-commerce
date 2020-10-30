@@ -7,7 +7,7 @@ import { useState } from 'react';
 function Catalogo({ productos }) {
 
 const [pagina, setPagina] = useState(1)  //el numero de las paginas, empieza en 1
-const products = 3;                      // productos q van a ver por pagina
+const products = 3;                      // productos q van a ver por pagina (hay q cambiarlo)
 
 const final = pagina * products;
 const principio = final - products;
