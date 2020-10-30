@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 
 function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd}) {
   const [products, setProducts] = useState([])
-  const [state, setState] = useState()
+  const [ total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
 
@@ -20,8 +20,8 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
       getCarritoRequest(user.user.user_id)
     }
     else{
-    
       setProducts(loadState())
+      
     }
   }, [])
 
@@ -60,15 +60,12 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
   }
   
   //---------------------------------RENDER
+  console.log(!carrito || carrito.length === 0 || !products || products.length === 0 );
+  console.log( carrito.length === 0 );
+  console.log(!products);
+  console.log(products.length === 0);
 
-  if (!carrito || carrito.length === 0) {
-    return (
-      <div>
-        <h1>Agregar productos al carrito</h1>
-        <a href="/products">Ir al Catálogo</a>
-      </div>
-    )
-  } else if(logged){
+  if(logged && carrito.length > 0){
     const order_id = carrito.map(id => id.LineaDeOrden.order_id)
     console.log('hay productos')
 
@@ -105,42 +102,50 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
         </div>
       </div>
     )
-  } else {
+  } else if (products.length > 0){
   
-  return (
-    <div>
-      <div className={Estilo.tusProductos}>
-        <h2 >Tus productos</h2>
-      </div>
-      {products && products.map(e => {
-        return (
-          <div>
-            <ProductoCarrito
-              key = {e.id}
-              id={e.id}
-              name={e.name}
-              price={e.price}
-              image={e.image}
-              LineaDeOrden={e.quantity}
-              // funcionDelete={onDelete}
-            />
-          </div>
+    return (
+      <div>
+        <div className={Estilo.tusProductos}>
+          <h2 >Tus productos</h2>
+        </div>
+        {products && products.map(e => {
+          return (
+            <div>
+              <ProductoCarrito
+                key = {e.id}
+                id={e.id}
+                name={e.name}
+                price={e.price}
+                image={e.image}
+                LineaDeOrden={e.quantity}
+                // funcionDelete={onDelete}
+              />
+            </div>
+          )
+        }
         )
-      }
-      )
-      }
-      <div className={Estilo.botonesFinales}>
-        <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
-        <a className={Estilo.botonesFinales} href='/products'>
-          <span className={Estilo.botoncitos} >Seguir Comprando</span>
-        </a>
-          {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
-            <span className={Estilo.botoncitos}  >Finalizar Compra</span>
-          </a> */}
+        }
+        <div className={Estilo.botonesFinales}>
+          <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
+          <a className={Estilo.botonesFinales} href='/products'>
+            <span className={Estilo.botoncitos} >Seguir Comprando</span>
+          </a>
+            {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+              <span className={Estilo.botoncitos}  >Finalizar Compra</span>
+            </a> */}
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  } else if (!carrito || carrito.length === 0 && !products || products.length === 0 ) {
+    return (
+      <div>
+        <h1>Agregar productos al carrito</h1>
+        <a href="/products">Ir al Catálogo</a>
+      </div>
+    )
+  } 
+   
 }
 const mapDispatchToProps =  dispatch => {
   return {

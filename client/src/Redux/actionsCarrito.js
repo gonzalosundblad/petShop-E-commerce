@@ -2,21 +2,7 @@ import {POST_CARRO, GET_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRIT
 
 import axios from 'axios';
 
-// export function getProducts(allProducts) {//va a REDUCER
-//   console.log('allProducts');
-//   return {
-//     type: GET_PRODUCTS,
-//     payload: allProducts
-//   }
-// }
-// export function getProductsRequest() {//Va a Catalogo2.jsx
-//   console.log('getProductsRequest');
-//   return (dispatch) => {
-//     axios.get(`http://localhost:3001/products`)
-//       .then(response => { dispatch(getProducts(response.data)) })
-//       .catch(err => { console.log(err) })
-//   }
-// }
+//--------------OBTENER CARRITO DE UN USUARIO--------------------------------------
 
 export function getCarrito(datos) {//va a REDUCER
   console.log('Datos Carrito');
@@ -36,43 +22,79 @@ export function getCarritoRequest(usuario) { //obtener todos los productos del c
     }
 }
 
-//--------------------------------------------------------------------------------
+//--------------OBTENER TODAS LAS ORDENES DE UN USUARIO------------------------------
 
-export function getProdOrder(usuario) { //obtener todos los productos del carrito
-  const request = axios.get(`http://localhost:3001/users/${usuario}/cart/orders`)
-  return { type:GET_CREADA, payload: request}; }
+export function getProdOrderUsers(resp) { //obtener todos los productos del carrito
+  console.log("Ordenes de usuario obtenidas")
+  return { type:GET_CREADA, payload: resp};
+}
+
+export function getProdOrder(usuario, products){ //Agregar productos al carrito
+  console.log("Cargar productos al carrito")
+  return (dispatch) => {
+    axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
+      .then((response) =>  {dispatch(postCarritoProducto(response)) })
+      .catch(err => {console.log(err) })
+  }
+}
+
+//------------------AGREGAR PRODUCTO AL CARRITO--------------------------------------
+
+
+export function postCarritoProducto(resp){
+  console.log('Producto agregado al carrito');
+  return { 
+    type: POST_CARRO, 
+    payload : resp 
+  }
+}
 
 export function postCarrito(usuario, products){ //Agregar productos al carrito
-  console.log(products)
-  const request = axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
-  return { type: POST_CARRO , payload : request } ; }
-//--
-  export function putCantidadOrden (id, cambio) { //Cambiar la cantidad de los productos
-    return axios.put(`http://localhost:3001/users/${id}/cart`, cambio)
-    .then((response) => {
-      return({ type:PUT_CANTIDAD_CARRO, payload : response })
-      console.log(response);
-    })
+  console.log("Cargar productos al carrito")
+  return (dispatch) => {
+    axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
+      .then((response) =>  {dispatch(postCarritoProducto(response)) })
+      .catch(err => {console.log(err) })
+  }
+}
+
+
+  //---------------------CAMBIAR CANTIDAD DENTRO DE LA ORDEN--------------------------
+
+  export function putCantidaOrder(resp){
+    console.log('Cantidad Cambiada');
+    return { 
+      type: PUT_CANTIDAD_CARRO, 
+      payload : resp 
+    }
   }
 
+
+  export function putCantidadOrdenRequest (id, cambio) { //Cambiar la cantidad de los productos
+    console.log("cambiar cantidad de elementos")
+    return (dispatch) => {
+      axios.put(`http://localhost:3001/users/${id}/cart`, cambio)
+        .then((response) =>  {dispatch(putCantidaOrder(response)) })
+        .catch(err => {console.log(err) })
+    }
+  }
+     
 //----------------------- BORRAR UN CARRITO DE UN USUARIO ---------------------------
 
   export function deleteCart(resp) {//va a REDUCER
     console.log('Carrito Borrado');
     return { 
       type: DELETE_CARRITO, 
-      payload : resp 
-    }
+      payload : resp }
   }   
-
 
   export function deleteCarrito(id){   //vacia carrito segun id usuario
     console.log('deleteProductOfUserCart');
     return (dispatch) => {
       axios.delete(`http://localhost:3001/users/${id}/cart`)
         .then(response => { dispatch(deleteCart(response)) })
-        .catch(err => { console.log(err) })
-    }
+        .catch(err => { console.log(err) })}
+    
   }
 
 
@@ -94,7 +116,7 @@ export function postCarrito(usuario, products){ //Agregar productos al carrito
         .then(response => {dispatch(delProductCart(response)) })
         .catch(err => { console.log(err) })
     }
-    }
+  }
   
      
   
