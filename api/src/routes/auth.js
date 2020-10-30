@@ -45,7 +45,7 @@ server.get('/google/callback', passport.authenticate('google', { failureRedirect
 
 //==================GITHUB AUTHENTICATION========================
 
-server.get('/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+server.get('/github', isNotAuthenticated, passport.authenticate('github', { scope: [ 'user:email' ] }));
 
 server.get('/github/callback', passport.authenticate('github', { failureRedirect: 'http://localhost:3000/login' }), (req, res) => {
   // Successful authentication, redirect home.
