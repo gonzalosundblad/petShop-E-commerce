@@ -215,8 +215,9 @@ server.put('/:idUser/cart', function (req, res) {                       //S41 : 
 })
 
 server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
-  const idUser = req.params.idUser;                                   // S111: INVENTO DE ERIC
+  const idUser = req.params.idUser;    
   const { product_id } = req.body;
+  console.log(req.body)                               // S111: INVENTO DE ERIC
   Order.findOne({
     where: {
       userId: idUser,
