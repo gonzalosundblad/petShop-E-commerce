@@ -13,7 +13,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
-  console.log(user, "hola")
+  console.log(user)
 
   useEffect(() => {
     // si el usuario esta logueado
@@ -144,11 +144,14 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     )
   }
 
+
 }
 const mapDispatchToProps = dispatch => {
-  return {
-    dispatch,
-    ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd }, dispatch)
+  function mapStateToProps(state) {
+    return {
+      dispatch,
+      ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd }, dispatch)
+    }
   }
 }
 

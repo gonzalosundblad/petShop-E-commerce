@@ -21,9 +21,6 @@ function Login({ user, isLoggedIn, loginRequest, users, getGithub }) {
   const [errors, setErrors] = useState({});
   var x = false;
 
-
-  console.log(users)
-
   function validate(input) {
     let errors = {};
     if (!input.email) {
