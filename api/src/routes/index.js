@@ -9,7 +9,8 @@ const reviewsRouter = require('./reviews');
 const logRouter = require('./auth')
 const forgotPasswordRouter = require('./forgotPassword');
 const resetPasswordRouter = require('./resetPassword');
-const updatePasswordViaEmailRouter = require('./updatePasswordViaEmail')
+const updatePasswordViaEmailRouter = require('./updatePasswordViaEmail');
+const checkoutRouter = require('./checkout')
 
 
 var router = Router();
@@ -25,7 +26,8 @@ router.use('/reviews', reviewsRouter);     //AGREGAMOS RUTA  /reviews
 router.use('/auth', logRouter);           // AGREGAMOS RUTA /log       
 router.use('/forgotPassword', forgotPasswordRouter);
 router.use('/reset', resetPasswordRouter);
-router.use('/updatePasswordViaEmail', updatePasswordViaEmailRouter)
+router.use('/updatePasswordViaEmail', updatePasswordViaEmailRouter);
+router.use('/checkout', checkoutRouter)
 
 
 

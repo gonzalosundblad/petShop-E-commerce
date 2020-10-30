@@ -16,23 +16,32 @@ class ForgotPassword extends Component {
       showError: false,
       messageFromServer: '',
       showNullError: false,
+      waiting: false
     };
   }
 
   handleChange = name => (event) => {
     this.setState({
       [name]: event.target.value,
+      showNullError: false,
+      showError: false
+
     });
   };
 
   sendEmail = async (e) => {
     e.preventDefault();
     const { email } = this.state;
+    this.setState({
+        waiting: true,
+        showError: false
+    });
     if (email === '') {
       this.setState({
         showError: false,
         messageFromServer: '',
         showNullError: true,
+        waiting: false
       });
     } else {
       try {
@@ -48,6 +57,7 @@ class ForgotPassword extends Component {
             showError: false,
             messageFromServer: 'recovery email sent',
             showNullError: false,
+            waiting: false
           });
         }
       } catch (error) {
@@ -57,6 +67,7 @@ class ForgotPassword extends Component {
             showError: true,
             messageFromServer: '',
             showNullError: false,
+            waiting: false
           });
         }
       }
@@ -65,7 +76,7 @@ class ForgotPassword extends Component {
 
   render() {
     const {
- email, messageFromServer, showNullError, showError 
+ email, messageFromServer, showNullError, showError, waiting
 } = this.state;
 
     return (
@@ -94,6 +105,11 @@ class ForgotPassword extends Component {
             
         <NavLink to='/register' className="nav-link">Registrarme</NavLink>
 
+          </div>
+        )}
+        {waiting && (
+          <div>
+            <h3>Enviando...por favor espere unos segundos</h3>
           </div>
         )}
         {messageFromServer === 'recovery email sent' && (

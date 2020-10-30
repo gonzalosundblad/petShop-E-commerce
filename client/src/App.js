@@ -31,6 +31,10 @@ import Carrusel from './Components/Carousel'
 import ForgotPassword from './Components/ForgotPassword';
 import ResetPassword from './Components/ResetPassword';
 import OrdenEstado from './Containers/OrdenEstado';
+import Cancel from './Components/Cancel';
+import Checkout from './Components/Checkout';
+import CheckoutNoLog from './Components/CheckoutNoLog';
+import Pagos from './Components/Pagos';
 
 
 function App() {
@@ -76,8 +80,14 @@ function App() {
           <Route exact path="/reset" render={() => <Reset />} />
           <Route exact path="/user/:id/ordenes" render={({ match }) => <OrdenCompra id={match.params.id} />} />
           <Route exact path="/forgot" render={() => <ForgotPassword />} />
-          <Route exact path="/resetpassword/:token" render={() => <ResetPassword />} />
           <Route exact path="/admin/:orderStates" render={({ match }) => <OrdenEstado orderStates={match.params.orderStates} />} />
+          <Route exact path="/resetpassword/:token" render={() => <ResetPassword />} />
+          <Route exact path="/perfil" render={() => <Perfil />} />
+          <Route exact path='/cancel' render={() => <Cancel />} />
+          <Route exact path='/checkout' render={() => <Checkout />} />
+          {/* <Route exact path='/checkoutGuest' render={() => <CheckoutNoLog/>} /> */}
+          <Route exact path='/checkout/pago' render={() => <Pagos />} />
+
 
 
         </div>
