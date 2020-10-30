@@ -18,7 +18,6 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
   const [ total, setTotal ] = useState(0)
   useEffect(() => {
     var precio = [];
-    console.log()
     if (logged){
       getCarrito(user.user.user_id)
 

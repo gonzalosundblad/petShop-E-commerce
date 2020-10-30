@@ -33,7 +33,10 @@ function UsuarioLogeado({ user, logout, logged }) {
               <a href={`/user/${1}/ordenes`}>Mis compras</a>}
             </li>
             <li>
-              {logged ? null :  <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>}
+
+              {/* Si no esta logueado o si esta */}
+
+              {!logged ? null :  <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>}
              
             </li>
 
