@@ -6,8 +6,7 @@ export const loadState = () => {
       let clave = localStorage.key(i);
       if(clave !== "carrito" && clave !== "user"){
         let prod = JSON.parse(localStorage.getItem(clave));
-                request.push(prod)
-            console.log(request);
+        request.push(prod);
       }
     }
     return request;

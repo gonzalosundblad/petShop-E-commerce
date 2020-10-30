@@ -6,7 +6,7 @@ import Basura from '../imagenes/basura.png';
 import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 
 function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcionDelete, funcionInput}){
-
+    
     var total= price * LineaDeOrden;
 
   function handleChange(e){
@@ -24,29 +24,13 @@ function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcio
     //  reload()
     // })
 
-  
+    
 
 function reload(){
   window.location.reload()
 }
 
-  function onDelete() {
-    // console.log(e)
-    // const f = (element) => element.id == e.target.value
-    // let index =  products.findIndex(f)
-    // // setBorrado(products.splice(index, 1))
-    // var borrado = products.splice(index, 1)
 
-
-    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    if (user.logged) {
-      deleteCarritoProd(user.user.user_id, id)
-     } else {
-      localStorage.removeItem(id)
-    }
-  }
-  
-    console.log(user.user.user_id)
     return(
         <div className={Estilo.producto}>
             {/* <div key={id}> */}
@@ -70,7 +54,7 @@ function reload(){
                 <div className={Estilo.botonBorrar}>
                     
 
-                    <   button onClick={onDelete} value={id} >
+                    <   button onClick={() => funcionDelete(id)} value={id} >
                         <img className={Estilo.basura} src={Basura} alt=""/>
                     </button>
                 </div>

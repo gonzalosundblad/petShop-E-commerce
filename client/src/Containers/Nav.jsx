@@ -10,6 +10,7 @@ import UsuarioLogeado from '../Components/UsuarioLogeado';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
+import { loadState } from '../Redux/reducer/localStorage';
 
 function NavBar({ user, logged, funcionCatag, onSearch }) {
   //console.log(user.user.role);
@@ -17,42 +18,24 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
   const [ total, setTotal ] = useState(0)
   useEffect(() => {
     var precio = [];
-    console.log(user)
-    if (user){
+    console.log()
+    if (logged){
       getCarrito(user.user.user_id)
-      // .payload
-      //   .then(res => {
-      //     if (!res.data[0]) {
-      //       console.log('no hay productos')
-      //     } else {
-      //       setCarro(res.data[0].products)
-      //     }
-      //   })
 
     }else if (localStorage.length > 0){
        
-          let x = []
-          //recorro el local storage
-          for(var i = 0; i < localStorage.length; i++){
-            let clave = localStorage.key(i);
-            console.log(clave)
-            let prod = (localStorage.getItem(clave));
-                if(typeof(parseInt(clave)) === NaN ){
-                    x.push(prod)
-                }     
-                
-                  
-          }
-          setCarro(x);
-          precio = x.map(e => {
-            return parseInt(e.price) * parseInt(e.quantity)
-          }) 
-        }
-        else{
-          console.log("no hay valores en el local storage ni tampoco usuario");
-        }
-      
-        
+      let x = loadState()
+      setCarro(x);
+      console.log(x)
+      precio = x.map(e => {
+        return parseInt(e.price) * parseInt(e.quantity)
+      }) 
+    }
+    else{
+      console.log("no hay valores en el local storage ni tampoco usuario");
+    }
+  
+    
       setTotal(precio.reduce(function (a, b) {
         return a + b
       }, 0))
@@ -89,9 +72,13 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
           </a>
           <UsuarioLogeado />
           <div className={StyleNav.iniciarSesion}>
-          {!logged ? 
-            <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> 
-            : null } 
+
+          {/* Condicional en caso de que el usuario exista para iniciar sesion */}
+
+          {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <a class="nav-link text-white" href='/login' > {user.user.email} </a>  } 
+
+          {/* ---------------------------------------------------------------- */}
+
           </div>
         </div>
       </div>

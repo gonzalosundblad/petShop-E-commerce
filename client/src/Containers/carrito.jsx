@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { loadState } from '../Redux/reducer/localStorage';
 import { NavLink } from 'react-router-dom';
 
-function Carrito({user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd}) {
+function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd}) {
   const [products, setProducts] = useState([])
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
@@ -16,8 +16,7 @@ function Carrito({user, carrito, getCarritoRequest, deleteCarrito, deleteCarrito
 
   useEffect(() => {
       // si el usuario esta logueado
-      console.log(carrito)
-    if (user.logged) {
+    if (logged) {
       getCarritoRequest(user.user.user_id)
     }
     else{
@@ -31,20 +30,36 @@ function Carrito({user, carrito, getCarritoRequest, deleteCarrito, deleteCarrito
     window.location.reload()
   }
 
+  //------------------------------Funcion Borrar por unidad del carrito
+
+  function onDelete(product_id) {
+    console.log(product_id)
+    var valor = {
+      product_id: product_id
+    }
+
+    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+    // let id = event.target.value
+    if (logged) {
+      deleteCarritoProd(user.user.user_id, valor)
+     } else {
+      localStorage.removeItem(product_id)
+    }
+  }
+
+  //---------------------------------Vaciar Carrito
+
   function vaciar() {
-    // Todavia no anda
-    if (user.logged) {
+    
+    if (logged) {
       deleteCarrito(user.user.user_id)
-      
     } 
     else{
       localStorage.clear()
-      
     }
-    reload()
   }
   
-
+  //---------------------------------RENDER
 
   if (!carrito || carrito.length === 0) {
     return (
@@ -53,7 +68,7 @@ function Carrito({user, carrito, getCarritoRequest, deleteCarrito, deleteCarrito
         <a href="/products">Ir al Catálogo</a>
       </div>
     )
-  } else if(user.logged){
+  } else if(logged){
     const order_id = carrito.map(id => id.LineaDeOrden.order_id)
     console.log('hay productos')
 
@@ -72,7 +87,7 @@ function Carrito({user, carrito, getCarritoRequest, deleteCarrito, deleteCarrito
                 price={e.price}
                 image={e.image}
                 LineaDeOrden={e.LineaDeOrden.quantity}
-                // funcionDelete={onDelete}
+                funcionDelete={onDelete}
               />
             </div>
           )
@@ -135,8 +150,10 @@ const mapDispatchToProps =  dispatch => {
 }
 
 const mapStateToProps = state => {
+  const { user, logged } = state.auth
   return {
-    user: state.auth.user,
+    user,
+    logged,
     carrito: state.reducer.carrito
   }
 }

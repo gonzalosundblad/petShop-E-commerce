@@ -78,7 +78,6 @@ export function postCarrito(usuario, products){ //Agregar productos al carrito
 
   //----------------------- BORRAR UN PRODUCTO DE UN USUARIO DEL CARRITO ---------------------------
   export function delProductCart(resp) {//va a REDUCER
-    console(resp)
     console.log('Borrado');
     return { 
       type: DELETE_CARRITOUNO, 
@@ -86,13 +85,13 @@ export function postCarrito(usuario, products){ //Agregar productos al carrito
     }
   }   
 
-  export function deleteCarritoProd(id_user, product_id){   //borra un producto segun del carrito del usuario
+  export function deleteCarritoProd(idUser, valor){   //borra un producto segun del carrito del usuario
     console.log('deleteProductOfUserCart');
-    console.log(id_user + "------" +product_id )
+    console.log(idUser + "------" + valor )
     return (dispatch) => {
       console.log("hola")
-      axios.delete(`http://localhost:3001/users/${id_user}/deleteCartProduct`, product_id)
-        .then(response => {console.log(response); dispatch(delProductCart(response)) })
+      axios.delete(`http://localhost:3001/users/${idUser}/deleteCartProduct`, valor)
+        .then(response => {dispatch(delProductCart(response)) })
         .catch(err => { console.log(err) })
     }
     }
