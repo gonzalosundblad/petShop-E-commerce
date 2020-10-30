@@ -3,7 +3,7 @@ const { Product, Review, User } = require('../db.js');
 const { isAuthenticated } = require("../passport");
 const { Sequelize } = require('sequelize');
 
-server.post('/product/:id/review',  (req, res) => {                       //S54 : ruta para crear/agregar Review
+server.post('/product/:id/review', isAuthenticated,  (req, res) => {                       //S54 : ruta para crear/agregar Review
   //Guardo el id del producto enviado por params en una constante
   const product_id = req.params.id;
   //Guardo el id del user en una constante
@@ -23,7 +23,7 @@ server.post('/product/:id/review',  (req, res) => {                       //S54 
   })
 })
 
-server.put('/product/:id/review/:idReview',  (req, res) => {              //S55 : ruta para Modificar Review
+server.put('/product/:id/review/:idReview', isAuthenticated,  (req, res) => {              //S55 : ruta para Modificar Review
   //Guardo el id del producto y de la review enviado por params en una constante
   const { id, idReview } = req.params;
   //Guardo el id del user en una constante
@@ -49,7 +49,7 @@ server.put('/product/:id/review/:idReview',  (req, res) => {              //S55 
   })
 })
 
-server.delete('/product/:id/review/:idReview',  (req, res) => {           //S56 : Crear Ruta para eliminar Review
+server.delete('/product/:id/review/:idReview', isAuthenticated,  (req, res) => {           //S56 : Crear Ruta para eliminar Review
   const { idReview } = req.params;
   const user_id = req.user.user_id;
 
@@ -70,7 +70,7 @@ server.delete('/product/:id/review/:idReview',  (req, res) => {           //S56 
   })
 })
 
-server.get('/product/:id/review/',  (req, res) => {                       //S57 : Crear Ruta para obtener todas las reviews de un producto.
+server.get('/product/:id/review/', isAuthenticated,   (req, res) => {                       //S57 : Crear Ruta para obtener todas las reviews de un producto.
   const { id } = req.params
   Review.findAll({
     where: {

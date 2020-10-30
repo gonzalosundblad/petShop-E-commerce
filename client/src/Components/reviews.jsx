@@ -13,11 +13,12 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
     qualification: "",
     description: "",
   });
-
+console.log(user);
   useEffect(() => {
     getAllReviewsRequest(id)
     getNumbers(id);
     }, [])
+    console.log(numbers);
     var number = numbers.avg
     var prom = Math.round(number).toFixed(2)
     var allReviews = reviews
@@ -54,12 +55,16 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
   function onSend() {
     var id = user.user.user.user_id
     var post = {
-      qualification: parseInt(state.qualification),
+      qualification: state.qualification,
       description: state.description,
       user_id: id
     };
     postReviewRequest(id, post)
+    redirect()
   }
+function redirect(){
+  return (<Redirect to="/login" />)
+}
 
   return (
     <div className={Style.box}>
@@ -105,10 +110,10 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
                           {o.qualification === 3 ? <label className={Style.estrellasnaranja}>★★★</label> : <p></p>}
                           {o.qualification === 2 ? <label className={Style.estrellasnaranja}>★★</label> : <p></p>}
                           {o.qualification === 1 ? <label className={Style.estrellasnaranja}>★</label> : <p></p>}
-              {user !== null ? <button name="modificar" onClick={onPut} className={Style.bottton} type="submit" value={o.review_id} >
+              {user.user !== null ? <button name="modificar" onClick={onPut} className={Style.bottton} type="submit" value={o.review_id} >
                             Modificar comentario
               </button> : null }
-              {user !== null ? <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit" value={o.review_id}>
+              {user.user !== null ? <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit" value={o.review_id}>
                             Eliminar comentario
               </button> : null }
                    </div>
@@ -140,7 +145,7 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
                 </p>
                 <input className={Style.inputt} type="text" name="description" placeholder="Cuentanos mas sobre el producto"
                   onChange={handleChange} />
-                {user !== null ? <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
+                {user.user !== null ? <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
                   Enviar comentario
               </button> : <p>Debes estar logueado</p> }
               </form>

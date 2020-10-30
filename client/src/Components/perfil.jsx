@@ -8,9 +8,6 @@ import { getMe } from '../Redux/actionsLogin'
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 
-
-
-
 function Perfil({ putUser, deleteUser, getMe, user }) {
   const [state, setState] = useState({
     name: "",

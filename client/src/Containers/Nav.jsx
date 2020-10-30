@@ -14,13 +14,12 @@ import { bindActionCreators } from 'redux';
 
 
 function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
-  //console.log(user.user.role);
   const [carro, setCarro] = useState([])
   useEffect(() => {
     if (user === null) {
       user = 1
     } else {
-      user = user.user.user_id
+      user = user.user_id
       // .user.user_id
     }
     getCarrito(user)
