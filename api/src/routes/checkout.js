@@ -9,7 +9,7 @@ const {
         EMAIL_PASSWORD
       } = process.env;
 
-
+var n = 0; // para asegurarme q falle seguido la req al banco y asi poder mostrar ambas pantallas
 
 server.post('/', (req, res) => {
 
@@ -29,8 +29,9 @@ server.post('/', (req, res) => {
       } else {
         
         // ACA HARIA LA REQ AL BANCO PARA Q ME HAGAN EL PAGO. SI TODO OK ENTONCES SIGO SINO NO. LO SIMULO CON UN IF(MATHRANDOM)
-
-    if(Math.random() > 0.5) {  
+        //pero tambien quiero q falle la primera vez para mostrar ambas pantallas 
+    n = n + 1 
+    if(Math.random() > 0.5 && n > 1) {  
 
         Order.update({
             orderState: "completa"
