@@ -102,7 +102,6 @@ server.get('/product/:id/review/numbers', (req, res) => {                       
 
   Promise.all([avg, one, two, three, four, five])
   .then((resp)=>{
-    console.log(resp);
     res.status(200).json({
       avg : resp[0][0].qualification,
       one: resp[1],

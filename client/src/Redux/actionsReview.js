@@ -61,7 +61,6 @@ export function getNumbers(id) {//S57 : Crear Ruta para obtener todas las review
   }
 }
 export function sendNum(request){
-  console.log(request);
   return{
     type: NUMBERS,
     payload: request
