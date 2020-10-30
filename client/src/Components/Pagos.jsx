@@ -70,6 +70,7 @@ function handlePayment() {
     <label for="exampleFormControlInput1">CVV</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="xxx"/>
   </div>
+  <p class="form-group col-md-4">poner el mismo cuadrito con resumen de compra</p>
   </div>
   <button onClick={() => handlePayment()} type="button" class="btn btn-success">Confirmar compra</button>
 </form>

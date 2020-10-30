@@ -112,8 +112,12 @@ function Checkout() {
                 <option>Chubut</option>
                 <option>Santa Cruz</option>
                 <option>Tierra del Fuego</option>
-      </select>
+      </select >
     </div>
+    <div class="form-group col-md-6">
+      
+    </div>
+  <p class="form-group col-md-6">poner un cuadrito a la derecha con el resumen de la compra q leo del state del store</p>
     
   </div>
   </div>
