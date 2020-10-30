@@ -1,11 +1,9 @@
 import axios from 'axios';
-import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, REGISTER_SUCCESS, REGISTER_FAIL, GET_ME, HACER_ADMIN } from './constantsLogin';
+import {MESSAGE, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, REGISTER_SUCCESS, REGISTER_FAIL, GET_ME, HACER_ADMIN } from './constantsLogin';
 
 var _axios = axios.create({
   withCredentials: true
 })
-
-
 export function postLog(user) {//va a REDUCER
   return {
     type: LOGIN_SUCCESS,
@@ -16,9 +14,12 @@ export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
   return (dispatch) => {
     _axios.post('http://localhost:3001/auth/login', usuario)
       .then(response => {
-        dispatch(postLog(response.data),
+        if(response.data.message){dispatch({
+          type: MESSAGE, payload: response.data
+        })}
+        else {dispatch(postLog(response.data),
           localStorage.setItem("user", JSON.stringify(response.data))
-        );
+        )}
       })
       .catch(error => { console.log(error) })
   }

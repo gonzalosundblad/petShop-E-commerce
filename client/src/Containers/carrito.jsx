@@ -14,7 +14,7 @@ function Carrito({ user, getCarrito }) {
   const [state, setState] = useState()
   const [borrado, setBorrado] = useState([])
 
-  console.log(user, "hola")
+  console.log(user)
 
   useEffect(() => {
     if (user.logged) {
@@ -110,8 +110,6 @@ function Carrito({ user, getCarrito }) {
 
 
 function mapStateToProps(state) {
-  // console.log(state.auth);
-
   return {
     user: state.auth
   };
@@ -125,6 +123,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Carrito)
