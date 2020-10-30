@@ -60,12 +60,17 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
   }
   
   //---------------------------------RENDER
-  console.log(!carrito || carrito.length === 0 || !products || products.length === 0 );
-  console.log( carrito.length === 0 );
-  console.log(!products);
-  console.log(products.length === 0);
 
-  if(logged && carrito.length > 0){
+  
+  if (carrito.length === 0 && products.length === 0) {
+    return (
+      <div>
+        <h1>Agregar productos al carrito</h1>
+        <a href="/products">Ir al Catálogo</a>
+      </div>
+    )
+  } 
+  else if (logged && carrito.length > 0){
     const order_id = carrito.map(id => id.LineaDeOrden.order_id)
     console.log('hay productos')
 
@@ -102,7 +107,7 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
         </div>
       </div>
     )
-  } else if (products.length > 0){
+  } else {
   
     return (
       <div>
@@ -135,13 +140,6 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
               <span className={Estilo.botoncitos}  >Finalizar Compra</span>
             </a> */}
         </div>
-      </div>
-    )
-  } else if (!carrito || carrito.length === 0 && !products || products.length === 0 ) {
-    return (
-      <div>
-        <h1>Agregar productos al carrito</h1>
-        <a href="/products">Ir al Catálogo</a>
       </div>
     )
   } 

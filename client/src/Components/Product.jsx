@@ -11,7 +11,7 @@ import { saveState } from '../Redux/reducer/localStorage';
 
 
 
-function Product({ user, id2, products, postCarrito, getProductById }) {
+function Product({logged, user, id2, products, postCarrito, getProductById }) {
 
   const [quantity, setQuantity] = useState();
 
@@ -28,9 +28,7 @@ function Product({ user, id2, products, postCarrito, getProductById }) {
   }
   function subirCarrito() {
     const {image, name, price} = products.products
-    console.log(user.user.logged)
-    console.log(image)
-    if (user.user.logged) {
+    if (logged) {
       postCarrito(user.user.user.user_id, {
         product_id: id2,
         quantity: quantity,
@@ -110,8 +108,11 @@ function Product({ user, id2, products, postCarrito, getProductById }) {
 }
 
 const mapStateToProps = state => {
+  const {user, logged} = state.auth;
+  
   return {
-    user: state.auth,
+    user,
+    logged,
     products: state.reducer
   }
 }

@@ -12,6 +12,9 @@ function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcio
   function handleChange(e){
     var quantity =  e.target.value
   }
+
+
+  function funcionInput(){
     // var cambio = {
     //   product_id: id,
     //   quantity: quantity
@@ -23,6 +26,8 @@ function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcio
     //   console.log(resp)
     //  reload()
     // })
+
+  }
 
     
 
@@ -48,7 +53,7 @@ function reload(){
                     <input type="text" onChange={handleChange} className={Estilo.Cambio} />
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
-                    {/* <input type="number" value={LineaDeOrden} onChange={funcionInput} /> */}
+                    <input type="number" value={LineaDeOrden} />
 
                 </div>
                 <div className={Estilo.botonBorrar}>
