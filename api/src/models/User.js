@@ -49,8 +49,11 @@ const User = (sequelize) => {
     googleAccount: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    }
-    ,
+    },
+    githubAccount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     resetPasswordToken: DataTypes.STRING,
     resetPasswordExpires: DataTypes.DATE
   });

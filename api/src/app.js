@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt");
 const session = require('express-session');
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 
 
 require('./db.js');
@@ -112,6 +113,7 @@ passport.use(new GoogleStrategy({
   passReqToCallback:true
 },
 function(request, accessToken, refreshToken, profile, done) {
+  console.log(profile)
     User.findOne({
       where: {
         email: profile.emails[0].value,
@@ -125,7 +127,7 @@ function(request, accessToken, refreshToken, profile, done) {
             email: profile.emails[0].value,
             googleAccount: true,
             role: 'user',
-            password: request.sessionID
+            password: profile.id
           });
       } else {
         done(null, {
@@ -137,9 +139,45 @@ function(request, accessToken, refreshToken, profile, done) {
     }).then(user => {
       done(null, user)
     }).catch(err => {
-      console.log('Error: ', err)
+      console.log('Error google: ', err)
     })
   }
+));
+
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.CALLBACK_URL_GITHUB
+},
+function(accessToken, refreshToken, profile, done) {
+  User.findOne({
+    where: {
+      email: profile.emails[0].value,
+      githubAccount: true
+    }
+  }).then((user)=> {
+    if(!user) {
+      return User.create({
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          githubAccount: true,
+          role: 'user',
+          password: profile.profileUrl
+        });
+    } else {
+      console.log(user)
+      done(null, {
+        user_id: user.user_id,
+        email: user.email,
+        role: user.role
+      });
+    }
+  }).then(user => {
+    done(null, user)
+  }).catch(err => {
+    console.log('Error github: ', err)
+  })
+}
 ));
 
 server.use('/', routes);

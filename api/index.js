@@ -32,7 +32,9 @@ var hash = function (pass) {
 var arrayDeUsuarios = [{
   name: "Eric",
   last_name: "Gomez",
-  email: "eric.gomez.unq@gmail.com",
+  email: "erickgoomez472@gmail.com",
+  googleAccount: false,
+  githubAccount: false,
   password: hash('1234')
 }, {
   name: "Gonza",
