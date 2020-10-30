@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import { getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers } from '../Redux/actionsReview';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import axios from 'axios';
 
 
 function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers }) {
@@ -13,17 +12,16 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
     qualification: "",
     description: "",
   });
-console.log(user);
-  useEffect(() => {
-    getAllReviewsRequest(id)
-    getNumbers(id);
-    }, [])
-    console.log(numbers);
-    var number = numbers.avg
-    var prom = Math.round(number).toFixed(2)
-    var allReviews = reviews
 
-  function handleChange(e) {
+  useEffect(() => {
+    getAllReviewsRequest(id) // trae todas las reviews como un array de objetos
+    getNumbers(id); //trae un array con el promedio y con la cantidad de votos
+    }, [])
+
+    var number = numbers.avg //el promedio esta en numbers.avg
+    var prom = Math.round(number).toFixed(2) // redondea y agrega dos ceros
+
+  function handleChange(e) { //toma los valores del input
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -32,27 +30,22 @@ console.log(user);
   function handleSubmit(e) {
     e.preventDefault();
   }
-  function onDelete(e) {
-    console.log("delete");
+  function onDelete(e) { //borra una publicacion
     var idReview = e.target.value
     console.log(idReview);
-    axios.delete(`http://localhost:3001/reviews/product/${id}/review/${idReview}`)
-      .then(rest => console.log(rest))
-    //deleteReviewRequest(id, idReview)
+    deleteReviewRequest(id, idReview)
   }
 
-  function onPut(e) {
+  function onPut(e) { //modifica una publicacion
     const idReview = e.target.value
     var post = {
       qualification: state.qualification,
       description: state.description
     };
-    axios.put(`http://localhost:3001/reviews/product/${id}/review/${idReview}`, post)
-      .then(result => console.log(result))
-    //putReviewRequest(id, idReview, post)
+    putReviewRequest(id, idReview, post)
   }
 
-  function onSend() {
+  function onSend() { //envia una publicacion nueva
     var id = user.user.user.user_id
     var post = {
       qualification: state.qualification,
@@ -60,11 +53,8 @@ console.log(user);
       user_id: id
     };
     postReviewRequest(id, post)
-    redirect()
   }
-function redirect(){
-  return (<Redirect to="/login" />)
-}
+
 
   return (
     <div className={Style.box}>
@@ -101,7 +91,7 @@ function redirect(){
 
               <div className={Style.opiniones}>
                 {
-                  allReviews && allReviews.map(o => {
+                  reviews && reviews.map(o => {
                     return (
                       <div>
                         <div>
@@ -118,7 +108,7 @@ function redirect(){
               </button> : null }
                    </div>
                         <p className={Style.opinionsDate}>{o.updatedAt.slice(0, 10)}</p>
-                        {/*  <p className={Style.opinionsTitle}>{o.user.name}</p>}*/}
+                        <p className={Style.opinionsTitle}>{o.user.name}</p>
                         <p className={Style.opinionsDescription}>{o.description}</p>
                       </div>
 

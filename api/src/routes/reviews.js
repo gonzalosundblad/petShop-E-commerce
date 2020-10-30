@@ -86,7 +86,7 @@ server.get('/product/:id/review/', isAuthenticated,   (req, res) => {           
   })
 })
 
-server.get('/product/:id/review/numbers', (req, res) => {                       //S57 : Crear Ruta para obtener todas las reviews de un producto.
+server.get('/product/:id/numbers', (req, res) => {                       //S57 : Crear Ruta para obtener todas las reviews de un producto.
   const { id } = req.params
   var avg = Review.findAll({
     where: {

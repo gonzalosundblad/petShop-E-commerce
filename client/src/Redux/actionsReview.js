@@ -55,7 +55,7 @@ export function getAllReviewsRequest(id) {//S57 : Crear Ruta para obtener todas 
 //---------------------------------------------------------------------------
 export function getNumbers(id) {//S57 : Crear Ruta para obtener todas las reviews de un producto.
   return (dispatch) => {
-    _axios.get(`http://localhost:3001/reviews/product/${id}/review/numbers`)
+    _axios.get(`http://localhost:3001/reviews/product/${id}/numbers`)
       .then(response => { dispatch(sendNum(response.data))})
       .catch(err => { console.log(err) })
   }
