@@ -11,9 +11,11 @@ function MostrarCatalogo({ products, getProductsRequest }) {
 
   useEffect(() => {
     getProductsRequest()
+    console.log(products)
+ 
   }, []);
 
-  console.log(products)
+ 
   return (
     <div className={StyleCatalogo.display}>
       {products.map(p =>

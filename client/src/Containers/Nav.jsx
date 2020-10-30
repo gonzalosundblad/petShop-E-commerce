@@ -10,26 +10,37 @@ import UsuarioLogeado from '../Components/UsuarioLogeado';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
+import { loadState } from '../Redux/reducer/localStorage';
 import { bindActionCreators } from 'redux';
 
 
-function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
+function NavBar({ user, logged, funcionCatag, onSearch }) {
   //console.log(user.user.role);
-  const [carro, setCarro] = useState([])
+  const [carro, setCarro] = useState([]);
+  const [total, setTotal] = useState(0)
   useEffect(() => {
-    if (user === null) {
-      user = 1
-    } else {
-      user = user.user.user_id
-      // .user.user_id
-    }
-    getCarrito(user)
+    var precio = [];
+    if (logged) {
+      getCarrito(user.user.user_id)
 
+    } else if (localStorage.length > 0) {
+
+      let x = loadState()
+      setCarro(x);
+      console.log(x)
+      precio = x.map(e => {
+        return parseInt(e.price) * parseInt(e.quantity)
+      })
+    }
+    else {
+      console.log("no hay valores en el local storage ni tampoco usuario");
+    }
+
+
+    setTotal(precio.reduce(function (a, b) {
+      return a + b
+    }, 0))
   }, [])
-  var precio = carro.map(e => e.price * e.LineaDeOrden.quantity)
-  var total = precio.reduce(function (a, b) {
-    return a + b
-  }, 0)
 
   function recargar() {
     window.location.reload()
@@ -62,7 +73,13 @@ function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
           </NavLink>
           <UsuarioLogeado />
           <div className={StyleNav.iniciarSesion}>
-            <NavLink class="nav-link text-white" to='/login' >Iniciar Sesión</NavLink>
+
+            {/* Condicional en caso de que el usuario exista para iniciar sesion */}
+
+            {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <a class="nav-link text-white" href='/login' > {user.user.email} </a>}
+
+            {/* ---------------------------------------------------------------- */}
+
           </div>
         </div>
       </div>
@@ -73,9 +90,10 @@ function NavBar({ user, funcionCatag, onSearch, getCarrito }) {
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-
+  const { user, logged } = state.auth;
   return {
-    user: state.auth.user
+    user,
+    logged
   };
 }
 

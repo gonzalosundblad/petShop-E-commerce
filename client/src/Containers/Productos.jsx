@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 
 
 
+
 export function ModificayBorra({ products, getProductsRequest, putId, deleteProduct }) {    //modifica y borra producto
   const [state, setState] = useState({
     id: "",
@@ -15,22 +16,15 @@ export function ModificayBorra({ products, getProductsRequest, putId, deleteProd
     price: "",
     stock: ""
   });
-
   useEffect(() => {
     getProductsRequest()
   }, []);
-
-  console.log(products.products)
-
-
   function handleChange(e) {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   }
-
-
   function modificar() {
     var id = state.id
     console.log(id)
@@ -42,13 +36,10 @@ export function ModificayBorra({ products, getProductsRequest, putId, deleteProd
     }
     putId(id, cambios)
   }
-
   function delet() {
     var id = state.id
     deleteProduct(id)
   }
-
-
   return (
     <div>
       <div className={Estilo.forms}>
@@ -97,22 +88,18 @@ export function ModificayBorra({ products, getProductsRequest, putId, deleteProd
         <form style={{ width: "50%", border: "solid 1px" }}>
           <fieldset>
             <legend>Ingrese los datos que desea modificar/eliminar</legend>
-
             <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
               <label style={{ textDecoration: 'none' }} for="exampleInputEmail1">Id</label>
               <input type="number" class="form-control" aria-describedby="emailHelp" placeholder="Id del producto" id="id" name="id" onChange={handleChange} />
             </div>
-
             <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
               <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Nombre</label>
               <input type="text" class="form-control" placeholder="Nombre del producto" id="name" name="name" onChange={handleChange} />
             </div>
-
             <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
               <label style={{ textDecoration: 'none' }} for="exampleTextarea">Descripcion</label>
               <textarea class="form-control" rows="3" id="description" name="description" placeholder="Ingrese una descripción" onChange={handleChange} />
             </div>
-
             <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }} >
               <label style={{ textDecoration: 'none' }} class="control-label">Precio</label>
               <div class="form-group">
@@ -124,7 +111,6 @@ export function ModificayBorra({ products, getProductsRequest, putId, deleteProd
                 </div>
               </div>
             </div>
-
             <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
               <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Stock</label>
               <input type="number" class="form-control" placeholder="Ingrese cantidad" id="stock" name="stock" onChange={handleChange} />
@@ -133,28 +119,23 @@ export function ModificayBorra({ products, getProductsRequest, putId, deleteProd
               <button onClick={modificar} class="btn btn-outline-success" style={{ margin: "10px" }}>Modificar</button>
               <button onClick={delet} class="btn btn-outline-danger" style={{ margin: "10px" }}>Borrar</button>
             </div>
-
           </fieldset>
         </form>
       </div>
     </div>
   );
 }
-
-
 const mapStateToProps = state => {
   return {
     products: state.reducer
   }
 }
-
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     ...bindActionCreators({ getProductsRequest, putId, deleteProduct }, dispatch)
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

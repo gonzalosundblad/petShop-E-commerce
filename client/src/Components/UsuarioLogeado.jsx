@@ -6,14 +6,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 
-function UsuarioLogeado({ user, logout }) {
+function UsuarioLogeado({ user, logout, logged }) {
   //console.log(user);
 
   function cerrarSesion() {
-    logout()
+    logout();
+    localStorage.removeItem("user")
   }
 
-  var id = 1
+
 
   return (
     <div id='header'>
@@ -29,7 +30,7 @@ function UsuarioLogeado({ user, logout }) {
               {/* window.location=`user/${user.id}` */}
             </li>
             <li >
-              <NavLink to={`/user/${id}/ordenes`}>Mis compras</NavLink>
+              <NavLink to={`/user/id/ordenes`}>Mis compras</NavLink>
             </li>
             <li>
               <NavLink to='/' onClick={cerrarSesion} >Cerrar Sesión</NavLink>
@@ -44,9 +45,9 @@ function UsuarioLogeado({ user, logout }) {
 }
 
 function mapStateToProps(state) {
-  const { user } = state.auth;
+  const { user, logged } = state.auth;
   return {
-    user,
+    user, logged
   };
 }
 function mapDispatchToProps(dispatch) {

@@ -11,9 +11,15 @@ import {
 } from "../constantsLogin.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
+var logueado;
+{ localStorage.getItem("user") ? logueado = true : logueado = false }
+
 
 const initialState = {
-  user: user
+  user: user,
+  logged: logueado
+
+
 }
 
 export default function (state = initialState, action) {
@@ -23,17 +29,20 @@ export default function (state = initialState, action) {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
+        logged: true
       };
     case LOGIN_FAIL:
       return {
         ...state,
-        user: null
+        user: null,
+        logged: false
       };
     case LOGOUT:
       return {
         ...state,
-        user: null
+        user: null,
+        logged: false
       };
     case GET_ME:
       return {

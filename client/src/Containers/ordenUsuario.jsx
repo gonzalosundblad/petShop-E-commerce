@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { getProdOrder, getCarro } from '../Redux/actionsCarrito'
+import { getProdOrder, getCarritoRequest } from '../Redux/actionsCarrito'
 import { putOrder, getOrderId } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 import { connect } from "react-redux";
@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom'
 
 
-function OrdenUsuario({ id2, user, order, carrito, putOrder, getCarro }) {
+function OrdenUsuario({ id2, user, order, carrito, putOrder, getCarritoRequest }) {
   const [productOrder, setproductOrder] = useState([])
   console.log('hhhhhhhhhhhhhhhhhh');
   // console.log(user.user.user_id);
@@ -16,7 +16,7 @@ function OrdenUsuario({ id2, user, order, carrito, putOrder, getCarro }) {
 
 
   useEffect(() => {
-    getCarro(user.user.user_id)
+    getCarritoRequest(user.user.user_id)
   }, [])
 
   // var total = 0
@@ -93,7 +93,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putOrder, getCarro }, dispatch)
+    ...bindActionCreators({ putOrder, getCarritoRequest }, dispatch)
   }
 }
 

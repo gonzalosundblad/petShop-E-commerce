@@ -8,7 +8,7 @@ export const initialState = {
   products: [],
   categories: [],
   users: [],
-  carrito: loadState === undefined ? [] : loadState(),
+  carrito: [],
   order: [],
   reviews: [],
 
@@ -114,12 +114,12 @@ export default (state = initialState, action) => {
     case GET_CARRO:
       return {
         ...state,
-        carrito: action.payload,
+        carrito: action.payload
       }
     case POST_CARRO:  //agrega un producto al carrito
       return {
         ...state,
-        carrito: state.carrito.concat(action.carrito)
+        carrito: state.carrito.concat(action.payload)
       }
     case PUT_CANTIDAD_CARRO:
       return {

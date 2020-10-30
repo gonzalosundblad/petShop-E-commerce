@@ -13,6 +13,7 @@ export function postLog(user) {//va a REDUCER
   }
 }
 export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
+  console.log("hola")
   return (dispatch) => {
     _axios.post('http://localhost:3001/auth/login', usuario)
       .then(response => {
@@ -79,23 +80,24 @@ export function postAdmin(idUser) {//Crea un Usuario nuevo
 
 //------------------Google-----
 
-export function getGoo(user) { //Va a Reducer
-  console.log("chau")
-  return {
-    type: GET_GOOGLE,
-    payload: user
-  }
+// export function getGoo(user) { //Va a Reducer
+//   console.log("chau")
+//   return {
+//     type: GET_GOOGLE,
+//     payload: user
+//   }
+// }
+
+export function getGoogle() {
+  const request = axios.get('http://localhost:3001/auth/google')
+  return { type: GET_GOOGLE, payload: request }
 }
 
-export function getGoogle() {// Te lleva a la pagina de Google
-  console.log("hola")
-  return (dispatch) => {
-    axios.get('http://localhost:3001/auth/google')
-      .then(resp => {
-        console.log(resp)
-      })
-  }
-}
+// export function getGoogle() {// Te lleva a la pagina de Google
+//   console.log("hola")
+//   axios.get('http://localhost:3001/auth/google')
+
+// }
 export function getGit(user) { //Va a Reducer
   console.log("chau")
   return {

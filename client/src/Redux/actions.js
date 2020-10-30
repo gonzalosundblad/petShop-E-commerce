@@ -1,6 +1,5 @@
 import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH, POST_USER, GET_USERS, PUT_USER, DELETE_USER, POST_PASSWORD } from './constants';
 import axios from 'axios';
-
 export function getProducts(allProducts) {//va a REDUCER
   console.log('allProducts');
   return {
