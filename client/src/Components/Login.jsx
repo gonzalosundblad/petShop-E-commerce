@@ -88,6 +88,7 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
                   </div>
                   <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button>
+                  <NavLink to='/forgot' class="btn btn-outline-danger" style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>
                 </fieldset>
               </form>
             </div>
