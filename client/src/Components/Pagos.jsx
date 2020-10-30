@@ -1,33 +1,70 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 
 
 function Pagos() {
 
-const [exito, setExito] = useState()    // ACA HAY Q RECIBIR EL OK O EL PROBLEMA Q HUBO CON EL PAGO O DESDE EL SERVIDOR.
-const [error, setError] = useState()
+// const [exito, setExito] = useState()    // ACA HAY Q RECIBIR EL OK O EL PROBLEMA Q HUBO CON EL PAGO O DESDE EL SERVIDOR.
+// const [error, setError] = useState()
+
+const [showError, setShowError] = useState(false);
+const [messageFromServer, setMessage] = useState('');
+const [waiting, setWaiting] = useState(false);
+const [success, setSuccess] = useState(false);
+
+
+var email = 'sundbladgonzalo@gmail.com' //pedirlo por props a componente checkout
 
 var years = []
 for(var i = 2020; i < 2050; i++) {
        years.push(i)
 }
      
-function handlePayment() {
-    //axios o no se que a la tarjeta de credito a ver si entra el pago
-    var axios = true    // en caso de recibir exitosamente el pago  //PONER FALSE PARA VER EL OTRO RENDERIZADO
-    if(axios) {
-       return setExito(true)   
-    } else {
-        setError(true)
-    }
+
+async function pedirPago(e) {
+    e.preventDefault();
+    
+    setWaiting(true);
+    setShowError(false);
+
+    try {
+        const response = await axios.post(
+          'http://localhost:3001/checkout',
+          {
+            email, // agregar resumen de compra: precio final, productos, direccion de envio, tarjeta con la q se pago, tipo de envio
+          },
+        );
+        console.log(response.data);
+        if (response.data === 'checkout email sent') {
+        setShowError(false);
+        setMessage('checkout email sent');
+        setWaiting(false);
+        setSuccess(true);
+        } else{
+            setTimeout(() => setShowError(true), 3000); // le pongo setTimeout para simular q tarda en recibir el error del banco en el pago
+            setTimeout(() => setWaiting(false), 3000);
+        }
+      } catch (error) {
+        console.error(error.response.data);
+        if (error.response.data === 'email not in db') {
+          setShowError(true);
+          setMessage('');
+          setWaiting(false);
+          setSuccess(false)
+        }
+      }
+
 }
     
 
   return (
+    
     <div style={{width: 700, margin: 'auto'}} >
- {!exito &&    
-     <form>
+        <p>******mostrar card con los datos ingresados en la pag anterior. pedirlos por props******</p>
+ {!success &&    
+     <form onSubmit={pedirPago}>
   <div class="form-group">
     <label for="exampleFormControlSelect1">Su tarjeta de credito</label>
     <select class="form-control" id="exampleFormControlSelect1">
@@ -72,10 +109,17 @@ function handlePayment() {
   </div>
   <p class="form-group col-md-4">poner el mismo cuadrito con resumen de compra</p>
   </div>
-  <button onClick={() => handlePayment()} type="button" class="btn btn-success">Confirmar compra</button>
+  <button type="submit" class="btn btn-success">Confirmar compra</button> 
 </form>
 }
-{ error &&
+{
+    waiting && 
+    <div>
+        <hr/>
+        <p>Procesando el pago...</p>
+    </div>
+}
+{ showError &&
       <div>
           <hr/>
             <h4>
@@ -86,7 +130,7 @@ function handlePayment() {
             <p>Puede intentar de nuevo o probar otro metodo de pago</p>
       </div>
   }
-{ exito &&
+{ success &&
       <div>
           <hr/>
             <h2>
