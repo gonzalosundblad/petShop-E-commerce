@@ -18,6 +18,8 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
   //console.log(user.user.role);
   const [carro, setCarro] = useState([]);
   const [total, setTotal] = useState(0)
+
+
   useEffect(() => {
     var precio = [];
     if (logged) {

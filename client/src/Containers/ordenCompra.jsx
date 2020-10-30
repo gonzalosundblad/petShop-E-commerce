@@ -8,27 +8,19 @@ import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom'
 
 
-function OrdenCompra({ id, user, putOrder, order }) {
+function OrdenCompra({ id, user, putOrder, order, getProdOrder }) {
   const [productOrder, setproductOrder] = useState([])
   console.log('hhhhhhhhhhhhhhhhhh');
-  console.log(user);
+  console.log(user, "hola");
 
 
   useEffect(() => {
-    if (user.user === null) {
-      var user = 1
+    if (user === null) {
+      var user2 = 1
     } else {
-      user = user.user.user_id
+      var user2 = user.user.user.user_id
     }
-    getProdOrder(id).payload
-      .then(res => {
-        if (!res.data[0]) {
-          alert('No hay Ordenes')
-        } else {
-          console.log(res.data[0].products)
-          setproductOrder(res.data[0].products)
-        }
-      })
+    getProdOrder(user2)
   }, [])
   var total = 0
 
@@ -88,7 +80,7 @@ function OrdenCompra({ id, user, putOrder, order }) {
 
 function mapStateToProps(state) {
   return {
-    user: state.auth.user,
+    user: state.auth,
     order: state.reducer.order
   };
 }
@@ -96,7 +88,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putOrder }, dispatch)
+    ...bindActionCreators({ putOrder, getProdOrder }, dispatch)
   }
 }
 

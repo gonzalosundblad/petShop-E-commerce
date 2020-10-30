@@ -29,11 +29,11 @@ export function getProdOrderUsers(resp) { //obtener todos los productos del carr
   return { type: GET_CREADA, payload: resp };
 }
 
-export function getProdOrder(usuario, products) { //Agregar productos al carrito
+export function getProdOrder(usuario) { //Trae los productos de una orden
   console.log("Cargar productos al carrito")
   return (dispatch) => {
-    axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
-      .then((response) => { dispatch(postCarritoProducto(response)) })
+    axios.get(`http://localhost:3001/users/${usuario}/cart/orders`)
+      .then((response) => { dispatch(getProdOrderUsers(response.data[0].products)) })
       .catch(err => { console.log(err) })
   }
 }
@@ -53,10 +53,15 @@ export function postCarrito(usuario, products) { //Agregar productos al carrito
   console.log("Cargar productos al carrito")
   return (dispatch) => {
     axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
-      .then((response) => { dispatch(postCarritoProducto(response)) })
+      .then((response) => { dispatch(postCarritoProducto(response.data)) })
       .catch(err => { console.log(err) })
   }
 }
+
+// export function postCarrito(usuario, products) {
+//   const request = axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
+//   return { type: POST_CARRO, payload: request }
+// }
 
 
 //---------------------CAMBIAR CANTIDAD DENTRO DE LA ORDEN--------------------------

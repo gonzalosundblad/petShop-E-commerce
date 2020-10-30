@@ -13,7 +13,8 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
-  console.log(user)
+  // console.log(carrito[0], "chau")
+  // console.log(user.user.user_id, "chawqadwu")
 
   useEffect(() => {
     // si el usuario esta logueado
@@ -63,6 +64,11 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   //---------------------------------RENDER
 
 
+  var orden = carrito.map(e => {
+    return e.LineaDeOrden.order_id
+  })
+  console.log(orden, "djkwah")
+
   if (carrito.length === 0 && products.length === 0) {
     return (
       <div>
@@ -72,8 +78,6 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     )
   }
   else if (logged && carrito.length > 0) {
-    const order_id = carrito.map(id => id.LineaDeOrden.order_id)
-    console.log('hay productos')
 
     return (
       <div>
@@ -101,7 +105,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
           <NavLink className={Estilo.botonesFinales} to='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </NavLink>
-          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+          <a className={Estilo.botonesFinales} href={`/order/${orden[0]}`} >
             <span className={Estilo.botoncitos}  >Finalizar Compra</span>
           </a>
         </div>
@@ -147,11 +151,9 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
 
 }
 const mapDispatchToProps = dispatch => {
-  function mapStateToProps(state) {
-    return {
-      dispatch,
-      ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd }, dispatch)
-    }
+  return {
+    dispatch,
+    ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd }, dispatch)
   }
 }
 

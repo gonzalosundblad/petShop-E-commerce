@@ -13,7 +13,7 @@ import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 
-function Login({ user, isLoggedIn, loginRequest, users, getGithub }) {
+function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -53,10 +53,7 @@ function Login({ user, isLoggedIn, loginRequest, users, getGithub }) {
   }
 
   function loginGoogle() {
-    getGoogle().payload
-      .then(resp => {
-        console.log(resp)
-      })
+    getGoogle()
   }
   function loginGithub() {
     getGithub()
@@ -143,7 +140,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest, getGithub }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, getGoogle }, dispatch)
   }
 }
 

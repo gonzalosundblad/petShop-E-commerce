@@ -4,6 +4,8 @@ import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, REGISTER_SUCCESS, REGISTER_FAIL, GET
 var _axios = axios.create({
   withCredentials: true
 })
+
+
 export function postLog(user) {//va a REDUCER
   return {
     type: LOGIN_SUCCESS,
@@ -15,10 +17,9 @@ export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
   return (dispatch) => {
     _axios.post('http://localhost:3001/auth/login', usuario)
       .then(response => {
-
         dispatch(postLog(response.data),
           localStorage.setItem("user", JSON.stringify(response.data))
-        )
+        );
       })
       .catch(error => { console.log(error) })
   }
@@ -79,24 +80,27 @@ export function postAdmin(idUser) {//Crea un Usuario nuevo
 
 //------------------Google-----
 
-// export function getGoo(user) { //Va a Reducer
-//   console.log("chau")
-//   return {
-//     type: GET_GOOGLE,
-//     payload: user
-//   }
-// }
-
-export function getGoogle() {
-  const request = axios.get('http://localhost:3001/auth/google')
-  return { type: GET_GOOGLE, payload: request }
+export function getGoo(user) { //Va a Reducer
+  console.log(user)
+  return {
+    type: GET_GOOGLE,
+    payload: user
+  }
 }
 
-// export function getGoogle() {// Te lleva a la pagina de Google
-//   console.log("hola")
-//   axios.get('http://localhost:3001/auth/google')
+export function getGoogle() {// Te lleva a la pagina de Google
+  console.log("hola")
+  return (dispatch) => {
+    axios.get('http://localhost:3001/auth/google')
+      .then(resp => {
+        dispatch(getGoo(resp.data))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+}
 
-// }
 export function getGit(user) { //Va a Reducer
   console.log("chau")
   return {

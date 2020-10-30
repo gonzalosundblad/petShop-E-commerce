@@ -19,20 +19,24 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
     getProductById(id2)
   }, []);
 
-  console.log(user, "hola")
+  console.log(products, "hola")
 
   function handleChange(e) {
     setQuantity(e.target.value);
 
-    console.log(user);
   }
+
+  console.log(user.user.user_id);
+
+  var idUser = user.user.user_id
+
   function subirCarrito() {
     const { image, name, price } = products.products
     if (logged) {
-      postCarrito(user.user.user_id, {
+      postCarrito(idUser, {
         product_id: id2,
         quantity: quantity,
-        price
+        price: products.products.price
       })
     }
     else if (quantity >= 0) {

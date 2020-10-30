@@ -11,6 +11,7 @@ const session = require('express-session');
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
+const cors = require('cors')
 
 
 require('./db.js');
@@ -31,10 +32,18 @@ server.use(morgan('dev'));
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin', 'https://github.com');
+  res.header('Access-Control-Allow-Origin', 'https://accounts.google.com');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+}
+server.use(cors(corsOptions));
 
 //Configuracion de passport
 server.use(passport.initialize());
