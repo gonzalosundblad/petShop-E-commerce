@@ -6,14 +6,14 @@ import email from '../imagenes/email.png';
 import google from '../imagenes/google.png';
 import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
-import { loginRequest } from '../Redux/actionsLogin';
+import { loginRequest, getGoogle, getGithub } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 
-function Login({ user, isLoggedIn, loginRequest, users }) {
+function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -54,6 +54,13 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
     loginRequest(input)
   }
 
+  function loginGoogle() {
+    getGoogle()
+  }
+  function loginGithub() {
+    getGithub()
+  }
+
   return (
     <div className={estilo.divOscuro}>
       <div className={estilo.x}>
@@ -88,6 +95,7 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
                   </div>
                   <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button>
+                  <NavLink to='/register' class="btn btn-outline-danger" style={{ margin: "10px" }}>Registrarme</NavLink>
                   <NavLink to='/forgot' class="btn btn-outline-danger" style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>
                 </fieldset>
               </form>
@@ -99,7 +107,7 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
           <div className={estilo.divDerecha}>
             <h3>Iniciar sesion con:</h3>
             <div >
-              <button type="button" class="btn btn-danger" style={{ margin: "10px" }}>
+              <button type="button" onClick={loginGoogle} class="btn btn-danger" style={{ margin: "10px" }}>
                 <div style={{ display: "flex", width: "90px", justifyContent: "space-around", alignItems: "center" }}>
                   <img src={google} className={estilo.imgGoogle} />
                   <h6>Google</h6>
@@ -108,7 +116,7 @@ function Login({ user, isLoggedIn, loginRequest, users }) {
 
             </div>
             <div >
-              <button type="button" class="btn btn-secondary" style={{ margin: "10px" }}>
+              <button type="button" onClick={loginGithub} class="btn btn-secondary" style={{ margin: "10px" }}>
                 <div style={{ display: "flex", width: "90px", justifyContent: "space-around", alignItems: "center" }}>
                   <img src={GitHub} className={estilo.imgGoogle} />
                   <h6>GitHub</h6>
@@ -132,7 +140,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest }, dispatch)
+    ...bindActionCreators({ loginRequest, getGoogle, getGithub }, dispatch)
   }
 }
 

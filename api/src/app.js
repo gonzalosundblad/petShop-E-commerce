@@ -41,38 +41,38 @@ server.use(passport.initialize());
 server.use(passport.session());
 
 const authenticateUser = (email, password, done) => {
-  User.findOne({ 
-      where: { 
-        email
-      } 
-    }).then(user => {
-      if (!user) {
-        return done(null, false, {
-          message: 'El correo electrónico no existe.',
-        });
-      }
-      bcrypt.compare(password, user.password, (err, isMatch) => {
-        if (err) {
-          console.log(err);
-        }
-        if (isMatch) {
-          return done(null, {
-            user_id: user.user_id,
-            name: user.name,
-            last_name: user.last_name,
-            role: user.role,
-            email: user.email
-          });
-        } else {
-          return done(null, false, { message: "Contraseña Incorrecta" });
-        }
+  User.findOne({
+    where: {
+      email
+    }
+  }).then(user => {
+    if (!user) {
+      return done(null, false, {
+        message: 'El correo electrónico no existe.',
       });
-    }).catch(err => {
+    }
+    bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
-        console.log('Error en el Servidor');
-        return done(err);
+        console.log(err);
+      }
+      if (isMatch) {
+        return done(null, {
+          user_id: user.user_id,
+          name: user.name,
+          last_name: user.last_name,
+          role: user.role,
+          email: user.email
+        });
+      } else {
+        return done(null, false, { message: "Contraseña Incorrecta" });
       }
     });
+  }).catch(err => {
+    if (err) {
+      console.log('Error en el Servidor');
+      return done(err);
+    }
+  });
 }
 
 passport.use(new LocalStrategy(
@@ -90,45 +90,45 @@ passport.deserializeUser((user_id, done) => {
       user_id: user_id.user_id
     }
   }).then((user) => {
-      if (user) {
-        return done(null, {
-          user_id: user.user_id,
-          email: user.email,
-          role: user.role,
-        });
-      } else {
-        done(new Error("Usuario no encontrado"), null);
-      }
-    }).catch((err) => {
-      console.error(err);
-      return done(new Error("Error interno"), null);
-    });
+    if (user) {
+      return done(null, {
+        user_id: user.user_id,
+        email: user.email,
+        role: user.role,
+      });
+    } else {
+      done(new Error("Usuario no encontrado"), null);
+    }
+  }).catch((err) => {
+    console.error(err);
+    return done(new Error("Error interno"), null);
+  });
 });
 
 
 passport.use(new GoogleStrategy({
-  clientID:process.env.GOOGLE_CLIENT_ID,
-  clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL:process.env.CALLBACK_URL,
-  passReqToCallback:true
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.CALLBACK_URL,
+  passReqToCallback: true
 },
-function(request, accessToken, refreshToken, profile, done) {
-  console.log(profile)
+  function (request, accessToken, refreshToken, profile, done) {
+    console.log(profile)
     User.findOne({
       where: {
         email: profile.emails[0].value,
         googleAccount: true
       }
-    }).then((user)=> {
-      if(!user) {
+    }).then((user) => {
+      if (!user) {
         return User.create({
-            name: profile.given_name,
-            last_name: profile.family_name,
-            email: profile.emails[0].value,
-            googleAccount: true,
-            role: 'user',
-            password: profile.id
-          });
+          name: profile.given_name,
+          last_name: profile.family_name,
+          email: profile.emails[0].value,
+          googleAccount: true,
+          role: 'user',
+          password: profile.id
+        });
       } else {
         done(null, {
           user_id: user.user_id,
@@ -149,35 +149,35 @@ passport.use(new GitHubStrategy({
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: process.env.CALLBACK_URL_GITHUB
 },
-function(accessToken, refreshToken, profile, done) {
-  User.findOne({
-    where: {
-      email: profile.emails[0].value,
-      githubAccount: true
-    }
-  }).then((user)=> {
-    if(!user) {
-      return User.create({
+  function (accessToken, refreshToken, profile, done) {
+    User.findOne({
+      where: {
+        email: profile.emails[0].value,
+        githubAccount: true
+      }
+    }).then((user) => {
+      if (!user) {
+        return User.create({
           name: profile.displayName,
           email: profile.emails[0].value,
           githubAccount: true,
           role: 'user',
           password: profile.profileUrl
         });
-    } else {
-      console.log(user)
-      done(null, {
-        user_id: user.user_id,
-        email: user.email,
-        role: user.role
-      });
-    }
-  }).then(user => {
-    done(null, user)
-  }).catch(err => {
-    console.log('Error github: ', err)
-  })
-}
+      } else {
+        console.log(user)
+        done(null, {
+          user_id: user.user_id,
+          email: user.email,
+          role: user.role
+        });
+      }
+    }).then(user => {
+      done(null, user)
+    }).catch(err => {
+      console.log('Error github: ', err)
+    })
+  }
 ));
 
 server.use('/', routes);

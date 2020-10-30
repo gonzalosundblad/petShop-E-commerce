@@ -5,7 +5,9 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   HACER_ADMIN,
-  GET_ME
+  GET_ME,
+  GET_GOOGLE,
+  GET_GIT
 } from "../constantsLogin.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
@@ -39,6 +41,16 @@ export default function (state = initialState, action) {
         user: action.payload
       }
     case HACER_ADMIN:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case GET_GOOGLE:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case GET_GIT:
       return {
         ...state,
         user: action.payload
