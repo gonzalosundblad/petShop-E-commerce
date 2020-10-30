@@ -11,7 +11,7 @@ import { saveState } from '../Redux/reducer/localStorage';
 
 
 
-function Product({logged, user, id2, products, postCarrito, getProductById }) {
+function Product({ logged, user, id2, products, postCarrito, getProductById }) {
 
   const [quantity, setQuantity] = useState();
 
@@ -19,7 +19,7 @@ function Product({logged, user, id2, products, postCarrito, getProductById }) {
     getProductById(id2)
   }, []);
 
-  console.log(products.products.name, "hola")
+  console.log(user, "hola")
 
   function handleChange(e) {
     setQuantity(e.target.value);
@@ -27,24 +27,19 @@ function Product({logged, user, id2, products, postCarrito, getProductById }) {
     console.log(user);
   }
   function subirCarrito() {
-    const {image, name, price} = products.products
+    const { image, name, price } = products.products
     if (logged) {
-      postCarrito(user.user.user.user_id, {
+      postCarrito(user.user.user_id, {
         product_id: id2,
         quantity: quantity,
         price
-      }).payload
-        .then(function (resp) {
-          console.log(resp.data)
-          window.location.replace("http://localhost:3000/products")
-        })
-        .catch(err => "Error al cargar producto")
+      })
     }
-    else if(quantity >= 0 ){
-        saveState({product_id: id2, quantity, price, image, name, })
-        window.location.replace("http://localhost:3000/products")
-        }
-    
+    else if (quantity >= 0) {
+      saveState({ product_id: id2, quantity, price, image, name, })
+      window.location.replace("http://localhost:3000/products")
+    }
+
   }
 
   if (products.products.stock <= 0) {
@@ -108,8 +103,8 @@ function Product({logged, user, id2, products, postCarrito, getProductById }) {
 }
 
 const mapStateToProps = state => {
-  const {user, logged} = state.auth;
-  
+  const { user, logged } = state.auth;
+
   return {
     user,
     logged,

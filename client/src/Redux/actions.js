@@ -15,7 +15,7 @@ export function getProductsRequest() {//Va a Catalogo2.jsx
       .catch(err => { console.log(err) })
   }
 }
-
+//----------------------------------------------------
 
 export function getCateg(categorias) {//va a REDUCER
   console.log('categorias');
@@ -32,6 +32,8 @@ export function getCategories() {//Va a Catalogo2.jsx
       .catch(err => { console.log(err) })
   }
 }
+
+//----------------------------------------------------
 
 
 export function getProdCate(prodCateg) {//va a REDUCER
@@ -50,6 +52,8 @@ export function getProductByCategory(name) {//Trae producto por categorias
   }
 }
 
+//----------------------------------------------------
+
 export function getProdId(producto) {//va a REDUCER
   console.log('getCateg');
   return {
@@ -65,6 +69,8 @@ export function getProductById(id) {//Muestra producto por ID
       .catch(err => { console.log(err) })
   }
 }
+
+//----------------------------------------------------
 
 
 export function postProd(product) {//va a REDUCER
@@ -82,10 +88,17 @@ export function postProduct(input) {//Agrega un producto nuevo Pero falta que ag
       .catch(err => { console.log(err) })
   }
 }
+
+//----------------------------------------------------
+
+
 export function postIdProdCatId(user, category) {   //agrega una categoria a un producto
   const request = axios.post(`http://localhost:3001/products/${user}/category/${category}`)
   return { type: POST_IDPROD_CAT_IDCATEG, payload: request };
 }
+
+//----------------------------------------------------
+
 
 export function postCateg(categorie) {//va a REDUCER
   console.log('Categoria');
@@ -94,6 +107,8 @@ export function postCateg(categorie) {//va a REDUCER
     payload: categorie
   }
 }
+
+
 export function postCategory(categoria) {//Crea una categoria
   console.log('postCategory');
   return (dispatch) => {
@@ -102,6 +117,9 @@ export function postCategory(categoria) {//Crea una categoria
       .catch(err => { console.log(err) })
   }
 }
+
+//----------------------------------------------------
+
 
 export function putProduct(cambio) {//va a REDUCER
   console.log('Cambios');
@@ -119,6 +137,7 @@ export function putId(id, cambios) {//Modifica producto segun id
   }
 }
 
+//----------------------------------------------------
 
 
 export function putCat(categ) {//va a REDUCER
@@ -137,11 +156,18 @@ export function putCategoryId(id, cambios) {//Modifica categoria segun id
       .catch(err => { console.log(err) })
   }
 }
+
+//----------------------------------------------------
+
 export function deleteCatOfProduct(idP, idC) {   //elimina una categoria de un producto
   return axios.delete(`http://localhost:3001/products/${idP}/category/${idC}`).then((resp) => {
     return { type: DELETE_IDPROD_CAT_IDCATEG, payload: resp }
   })
 }
+
+//----------------------------------------------------
+
+
 export function delProduct(prod) {//va a REDUCER
   console.log('Borrado');
   return {
@@ -158,6 +184,7 @@ export function deleteProduct(id) {//Va a Catalogo2.jsx
   }
 }
 
+//----------------------------------------------------
 
 
 export function delCateg(categ) {//va a REDUCER
@@ -175,6 +202,9 @@ export function deleteCategory(id) {//Va a Catalogo2.jsx
       .catch(err => { console.log(err) })
   }
 }
+
+//----------------------------------------------------
+
 
 export function search(producto) {   //busca entre todo FALTA
   const request = axios.get(`http://localhost:3001/search?products=${producto}`)

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import '../Estilos/SearchBar.module.css';
 import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
@@ -11,35 +11,42 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
 import { loadState } from '../Redux/reducer/localStorage';
+import { bindActionCreators } from 'redux';
 
-function NavBar({ user, logged, funcionCatag, onSearch }) {
+
+function NavBar({ user, logged, carrito, funcionCatag, onSearch }) {
   //console.log(user.user.role);
   const [carro, setCarro] = useState([]);
-  const [ total, setTotal ] = useState(0)
+  const [total, setTotal] = useState(0)
   useEffect(() => {
     var precio = [];
-    if (logged){
+    console.log(logged)
+    if (logged) {
       getCarrito(user.user.user_id)
+      if (carrito.length > 0){
+          precio = carrito.map(e => {
+            return parseInt(e.price) * parseInt(e.LineaDeOrden.quantity)
+        })
+      }
+      
+    } else if (localStorage.length > 0) {
 
-    }else if (localStorage.length > 0){
-       
       let x = loadState()
       setCarro(x);
-      console.log(x)
       precio = x.map(e => {
         return parseInt(e.price) * parseInt(e.quantity)
-      }) 
+      })
     }
-    else{
+    else {
       console.log("no hay valores en el local storage ni tampoco usuario");
     }
-  
-    
-      setTotal(precio.reduce(function (a, b) {
-        return a + b
-      }, 0))
-    }, [])
-  
+
+
+    setTotal(precio.reduce(function (a, b) {
+      return a + b
+    }, 0))
+  }, [])
+
   function recargar() {
     window.location.reload()
   }
@@ -53,9 +60,9 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top row" style={{ backgroundColor: "orange", height: "100px" }}>
       <div className={StyleNav.nav}>
         <div className={StyleNav.divIzquierda}>
-          <Link to='/'>
+          <NavLink to='/'>
             <img src={HenryPet} className={StyleNav.imagen} />
-          </Link>
+          </NavLink>
           <ListaDesplegable />
         </div>
         <div className={StyleNav.divMedio}>
@@ -65,18 +72,18 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
 
         </div>
         <div className={StyleNav.divDerecho}>
-          <a className={StyleNav.botonCarrito} href='/carrito' style={{ textDecoration: 'none' }}>
+          <NavLink className={StyleNav.botonCarrito} to='/carrito' style={{ textDecoration: 'none' }}>
             <img className={StyleNav.img} src={Changito} />
             <h5>${total}</h5>
-          </a>
+          </NavLink>
           <UsuarioLogeado />
           <div className={StyleNav.iniciarSesion}>
 
-          {/* Condicional en caso de que el usuario exista para iniciar sesion */}
+            {/* Condicional en caso de que el usuario exista para iniciar sesion */}
 
-          {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <a class="nav-link text-white" href='/login' > {user.user.email} </a>  } 
+            {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <a class="nav-link text-white" href='/login' > {user.user.email} </a>}
 
-          {/* ---------------------------------------------------------------- */}
+            {/* ---------------------------------------------------------------- */}
 
           </div>
         </div>
@@ -91,8 +98,16 @@ function mapStateToProps(state) {
   const { user, logged } = state.auth;
   return {
     user,
-    logged
+    logged, 
+    carrito: state.reducer
   };
 }
 
-export default connect(mapStateToProps)(NavBar);
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getCarrito }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

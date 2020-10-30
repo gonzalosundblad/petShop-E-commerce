@@ -1,6 +1,6 @@
 import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH } from '../constants';
 import { GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA } from '../constantsCarro'
-import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID, GET_ORDENIDUSER } from '../constantesOrden'
+import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID, GET_ORDENIDUSER, DELETE_ORDER } from '../constantesOrden'
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW } from '../constantsReview';
 import { loadState, saveState } from "./localStorage"
 
@@ -116,11 +116,6 @@ export default (state = initialState, action) => {
         ...state,
         carrito: action.payload
       }
-    case GET_CREADA:
-      return {
-        ...state,
-        carrito: action.payload,
-      }
     case POST_CARRO:  //agrega un producto al carrito
       return {
         ...state,
@@ -147,6 +142,16 @@ export default (state = initialState, action) => {
         ...state,
         order: action.payload,
       }
+    case GET_CREADA:
+      return {
+        ...state,
+        order: action.payload,
+      }
+    case GET_ORDENID:
+      return {
+        ...state,
+        order: action.payload,
+      }
     case GET_ORDENIDUSER:
       return {
         ...state,
@@ -156,6 +161,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         order: state.order.map(ord => ord.id === action.payload.id ? action.payload : ord)
+      }
+    case DELETE_ORDER:
+      return {
+        ...state,
+        order: state.order.filter(ord => ord.id !== action.payload.id)
       }
     //reviews-----------------------
     case POST_REVIEW:

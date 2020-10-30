@@ -28,6 +28,8 @@ import { PieDePagina } from './Containers/fondo';
 import Reset from './Components/Reset';
 import OrdenCompra from './Containers/ordenCompra';
 import Carrusel from './Components/Carousel'
+import ForgotPassword from './Components/ForgotPassword';
+import ResetPassword from './Components/ResetPassword';
 
 
 function App() {
@@ -68,10 +70,14 @@ function App() {
           <Route exact path="/admin/ordenes" render={() => <Ordenes />} />
           <Route exact path="/admin/ordenes/:id" render={({ match }) => <OrdenAdmin id={match.params.id} />} />
           <Route exact path="/admin/usuarios" render={() => <Usuarios />} />
-          <Route exact path="/user/:id" render={({ match }) => <Perfil id={match.params.id} />} />
-          <Route exact path="/order/:id" render={({ match }) => <OrdenUsuario id={match.params.id} />} />
+          <Route exact path="/perfil" render={() => <Perfil />} />
+          <Route exact path="/order/:id" render={({ match }) => <OrdenUsuario id2={match.params.id} />} />
           <Route exact path="/reset" render={() => <Reset />} />
           <Route exact path="/user/:id/ordenes" render={({ match }) => <OrdenCompra id={match.params.id} />} />
+          <Route exact path="/forgot" render={() => <ForgotPassword />} />
+          <Route exact path="/resetpassword/:token" render={() => <ResetPassword/>} />
+
+
         </div>
       </BrowserRouter>
     </div >

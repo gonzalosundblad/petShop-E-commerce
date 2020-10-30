@@ -8,20 +8,21 @@ import { bindActionCreators } from 'redux';
 import { loadState } from '../Redux/reducer/localStorage';
 import { NavLink } from 'react-router-dom';
 
-function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd}) {
+function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd }) {
   const [products, setProducts] = useState([])
-  const [ total, setTotal] = useState()
+  const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
+  console.log(user)
 
   useEffect(() => {
-      // si el usuario esta logueado
+    // si el usuario esta logueado
     if (logged) {
       getCarritoRequest(user.user.user_id)
     }
-    else{
+    else {
       setProducts(loadState())
-      
+
     }
   }, [])
 
@@ -42,7 +43,7 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
     // let id = event.target.value
     if (logged) {
       deleteCarritoProd(user.user.user_id, valor)
-     } else {
+    } else {
       localStorage.removeItem(product_id)
     }
   }
@@ -50,27 +51,27 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
   //---------------------------------Vaciar Carrito
 
   function vaciar() {
-    
+
     if (logged) {
       deleteCarrito(user.user.user_id)
-    } 
-    else{
+    }
+    else {
       localStorage.clear()
     }
   }
-  
+
   //---------------------------------RENDER
 
-  
+
   if (carrito.length === 0 && products.length === 0) {
     return (
       <div>
         <h1>Agregar productos al carrito</h1>
-        <a href="/products">Ir al Catálogo</a>
+        <NavLink to="/products">Ir al Catálogo</NavLink>
       </div>
     )
-  } 
-  else if (logged && carrito.length > 0){
+  }
+  else if (logged && carrito.length > 0) {
     const order_id = carrito.map(id => id.LineaDeOrden.order_id)
     console.log('hay productos')
 
@@ -83,13 +84,12 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
           return (
             <div>
               <ProductoCarrito
-                key = {e.id}
+                key={e.id}
                 id={e.id}
                 name={e.name}
                 price={e.price}
                 image={e.image}
                 LineaDeOrden={e.LineaDeOrden.quantity}
-                funcionDelete={onDelete}
               />
             </div>
           )
@@ -98,17 +98,17 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
         }
         <div className={Estilo.botonesFinales}>
           <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
-          <a className={Estilo.botonesFinales} href='/products'>
+          <NavLink className={Estilo.botonesFinales} to='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
+          </NavLink>
+          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+            <span className={Estilo.botoncitos}  >Finalizar Compra</span>
           </a>
-            <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
-              <span className={Estilo.botoncitos}  >Finalizar Compra</span>
-            </a>
         </div>
       </div>
     )
   } else {
-  
+
     return (
       <div>
         <div className={Estilo.tusProductos}>
@@ -118,7 +118,7 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
           return (
             <div>
               <ProductoCarrito
-                key = {e.id}
+                key={e.id}
                 id={e.id}
                 name={e.name}
                 price={e.price}
@@ -136,19 +136,22 @@ function Carrito({logged, user, carrito, getCarritoRequest, deleteCarrito, delet
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
-            {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+          {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
               <span className={Estilo.botoncitos}  >Finalizar Compra</span>
             </a> */}
         </div>
       </div>
     )
-  } 
-   
+  }
+
+
 }
-const mapDispatchToProps =  dispatch => {
-  return {
-    dispatch,
-    ...bindActionCreators({getCarritoRequest, deleteCarrito, deleteCarritoProd} , dispatch)
+const mapDispatchToProps = dispatch => {
+  function mapStateToProps(state) {
+    return {
+      dispatch,
+      ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd }, dispatch)
+    }
   }
 }
 
@@ -160,6 +163,7 @@ const mapStateToProps = state => {
     carrito: state.reducer.carrito
   }
 }
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

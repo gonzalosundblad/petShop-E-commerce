@@ -1,32 +1,22 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { getProdOrder } from '../Redux/actionsCarrito'
-import { putOrder } from '../Redux/actionsOrden'
+import { getProdOrder, getCarritoRequest } from '../Redux/actionsCarrito'
+import { putOrder, getOrderId } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom'
 
 
-function OrdenUsuario(props) {
+function OrdenUsuario({ id2, user, order, carrito, putOrder, getCarritoRequest }) {
   const [productOrder, setproductOrder] = useState([])
   console.log('hhhhhhhhhhhhhhhhhh');
-  console.log(props);
-  const id = 3
+  // console.log(user.user.user_id);
+  // console.log(id2);
+
+
   useEffect(() => {
-    if (props.user === null) {
-      var user = 1
-    } else {
-      user = props.user.user_id
-    }
-    getProdOrder(props.id).payload
-      .then(res => {
-        if (!res.data[0]) {
-          alert('No hay Ordenes')
-        } else {
-          console.log(res.data[0].products)
-          setproductOrder(res.data[0].products)
-        }
-      })
+    getCarritoRequest(user.user.user_id)
   }, [])
 
   // var total = 0
@@ -38,45 +28,37 @@ function OrdenUsuario(props) {
   //   return a + b
   // }, 0)
 
-  console.log(props.id);
+  // const orders = order[0]
+
+  console.log(carrito, "hola");
 
 
   const estado = { orderState: 'creada' }
 
   function cambioEstado() {
-
-    putOrder(props.id, estado)
-      .then(resp => {
-        console.log(resp)
-        alert('Compra Exitosa')
-        window.location = '/'
-      })
+    putOrder(id2, estado)
   }
 
   const estado2 = { orderState: 'cancelada' }
 
   function cambioEstado2() {
-    putOrder(props.id, estado2)
-      .then(resp => {
-        console.log(resp)
-        alert('Pedido Cancelado')
-        window.location = '/'
-      })
+    putOrder(id2, estado2)
+    alert('Pedido Cancelado')
   }
 
-  if (props.user === null) {
+  if (user.user === null) {
     return (
       <div>
         <h1>Iniciar Sesión o Registrarse para continuar</h1>
-        <a href="/login">Iniciar sesión</a>
-        <a href="/register">Registrarme</a>
+        <NavLink href="/login">Iniciar sesión</NavLink>
+        <NavLink href="/register">Registrarme</NavLink>
       </div>
     )
   } else {
     return (
       <div>
         <h1 className={StyleOrden.tuOrden} >Tu Orden</h1>
-        {productOrder && productOrder.map(e => {
+        {carrito && carrito.map(e => {
           return (
             <div className={StyleOrden.producto} >
               <h2>{e.name}</h2>
@@ -101,16 +83,17 @@ function OrdenUsuario(props) {
 
 
 function mapStateToProps(state) {
-  const { user } = state.auth;
+
   return {
-    user,
-  };
+    user: state.auth.user,
+    carrito: state.reducer.carrito
+  }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ OrdenUsuario }, dispatch)
+    ...bindActionCreators({ putOrder, getCarritoRequest }, dispatch)
   }
 }
 

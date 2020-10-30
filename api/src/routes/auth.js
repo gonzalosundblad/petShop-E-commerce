@@ -7,8 +7,7 @@ const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 server.post("/login", isNotAuthenticated, passport.authenticate("local"), (req, res) => {      // S63 : Crear ruta de Login
   console.log(req.user)
   res.send({ user: req.user, logged: true });
-}
-);
+});
 
 server.post("/logout", isAuthenticated, (req, res) => {                                         // S64 : Crear ruta de logout
   req.logOut();
@@ -34,5 +33,23 @@ server.post('/promote/:id', isAdmin, (req, res) => {                            
     res.status(400).send('errorrororor');
   })
 })
+
+//==================GOOGLE AUTHENTICATION========================
+
+server.get('/google', isNotAuthenticated, passport.authenticate('google', { scope: ['profile', 'email'], prompt: "select_account" }));
+
+server.get('/google/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }), (req, res) => {
+  // Successful authentication, redirect home.
+  res.redirect('http://localhost:3000');
+});
+
+//==================GITHUB AUTHENTICATION========================
+
+server.get('/github', isNotAuthenticated, passport.authenticate('github', { scope: ['user:email'] }));
+
+server.get('/github/callback', passport.authenticate('github', { failureRedirect: 'http://localhost:3000/login' }), (req, res) => {
+  // Successful authentication, redirect home.
+  res.redirect('http://localhost:3000');
+});
 
 module.exports = server;

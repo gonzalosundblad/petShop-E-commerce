@@ -4,6 +4,7 @@ import userLogo from '../imagenes/userLogo.png'
 import { logout } from '../Redux/actionsLogin'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
 function UsuarioLogeado({ user, logout, logged }) {
   //console.log(user);
@@ -13,7 +14,7 @@ function UsuarioLogeado({ user, logout, logged }) {
     localStorage.removeItem("user")
   }
 
-  
+
 
   return (
     <div id='header'>
@@ -25,19 +26,14 @@ function UsuarioLogeado({ user, logout, logged }) {
           </svg>
           <ul>
             <li>
-              <a href='/perfil'>Detalles de cuenta</a>
+              <NavLink to='/perfil'>Detalles de cuenta</NavLink>
               {/* window.location=`user/${user.id}` */}
             </li>
             <li >
-              {user ? <a href={`/user/${user.id}/ordenes`}>Mis compras</a> :
-              <a href={`/user/${1}/ordenes`}>Mis compras</a>}
+              <NavLink to={`/user/id/ordenes`}>Mis compras</NavLink>
             </li>
             <li>
-
-              {/* Si no esta logueado o si esta */}
-
-              {!logged ? null :  <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>}
-             
+              <NavLink to='/' onClick={cerrarSesion} >Cerrar Sesión</NavLink>
             </li>
 
           </ul>
