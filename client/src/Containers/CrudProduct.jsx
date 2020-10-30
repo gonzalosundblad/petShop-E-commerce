@@ -38,31 +38,31 @@ export function CrudProduct({ getCategories, postProduct, categories }) {
   function validate(input) {
     let errors = {};
     if (!input.name) {
-      errors.name = 'Product Name is required';
+      errors.name = 'El nombre es requerido';
     } else if (input.name.length < 3) {
-      errors.name = 'Product Name is invalid (more than 3 characters)';
+      errors.name = 'Nombre invalido(Tiene que ser mas de 3 caracteres)';
     }
     if (!input.price) {
-      errors.price = "Price is required";
+      errors.price = "El precio es requerido";
     } else if (!typeof (parseFloat(input.price) == "NaN")) {
-      errors.price = "Price is not a number";
+      errors.price = "El precio no es un numero";
 
     } else if (parseFloat(input.price) < 0) {
-      errors.price = "Price has to be major to 0";
+      errors.price = "el precio tiene que ser mayor a $0";
 
     } else if (!/^\d+(\.\d{1,2})?$/.test(input.price)) {
-      errors.price = "Price Format Invalid(Format valid (Number.Number))";
+      errors.price = "Formato invalido";
     }
     if (!input.stock) {
-      errors.stock = "Stock is required";
+      errors.stock = "El stock es requerido";
       // }else if(!/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)){
     } else if (!typeof (parseFloat(input.stock) === "number")) {
-      errors.stock = "Stock is not a number";
+      errors.stock = "El stock tiene que ser un numero";
 
     } else if (parseFloat(input.stock) < 0) {
-      errors.stock = "Stock has to be major to 0";
+      errors.stock = "No puede ser menor a 0";
     } else if (!/^\d+(\.\d{1,2})?$/.test(input.stock)) {
-      errors.stock = "Stock Format Invalid(Format valid (Number.Number))";
+      errors.stock = "Formato invalido";
     }
     return errors;
   };

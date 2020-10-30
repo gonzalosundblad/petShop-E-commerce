@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route } from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo'
-import Nav from './Containers/Nav';
+import NavBar from './Containers/Nav';
 import CrudProduct from './Containers/CrudProduct';
 import { mostrarCategorias } from './Containers/Categorias';
 import ProductosPorCategoria from './Containers/ProdCateg';
@@ -24,6 +24,7 @@ import OrdenUsuario from './Containers/ordenUsuario';
 import OrdenAdmin from './Components/ordenAdmin';
 import { Fondo } from './Containers/fondo';
 import { Animales } from './Containers/fondo';
+import { ParaComprar } from './Containers/fondo';
 import { PieDePagina } from './Containers/fondo';
 import Reset from './Components/Reset';
 import OrdenCompra from './Containers/ordenCompra';
@@ -44,7 +45,6 @@ function App() {
     search(producto).payload
       .then(resp => {
         setResultados(resp.data)
-        window.location.replace("http://localhost:3000/search")
       })
   }
 
@@ -52,18 +52,20 @@ function App() {
 
     <div >
       <BrowserRouter>
-        <Route path="/" render={() => <Nav onSearch={onSearch} />} />
+        <Route path="/" render={() => <NavBar onSearch={onSearch} />} />
         <div className={StyleApp.App}>
-          <Route exact path="/search" render={() => <Catalogo productos={resultados} />} />
+
           <Route exact path="/" render={() => <Fondo />} />
           <Route exact path="/" component={mostrarCategorias} />
           <Route exact path="/" component={Animales} />
-          <Route exact path="/" component={ControlledCarousel} />
+          <Route exact path="/" component={Carrusel} />
+          <Route exact path="/" component={ParaComprar} />
           <Route exact path="/" component={PieDePagina} />
           <Route exact path="/login" render={() => <User />} />
           <Route exact path="/register" render={() => <AgregarUsuario />} />
           <Route path="/products" component={listaCategorias} />
           <Route exact path="/products" component={MostrarCatalogo} />
+          <Route exact path="/products/search" render={() => <Catalogo productos={resultados} />} />
           <Route exact path={`/products/category/:Categoria`} render={({ match }) => <ProductosPorCategoria name={match.params.Categoria} />} />
           <Route exact path={`/producto/:Id`} render={({ match }) => <Product id2={match.params.Id} />} />
           <Route exact path="/carrito" render={() => <Carrito />} />

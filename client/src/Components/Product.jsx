@@ -26,7 +26,7 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
 
   }
 
-  console.log(user.user.user_id);
+
 
   var idUser = user.user.user_id
 

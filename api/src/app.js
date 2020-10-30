@@ -11,7 +11,7 @@ const session = require('express-session');
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
-const cors = require('cors')
+// const cors = require('cors')
 
 
 require('./db.js');
@@ -39,11 +39,11 @@ server.use((req, res, next) => {
   next();
 });
 
-const corsOptions = {
-  origin: 'https://accounts.google.com',
-  credentials: true
-}
-server.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: 'https://accounts.google.com',
+//   credentials: true
+// }
+// server.use(cors(corsOptions));
 
 //Configuracion de passport
 server.use(passport.initialize());

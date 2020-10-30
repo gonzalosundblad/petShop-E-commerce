@@ -44,10 +44,6 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
     }, 0))
   }, [])
 
-  function recargar() {
-    window.location.reload()
-  }
-
   // let admin;
   // if (user !== null && user.user.role === 'admin') {
   //   admin = <ListaDesplegable />
