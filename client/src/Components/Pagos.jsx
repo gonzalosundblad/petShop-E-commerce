@@ -4,13 +4,13 @@ import axios from 'axios';
 
 import { connect } from 'react-redux'
 
+import CheckoutProductoCarrito from './CheckoutProductoCarrito';
 
 
 
-function Pagos({ user, logged }) {
 
-// const [exito, setExito] = useState()    // ACA HAY Q RECIBIR EL OK O EL PROBLEMA Q HUBO CON EL PAGO O DESDE EL SERVIDOR.
-// const [error, setError] = useState()
+function Pagos({ user, logged, carrito, datosEnvio }) {
+
 
 const [showError, setShowError] = useState(false);
 const [messageFromServer, setMessage] = useState('');
@@ -18,12 +18,13 @@ const [waiting, setWaiting] = useState(false);
 const [success, setSuccess] = useState(false);
 
 
+
 var email;
 
 if(user && logged) {
   email = user.user.email
 } else {
-  email = 'dvfsv' // necesito tomarlo del componente checkout porq este comprador no tiene ususario
+  email = datosEnvio.email // necesito tomarlo del componente checkout porq este comprador no tiene ususario
 }
 
 var years = []
@@ -71,7 +72,35 @@ async function pedirPago(e) {
   return (
     
     <div style={{width: 700, margin: 'auto'}} >
-        <p>******mostrar card con los datos ingresados en la pag anterior. pedirlos por props******</p>
+      {carrito && carrito.map(e => {
+          return (
+            <div>
+              <CheckoutProductoCarrito
+                key={e.id}
+                id={e.id}
+                name={e.name}
+                price={e.price}
+                image={e.image}
+                LineaDeOrden={e.LineaDeOrden.quantity}
+              />
+            </div>
+          )}
+        )}
+        <div class="card" style={{width: '18rem'}}>
+            <div class="card-body">
+              <h5 class="card-title">{datosEnvio.name} {datosEnvio.lastname}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{datosEnvio.email}</h6>
+              <hr/>
+              <h6 className="card-title">Enviando a:  {datosEnvio.adress}, {datosEnvio.pisoDepto}</h6>
+              <h6 className="card-title">{datosEnvio.city}, {datosEnvio.prov}, {datosEnvio.CP} </h6>
+              <hr/>          
+              <a href="#" class="card-link">Editar datos</a>
+            </div>
+        </div>
+        <hr/>
+        <h5>Total: ${datosEnvio.precioFinal}</h5>
+        <hr/>
+        
  {!success &&    
      <form onSubmit={pedirPago}>
   <div class="form-group">
@@ -116,18 +145,22 @@ async function pedirPago(e) {
     <label for="exampleFormControlInput1">CVV</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="xxx"/>
   </div>
-  <p class="form-group col-md-4">poner el mismo cuadrito con resumen de compra</p>
+
   </div>
-  <button type="submit" class="btn btn-success">Confirmar compra</button> 
-</form>
-}
-{
+  <hr/>
+  {!waiting &&
+  <button type="submit" class="btn btn-success">Pagar</button> 
+}{
     waiting && 
     <div>
-        <hr/>
+        
         <p>Procesando el pago...</p>
     </div>
 }
+  <hr></hr>
+</form>
+}
+
 { showError &&
       <div>
           <hr/>
@@ -162,7 +195,10 @@ function mapStateToProps(state) {
   const { user, logged } = state.auth;
   return {
     user,
-    logged
+    logged,
+    carrito: state.reducer.carrito,
+    // precioFINAL: state.reducer.precioFINAL,
+    datosEnvio: state.reducer.datosEnvio
   };
 }
 

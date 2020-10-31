@@ -7,6 +7,9 @@ import { loadState } from '../Redux/reducer/localStorage';
 import { bindActionCreators } from 'redux';
 import { useState } from 'react';
 
+import CheckoutProductoCarrito from './CheckoutProductoCarrito';
+
+import { datosEnvio } from '../Redux/actionsCheckout'
 
 
 var logueado = false// HAY Q PREGUNTARLE AL STORE SI EL USUARIO ESTA LOGUEADO PARA EL RENDERIZADO CONDICIONAL DE ABAJO. PONER FALSE PARA VER EL OTRO RENDERIZADO
@@ -15,7 +18,7 @@ var logueado = false// HAY Q PREGUNTARLE AL STORE SI EL USUARIO ESTA LOGUEADO PA
 // var email = 'usuarioLogueado.email'
 
 
-function Checkout({ user, logged }) {
+function Checkout({ user, logged, carrito, datosEnvio }) {
 
   const [envio, setEnvio] = useState();
   const [email, setEmail] = useState(user? user.user.email : null);
@@ -28,12 +31,15 @@ function Checkout({ user, logged }) {
   const [CP, setCP] = useState();
 
 
-// var handleChange = (e) => {
-//   console.log(e.target.value)
-//   console.log(e.target.name)
-//   console.log(adress)
 
-// }
+var precioFinal = 0
+for(var i = 0; i < carrito.length; i++) {
+  precioFinal = precioFinal + (carrito[i].LineaDeOrden.price)*(carrito[i].LineaDeOrden.quantity)
+}
+
+
+if(envio === 'Envio CABA y alrededores ($180)') precioFinal = precioFinal + 180
+if(envio === 'Envio GBA y resto del pais ($450)') precioFinal = precioFinal + 450
 
 var disable = true;
 // var prohibir = false;
@@ -44,10 +50,25 @@ if(envio && email && name && lastname && adress && city && prov) {
 
 var handleClick = (e) => {
   if(disable) {
-    e.preventDefault()
+    e.preventDefault() //OJO ACA SI ROMPE
     alert('Campos requeridos!')
     // prohibir = true
-}}
+}
+
+datosEnvio({
+  name,
+  lastname,
+  email,
+  adress,
+  envio,
+  city,
+  prov,
+  pisoDepto,
+  CP,
+  precioFinal
+})
+
+}
   
   // console.log(prohibir)
 
@@ -58,19 +79,39 @@ var handleClick = (e) => {
 
 
   return (
-    <div style={{ width: 700, margin: 'auto' }} >
+    <div style={{ width: 700, margin: 'auto'}} >
 
       <form>
 
+      {carrito && carrito.map(e => {
+          return (
+            <div>
+              <CheckoutProductoCarrito
+                key={e.id}
+                id={e.id}
+                name={e.name}
+                price={e.price}
+                image={e.image}
+                LineaDeOrden={e.LineaDeOrden.quantity}
+                precioFinal={precioFinal}
+              />
+            </div>
+          )
+        }
+        )
+        }
+        <hr/>
+        <h5>Total a pagar: ${precioFinal}</h5>
+        <hr/>
         {logueado && (
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputState">Envio</label>
               <select id="inputState" class="form-control" onChange={e => setEnvio(e.target.value)}>
                 <option selected>Elija un metodo de envio</option>
-                <option>Envio CABA y alrededores</option>
-                <option>Envio GBA y resto del pais</option>
-                <option>Retiro por sucursal ANDREANI</option>
+                <option>Envio CABA y alrededores ($180)</option>
+                <option>Envio GBA y resto del pais ($450)</option>
+                <option>Retiro por sucursal ANDREANI (sin cargo)</option>
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -93,9 +134,9 @@ var handleClick = (e) => {
               <label for="inputState">Envio</label>
               <select id="inputState" class="form-control" onChange={e => setEnvio(e.target.value)}>
                 <option selected>Elija un metodo de envio</option>
-                <option>Envio CABA y alrededores</option>
-                <option>Envio GBA y resto del pais</option>
-                <option>Retiro por sucursal ANDREANI</option>
+                <option>Envio CABA y alrededores ($180)</option>
+                <option>Envio GBA y resto del pais ($450)</option>
+                <option>Retiro por sucursal ANDREANI (sin cargo)</option>
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -163,15 +204,30 @@ var handleClick = (e) => {
               </select >
             </div>
             <div class="form-group col-md-6">
-
             </div>
-            <p class="form-group col-md-6">poner un cuadrito a la derecha con el resumen de la compra q leo del state del store</p>
-
           </div>
         </div>
         <hr />
         <NavLink to='/checkout/pago' onClick={handleClick} type="submit" class="btn btn-primary" disabled='true'>Continuar</NavLink>
+        <hr/>
       </form>
+      {/* {carrito && carrito.map(e => {
+          return (
+            <div>
+              <ProductoCarrito
+                key={e.id}
+                id={e.id}
+                name={e.name}
+                price={e.price}
+                image={e.image}
+                LineaDeOrden={e.LineaDeOrden.quantity}
+              />
+            </div>
+          )
+        }
+        )
+        } */}
+        
       {/* {prohibir && (
         <div><p>campos requeridos</p></div>
       )} */}
@@ -184,8 +240,15 @@ function mapStateToProps(state) {
   const { user, logged } = state.auth;
   return {
     user,
-    logged
+    logged,
+    carrito: state.reducer.carrito
   };
 }
 
-export default connect(mapStateToProps, null)(Checkout);
+function mapDispatchToProps(dispatch) {
+  return {
+    // setTaste: taste => dispatch(setTaste(taste)),
+    datosEnvio: (payload) => dispatch(datosEnvio(payload))
+  }};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
