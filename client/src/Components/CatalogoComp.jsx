@@ -19,4 +19,7 @@ function Catalogo({ productos }) {
   );
 };
 
+
+
+
 export default Catalogo;

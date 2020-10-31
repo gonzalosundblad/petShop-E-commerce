@@ -28,3 +28,12 @@ export const clearState = () => {
     }
   }
 };
+
+  export const CompState = (local, carrito) => {
+    console.log(carrito)
+    var arrayprod = carrito.map (value => {
+      console.log(value.product_id)
+      return value
+    })
+    return arrayprod
+  }

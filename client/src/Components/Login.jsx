@@ -12,8 +12,8 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
-import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
-import { loadState } from '../Redux/reducer/localStorage';
+import { deleteCarrito, postCarrito, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
+import { clearState, loadState } from '../Redux/reducer/localStorage';
 
 function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarritoRequest }) {
   const [input, setInput] = useState({
@@ -48,15 +48,31 @@ function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarri
     }));
   }
   
+  function addProducts(){
+    var local = loadState()
+    if (local.length > 0) {
+      local.map(prod => {
+      const { product_id, quantity, price } = prod
+      console.log(prod)
+      postCarrito(user.user.user_id, {
+        product_id,
+        quantity,
+        price 
+      })
+    })
+    
+    clearState()
+  }
+}
 
   function handleLogin(e) {
     e.preventDefault();
   }
-  function loginUser() {
+   function loginUser() {
     loginRequest(input)
-    var x = loadState()
-    if (x.length > 0){
-      deleteCarrito(user.user.user_id)
+     console.log(user)
+    if (logged){
+      addProducts()
     }
   }
 
@@ -68,7 +84,7 @@ function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarri
   }
   function loginGithub() {
     getGithub()
-
+   
   }
   
   return (
@@ -152,7 +168,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest, getGithub, getCarritoRequest, deleteCarrito }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, postCarrito }, dispatch)
   }
 }
 

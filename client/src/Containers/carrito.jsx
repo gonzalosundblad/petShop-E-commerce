@@ -5,7 +5,7 @@ import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearState, loadState } from '../Redux/reducer/localStorage';
+import { clearState, CompState, loadState } from '../Redux/reducer/localStorage';
 import { NavLink } from 'react-router-dom';
 
 
@@ -14,19 +14,21 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
-  function changeCartProducts(pr){
-    alert("Tus productos seran actualizados a los ultimos agregados.")
-    pr.map(prod => {
-      console.log(prod)
-      postCarrito(user.user.user_id, {
-        product_id: prod.prod_id,
-        quantity: prod.quantity,
-        price: prod.quantity
-      })
-    })
-    clearState()
+  // function changeCartProducts(){
+  //   var local = loadState()
+  //   console.log("hoooooooooooooooooooola")
+    
+  //   pr.map(prod => {
+  //     console.log(prod)
+  //     postCarrito(user.user.user_id, {
+  //       product_id: prod.prod_id,
+  //       quantity: prod.quantity,
+  //       price: prod.quantity
+  //     })
+  //   })
+  //   .then(clearState())
        
-  } 
+  // } 
 
   
 
@@ -34,13 +36,46 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   useEffect(() => {
     // si el usuario esta logueado
     
+   
+  
+  
+
+    
     if (logged) {
-      var i = (loadState())
-      if (i.length > 0){
-        changeCartProducts(i)
-      }
-      getCarritoRequest(user.user.user_id)
-      console.log(carrito)
+      var local = loadState()
+  //   console.log("hoooooooooo")
+  if (local.length > 0) {
+      local.map(prod => {
+      const { product_id, quantity, price } = prod
+      console.log(prod)
+      postCarrito(user.user.user_id, {
+        product_id,
+        quantity,
+        price 
+      })
+    })
+    
+    clearState()
+  }
+  getCarritoRequest(user.user.user_id)
+  
+
+      // changeCartProducts()
+    //   var local = (loadState())
+    //   console.log(local)
+    //   if (local.length > 0){
+    //     console.log(carrito)
+    //     var nuevoarray = carrito.map((carr => {
+    //       let i = carr.product_id
+    //       console.log(i)
+    //       if (i === localStorage.key(i)){
+    //         console.log("hola")
+    //         return localStorage.getItem(i)
+    //       }
+    //     }))
+    //     console.log(nuevoarray)
+    //   }
+      
     }
     else {
       setProducts(loadState())
@@ -96,6 +131,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     )
   }
   else if (logged && carrito.length > 0) {
+    console.log(carrito)
     const order_id = carrito.map(id => id.LineaDeOrden.order_id)
     console.log('hay productos')
 
