@@ -86,7 +86,6 @@ function App() {
           <Route exact path="/forgot" render={() => <ForgotPassword />} />
           <Route exact path="/admin/:order" render={({ match }) => <OrdenEstado orderStates={match.params.order} />} />
           <Route exact path="/resetpassword/:token" render={() => <ResetPassword />} />
-          <Route exact path="/perfil" render={() => <Perfil />} />
           <Route exact path='/cancel' render={() => <Cancel />} />
           <Route exact path='/checkout' render={() => <Checkout />} />
           {/* <Route exact path='/checkoutGuest' render={() => <CheckoutNoLog/>} /> */}

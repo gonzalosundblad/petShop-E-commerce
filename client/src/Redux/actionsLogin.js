@@ -101,20 +101,20 @@ export function getGoogle() {// Te lleva a la pagina de Google
   }
 }
 
-export function getGit(user) { //Va a Reducer
-  console.log("chau")
-  return {
-    type: GET_GIT,
-    payload: user
-  }
-}
+// export function getGit(user) { //Va a Reducer
+//   console.log("chau")
+//   return {
+//     type: GET_GIT,
+//     payload: user
+//   }
+// }
 
 export function getGithub() {// Te lleva a la pagina de Google
   console.log("hola")
-  return (dispatch) => {
+  return () => {
     axios.get('http://localhost:3001/auth/github')
       .then(resp => {
-        dispatch(getGit(resp.data))
+        console.log(resp)
       })
       .catch(err => {
         console.log(err)

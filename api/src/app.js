@@ -50,38 +50,36 @@ server.use(passport.initialize());
 server.use(passport.session());
 
 const authenticateUser = (email, password, done) => {
-  User.findOne({
-    where: {
-      email
-    }
-  }).then(user => {
-    if (!user) {
-      return done(null, false, {
-        message: 'El correo electrónico no existe.',
-      });
-    }
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err) {
-        console.log(err);
-      }
-      if (isMatch) {
-        return done(null, {
-          user_id: user.user_id,
-          name: user.name,
-          last_name: user.last_name,
-          role: user.role,
-          email: user.email
+  User.findOne({ where: { email: email } })
+    .then(user => {
+      if (!user) {
+        return done(null, false, {
+          message: 'El correo electrónico no existe.',
         });
-      } else {
-        return done(null, false, { message: "Contraseña Incorrecta" });
+      }
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) {
+          console.log(err);
+        }
+        if (isMatch) {
+          return done(null, {
+            user_id: user.user_id,
+            name: user.name,
+            last_name: user.last_name,
+            role: user.role,
+            email: user.email
+          });
+        } else {
+          return done(null, false, { message: "Contraseña Incorrecta" });
+        }
+      });
+    })
+    .catch(err => {
+      if (err) {
+        console.log('error en Servidor');
+        return done(err);
       }
     });
-  }).catch(err => {
-    if (err) {
-      console.log('Error en el Servidor');
-      return done(err);
-    }
-  });
 }
 
 passport.use(new LocalStrategy(
@@ -101,6 +99,7 @@ passport.deserializeUser((user_id, done) => {
   }).then((user) => {
     if (user) {
       return done(null, {
+        name: user.name,
         user_id: user.user_id,
         email: user.email,
         role: user.role,

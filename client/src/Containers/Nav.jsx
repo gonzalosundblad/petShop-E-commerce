@@ -14,16 +14,22 @@ import { loadState } from '../Redux/reducer/localStorage';
 import { bindActionCreators } from 'redux';
 
 
-function NavBar({ user, logged, funcionCatag, onSearch }) {
+
+function NavBar({ user, logged, funcionCatag, carrito, onSearch }) {
   //console.log(user.user.role);
   const [carro, setCarro] = useState([]);
   const [total, setTotal] = useState(0)
+
+  console.log(carrito)
 
 
   useEffect(() => {
     var precio = [];
     if (logged) {
       getCarrito(user.user.user_id)
+      // var precio2 = carrito.map(e => {
+      //   return e.price * e.LineaDeOrden.quantity
+      // })
 
     } else if (localStorage.length > 0) {
 
@@ -43,6 +49,7 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
       return a + b
     }, 0))
   }, [])
+
 
   // let admin;
   // if (user !== null && user.user.role === 'admin') {
@@ -91,7 +98,8 @@ function mapStateToProps(state) {
   const { user, logged } = state.auth;
   return {
     user,
-    logged
+    logged,
+    carrito: state.reducer.carrito
   };
 }
 

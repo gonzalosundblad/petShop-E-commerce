@@ -8,7 +8,7 @@ import { getMe } from '../Redux/actionsLogin'
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 
-function Perfil({ putUser, deleteUser, getMe, user }) {
+function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -16,8 +16,10 @@ function Perfil({ putUser, deleteUser, getMe, user }) {
     oldPassword: ""
   });
 
+  console.log(users, "hola")
+
   useEffect(() => {
-    getMe()
+    getMe();
   }, [])
 
   console.log(user.user)
@@ -58,7 +60,7 @@ function Perfil({ putUser, deleteUser, getMe, user }) {
 
   }
 
-
+  console.log(user.user_id)
 
   function onDelete() {
     const id = user.user_id
@@ -114,7 +116,8 @@ function Perfil({ putUser, deleteUser, getMe, user }) {
 }
 function mapStateToProps(state) {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    users: state.reducer.users
   };
 }
 

@@ -13,13 +13,15 @@ import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 
-function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
+function Login({ user, logged, loginRequest, users, getGoogle, getGithub }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
   })
   const [errors, setErrors] = useState({});
   var x = false;
+
+  console.log(logged);
 
   function validate(input) {
     let errors = {};
@@ -93,7 +95,8 @@ function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) 
                     </svg>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
                   </div>
-                  <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button>
+                  {!logged ? <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> : <NavLink to="/perfil">Mi Perfil</NavLink>}
+                  {/* <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> */}
                   <NavLink to='/register' class="btn btn-outline-danger" style={{ margin: "10px" }}>Registrarme</NavLink>
                   <NavLink to='/forgot' class="btn btn-outline-danger" style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>
                 </fieldset>
@@ -131,9 +134,10 @@ function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) 
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-  const { user, isLoggedIn } = state.auth;
+  const { user, logged } = state.auth;
   return {
-    user
+    user,
+    logged
   }
 }
 
