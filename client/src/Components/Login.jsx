@@ -12,8 +12,9 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
+import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 
-function Login({ user, isLoggedIn, loginRequest, users, getGithub }) {
+function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarritoRequest }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -45,11 +46,14 @@ function Login({ user, isLoggedIn, loginRequest, users, getGithub }) {
       [e.target.name]: e.target.value
     }));
   }
+  
+
   function handleLogin(e) {
     e.preventDefault();
   }
   function loginUser() {
     loginRequest(input)
+    
   }
 
   function loginGoogle() {
@@ -62,7 +66,7 @@ function Login({ user, isLoggedIn, loginRequest, users, getGithub }) {
     getGithub()
 
   }
-
+  
   return (
     <div className={estilo.divOscuro}>
       <div className={estilo.x}>
@@ -134,16 +138,17 @@ function Login({ user, isLoggedIn, loginRequest, users, getGithub }) {
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-  const { user, isLoggedIn } = state.auth;
+  const { user, logged } = state.auth;
   return {
-    user
+    user, logged,
+    carrito: state.reducer.carrito
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest, getGithub }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, getCarritoRequest }, dispatch)
   }
 }
 

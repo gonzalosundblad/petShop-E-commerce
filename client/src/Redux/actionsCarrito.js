@@ -53,7 +53,7 @@ export function postCarrito(usuario, products) { //Agregar productos al carrito
   console.log("Cargar productos al carrito")
   return (dispatch) => {
     axios.post(`http://localhost:3001/users/${usuario}/cart`, products)
-      .then((response) => { dispatch(postCarritoProducto(response)) })
+      .then((response) => { dispatch(postCarritoProducto(response.data)) })
       .catch(err => { console.log(err) })
   }
 }

@@ -18,3 +18,13 @@ export const saveState = (state) => {
   } catch (error) {
   }
 };
+
+export const clearState = () => {
+  for(var i = 0; i < localStorage.length; i++){
+    let clave = localStorage.key(i);
+    console.log(clave);
+    if(clave !== "carrito" && clave !== "user"){
+      localStorage.removeItem(clave)
+    }
+  }
+};

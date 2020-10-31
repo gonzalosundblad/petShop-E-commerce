@@ -1,24 +1,47 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
+import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd,postCarrito } from '../Redux/actionsCarrito';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadState } from '../Redux/reducer/localStorage';
+import { clearState, loadState } from '../Redux/reducer/localStorage';
 import { NavLink } from 'react-router-dom';
 
-function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd }) {
+
+function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd, postCarrito }) {
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
-  console.log(user)
+  
+
+  
+
 
   useEffect(() => {
     // si el usuario esta logueado
+    function changeCartProducts(){
+      let i = (loadState())
+      console.log(i)
+      if (i.length > 0){
+        deleteCarrito(user.user.user_id)
+        alert("Tus productos seran actualizados a los ultimos agregados.")
+        i.map(prod => {
+          console.log(prod)
+          postCarrito(user.user.user_id, {
+            product_id: prod.prod_id,
+            quantity: prod.quantity,
+            price: prod.quantity
+          })
+        })
+        clearState()
+      }    
+    } 
     if (logged) {
+      changeCartProducts()
       getCarritoRequest(user.user.user_id)
+      console.log(carrito)
     }
     else {
       setProducts(loadState())
@@ -34,7 +57,6 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   //------------------------------Funcion Borrar por unidad del carrito
 
   function onDelete(product_id) {
-    console.log(product_id)
     var valor = {
       product_id: product_id
     }
@@ -47,6 +69,9 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
       localStorage.removeItem(product_id)
     }
   }
+
+
+
 
   //---------------------------------Vaciar Carrito
 
@@ -147,12 +172,11 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
 
 }
 const mapDispatchToProps = dispatch => {
-  function mapStateToProps(state) {
     return {
       dispatch,
-      ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd }, dispatch)
+      ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd, postCarrito }, dispatch)
     }
-  }
+  
 }
 
 const mapStateToProps = state => {
