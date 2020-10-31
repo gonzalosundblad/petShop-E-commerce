@@ -2,7 +2,7 @@ const server = require('express').Router();
 const { Product, Category, productcategory, User, Order, LineaDeOrden } = require('../db.js');
 const { isAuthenticated, isAdmin, isNotAuthenticated } = require("../passport");
 
-server.get('/', isAdmin, (req, res) => {                //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
+server.get('/', (req, res) => {                //S44 : Crear ruta que retorne todas las ordenes (si hay params retorna la de params -> state)
   if (req.query.state) {
     Order.findAll({
       where: {
@@ -25,7 +25,7 @@ server.get('/', isAdmin, (req, res) => {                //S44 : Crear ruta que r
     });
 })
 
-server.get('/:id', isAuthenticated, (req, res) => {     //S46 : Crear Ruta que retorne una orden en particular.
+server.get('/:id', (req, res) => {     //S46 : Crear Ruta que retorne una orden en particular.
   Order.findByPk(req.params.id)
     .then(order => {
       res.json(order)
@@ -35,8 +35,10 @@ server.get('/:id', isAuthenticated, (req, res) => {     //S46 : Crear Ruta que r
     })
 })
 
-server.put('/:id', isAuthenticated, (req, res) => {     //S47 : Crear Ruta para modificar una Orden
+server.put('/:id', (req, res) => {     //S47 : Crear Ruta para modificar una Orden
   const { orderState } = req.body
+  console.log(orderState);
+  console.log(req.params.id);
   Order.update({
     orderState
   }, {

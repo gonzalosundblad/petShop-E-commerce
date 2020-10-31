@@ -91,7 +91,6 @@ server.post('/', isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
       stock,
       image: `https://firebasestorage.googleapis.com/v0/b/petshopfiles.appspot.com/o/fotosProductos%2F${image.slice(12)}?alt=media&token`
     })
-
     Promise.all([category, producto])
       .then(values => {
         var category = values[0]

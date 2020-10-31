@@ -1,39 +1,29 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { deleteCarrito, getCarrito, putCantidadOrden, deleteCarritoUno } from '../Redux/actionsCarrito';
+import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadState } from '../Redux/reducer/localStorage';
+import { NavLink } from 'react-router-dom';
 
-
-function Carrito(user) {
+function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, deleteCarritoProd }) {
   const [products, setProducts] = useState([])
-  const [state, setState] = useState()
+  const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
+  // console.log(carrito[0], "chau")
+  // console.log(user.user.user_id, "chawqadwu")
 
   useEffect(() => {
-    if (user.user.isLoggedIn) {
-      getCarrito(user.user.user.user.user_id).payload
-        .then(res => {
-          if (!res.data[0]) {
-            console.log("agregar")
-          }
-          else {
-            setProducts(res.data[0].products)
-          }
-        })
+    // si el usuario esta logueado
+    if (logged) {
+      getCarritoRequest(user.user.user_id)
     }
-    if (user.user.isLoggedIn === false) {
-      getCarrito(2).payload
-        .then(res => {
-          if (!res.data[0]) {
-            console.log("agregar")
-          }
-          else {
-            setProducts(res.data[0].products)
-          }
-        })
+    else {
+      setProducts(loadState())
+
     }
   }, [])
 
@@ -42,49 +32,86 @@ function Carrito(user) {
     window.location.reload()
   }
 
-  function vaciar() {
-    if (user.user.isLoggedIn) {
-      deleteCarrito(user.user.user.user.user_id).then(resp => {
-        reload()
-      })
-    }
-    if (user.user.isLoggedIn === false) {
-      deleteCarrito(2).then(resp => {
-        reload()
-      })
-    }
-  }
-  function onDelete() {
-    // console.log(e)
-    // const f = (element) => element.id == e.target.value
-    // let index =  products.findIndex(f)
-    // // setBorrado(products.splice(index, 1))
-    // var borrado = products.splice(index, 1)
+  //------------------------------Funcion Borrar por unidad del carrito
 
-    var product_id = 2
+  function onDelete(product_id) {
+    console.log(product_id)
+    var valor = {
+      product_id: product_id
+    }
 
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    deleteCarritoUno(2, product_id)
-      .then(resp => {
-        console.log(resp)
-      })
+    // let id = event.target.value
+    if (logged) {
+      deleteCarritoProd(user.user.user_id, valor)
+    } else {
+      localStorage.removeItem(product_id)
+    }
   }
 
+  //---------------------------------Vaciar Carrito
 
-  const order_id = products.map(id => id.LineaDeOrden.order_id)
+  function vaciar() {
 
-  console.log(order_id);
+    if (logged) {
+      deleteCarrito(user.user.user_id)
+    }
+    else {
+      localStorage.clear()
+    }
+  }
+
+  //---------------------------------RENDER
 
 
-  if (!products || products.length === 0) {
+  var orden = carrito.map(e => {
+    return e.LineaDeOrden.order_id
+  })
+  console.log(orden, "djkwah")
+
+  if (carrito.length === 0 && products.length === 0) {
     return (
       <div>
         <h1>Agregar productos al carrito</h1>
-        <a href="/products">Ir al Catálogo</a>
+        <NavLink to="/products">Ir al Catálogo</NavLink>
+      </div>
+    )
+  }
+  else if (logged && carrito.length > 0) {
+
+    return (
+      <div>
+        <div className={Estilo.tusProductos}>
+          <h2 >Tus productos</h2>
+        </div>
+        {carrito && carrito.map(e => {
+          return (
+            <div>
+              <ProductoCarrito
+                key={e.id}
+                id={e.id}
+                name={e.name}
+                price={e.price}
+                image={e.image}
+                LineaDeOrden={e.LineaDeOrden.quantity}
+              />
+            </div>
+          )
+        }
+        )
+        }
+        <div className={Estilo.botonesFinales}>
+          <button className={Estilo.botonVaciarCart} onClick={vaciar} >Vaciar Carrito</button>
+          <NavLink className={Estilo.botonesFinales} to='/products'>
+            <span className={Estilo.botoncitos} >Seguir Comprando</span>
+          </NavLink>
+          <a className={Estilo.botonesFinales} href={`/order/${orden[0]}`} >
+            <span className={Estilo.botoncitos}  >Finalizar Compra</span>
+          </a>
+        </div>
       </div>
     )
   } else {
-    console.log('hay productos')
 
     return (
       <div>
@@ -95,12 +122,13 @@ function Carrito(user) {
           return (
             <div>
               <ProductoCarrito
+                key={e.id}
                 id={e.id}
                 name={e.name}
                 price={e.price}
                 image={e.image}
-                LineaDeOrden={e.LineaDeOrden.quantity}
-                funcionDelete={onDelete}
+                LineaDeOrden={e.quantity}
+              // funcionDelete={onDelete}
               />
             </div>
           )
@@ -112,19 +140,33 @@ function Carrito(user) {
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
-          <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
-            <span className={Estilo.botoncitos}  >Finalizar Compra</span>
-          </a>
+          {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
+              <span className={Estilo.botoncitos}  >Finalizar Compra</span>
+            </a> */}
         </div>
       </div>
     )
   }
+
+
 }
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch => {
   return {
-    user: state.auth
+    dispatch,
+    ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd }, dispatch)
   }
 }
+
+const mapStateToProps = state => {
+  const { user, logged } = state.auth
+  return {
+    user,
+    logged,
+    carrito: state.reducer.carrito
+  }
+}
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Carrito)

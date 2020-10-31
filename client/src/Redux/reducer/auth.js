@@ -5,36 +5,61 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   HACER_ADMIN,
-  ME
+  GET_ME,
+  GET_GOOGLE,
+  GET_GIT
 } from "../constantsLogin.js";
 
 const user = JSON.parse(localStorage.getItem("user"));
-console.log(user.user)
+var logueado;
+{ localStorage.getItem("user") ? logueado = true : logueado = false }
+
 
 const initialState = {
-  user: user
+  user: user,
+  logged: logueado
+
+
 }
 
 export default function (state = initialState, action) {
-  console.log(action)
+  console.log(action.payload)
 
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
+        logged: true
       };
     case LOGIN_FAIL:
       return {
         ...state,
-        user: null
+        user: null,
+        logged: false
       };
     case LOGOUT:
       return {
         ...state,
-        user: null
+        user: null,
+        logged: false
       };
-    case ME:
+    case GET_ME:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case HACER_ADMIN:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case GET_GOOGLE:
+      return {
+        ...state,
+        user: action.payload
+      }
+    case GET_GIT:
       return {
         ...state,
         user: action.payload

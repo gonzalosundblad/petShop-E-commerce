@@ -1,20 +1,20 @@
 var array = []
 
 export const loadState = () => {
-  try {
-    const serializedData = localStorage.getItem("carrito");
-    if (serializedData === null) {
-      return undefined;
+    const request = [];
+    for(var i = 0; i < localStorage.length; i++){
+      let clave = localStorage.key(i);
+      if(clave !== "carrito" && clave !== "user"){
+        let prod = JSON.parse(localStorage.getItem(clave));
+        request.push(prod);
+      }
     }
-    return JSON.parse(serializedData);
-  } catch (error) {
-    return undefined;
-  }
+    return request;
 };
 export const saveState = (state) => {
   try {
     let serializedData = JSON.stringify(state);
-    localStorage.setItem("carrito", serializedData);
+    localStorage.setItem(state.product_id, serializedData);
   } catch (error) {
   }
 };

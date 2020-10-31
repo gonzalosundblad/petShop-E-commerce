@@ -70,34 +70,40 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
   }
 
   return (
-    <div className={Style.box}>
-      <div >
-        <h3 className={Style.titulo}>Reviews</h3>
-        <hr className={Style.hr} />
-        <div />
+    <div >
+      <div className= {Style.opinion}>
+        <div>
+          <ul class="nav nav-tabs" style={{display: "flex", justifyContent: "end", width: "100%"}}>
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab"><h5>Opiniones</h5></a>
+            </li> 
+
+          </ul>
+          </div>
+        <hr />
+        <div id="myTabContent" class="tab-content">
         <table>
           <tr><td >
-            <h4 className={Style.subtitulo}>Opiniones sobre el producto</h4>
             <div>
-              <div>
+              <div class="tab-pane fade active show" id="opiniones">
                 <div className={Style.cajon1}>
-                  <p className={Style.numPromedio}> {prom} </p>
+                  <h1 style={{fontSize: "90px"}}> {prom} </h1>
                   <div>
                     {prom == 5 ? <label className={Style.estrellasnaranja}>★★★★★</label> : <p></p>}
                     {prom == 4 ? <label className={Style.estrellasnaranja}>★★★★</label> : <p></p>}
                     {prom == 3 ? <label className={Style.estrellasnaranja}>★★★</label> : <p></p>}
                     {prom == 2 ? <label className={Style.estrellasnaranja}>★★</label> : <p></p>}
                     {prom == 1 ? <label className={Style.estrellasnaranja}>★</label> : <p></p>}
-                    {prom == 0 ? <h3 className={Style.p}>Sin calificaciones</h3> : <p></p>}
+                    {prom == 0 ? <h5>Sin calificaciones</h5> : <p></p>}
 
                   </div>
                 </div>
                 <div className={Style.cajon2}>
-                  <p>{list[0].uno.length} votos ▀▀▀▀▀</p>
-                  <p>{list[0].dos.length} votos ▀▀▀▀</p>
-                  <p>{list[0].tres.length} votos ▀▀▀</p>
-                  <p>{list[0].cuatro.length} votos ▀▀</p>
-                  <p>{list[0].cinco.length} votos ▀</p>
+                  <p>{list[0].cinco.length} votos ★★★★★</p>
+                  <p>{list[0].cuatro.length} votos ★★★★</p>
+                  <p>{list[0].tres.length} votos ★★★</p>
+                  <p>{list[0].dos.length} votos ★★</p>
+                  <p>{list[0].uno.length} votos ★</p>
                 </div>
               </div>
 
@@ -117,10 +123,10 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
                           {o.qualification === 1 ? <label className={Style.estrellasnaranja}>★</label> : <p></p>}
                           <button name="modificar" onClick={onPut} className={Style.bottton} type="submit" value={o.review_id} >
                             Modificar comentario
-              </button>
+                          </button>
                           <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit" value={o.review_id}>
                             Eliminar comentario
-              </button>
+                          </button>
                         </div>
                         <p className={Style.opinionsDate}>{o.updatedAt.slice(0, 10)}</p>
                         <p className={Style.opinionsTitle}>{o.user.name}</p>
@@ -133,9 +139,10 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
 
             </div>
 
-          </td><td className={Style.cajon2}>
+          </td><td >
+            <div style={{width: "300px"}}>
               <form onSubmit={handleSubmit}>
-                <h4 className={Style.subtitulo}> Dejanos tu opinion </h4>
+                <h4 > Dejanos tu opinion </h4>
                 <p>
                   <input id="radio1" type="radio" name="qualification" value="5" onChange={handleChange} />
                   <label for="radio1" className={Style.estrellas}>★</label>
@@ -148,24 +155,18 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
                   <input id="radio5" type="radio" name="qualification" value="1" onChange={handleChange} />
                   <label for="radio5" className={Style.estrellas}>★</label>
                 </p>
-                <input className={Style.inputt} type="text" name="description" placeholder="Cuentanos mas sobre el producto"
-                  onChange={handleChange} />
-                <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
-                  Enviar comentario
-              </button>
-                {/* <button name="enviar" onClick={() => postReviewRequest(id, state)} className={Style.botton} type="submit">
-                Enviar comentario
-              </button>
-              <button name="modificar" onClick={() => putReview(state)} className={Style.botton} type="submit">
-                Modificar comentario
-              </button>
-              <button name="eliminar" onClick={() => deleteReview()} className={Style.botton} type="submit">
-                Eliminar comentario
-              </button> */}
+                <div style={{display: "block"}}>
+                  {/* <label for="exampleTextarea">Example textarea</label> */}
+                  <textarea class="form-control" name="description" rows="3" onChange={handleChange} placeholder="Cuentanos mas sobre el producto"></textarea>
+                  <button name="enviar" onClick={onSend} class='btn btn-success' type="submit">
+                    Enviar comentario
+                  </button>
+                </div>
               </form>
+              </div>
             </td></tr>
         </table>
-
+        </div>
       </div>
     </div>
 

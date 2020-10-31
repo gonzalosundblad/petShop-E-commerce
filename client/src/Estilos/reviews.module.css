@@ -1,44 +1,14 @@
-.box{
+.opinion{
+  margin-left: 7%;
+}
+
+
+ .box{
     margin-left: 70px;
     display: flex;
     justify-content:  flex-start;
 }
 
-.titulo{
-    background-color: rgb(252, 225, 118);
-    height: 40px;
-    width: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin-top: 25px;
-    border: gray;
-    box-shadow: 3px 3px 3px gray;
-}
-
-.hr{
-    width: 900px;
-    height: 2px;
-    color: gray;
-}
-.subtitulo{
-    margin-top: 25px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    font-size: 20px;
-    color: rgb(107, 107, 107);
-}
-.p{
-  color: DarkSlateBlue;
-}
-.opiniones{
-    margin-top: 25px;
-    display: block;
-    font-size: 20px;
-    color: rgb(107, 107, 107);
-}
 .opinionsTitle{
   display: flex;
   align-items: flex-start;
@@ -90,14 +60,14 @@
 input[type="radio"] {
   display: none;
 }
-.inputt[type="text"] {
+.inputt {
   width: 300px;
   height: 80px;
   color: grey;
 }
 .estrellas {
   color: grey;
-  font-size: 50px;
+  font-size: 30px;
 }
 .estrellasnaranja{
   color: orange;
@@ -108,10 +78,7 @@ input[type="radio"] {
 .estrellas:hover ~ label {
   color: orange;
 }
-/*table{
-  table-layout: fixed;
-  width: 900px;
-}*/
+
 .cajon1{
   width: 250px;
 float:left;
@@ -121,10 +88,8 @@ float:left;
   flex-direction: column;
   align-items: flex-start;
   width: 250px;
-  height: 200px;
-  float:left;
-  font-size: 20px;
-  color: darkcyan;
+  font-size: 15px;
+  color: gray;
 }
 
 input[type="radio"]:checked ~ label {
@@ -140,4 +105,4 @@ input[type="radio"]:checked ~ label {
 .boton:hover{
     background-color: rgb(35, 180, 185);
     box-shadow: 3px 3px 3px rgb(97, 97, 97);
-}
+} 

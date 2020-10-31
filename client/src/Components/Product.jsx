@@ -8,9 +8,11 @@ import Reviews from './reviews.jsx'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Contador from './Contador';
+import { saveState } from '../Redux/reducer/localStorage';
 
 
-function Product({ user, id2, products, getProductById }) {
+
+function Product({ logged, user, id2, products, postCarrito, getProductById }) {
 
   const [quantity, setQuantity] = useState();
 
@@ -18,34 +20,34 @@ function Product({ user, id2, products, getProductById }) {
     getProductById(id2)
   }, []);
 
-  console.log(products.products.name, "hola")
 
   function handleChange(e) {
     setQuantity(e.target.value);
+
   }
+
+
+  var idUser;
+  if(!user){
+    idUser= 0;
+  }
+  else idUser= user.user.user_id;
+
+
   function subirCarrito() {
-    if (user.isLoggedIn) {
-      postCarrito(user.user.user.user_id, {
+    const { image, name, price } = products.products
+    if (logged) {
+      postCarrito(idUser, {
         product_id: id2,
         quantity: quantity,
         price: products.products.price
-      }).payload
-        .then(function (resp) {
-          console.log(resp.data)
-          window.location.replace("http://localhost:3000/carrito")
-        })
+      })
     }
-    if (user.isLoggedIn === false) {
-      postCarrito(2, {
-        product_id: id2,
-        quantity: quantity,
-        price: products.products.price
-      }).payload
-        .then(function (resp) {
-          console.log(resp.data)
-          window.location.replace("http://localhost:3000/carrito")
-        })
+    else if (quantity >= 0) {
+      saveState({ product_id: id2, quantity, price, image, name, })
+      window.location.replace("http://localhost:3000/products")
     }
+
   }
 
   if (products.products.stock <= 0) {
@@ -106,7 +108,7 @@ function Product({ user, id2, products, getProductById }) {
               </div>
               <div style={{display: "flex", justifyContent: "end", marginTop: "10px"}}>
                 <h6 style={{fontSize: "12px"}}>Stock diponible: {products.products.stock} unidades</h6>
-                {/* <p>{products.products.stock} unidades</p> */}
+                
               </div>
             </div>
           </div>
@@ -129,8 +131,11 @@ function Product({ user, id2, products, getProductById }) {
 }
 
 const mapStateToProps = state => {
+  const { user, logged } = state.auth;
+
   return {
-    user: state.auth,
+    user,
+    logged,
     products: state.reducer
   }
 }
@@ -138,7 +143,7 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getProductById }, dispatch)
+    ...bindActionCreators({ getProductById, postCarrito }, dispatch)
   }
 }
 

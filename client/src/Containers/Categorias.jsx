@@ -7,6 +7,7 @@ import { putCategoryId } from '../Redux/actions.js';
 import estilo from '../Estilos/forms.module.css';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
 
 export function MostrarCategorias({ getCategories, categories }) {                  //Muestra las categorias en el home
@@ -27,7 +28,7 @@ export function MostrarCategorias({ getCategories, categories }) {              
               categories.map(n => {
                 if (n.name !== 'Sin Categoria') {
                   return (
-                    <a class="dropdown-item" height='30px' href={`/products/category/${n.name}`}>{n.name}</a>)
+                    <NavLink class="dropdown-item" height='30px' to={`/products/category/${n.name}`}>{n.name}</NavLink>)
                 }
               })
             }
@@ -94,21 +95,20 @@ export function ListaCategorias({ getCategories, categories }) {                
 
   useEffect(() => {
     getCategories()
+    setCategoria(categories)
   }, []);
-
-  console.log(categories, "hola")
 
   return (
     <div style={{ position: "absolute" }}>
       <div className={estilo.listaCategorias}>
         <div class="list-group" style={{ width: "150px" }}>
-          <a href="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</a>
-          <a href='/products' class="list-group-item list-group-item-action">Todas</a>
+          <NavLink to="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</NavLink>
+          <NavLink to='/products' class="list-group-item list-group-item-action">Todas</NavLink>
           {
-            categories.map(n => {
+            categorias.map(n => {
               if (n.name !== 'Sin Categoria') {
                 return (
-                  <a href={`/products/category/${n.name}`} class="list-group-item list-group-item-action">{n.name}</a>
+                  <NavLink to={`/products/category/${n.name}`} class="list-group-item list-group-item-action">{n.name}</NavLink>
                 )
               }
             })}

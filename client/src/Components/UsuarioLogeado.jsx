@@ -4,15 +4,17 @@ import userLogo from '../imagenes/userLogo.png'
 import { logout } from '../Redux/actionsLogin'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
-function UsuarioLogeado({ user, logout }) {
+function UsuarioLogeado({ user, logout, logged }) {
   //console.log(user);
 
   function cerrarSesion() {
-    logout()
+    logout();
+    localStorage.removeItem("user")
   }
 
-  var id = 1
+
 
   return (
     <div id='header'>
@@ -24,14 +26,14 @@ function UsuarioLogeado({ user, logout }) {
           </svg>
           <ul>
             <li>
-              <a href='/perfil'>Detalles de cuenta</a>
+              <NavLink to='/perfil'>Detalles de cuenta</NavLink>
               {/* window.location=`user/${user.id}` */}
             </li>
             <li >
-              <a href={`/user/${id}/ordenes`}>Mis compras</a>
+              <NavLink to={`/user/id/ordenes`}>Mis compras</NavLink>
             </li>
             <li>
-              <a href='/' onClick={cerrarSesion} >Cerrar Sesión</a>
+              <NavLink to='/' onClick={cerrarSesion} >Cerrar Sesión</NavLink>
             </li>
 
           </ul>
@@ -43,9 +45,9 @@ function UsuarioLogeado({ user, logout }) {
 }
 
 function mapStateToProps(state) {
-  const { user } = state.auth;
+  const { user, logged } = state.auth;
   return {
-    user,
+    user, logged
   };
 }
 function mapDispatchToProps(dispatch) {

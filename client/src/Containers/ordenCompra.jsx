@@ -5,28 +5,22 @@ import { putOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom'
 
 
-function OrdenCompra(props) {
+function OrdenCompra({ id, user, putOrder, order, getProdOrder }) {
   const [productOrder, setproductOrder] = useState([])
   console.log('hhhhhhhhhhhhhhhhhh');
-  console.log(props);
-  const id = 3
+  console.log(user, "hola");
+
+
   useEffect(() => {
-    if (props.user === null) {
-      var user = 1
+    if (user === null) {
+      var user2 = 1
     } else {
-      user = props.user.user_id
+      var user2 = user.user.user.user_id
     }
-    getProdOrder(props.id).payload
-      .then(res => {
-        if (!res.data[0]) {
-          alert('No hay Ordenes')
-        } else {
-          console.log(res.data[0].products)
-          setproductOrder(res.data[0].products)
-        }
-      })
+    getProdOrder(user2)
   }, [])
   var total = 0
 
@@ -40,35 +34,21 @@ function OrdenCompra(props) {
   console.log(productOrder);
 
 
-  const estado = { orderState: 'creada' }
 
-  function cambioEstado() {
-
-    putOrder(props.id, estado)
-      .then(resp => {
-        console.log(resp)
-        alert('Compra Exitosa')
-        window.location = '/'
-      })
-  }
 
   const estado2 = { orderState: 'cancelada' }
 
   function cambioEstado2() {
-    putOrder(props.id, estado2)
-      .then(resp => {
-        console.log(resp)
-        alert('Pedido Cancelado')
-        window.location = '/'
-      })
+    putOrder(id, estado2)
+    alert('Pedido Cancelado')
   }
 
-  if (props.user === null) {
+  if (user.user === null) {
     return (
       <div>
         <h1>Iniciar Sesión o Registrarse para continuar</h1>
-        <a href="/login">Iniciar sesión</a>
-        <a href="/register">Registrarme</a>
+        <NavLink href="/login">Iniciar sesión</NavLink>
+        <NavLink href="/register">Registrarme</NavLink>
       </div>
     )
   } else {
@@ -99,16 +79,16 @@ function OrdenCompra(props) {
 
 
 function mapStateToProps(state) {
-  const { user } = state.auth;
   return {
-    user,
+    user: state.auth,
+    order: state.reducer.order
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ OrdenCompra }, dispatch)
+    ...bindActionCreators({ putOrder, getProdOrder }, dispatch)
   }
 }
 

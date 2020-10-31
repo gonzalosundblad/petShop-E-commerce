@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StyleApp from './App.module.css';
 import { BrowserRouter, Route } from "react-router-dom";
 import MostrarCatalogo from './Containers/Catalogo'
-import {Nav} from './Containers/Nav';
+import NavBar from './Containers/Nav';
 import CrudProduct from './Containers/CrudProduct';
 import { mostrarCategorias } from './Containers/Categorias';
 import ProductosPorCategoria from './Containers/ProdCateg';
@@ -29,6 +29,13 @@ import { PieDePagina } from './Containers/fondo';
 import Reset from './Components/Reset';
 import OrdenCompra from './Containers/ordenCompra';
 import Carrusel from './Components/Carousel'
+import ForgotPassword from './Components/ForgotPassword';
+import ResetPassword from './Components/ResetPassword';
+import OrdenEstado from './Containers/OrdenEstado';
+import Cancel from './Components/Cancel';
+import Checkout from './Components/Checkout';
+import CheckoutNoLog from './Components/CheckoutNoLog';
+import Pagos from './Components/Pagos';
 
 
 function App() {
@@ -45,9 +52,9 @@ function App() {
 
     <div >
       <BrowserRouter>
-        <Route path="/" render={() => <Nav onSearch={onSearch} />} />
+        <Route path="/" render={() => <NavBar onSearch={onSearch} />} />
         <div className={StyleApp.App}>
-          
+
           <Route exact path="/" render={() => <Fondo />} />
           <Route exact path="/" component={mostrarCategorias} />
           <Route exact path="/" component={Animales} />
@@ -70,10 +77,20 @@ function App() {
           <Route exact path="/admin/ordenes" render={() => <Ordenes />} />
           <Route exact path="/admin/ordenes/:id" render={({ match }) => <OrdenAdmin id={match.params.id} />} />
           <Route exact path="/admin/usuarios" render={() => <Usuarios />} />
-          <Route exact path="/user/:id" render={({ match }) => <Perfil id={match.params.id} />} />
-          <Route exact path="/order/:id" render={({ match }) => <OrdenUsuario id={match.params.id} />} />
+          <Route exact path="/order/:id" render={({ match }) => <OrdenUsuario id2={match.params.id} />} />
           <Route exact path="/reset" render={() => <Reset />} />
           <Route exact path="/user/:id/ordenes" render={({ match }) => <OrdenCompra id={match.params.id} />} />
+          <Route exact path="/forgot" render={() => <ForgotPassword />} />
+          <Route exact path="/admin/:orderStates" render={({ match }) => <OrdenEstado orderStates={match.params.orderStates} />} />
+          <Route exact path="/resetpassword/:token" render={() => <ResetPassword />} />
+          <Route exact path="/perfil" render={() => <Perfil />} />
+          <Route exact path='/cancel' render={() => <Cancel />} />
+          <Route exact path='/checkout' render={() => <Checkout />} />
+          {/* <Route exact path='/checkoutGuest' render={() => <CheckoutNoLog/>} /> */}
+          <Route exact path='/checkout/pago' render={() => <Pagos />} />
+
+
+
         </div>
       </BrowserRouter>
     </div >
