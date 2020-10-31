@@ -2,13 +2,28 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink } from 'react-router-dom';
 
-var logueado = false // HAY Q PREGUNTARLE AL STORE SI EL USUARIO ESTA LOGUEADO PARA EL RENDERIZADO CONDICIONAL DE ABAJO. PONER FALSE PARA VER EL OTRO RENDERIZADO
-var name = 'usuarioLogueado.nombre'
-var lastname = 'usuarioLogueado.apellido'
-var email = 'usuarioLogueado.email'
+import { connect } from 'react-redux'
+import { loadState } from '../Redux/reducer/localStorage';
+import { bindActionCreators } from 'redux';
 
 
-function Checkout() {
+
+var logueado = false// HAY Q PREGUNTARLE AL STORE SI EL USUARIO ESTA LOGUEADO PARA EL RENDERIZADO CONDICIONAL DE ABAJO. PONER FALSE PARA VER EL OTRO RENDERIZADO
+// var name = 'usuarioLogueado.nombre'
+// var lastname = 'usuarioLogueado.apellido'
+// var email = 'usuarioLogueado.email'
+
+
+function Checkout({ user, logged }) {
+  
+  
+  // console.log(user.user, logged)
+
+  if(user && logged) {
+    logueado = true
+  } 
+
+
   return (
     <div style={{ width: 700, margin: 'auto' }} >
 
@@ -27,15 +42,15 @@ function Checkout() {
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Email</label>
-              <input type="password" class="form-control" id="inputPassword4" placeholder={email} readOnly />
+              <input type="password" class="form-control" id="inputPassword4" placeholder={user.user.email} readOnly />
             </div>
             <div class="form-group col-md-6">
               <label for="inputEmail4">Nombre</label>
-              <input type="email" class="form-control" id="inputEmail4" placeholder={name} readOnly />
+              <input type="email" class="form-control" id="inputEmail4" placeholder={user.user.name} readOnly />
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Apellido</label>
-              <input type="password" class="form-control" id="inputPassword4" placeholder={lastname} readOnly />
+              <input type="password" class="form-control" id="inputPassword4" placeholder={user.user.last_name} readOnly />
             </div>
           </div>
         )}
@@ -128,4 +143,13 @@ function Checkout() {
   );
 };
 
-export default Checkout;
+function mapStateToProps(state) {
+  // console.log(state.auth);
+  const { user, logged } = state.auth;
+  return {
+    user,
+    logged
+  };
+}
+
+export default connect(mapStateToProps, null)(Checkout);

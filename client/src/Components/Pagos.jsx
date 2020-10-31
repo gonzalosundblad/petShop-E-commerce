@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
+import { connect } from 'react-redux'
 
 
-function Pagos() {
+
+
+function Pagos({ user, logged }) {
 
 // const [exito, setExito] = useState()    // ACA HAY Q RECIBIR EL OK O EL PROBLEMA Q HUBO CON EL PAGO O DESDE EL SERVIDOR.
 // const [error, setError] = useState()
@@ -15,7 +18,13 @@ const [waiting, setWaiting] = useState(false);
 const [success, setSuccess] = useState(false);
 
 
-var email = 'sundbladgonzalo@gmail.com' //pedirlo por props a componente checkout
+var email;
+
+if(user && logged) {
+  email = user.user.email
+} else {
+  email = 'dvfsv' // necesito tomarlo del componente checkout porq este comprador no tiene ususario
+}
 
 var years = []
 for(var i = 2020; i < 2050; i++) {
@@ -147,5 +156,16 @@ async function pedirPago(e) {
 
 };
 
-export default Pagos;
+
+function mapStateToProps(state) {
+  // console.log(state.auth);
+  const { user, logged } = state.auth;
+  return {
+    user,
+    logged
+  };
+}
+
+export default connect(mapStateToProps, null)(Pagos);
+
 
