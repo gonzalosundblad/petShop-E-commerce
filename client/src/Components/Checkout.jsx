@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { loadState } from '../Redux/reducer/localStorage';
 import { bindActionCreators } from 'redux';
+import { useState } from 'react';
 
 
 
@@ -15,9 +16,41 @@ var logueado = false// HAY Q PREGUNTARLE AL STORE SI EL USUARIO ESTA LOGUEADO PA
 
 
 function Checkout({ user, logged }) {
+
+  const [envio, setEnvio] = useState();
+  const [email, setEmail] = useState(user? user.user.email : null);
+  const [name, setName] = useState(user? user.user.name : null);
+  const [lastname, setLastname] = useState(user? user.user.last_name : null);
+  const [adress, setAdress] = useState();
+  const [city, setCity] = useState();
+  const [prov, setProv] = useState();
+  const [pisoDepto, setPisoDepto] = useState();
+  const [CP, setCP] = useState();
+
+
+// var handleChange = (e) => {
+//   console.log(e.target.value)
+//   console.log(e.target.name)
+//   console.log(adress)
+
+// }
+
+var disable = true;
+// var prohibir = false;
+
+if(envio && email && name && lastname && adress && city && prov) {
+   disable = false
+}
+
+var handleClick = (e) => {
+  if(disable) {
+    e.preventDefault()
+    alert('Campos requeridos!')
+    // prohibir = true
+}}
   
-  
-  // console.log(user.user, logged)
+  // console.log(prohibir)
+
 
   if(user && logged) {
     logueado = true
@@ -33,7 +66,7 @@ function Checkout({ user, logged }) {
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputState">Envio</label>
-              <select id="inputState" class="form-control">
+              <select id="inputState" class="form-control" onChange={e => setEnvio(e.target.value)}>
                 <option selected>Elija un metodo de envio</option>
                 <option>Envio CABA y alrededores</option>
                 <option>Envio GBA y resto del pais</option>
@@ -42,15 +75,15 @@ function Checkout({ user, logged }) {
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Email</label>
-              <input type="password" class="form-control" id="inputPassword4" placeholder={user.user.email} readOnly />
+              <input type="email" class="form-control" name='email' id="inputPassword4" placeholder={user.user.email} readOnly />
             </div>
             <div class="form-group col-md-6">
               <label for="inputEmail4">Nombre</label>
-              <input type="email" class="form-control" id="inputEmail4" placeholder={user.user.name} readOnly />
+              <input type="text" class="form-control" id="inputEmail4" placeholder={user.user.name} readOnly />
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Apellido</label>
-              <input type="password" class="form-control" id="inputPassword4" placeholder={user.user.last_name} readOnly />
+              <input type="text" class="form-control" id="inputPassword4" placeholder={user.user.last_name} readOnly />  
             </div>
           </div>
         )}
@@ -58,7 +91,7 @@ function Checkout({ user, logged }) {
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputState">Envio</label>
-              <select id="inputState" class="form-control">
+              <select id="inputState" class="form-control" onChange={e => setEnvio(e.target.value)}>
                 <option selected>Elija un metodo de envio</option>
                 <option>Envio CABA y alrededores</option>
                 <option>Envio GBA y resto del pais</option>
@@ -67,15 +100,15 @@ function Checkout({ user, logged }) {
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Email</label>
-              <input type="password" class="form-control" id="inputPassword4" placeholder='Ingrese su email' />
+              <input type="email" class="form-control" name='email' id="inputPassword4" placeholder='Ingrese su email' onChange={e => setEmail(e.target.value)}/>
             </div>
             <div class="form-group col-md-6">
               <label for="inputEmail4">Nombre</label>
-              <input type="email" class="form-control" id="inputEmail4" placeholder='Ingrese su nombre' />
+              <input type="text" class="form-control" id="inputEmail4" placeholder='Ingrese su nombre' onChange={e => setName(e.target.value)}/>
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Apellido</label>
-              <input type="password" class="form-control" id="inputPassword4" placeholder='Ingrese su apellido' />
+              <input type="text" class="form-control" id="inputPassword4" placeholder='Ingrese su apellido' onChange={e => setLastname(e.target.value)}/>
             </div>
           </div>
         )}
@@ -84,24 +117,24 @@ function Checkout({ user, logged }) {
 
           <div class="form-group col-md-6">
             <label for="inputAddress">Direccion</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="Avenida Siempreviva 742" />
+            <input type="text" class="form-control" id="inputAddress" onChange={e => setAdress(e.target.value)} placeholder="Avenida Siempreviva 742" />
           </div>
           <div class="form-group col-md-2">
             <label for="inputAddress2">Piso y dpto</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="1A" />
+            <input type="text" class="form-control" id="inputAddress2" onChange={e => setPisoDepto(e.target.value)} placeholder="1A" />
           </div>
           <div class="form-group col-md-2">
             <label for="inputZip">Codigo Postal</label>
-            <input type="text" class="form-control" id="inputZip" />
+            <input type="text" class="form-control" id="inputZip" onChange={e => setCP(e.target.value)}/>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputCity">Ciudad</label>
-              <input type="text" class="form-control" id="inputCity" />
+              <input type="text" class="form-control" id="inputCity" onChange={e => setCity(e.target.value)}/>
             </div>
             <div class="form-group col-md-6">
               <label for="inputState">Provincia</label>
-              <select id="inputState" class="form-control">
+              <select id="inputState" class="form-control" onChange={e => setProv(e.target.value)}>
                 <option selected>Ingrese su provincia</option>
                 <option>CABA</option>
                 <option>Buenos Aires</option>
@@ -137,8 +170,11 @@ function Checkout({ user, logged }) {
           </div>
         </div>
         <hr />
-        <NavLink to='/checkout/pago' type="submit" class="btn btn-primary">Continuar</NavLink>
+        <NavLink to='/checkout/pago' onClick={handleClick} type="submit" class="btn btn-primary" disabled='true'>Continuar</NavLink>
       </form>
+      {/* {prohibir && (
+        <div><p>campos requeridos</p></div>
+      )} */}
     </div>
   );
 };
