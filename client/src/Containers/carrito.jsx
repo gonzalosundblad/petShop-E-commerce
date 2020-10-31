@@ -14,32 +14,31 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
-  
+  function changeCartProducts(pr){
+    alert("Tus productos seran actualizados a los ultimos agregados.")
+    pr.map(prod => {
+      console.log(prod)
+      postCarrito(user.user.user_id, {
+        product_id: prod.prod_id,
+        quantity: prod.quantity,
+        price: prod.quantity
+      })
+    })
+    clearState()
+       
+  } 
 
   
 
 
   useEffect(() => {
     // si el usuario esta logueado
-    function changeCartProducts(){
-      let i = (loadState())
-      console.log(i)
-      if (i.length > 0){
-        deleteCarrito(user.user.user_id)
-        alert("Tus productos seran actualizados a los ultimos agregados.")
-        i.map(prod => {
-          console.log(prod)
-          postCarrito(user.user.user_id, {
-            product_id: prod.prod_id,
-            quantity: prod.quantity,
-            price: prod.quantity
-          })
-        })
-        clearState()
-      }    
-    } 
+    
     if (logged) {
-      changeCartProducts()
+      var i = (loadState())
+      if (i.length > 0){
+        changeCartProducts(i)
+      }
       getCarritoRequest(user.user.user_id)
       console.log(carrito)
     }
