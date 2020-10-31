@@ -28,12 +28,11 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
 
 
 
-  var idUser = user.user.user_id
 
   function subirCarrito() {
     const { image, name, price } = products.products
     if (logged) {
-      postCarrito(idUser, {
+      postCarrito(user.user.user_id, {
         product_id: id2,
         quantity: quantity,
         price: products.products.price

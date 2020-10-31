@@ -13,11 +13,34 @@ function OrdenState({ orderStates, order, getOrder }) {
     getOrder()
   }, [])
 
-  console.log(orderStates)
+  console.log(orderStates, "hola")
+  console.log(order, "chau")
+
+  var state = order.filter(o => o.orderState === orderStates)
+
+  console.log(state, "state");
+
+
 
   return (
     <div>
-      Hola
+      <div>
+        {state && state.map(o => {
+          return (
+            <div>
+              <form key={o.id} className={Estilo.resultado} >
+                <label>Id orden:</label>
+                <input type="text" value={o.id} className={Estilo.inputs} />
+                <label>Estado de Orden:</label>
+                <input type="text" value={o.orderState} className={Estilo.inputs} />
+                <label>Id usuario:</label>
+                <input type="text" value={o.userId} className={Estilo.inputs} />
+                {o.orderState === 'creada' ? <a href={`/admin/ordenes/${o.id}`}>Ver Orden</a> : <a>-----------</a>}
+              </form>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 

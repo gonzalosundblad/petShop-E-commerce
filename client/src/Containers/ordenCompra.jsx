@@ -1,26 +1,29 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { getProdOrder } from '../Redux/actionsCarrito'
-import { putOrder } from '../Redux/actionsOrden'
+import { putOrder, getOrder } from '../Redux/actionsOrden'
 import StyleOrden from '../Estilos/ordenesUsuario.module.css'
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom'
+import Estilo from '../Estilos/forms.module.css'
 
 
-function OrdenCompra({ id, user, putOrder, order, getProdOrder }) {
+
+function OrdenCompra({ user, logged, putOrder, order, getOrder }) {
   const [productOrder, setproductOrder] = useState([])
+  const [id2, setId2] = useState([])
   console.log('hhhhhhhhhhhhhhhhhh');
   console.log(user, "hola");
 
 
   useEffect(() => {
-    if (user === null) {
-      var user2 = 1
+    if (logged) {
+      var user2 = user.user.user_id
     } else {
-      var user2 = user.user.user.user_id
+      var user2 = 1
     }
-    getProdOrder(user2)
+    getOrder()
   }, [])
   var total = 0
 
@@ -31,19 +34,22 @@ function OrdenCompra({ id, user, putOrder, order, getProdOrder }) {
     return a + b
   }, 0)
 
-  console.log(productOrder);
+  console.log(order);
 
 
+  function handleChange(e) {
+    setId2(e.target.value)
+  }
 
 
   const estado2 = { orderState: 'cancelada' }
 
   function cambioEstado2() {
-    putOrder(id, estado2)
+    putOrder(id2, estado2)
     alert('Pedido Cancelado')
   }
 
-  if (user.user === null) {
+  if (logged === false) {
     return (
       <div>
         <h1>Iniciar Sesión o Registrarse para continuar</h1>
@@ -54,23 +60,26 @@ function OrdenCompra({ id, user, putOrder, order, getProdOrder }) {
   } else {
     return (
       <div>
-        <h1 className={StyleOrden.tuOrden} >Tu Orden</h1>
-        {productOrder && productOrder.map(e => {
-          return (
-            <div className={StyleOrden.producto} >
-              <h2>{e.name}</h2>
-              <h2>${e.price * e.LineaDeOrden.quantity}</h2>
-              <h3> Cantidad:{e.LineaDeOrden.quantity}</h3>
-            </div>
-          )
-        }
-        )
-        }
-        <div className={StyleOrden.inputBoton}>
-          <h2 >Total: {total} </h2>
-        </div>
-        <div className={StyleOrden.botonesFinales} >
-          <button onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</button>
+        <div>
+          <div className={Estilo.forms} > {
+            order && order.map(encontrado => {
+              return (
+                <form key={encontrado.id} className={Estilo.resultado} >
+                  <label>Id orden:</label>
+                  <input type="text" value={encontrado.id} className={Estilo.inputs} />
+                  <label>Estado de Orden:</label>
+                  <input type="text" value={encontrado.orderState} className={Estilo.inputs} />
+                  {encontrado.orderState === 'creada' ? <a href={`/user/ordenes/${encontrado.id}`}>Ver Orden</a> : <a>-----------</a>}
+                </form>
+              )
+            })
+          }
+          </div>
+          <div className={StyleOrden.botonesFinales} >
+            <label>Id orden</label>
+            <input type="number" onChange={handleChange} />
+            <button onClick={cambioEstado2} className={StyleOrden.botoncitos} >Cancelar Pedido</button>
+          </div>
         </div>
       </div>
     )
@@ -78,9 +87,13 @@ function OrdenCompra({ id, user, putOrder, order, getProdOrder }) {
 }
 
 
+
+
 function mapStateToProps(state) {
+  const { user, logged } = state.auth
   return {
-    user: state.auth,
+    user,
+    logged,
     order: state.reducer.order
   };
 }
@@ -88,8 +101,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putOrder, getProdOrder }, dispatch)
+    ...bindActionCreators({ putOrder, getOrder }, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrdenCompra);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OrdenCompra)
+

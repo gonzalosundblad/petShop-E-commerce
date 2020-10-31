@@ -80,20 +80,20 @@ export function postAdmin(idUser) {//Crea un Usuario nuevo
 
 //------------------Google-----
 
-export function getGoo(user) { //Va a Reducer
-  console.log(user)
-  return {
-    type: GET_GOOGLE,
-    payload: user
-  }
-}
+// export function getGoo(user) { //Va a Reducer
+//   console.log(user)
+//   return {
+//     type: GET_GOOGLE,
+//     payload: user
+//   }
+// }
 
 export function getGoogle() {// Te lleva a la pagina de Google
   console.log("hola")
-  return (dispatch) => {
+  return () => {
     axios.get('http://localhost:3001/auth/google')
       .then(resp => {
-        dispatch(getGoo(resp.data))
+        console.log(resp)
       })
       .catch(err => {
         console.log(err)

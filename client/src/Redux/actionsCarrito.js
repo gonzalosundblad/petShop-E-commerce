@@ -29,11 +29,11 @@ export function getProdOrderUsers(resp) { //obtener todos los productos del carr
   return { type: GET_CREADA, payload: resp };
 }
 
-export function getProdOrder(usuario) { //Trae los productos de una orden
+export function getProdOrder(usuario, id2) { //Trae los productos de una orden
   console.log("Cargar productos al carrito")
   return (dispatch) => {
     axios.get(`http://localhost:3001/users/${usuario}/cart/orders`)
-      .then((response) => { dispatch(getProdOrderUsers(response.data[0].products)) })
+      .then((response) => { dispatch(getProdOrderUsers(response.data[id2].products)) })
       .catch(err => { console.log(err) })
   }
 }
