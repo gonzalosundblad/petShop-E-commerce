@@ -35,14 +35,26 @@ var editarDatos = () => {
   }
 
 
-console.log(editar)
 
-var email;
+var email; // defino los datos para enviar al servidor y q este mande el mail de confirmacion y resumen de compra
+var nombre;
+var apellido;
+var direccion = datosEnvio.adress;
+var pisoDepto = datosEnvio.pisoDepto
+var CP = datosEnvio.CP;
+var ciudad = datosEnvio.city;
+var provincia = datosEnvio.prov;
+var precioFinal = datosEnvio.precioFinal;
 
-if(user && logged) {
-  email = user.user.email
+
+if(user && logged) { //estos datos dependen de si la compra la hace un usuario logueado o fantasma
+  email = user.user.email;
+  nombre = user.user.name;
+  apellido = user.user.last_name;
 } else {
-  email = datosEnvio.email // necesito tomarlo del componente checkout porq este comprador no tiene ususario
+  email = datosEnvio.email; // necesito tomarlo del componente checkout porq este comprador no tiene cuenta
+  nombre = datosEnvio.name;
+  apellido = datosEnvio.lastname;
 }
 
 var years = []
@@ -50,7 +62,6 @@ for(var i = 2020; i < 2050; i++) {
        years.push(i)
 }
      
-
 async function pedirPago(e) {
     e.preventDefault();
     
@@ -62,7 +73,16 @@ async function pedirPago(e) {
           'http://localhost:3001/checkout',
           {
             email, // agregar resumen de compra: precio final, productos, direccion de envio, tarjeta con la q se pago, tipo de envio
-          },
+            nombre,
+            apellido,
+            direccion,
+            pisoDepto,
+            CP,
+            ciudad,
+            provincia,
+            precioFinal,
+            carrito
+          }
         );
         console.log(response.data);
         if (response.data === 'checkout email sent') {

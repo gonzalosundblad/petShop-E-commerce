@@ -3,6 +3,7 @@ const { User, Order } = require('../db.js');
 const crypto = require('crypto');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars');
 
 const {
   EMAIL_ADDRESS,
@@ -13,6 +14,14 @@ var n = 0; // para asegurarme q falle seguido la req al banco y asi poder mostra
 
 server.post('/', (req, res) => {
 
+  const { email, nombre, apellido, direccion, pisoDepto, CP, ciudad, provincia, precioFinal, carrito } = req.body;
+
+  var productos = []
+  for(var i = 0; i < carrito.length; i++) {
+    productos.push(' ' + carrito[i].LineaDeOrden.quantity + ' ' + carrito[i].name)
+  }
+
+  console.log(req.body);
 
     if (req.body.email === '') {
       res.status(400).send('email required');
@@ -54,23 +63,31 @@ server.post('/', (req, res) => {
 
 
         const transporter = nodemailer.createTransport({
-          service: 'gmail',
+          service: 'gmail', // en produccion hay q usar un tercer servicio como nodemailer
           auth: {
             user: EMAIL_ADDRESS,
             pass: EMAIL_PASSWORD,
           },
         });
 
+        // transporter.use('compile', hbs({
+        //   viewEngine: 'express-handlebars',
+        //   viewPath: './views/'
+        // }))
+
         const mailOptions = {
           from: 'henrypetshop.2020@gmail.com',
           to: `${user.email}`,
           subject: 'Tu compra ha sido confirmada!',
-          text:
-            'Este es el resumen de su compra: ${poner compra aca poniendo el texto entero entre backticks cuando tenga la data de la compra q me llega del store}\n\n'
+          text: 
+            'Este es el resumen de su compra: \n\n'
+            + `Sera entregada a ${direccion}, ${pisoDepto}, ${ciudad}, ${provincia}, ${CP}\n`
+            + `Precio final: $${precioFinal}\n`
+            + `Usted a comprado: ${productos}\n`
+            + 'Gracias por confiar en nosotros!\n'
 
-            + 'Gracias por confiar en nosotros!'
-
-            + 'ANDOOO *sticker de agusamani*'
+            
+          // template: 'index'
         };
 
         console.log('sending mail');
