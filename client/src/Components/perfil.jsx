@@ -22,7 +22,6 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
     getMe();
   }, [])
 
-  console.log(user.user)
 
   var user = user.user
 

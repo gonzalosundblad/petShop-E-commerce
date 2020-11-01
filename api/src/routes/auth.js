@@ -40,8 +40,8 @@ server.get('/google', isNotAuthenticated, passport.authenticate('google', { scop
 
 server.get('/google/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }), (req, res) => {
   // Successful authentication, redirect home.
-  console.log(req.user);
   res.redirect('http://localhost:3000');
+  res.send({ user: req.user, logged: true })
 });
 
 //==================GITHUB AUTHENTICATION========================
@@ -51,6 +51,7 @@ server.get('/github', isNotAuthenticated, passport.authenticate('github', { scop
 server.get('/github/callback', passport.authenticate('github', { failureRedirect: 'http://localhost:3000/login' }), (req, res) => {
   // Successful authentication, redirect home.
   res.redirect('http://localhost:3000');
+  res.send({ user: req.user, logged: true })
 });
 
 module.exports = server;

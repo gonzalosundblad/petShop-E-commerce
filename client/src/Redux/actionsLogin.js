@@ -18,8 +18,7 @@ export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
           console.log(response.data.message);
         }
         else {
-          dispatch(postLog(response.data),
-            localStorage.setItem("user", JSON.stringify(response.data))
+          dispatch(postLog(response.data)
           )
         }
       })
@@ -56,7 +55,7 @@ export function getMe() {//Va a Catalogo2.jsx
   console.log('getMe');
   return (dispatch) => {
     axios.get('http://localhost:3001/auth/me')
-      .then(response => { dispatch(getUserMe(response.data)) })
+      .then(response => { dispatch(getUserMe(response.data), localStorage.setItem("user", JSON.stringify(response.data))) })
       .catch(err => { console.log(err) })
   }
 }
@@ -93,9 +92,9 @@ export function postAdmin(idUser) {//Crea un Usuario nuevo
 export function getGoogle() {// Te lleva a la pagina de Google
   console.log("hola")
   return () => {
-    axios.get('http://localhost:3001/auth/google')
+    axios.get('http://localhost:3001/auth/google/callback')
       .then(resp => {
-        console.log(resp)
+        console.log(resp.data)
       })
       .catch(err => {
         console.log(err)
@@ -103,20 +102,20 @@ export function getGoogle() {// Te lleva a la pagina de Google
   }
 }
 
-// export function getGit(user) { //Va a Reducer
-//   console.log("chau")
-//   return {
-//     type: GET_GIT,
-//     payload: user
-//   }
-// }
+export function getGit(user) { //Va a Reducer
+  console.log("chau")
+  return {
+    type: GET_GIT,
+    payload: user
+  }
+}
 
 export function getGithub() {// Te lleva a la pagina de Google
   console.log("hola")
-  return () => {
-    axios.get('http://localhost:3001/auth/github')
+  return (dispatch) => {
+    axios.get('http://localhost:3001/auth/github/callback')
       .then(resp => {
-        console.log(resp)
+        dispatch(getGit(resp.data))
       })
       .catch(err => {
         console.log(err)

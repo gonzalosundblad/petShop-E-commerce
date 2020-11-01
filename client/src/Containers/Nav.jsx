@@ -12,10 +12,11 @@ import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
 import { loadState } from '../Redux/reducer/localStorage';
 import { bindActionCreators } from 'redux';
+import { getMe } from '../Redux/actionsLogin';
 
 
 
-function NavBar({ user, logged, funcionCatag, carrito, onSearch }) {
+function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
   //console.log(user.user.role);
   const [carro, setCarro] = useState([]);
   const [total, setTotal] = useState(0)
@@ -23,7 +24,9 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch }) {
   console.log(carrito)
 
 
+
   useEffect(() => {
+    getMe();
     var precio = [];
     if (logged) {
       getCarrito(user.user.user_id)
@@ -106,7 +109,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getCarrito }, dispatch)
+    ...bindActionCreators({ getCarrito, getMe }, dispatch)
   }
 }
 

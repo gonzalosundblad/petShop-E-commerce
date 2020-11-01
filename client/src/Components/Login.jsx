@@ -6,14 +6,14 @@ import email from '../imagenes/email.png';
 import google from '../imagenes/google.png';
 import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
-import { loginRequest, getGoogle, getGithub } from '../Redux/actionsLogin';
+import { loginRequest, getGoogle, getGithub, getMe } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 
-function Login({ user, logged, loginRequest, users, getGoogle, getGithub }) {
+function Login({ user, logged, loginRequest, users, getGoogle, getGithub, getMe }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -21,7 +21,9 @@ function Login({ user, logged, loginRequest, users, getGoogle, getGithub }) {
   const [errors, setErrors] = useState({});
   var x = false;
 
-  console.log(logged);
+
+
+  console.log(user, "holisdts");
 
   function validate(input) {
     let errors = {};
@@ -55,10 +57,12 @@ function Login({ user, logged, loginRequest, users, getGoogle, getGithub }) {
   }
 
   function loginGoogle() {
-    window.location = "http://localhost:3001/auth/google"
+    getGoogle()
+    window.location.replace("http://localhost:3001/auth/google")
   }
   function loginGithub() {
     getGithub()
+    window.location.replace("http://localhost:3001/auth/github")
 
   }
 
@@ -144,7 +148,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest, getGithub, getGoogle }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, getGoogle, getMe }, dispatch)
   }
 }
 
