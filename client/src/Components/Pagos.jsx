@@ -132,7 +132,7 @@ async function pedirPago(e) {
                 <option>city</option>
               </select>
             </div>
-           <input type="text" class="form-control" id="inputAddress" onChange={e => setNuevoDato(e.target.value)}  placeholder="Avenida Siempreviva 742" />
+           <input type="text" class="form-control" id="inputAddress" onChange={e => setNuevoDato(e.target.value)}  placeholder="Ingrese el dato corregido" />
          </div>
          <button type='submit' onClick={() => editarDatos()}>Confirmar</button>
          </form>
@@ -187,7 +187,7 @@ async function pedirPago(e) {
   </div>
   <div class="form-group col-md-2">
     <label for="exampleFormControlInput1">CVV</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="xxx"/>
+    <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="xxx"/>
   </div>
 
   </div>

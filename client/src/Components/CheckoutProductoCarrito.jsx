@@ -16,7 +16,7 @@ function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, precio
                     <div className="col-md-8">
                         <div className="card-body">
                             <h5 className="card-title">{name}</h5>
-                            <h6 className="card-title">{price}</h6>
+                            <h6 className="card-title">${price} por unidad</h6>
                             <h6 className="card-title">Cantidad: {LineaDeOrden} unidad(es)</h6>
                             <h6>Total: ${total}</h6>
                             
