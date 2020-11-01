@@ -20,9 +20,9 @@ function Perfil({ putUser, deleteUser, getMe, user }) {
     getMe()
   }, [])
 
-  console.log(user.user)
+  console.log(user)
 
-  var user = user.user
+  var user = user
 
   function handle() {
     // users.map((user) => {

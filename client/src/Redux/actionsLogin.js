@@ -5,6 +5,7 @@ var _axios = axios.create({
   withCredentials: true
 })
 export function postLog(user) {//va a REDUCER
+  console.log(user);
   return {
     type: LOGIN_SUCCESS,
     payload: user
@@ -18,7 +19,7 @@ export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
           type: MESSAGE, payload: response.data
         })}
         else {dispatch(postLog(response.data),
-          localStorage.setItem("user", JSON.stringify(response.data))
+          localStorage.setItem("user", JSON.stringify(response.data.user))
         )}
       })
       .catch(error => { console.log(error) })

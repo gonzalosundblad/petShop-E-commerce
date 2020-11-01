@@ -10,7 +10,6 @@ function UsuarioLogeado({ user, logout }) {
   //console.log(user);
 
   function cerrarSesion() {
-    localStorage.removeItem(user);
     logout()
     localStorage.removeItem(user);
   }
