@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Style from '../Estilos/reviews.module.css';
-import { getAllReviewsRequest, postReviewRequest, putReview, deleteReviewRequest, deleteReview } from '../Redux/actionsReview';
+import { Redirect } from "react-router-dom";
+import { getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers } from '../Redux/actionsReview';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
+
+function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers }) {
 
   const [state, setState] = useState({
     qualification: "",
@@ -12,28 +14,14 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
   });
 
   useEffect(() => {
-    getAllReviewsRequest(id)
+    getAllReviewsRequest(id) // trae todas las reviews como un array de objetos
+    getNumbers(id); //trae un array con el promedio y con la cantidad de votos
   }, [])
 
-  var prom = [];//hago promedio
-  var list = [{ uno: [], dos: [], tres: [], cuatro: [], cinco: [] }]
+  var number = numbers.avg //el promedio esta en numbers.avg
+  var prom = Math.round(number).toFixed(2) // redondea y agrega dos ceros
 
-  function promedio() {
-    var value = []
-    if (reviews.length === 0) { value.push(0) }
-    reviews.map(e => { value.push(e.qualification) })
-    var total = value.reduce(function (a, b) { return a + b }, 0)
-    prom = Math.round(total / value.length).toFixed(2);
-    value.map(e => e === 1 ? list[0].uno.push(e) : null)
-    value.map(e => e === 2 ? list[0].dos.push(e) : null)
-    value.map(e => e === 3 ? list[0].tres.push(e) : null)
-    value.map(e => e === 4 ? list[0].cuatro.push(e) : null)
-    value.map(e => e === 5 ? list[0].cinco.push(e) : null)
-  }
-
-  promedio()
-
-  function handleChange(e) {
+  function handleChange(e) { //toma los valores del input
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -42,32 +30,31 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
   function handleSubmit(e) {
     e.preventDefault();
   }
-  function onDelete(e) {
+  function onDelete(e) { //borra una publicacion
     var idReview = e.target.value
-    deleteReview(id, idReview)
-    window.location.reload()
+    console.log(idReview);
+    deleteReviewRequest(id, idReview)
   }
 
-  function onPut(e) {
+  function onPut(e) { //modifica una publicacion
     const idReview = e.target.value
     var post = {
       qualification: state.qualification,
       description: state.description
     };
-    putReview(id, idReview, post)
-    window.location.reload()
-
+    putReviewRequest(id, idReview, post)
   }
 
-  function onSend() {
+  function onSend() { //envia una publicacion nueva
+    var id = user.user.user.user_id
     var post = {
       qualification: state.qualification,
       description: state.description,
-      user_id: 2
+      user_id: id
     };
     postReviewRequest(id, post)
-    window.location.reload()
   }
+
 
   return (
     <div className={Style.box}>
@@ -81,32 +68,30 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
             <div>
               <div>
                 <div className={Style.cajon1}>
-                  <p className={Style.numPromedio}> {prom} </p>
+                  {prom == 'NaN' ? null : <p className={Style.numPromedio}> {prom} </p>}
                   <div>
                     {prom == 5 ? <label className={Style.estrellasnaranja}>★★★★★</label> : <p></p>}
                     {prom == 4 ? <label className={Style.estrellasnaranja}>★★★★</label> : <p></p>}
                     {prom == 3 ? <label className={Style.estrellasnaranja}>★★★</label> : <p></p>}
                     {prom == 2 ? <label className={Style.estrellasnaranja}>★★</label> : <p></p>}
                     {prom == 1 ? <label className={Style.estrellasnaranja}>★</label> : <p></p>}
-                    {prom == 0 ? <h3 className={Style.p}>Sin calificaciones</h3> : <p></p>}
+                    {prom == 'NaN' ? <h3 className={Style.p}>Sin calificaciones</h3> : <p></p>}
 
                   </div>
                 </div>
-                <div className={Style.cajon2}>
-                  <p>{list[0].uno.length} votos ▀▀▀▀▀</p>
-                  <p>{list[0].dos.length} votos ▀▀▀▀</p>
-                  <p>{list[0].tres.length} votos ▀▀▀</p>
-                  <p>{list[0].cuatro.length} votos ▀▀</p>
-                  <p>{list[0].cinco.length} votos ▀</p>
-                </div>
+                {numbers ? <div className={Style.cajon2}>
+                  <p>{numbers.five} votos ▀▀▀▀▀</p>
+                  <p>{numbers.four} votos ▀▀▀▀</p>
+                  <p>{numbers.three} votos ▀▀▀</p>
+                  <p>{numbers.two} votos ▀▀</p>
+                  <p>{numbers.one} votos ▀</p>
+                </div> : null}
               </div>
 
 
               <div className={Style.opiniones}>
                 {
                   reviews && reviews.map(o => {
-
-                    console.log(reviews)
                     return (
                       <div>
                         <div>
@@ -115,12 +100,12 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
                           {o.qualification === 3 ? <label className={Style.estrellasnaranja}>★★★</label> : <p></p>}
                           {o.qualification === 2 ? <label className={Style.estrellasnaranja}>★★</label> : <p></p>}
                           {o.qualification === 1 ? <label className={Style.estrellasnaranja}>★</label> : <p></p>}
-                          <button name="modificar" onClick={onPut} className={Style.bottton} type="submit" value={o.review_id} >
+                          {user.user !== null ? <button name="modificar" onClick={onPut} className={Style.bottton} type="submit" value={o.review_id} >
                             Modificar comentario
-              </button>
-                          <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit" value={o.review_id}>
+              </button> : null}
+                          {user.user !== null ? <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit" value={o.review_id}>
                             Eliminar comentario
-              </button>
+              </button> : null}
                         </div>
                         <p className={Style.opinionsDate}>{o.updatedAt.slice(0, 10)}</p>
                         <p className={Style.opinionsTitle}>{o.user.name}</p>
@@ -150,18 +135,9 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
                 </p>
                 <input className={Style.inputt} type="text" name="description" placeholder="Cuentanos mas sobre el producto"
                   onChange={handleChange} />
-                <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
+                {user.user !== null ? <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
                   Enviar comentario
-              </button>
-                {/* <button name="enviar" onClick={() => postReviewRequest(id, state)} className={Style.botton} type="submit">
-                Enviar comentario
-              </button>
-              <button name="modificar" onClick={() => putReview(state)} className={Style.botton} type="submit">
-                Modificar comentario
-              </button>
-              <button name="eliminar" onClick={() => deleteReview()} className={Style.botton} type="submit">
-                Eliminar comentario
-              </button> */}
+              </button> : <p>Debes estar logueado</p>}
               </form>
             </td></tr>
         </table>
@@ -169,30 +145,21 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
       </div>
     </div>
 
-
   )
 }
-
 const mapStateToProps = state => {
-  console.log(state.reducer);
   return {
-    reviews: state.reducer.reviews
+    user: state.auth,
+    reviews: state.reducer.reviews,
+    numbers: state.reducer.numbers
   }
 }
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     dispatch,
-//     ...bindActionCreators({getAllReviewsRequest}, dispatch)
-//   }
-// }
-
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getAllReviewsRequest, postReviewRequest }, dispatch)
+    ...bindActionCreators({ getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers }, dispatch)
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -40,6 +40,7 @@ server.get('/google', isNotAuthenticated, passport.authenticate('google', { scop
 
 server.get('/google/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }), (req, res) => {
   // Successful authentication, redirect home.
+  console.log(req.user);
   res.redirect('http://localhost:3000');
 });
 

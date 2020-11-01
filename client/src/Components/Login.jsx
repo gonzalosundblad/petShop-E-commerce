@@ -55,7 +55,7 @@ function Login({ user, logged, loginRequest, users, getGoogle, getGithub }) {
   }
 
   function loginGoogle() {
-    getGoogle()
+    window.location = "http://localhost:3001/auth/google"
   }
   function loginGithub() {
     getGithub()

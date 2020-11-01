@@ -1,7 +1,7 @@
 import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH } from '../constants';
 import { GET_CARRO, POST_CARRO, PUT_CANTIDAD_CARRO, DELETE_CARRITO, DELETE_CARRITOUNO, GET_CREADA } from '../constantsCarro'
 import { POST_USER, GET_USER, PUT_USER, DELETE_USER, PUT_ORDER, GET_ORDENID, GET_ORDENIDUSER, DELETE_ORDER, GET_ORDER } from '../constantesOrden'
-import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW } from '../constantsReview';
+import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW, NUMBERS } from '../constantsReview';
 import { loadState, saveState } from "./localStorage"
 
 export const initialState = {
@@ -11,7 +11,7 @@ export const initialState = {
   carrito: [],
   order: [],
   reviews: [],
-
+  numbers: []
 };
 
 export default (state = initialState, action) => {
@@ -176,7 +176,7 @@ export default (state = initialState, action) => {
     case POST_REVIEW:
       return {
         ...state,
-        reviews: state.carrito.concat(action.payload)
+        reviews: state.reviews.concat(action.payload)
       }
     case PUT_REVIEW:
       return {
@@ -193,7 +193,11 @@ export default (state = initialState, action) => {
         ...state,
         reviews: action.payload
       }
-
+    case NUMBERS:
+      return {
+        ...state,
+        numbers: action.payload
+      }
     default: return state
   }
 

@@ -1,14 +1,14 @@
 const server = require('express').Router();
 const { Product, Review, User } = require('../db.js');
 const { isAuthenticated } = require("../passport");
+const { Sequelize } = require('sequelize');
 
 server.post('/product/:id/review', (req, res) => {                       //S54 : ruta para crear/agregar Review
   //Guardo el id del producto enviado por params en una constante
   const product_id = req.params.id;
   //Guardo el id del user en una constante
-  const user_id = req.user.user_id;
   //Guardo la calificacion y descripcion enviada por body con destructuring
-  const { qualification, description } = req.body;
+  const { qualification, description, user_id } = req.body;
   Review.create({
     qualification,
     description,
@@ -84,6 +84,36 @@ server.get('/product/:id/review/', (req, res) => {                       //S57 :
   }).catch(err => {
     res.status(404).json(err)
   })
+})
+
+server.get('/product/:id/numbers', (req, res) => {                       //S57 : Crear Ruta para obtener todas las reviews de un producto.
+  const { id } = req.params
+  var avg = Review.findAll({
+    where: {
+      product_id: id
+    },
+    attributes: [[Sequelize.fn('AVG', Sequelize.col('qualification')), 'qualification']]
+  })
+  var one = Review.count({ where: { product_id: id }, attributes: 'qualification', where: { qualification: 1 } })
+  var two = Review.count({ where: { product_id: id }, attributes: 'qualification', where: { qualification: 2 } })
+  var three = Review.count({ where: { product_id: id }, attributes: 'qualification', where: { qualification: 3 } })
+  var four = Review.count({ where: { product_id: id }, attributes: 'qualification', where: { qualification: 4 } })
+  var five = Review.count({ where: { product_id: id }, attributes: 'qualification', where: { qualification: 5 } })
+
+  Promise.all([avg, one, two, three, four, five])
+    .then((resp) => {
+      res.status(200).json({
+        avg: resp[0][0].qualification,
+        one: resp[1],
+        two: resp[2],
+        three: resp[3],
+        four: resp[4],
+        five: resp[5]
+      })
+    })
+    .catch(err => {
+      res.status(404).json(err)
+    })
 })
 
 module.exports = server;
