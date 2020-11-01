@@ -1,16 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import OrdenUsuario from '../Containers/ordenUsuario';
 import { getUser, deleteUser, putUser } from '../Redux/actionsOrden'
-import Estilo from '../Estilos/Perfil.module.css'
 import { connect } from 'react-redux'
 import { getMe } from '../Redux/actionsLogin'
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
+import { logout } from '../Redux/actionsLogin';
 
-function Perfil({ putUser, deleteUser, getMe, user }) {
+function Perfil({ putUser, deleteUser, getMe, user, logout }) {
   const [state, setState] = useState({
     name: "",
+    last_name: "",
     email: "",
     password: "",
     oldPassword: ""
@@ -20,9 +20,11 @@ function Perfil({ putUser, deleteUser, getMe, user }) {
     getMe()
   }, [])
 
-  console.log(user.user)
 
-  var user = user.user
+  var userN;
+  if(user){
+    userN = user.user
+  }
 
   function handle() {
     // users.map((user) => {
@@ -40,31 +42,36 @@ function Perfil({ putUser, deleteUser, getMe, user }) {
   }
   //name, email, password, newPassword, last_name
 
+  function cerrarSesion() {
+    logout();
+    localStorage.removeItem("user")
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     const cambios = {
       name: state.name,
+      last_name: state.last_name,
       email: state.email,
       newPassword: state.password,
       password: state.oldPassword
     }
-    if (cambios.name.length === 0) { cambios.name = user.name }
-    if (cambios.email.length === 0) { cambios.email = user.email }
+    if (cambios.name.length === 0) { cambios.name = userN.name }
+    if (cambios.email.length === 0) { cambios.email = userN.email }
+    if (cambios.last_name.length === 0) { cambios.last_name = userN.last_name }
 
-
-
-    putUser(user.user_id, cambios)
+    putUser(userN.user_id, cambios)
 
   }
 
 
 
   function onDelete() {
-    const id = user.user_id
+    const id = userN.user_id
     deleteUser(id)
   }
-  if (user === null) {
+
+  if (!user) {
     return (
       <div>
         <h1>Debes iniciar sesión o registrarte para ver tu perfil</h1>
@@ -74,44 +81,89 @@ function Perfil({ putUser, deleteUser, getMe, user }) {
     )
   } else {
     return (
-      <div className={Estilo.productoGrande} >
-        <h1 className={Estilo.bienvenido} >Bienvenido {user.name} ! </h1>
-        <h2 className={Estilo.producto} >Tu email : {user.email}  </h2>
-        <div>
-          <form >
-            <div>
-              <div className={Estilo.nombre}>
-                <label >Nombre:</label>
-                <input type="text" placeholder={user.name} name="name" onChange={handleChange} className={Estilo.nombre2} />
-              </div>
-              <div className={Estilo.email}>
-                <label>Email:</label>
-                <input type="email" placeholder={user.email} name="email" onChange={handleChange} className={Estilo.email2} />
-              </div>
-              <div className={Estilo.password}>
-                <label>Contraseña vieja(tenga en cuenta que si no es correcta la vieja contraseña, esta no se modificara):</label>
-                <input type="password" placeholder="Ingrese antigua contraseña" name="oldPassword" onChange={handleChange} className={Estilo.password2} />
-              </div>
-              <div>
-                <label>Nueva Contraseña:</label>
-                <input type="password" placeholder="Ingrese nueva contraseña" name="password" onChange={handleChange} className={Estilo.password2} />
+      <div>
+        <h1 style={{margin: "40px", display: "flex"}}>Bienvenido {userN.name} ! </h1>
+        <div class="row" style={{margin: "40px"}}>
+          <div class="col-3" >
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style={{width: "180px"}}>
+              <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Perfil</a>
+              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Modificar Datos</a>
+              <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Cambiar Contraseña</a>
+              <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Salir</a>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+
+              <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+              <table class="table table-hover" style={{width: "500px", border: "1px solid gray"}}>
+                <tbody>
+                  <tr class="table-default">
+                    <th scope="row">Nombre:</th>
+                    <td>{userN.name}</td>
+                  </tr>
+                  <tr class="table-default">
+                    <th scope="row">Apellido:</th>
+                    <td>{userN.last_name}</td>
+                  </tr>
+                  <tr class="table-default">
+                    <th scope="row">Tu email:</th>
+                    <td>{userN.email}</td>
+                  </tr>
+                </tbody>
+              </table>
               </div>
 
-              <div className={Estilo.botonesFinales} >
-                <button onClick={handleSubmit} className={Estilo.botoncitos} >
-                  Modificar datos
-                      </button>
-                <button onClick={onDelete} className={Estilo.botoncitos2}  >
-                  Eliminar Cuenta
-                      </button>
+              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <form style={{width: "500px"}}>
+                  <fieldset>
+                    <legend>Modifica tus datos:</legend>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Nombre</label>
+                      <input type="text" class="form-control" name="name" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nuevo Nombre"/>
+                    </div>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Apellido</label>
+                      <input type="text" class="form-control" name="lastName" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nuevo Apellido"/>
+                    </div>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Email</label>
+                      <input type="email" class="form-control" name="email" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nuevo email"/>
+                    </div>
+                    <button onClick={handleSubmit} class="btn btn-success"> Modificar datos </button>
+                  </fieldset>
+                </form>
+              </div>
+
+              <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <form style={{width: "500px"}}>
+                  <fieldset>
+                    <legend>Cambiar Contraseña:</legend>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Contraseña:</label>
+                      <input type="password" class="form-control" name="oldPassword" onChange={handleChange} aria-describedby="emailHelp" placeholder="Contraseña Actual"/>
+                    </div>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Nueva Contraseña:</label>
+                      <input type="password" class="form-control" name="password" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nueva Contraseña"/>
+                    </div>
+                    <button onClick={handleSubmit} class="btn btn-success"> Cambiar Contraseña </button>
+                  </fieldset>
+                </form>
+              </div>
+
+              <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" style={{width: "500px"}}>
+                <button onClick={cerrarSesion} class="btn btn-warning" style={{margin: "30px"}} > Cerrar Sesión </button>
+                <button onClick={onDelete} class="btn btn-danger" style={{margin: "30px"}} > Eliminar Cuenta </button>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     )
   }
 }
+
 function mapStateToProps(state) {
   return {
     user: state.auth.user
@@ -121,7 +173,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putUser, deleteUser, getMe }, dispatch)
+    ...bindActionCreators({ putUser, deleteUser, getMe, logout }, dispatch)
   }
 }
 

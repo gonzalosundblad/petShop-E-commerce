@@ -57,7 +57,7 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
     else if(user && !logged){
       inicio = <a class="nav-link text-white" href='/login' >Iniciar Sesión</a>
     }
-    else inicio= <a class="nav-link text-white" href='/login' > Hola {user.user.name}! </a>
+    else inicio= <a class="nav-link text-white"> Hola {user.user.name}! </a>
   
   console.log(inicio)
   // let admin;

@@ -50,11 +50,11 @@ export function getUserMe(user) {//va a REDUCER
     payload: user
   }
 }
-export function getMe() {//Va a Catalogo2.jsx
-  console.log('getMe');
+export function getMe() {//va al perfil
   return (dispatch) => {
     _axios.get('http://localhost:3001/auth/me')
-      .then(response => { dispatch(getUserMe(response.data)) })
+      .then(response => { console.log(response.data.user) 
+        dispatch(getUserMe(response.data)) })
       .catch(err => { console.log(err) })
   }
 }

@@ -36,7 +36,7 @@ import Cancel from './Components/Cancel';
 import Checkout from './Components/Checkout';
 import CheckoutNoLog from './Components/CheckoutNoLog';
 import Pagos from './Components/Pagos';
-
+import EliminarCuenta from './Components/EliminaCuenta';
 
 function App() {
   const [resultados, setResultados] = useState([]);
@@ -84,6 +84,7 @@ function App() {
           <Route exact path="/admin/:orderStates" render={({ match }) => <OrdenEstado orderStates={match.params.orderStates} />} />
           <Route exact path="/resetpassword/:token" render={() => <ResetPassword />} />
           <Route exact path="/perfil" render={() => <Perfil />} />
+          {/* <Route exact path="/perfil/borrar" render={() => <EliminarCuenta/>} /> */}
           <Route exact path='/cancel' render={() => <Cancel />} />
           <Route exact path='/checkout' render={() => <Checkout />} />
           {/* <Route exact path='/checkoutGuest' render={() => <CheckoutNoLog/>} /> */}
