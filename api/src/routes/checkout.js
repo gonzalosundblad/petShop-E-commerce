@@ -13,12 +13,16 @@ const {
 var n = 0; // para asegurarme q falle seguido la req al banco y asi poder mostrar ambas pantallas
 
 server.post('/', (req, res) => {
-
+  console.log(__dirname)
   const { email, nombre, apellido, direccion, pisoDepto, CP, ciudad, provincia, precioFinal, carrito } = req.body;
 
   var productos = []
   for(var i = 0; i < carrito.length; i++) {
     productos.push(' ' + carrito[i].LineaDeOrden.quantity + ' ' + carrito[i].name)
+  }
+  var imagenes = []
+  for(var i = 0; i < carrito.length; i++) {
+    imagenes.push(carrito[i].image)
   }
 
   console.log(req.body);
@@ -70,25 +74,68 @@ server.post('/', (req, res) => {
           },
         });
 
-        // transporter.use('compile', hbs({
-        //   viewEngine: 'express-handlebars',
-        //   viewPath: './views/'
-        // }))
+        // var options = {
+        //   viewEngine : {
+        //       extname: '.hbs', // handlebars extension
+        //       layoutsDir: './views/email/', // location of handlebars templates
+        //       defaultLayout: 'template', // name of main template
+        //       // partialsDir: 'views/email/', // location of your subtemplates aka. header, footer etc
+        //   },
+        //   viewPath: './views/email',
+        //   extName: '.hbs'
+        //   };
+        const options = {
+          viewEngine: {
+            partialsDir: __dirname + "/views/partials",
+            // layoutsDir: 'C:/Users/Gonzalo Sundblad/henry/ecommerce-ft05-g2/api/views/layouts',
+            layoutsDir: './views/layouts', //ESTO ANDA MUY RARO. SOLO ME DEJA BUSCAR SI LA CARPETA VIEWS ESTA EN /API Y BUSCA COMO SI ESTUVIERA PARADO AHI (PONGO ../../ Y SALE DOS PARA ATRAS DE API. PONGO ./ Y LO ENCUENTRA) QCYOOO
 
+
+            // layoutsDir: 'C:/Users/Gonzalo Sundblad/henry/ecommerce-ft05-g2/api/src/routes/views/layouts',
+            extname: ".hbs"
+          },
+          extName: ".hbs",
+          viewPath: "views"
+        };
+
+        transporter.use('compile', hbs(options))
+        const order = {
+          orderId: carrito[0].LineaDeOrden.order_id,
+          nombre: nombre,
+          apellido: apellido,
+          direccion: direccion,
+          pisoDepto: pisoDepto,
+          ciudad: ciudad,
+          provincia: provincia,
+          CP: CP,
+          productos: productos,
+          price: precioFinal,
+          imagenes: imagenes
+
+
+        };
+
+
+       
         const mailOptions = {
           from: 'henrypetshop.2020@gmail.com',
           to: `${user.email}`,
           subject: 'Tu compra ha sido confirmada!',
-          text: 
-            'Este es el resumen de su compra: \n\n'
-            + `Sera entregada a ${direccion}, ${pisoDepto}, ${ciudad}, ${provincia}, ${CP}\n`
-            + `Precio final: $${precioFinal}\n`
-            + `Usted a comprado: ${productos}\n`
-            + 'Gracias por confiar en nosotros!\n'
+          // text: 
+          //   'Este es el resumen de su compra: \n\n'
+          //   + `Sera entregada a ${direccion}, ${pisoDepto}, ${ciudad}, ${provincia}, ${CP}\n`
+          //   + `Precio final: $${precioFinal}\n`
+          //   + `Usted a comprado: ${productos}\n`
+          //   + 'Gracias por confiar en nosotros!\n',
 
-            
-          // template: 'index'
+            attachments: [{path: imagenes[0]}],
+            template: "orderConfirmation",
+            context: order
+
+          // template: 'template'
         };
+
+       
 
         console.log('sending mail');
 
