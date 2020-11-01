@@ -20,10 +20,24 @@ server.post('/', (req, res) => {
   for(var i = 0; i < carrito.length; i++) {
     productos.push(' ' + carrito[i].LineaDeOrden.quantity + ' ' + carrito[i].name)
   }
-  var imagenes = []
-  for(var i = 0; i < carrito.length; i++) {
-    imagenes.push(carrito[i].image)
+  
+  var sendImg = {
+    orderId: carrito[0].LineaDeOrden.order_id,
+    nombre: nombre,
+    apellido: apellido,
+    direccion: direccion,
+    pisoDepto: pisoDepto,
+    ciudad: ciudad,
+    provincia: provincia,
+    CP: CP,
+    productos: productos,
+    price: precioFinal,
+    
   }
+  for(var i = 0; i < carrito.length; i++) {
+    sendImg[i] = carrito[i].image 
+  }
+
 
   console.log(req.body);
 
@@ -99,21 +113,7 @@ server.post('/', (req, res) => {
         };
 
         transporter.use('compile', hbs(options))
-        const order = {
-          orderId: carrito[0].LineaDeOrden.order_id,
-          nombre: nombre,
-          apellido: apellido,
-          direccion: direccion,
-          pisoDepto: pisoDepto,
-          ciudad: ciudad,
-          provincia: provincia,
-          CP: CP,
-          productos: productos,
-          price: precioFinal,
-          imagenes: imagenes
-
-
-        };
+        const order = sendImg;
 
 
        
@@ -127,8 +127,6 @@ server.post('/', (req, res) => {
           //   + `Precio final: $${precioFinal}\n`
           //   + `Usted a comprado: ${productos}\n`
           //   + 'Gracias por confiar en nosotros!\n',
-
-            attachments: [{path: imagenes[0]}],
             template: "orderConfirmation",
             context: order
 
