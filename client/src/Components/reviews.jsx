@@ -143,7 +143,7 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
             <div style={{width: "300px"}}>
               <form onSubmit={handleSubmit}>
                 <h4 > Dejanos tu opinion </h4>
-                <p>
+                <p style={{margin: "-10px"}}>
                   <input id="radio1" type="radio" name="qualification" value="5" onChange={handleChange} />
                   <label for="radio1" className={Style.estrellas}>★</label>
                   <input id="radio2" type="radio" name="qualification" value="4" onChange={handleChange} />
@@ -158,7 +158,7 @@ function Reviews({ id, reviews, getAllReviewsRequest, postReviewRequest }) {
                 <div style={{display: "block"}}>
                   {/* <label for="exampleTextarea">Example textarea</label> */}
                   <textarea class="form-control" name="description" rows="3" onChange={handleChange} placeholder="Cuentanos mas sobre el producto"></textarea>
-                  <button name="enviar" onClick={onSend} class='btn btn-success' type="submit">
+                  <button name="enviar" onClick={onSend} class='btn btn-success' type="submit" style={{margin:"10px"}}>
                     Enviar comentario
                   </button>
                 </div>

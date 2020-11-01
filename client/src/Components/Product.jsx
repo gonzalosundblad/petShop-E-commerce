@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Contador from './Contador';
 import { saveState } from '../Redux/reducer/localStorage';
-
+import Camioneta from '../imagenes/EnvioExpress2.png';
 
 
 function Product({ logged, user, id2, products, postCarrito, getProductById }) {
@@ -108,8 +108,11 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
               </div>
               <div style={{display: "flex", justifyContent: "end", marginTop: "10px"}}>
                 <h6 style={{fontSize: "12px"}}>Stock diponible: {products.products.stock} unidades</h6>
-                
               </div>
+            </div>
+            <div style={{display: "flex", flexDirection: "column", marginTop: "40px"}}>
+              <img src={Camioneta} style={{width: "80px"}}/>
+              <h6  style={{display: "flex", justifyContent: "end"}}>Envio Express</h6>
             </div>
           </div>
         </div>
