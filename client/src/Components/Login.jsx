@@ -70,10 +70,13 @@ function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarri
   }
    function loginUser() {
     loginRequest(input)
-     console.log(user)
-    if (logged){
-      addProducts()
-    }
+    setTimeout(() => {
+      console.log(user)
+     if (logged){
+       addProducts()
+     }
+      
+    }, 500);
   }
 
   function loginGoogle() {

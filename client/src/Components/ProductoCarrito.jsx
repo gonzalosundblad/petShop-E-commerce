@@ -5,9 +5,9 @@ import Estilo from '../Estilos/ProductoCarrito.module.css';
 import Basura from '../imagenes/basura.png';
 import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 
-function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcionDelete, funcionInput}){
-    
-    var total= price * LineaDeOrden;
+function ProductoCarritocard({user, logged,  id, image, name, price, quantity, funcionDelete, funcionInput}){
+    console.log(price + " + " + quantity)
+    var total= price * quantity;
 
   function handleChange(e){
     var quantity =  e.target.value
@@ -29,6 +29,23 @@ function ProductoCarritocard({user, id, image, name, price, LineaDeOrden, funcio
 
   }
 
+  function onDelete(e) {
+    console.log(e.target.value); 
+    var valor = {
+      product_id: e.target.value
+    }
+
+    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+    // let id = event.target.value
+    if (logged) {
+      deleteCarritoProd(user.user.user_id, valor)
+    } else {
+      localStorage.removeItem(id)
+    }
+    reload()
+  }
+
+
     
 
 function reload(){
@@ -49,17 +66,17 @@ function reload(){
                 <div className={Estilo.inputBoton}>
                     <h3>Cantidad: </h3>
                     {useReducer.logged}
-                    <h4>{LineaDeOrden} unidades</h4>
+                    <h4>{quantity} unidades</h4>
                     <input type="text" onChange={handleChange} className={Estilo.Cambio} />
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
-                    <input type="number" value={LineaDeOrden} />
+                    <input type="number" value={quantity} />
 
                 </div>
                 <div className={Estilo.botonBorrar}>
                     
 
-                    <   button onClick={() => funcionDelete(id)} value={id} >
+                    <   button onClick={onDelete} value={id} >
                         <img className={Estilo.basura} src={Basura} alt=""/>
                     </button>
                 </div>
@@ -78,6 +95,7 @@ const mapDispatchToProps =  dispatch => {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
+    logged: state.auth.logged
     // carrito: state.reducer.carrito
   }
 }
