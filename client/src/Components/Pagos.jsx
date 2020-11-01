@@ -5,11 +5,13 @@ import axios from 'axios';
 import { connect } from 'react-redux'
 
 import CheckoutProductoCarrito from './CheckoutProductoCarrito';
+import { NavLink } from 'react-router-dom';
+
+// import { editarUno } from '../Redux/actionsCheckout'
 
 
 
-
-function Pagos({ user, logged, carrito, datosEnvio }) {
+function Pagos({ user, logged, carrito, datosEnvio, editarUno }) {
 
 
 const [showError, setShowError] = useState(false);
@@ -17,7 +19,23 @@ const [messageFromServer, setMessage] = useState('');
 const [waiting, setWaiting] = useState(false);
 const [success, setSuccess] = useState(false);
 
+const [editar, setEditar] = useState(false);
 
+const [cambio, setCambio] = useState();
+const [nuevoDato, setNuevoDato] = useState();
+
+var editarDatos = () => {
+  console.log('heloo')
+  if(!editar) setEditar(true);
+  if(editar) setEditar(false)
+  // editarUno({
+  //   [cambio]: nuevoDato
+  // })
+  datosEnvio[cambio] = nuevoDato
+  }
+
+
+console.log(editar)
 
 var email;
 
@@ -87,6 +105,7 @@ async function pedirPago(e) {
           )}
         )}
         <div class="card" style={{width: '18rem'}}>
+         
             <div class="card-body">
               <h5 class="card-title">{datosEnvio.name} {datosEnvio.lastname}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{datosEnvio.email}</h6>
@@ -94,8 +113,33 @@ async function pedirPago(e) {
               <h6 className="card-title">Enviando a:  {datosEnvio.adress}, {datosEnvio.pisoDepto}</h6>
               <h6 className="card-title">{datosEnvio.city}, {datosEnvio.prov}, {datosEnvio.CP} </h6>
               <hr/>          
-              <a href="#" class="card-link">Editar datos</a>
+              <button onClick={() => editarDatos()} class="card-link">Editar datos</button>
             </div>
+          
+          {editar && (
+            <div>
+              <form >
+           <div class="form-group">
+           <label for="inputAddress">Que dato desea editar?</label>
+           <div class="form-group">
+              <select id="inputState" class="form-control" onChange={e => setCambio(e.target.value)} >
+                <option selected></option>
+                <option>name</option>
+                <option>lastname</option>
+                <option>email</option>
+                <option>adress</option>
+                <option>pisoDepto</option>
+                <option>city</option>
+              </select>
+            </div>
+           <input type="text" class="form-control" id="inputAddress" onChange={e => setNuevoDato(e.target.value)}  placeholder="Avenida Siempreviva 742" />
+         </div>
+         <button type='submit' onClick={() => editarDatos()}>Confirmar</button>
+         </form>
+          </div>
+          )
+
+          }
         </div>
         <hr/>
         <h5>Total: ${datosEnvio.precioFinal}</h5>
@@ -113,7 +157,7 @@ async function pedirPago(e) {
   </div>
   <div class="form-group">
     <label for="exampleFormControlInput1">Nro de tarjeta</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="xxxx xxxx xxxx xxxx"/>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="xxxx xxxx xxxx xxxx"/>
   </div>
 <div class="form-row">
   <div class="form-group col-md-4">
@@ -143,7 +187,7 @@ async function pedirPago(e) {
   </div>
   <div class="form-group col-md-2">
     <label for="exampleFormControlInput1">CVV</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="xxx"/>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="xxx"/>
   </div>
 
   </div>
@@ -201,6 +245,13 @@ function mapStateToProps(state) {
     datosEnvio: state.reducer.datosEnvio
   };
 }
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     // setTaste: taste => dispatch(setTaste(taste)),
+//     editarUno: (payload) => dispatch(editarUno(payload))
+//   }};
+
 
 export default connect(mapStateToProps, null)(Pagos);
 

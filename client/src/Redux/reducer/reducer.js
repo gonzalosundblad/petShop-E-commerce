@@ -16,8 +16,9 @@ export const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(action)
+  console.log(action.payload)
   switch (action.type) {
+
     
     case 'SET_DATOS_ENVIO': 
       return {

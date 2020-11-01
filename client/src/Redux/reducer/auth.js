@@ -26,6 +26,17 @@ export default function (state = initialState, action) {
   console.log(action.payload)
 
   switch (action.type) {
+    case 'SET_EDIT_DATA': 
+      return {
+        ...state,
+        user: {
+          ...user,
+          user: {
+            ...user,
+            // [Object.keys(action.payload)[0]]: action.payload[Object.keys(action.payload)[0]]
+            name: 'carlos'
+          }}
+      }    
     case LOGIN_SUCCESS:
       return {
         ...state,

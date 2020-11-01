@@ -7,3 +7,10 @@ export function datosEnvio(payload) {
   }
 };
 
+// export function editarUno(payload) {
+//     console.log(payload)
+//     return {
+//         type: 'SET_EDIT_DATA',
+//         payload
+//     }
+// }
