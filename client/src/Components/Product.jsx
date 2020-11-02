@@ -19,25 +19,19 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
     getProductById(id2)
   }, []);
 
-  console.log(user, "hola")
-
   function handleChange(e) {
     setQuantity(e.target.value);
-
-    console.log(user);
   }
   function subirCarrito() {
     const { image, name, price } = products.products
     if (logged) {
-      postCarrito(user.user.user.user_id, {
+      postCarrito(user.user_id, {
         product_id: id2,
         quantity: quantity,
         price
-      }).payload
-        .then(function (resp) {
-          console.log(resp.data)
+      });        
           window.location.replace("http://localhost:3000/products")
-        })
+
         .catch(err => "Error al cargar producto")
     }
     else if (quantity >= 0) {

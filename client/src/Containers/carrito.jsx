@@ -32,7 +32,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
 
   }
   setTimeout(() => {
-    getCarritoRequest(user.user.user_id)
+    getCarritoRequest(user.user_id)
     clearState()
 
   }, 500);

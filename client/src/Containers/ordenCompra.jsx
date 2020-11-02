@@ -13,13 +13,10 @@ import Estilo from '../Estilos/forms.module.css'
 function OrdenCompra({ user, logged, putOrder, order, getOrder }) {
   const [productOrder, setproductOrder] = useState([])
   const [id2, setId2] = useState([])
-  console.log('hhhhhhhhhhhhhhhhhh');
-  console.log(user, "hola");
-
 
   useEffect(() => {
     if (logged) {
-      var user2 = user.user.user_id
+      var user2 = user.user_id
     } else {
       var user2 = 1
     }
@@ -33,9 +30,6 @@ function OrdenCompra({ user, logged, putOrder, order, getOrder }) {
   var total = precio.reduce(function (a, b) {
     return a + b
   }, 0)
-
-  console.log(order);
-
 
   function handleChange(e) {
     setId2(e.target.value)
@@ -109,4 +103,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(OrdenCompra)
-

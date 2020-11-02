@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Style from '../Estilos/reviews.module.css';
 import { Redirect } from "react-router-dom";
+import { getMe } from '../Redux/actionsLogin'
 import { getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers } from '../Redux/actionsReview';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 
-function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers }) {
+function Reviews({ numbers, user, id, reviews, getMe, getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers }) {
 
   const [state, setState] = useState({
     qualification: "",
@@ -14,6 +15,7 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
   });
 
   useEffect(() => {
+    getMe();
     getAllReviewsRequest(id) // trae todas las reviews como un array de objetos
     getNumbers(id); //trae un array con el promedio y con la cantidad de votos
   }, [])
@@ -45,7 +47,7 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
   }
 
   function onSend() { //envia una publicacion nueva
-    var id = user.user.user.user_id
+    var id = user.user_id
     var post = {
       qualification: state.qualification,
       description: state.description,
@@ -99,16 +101,16 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
                           {o.qualification === 3 ? <label className={Style.estrellasnaranja}>★★★</label> : <p></p>}
                           {o.qualification === 2 ? <label className={Style.estrellasnaranja}>★★</label> : <p></p>}
                           {o.qualification === 1 ? <label className={Style.estrellasnaranja}>★</label> : <p></p>}
-                          {user.user !== null ? <button name="modificar" onClick={onPut} className={Style.bottton} type="submit" value={o.review_id} >
+                          {user !== null ? <button name="modificar" onClick={onPut} className={Style.bottton} type="submit" value={o.review_id} >
                             Modificar comentario
               </button> : null}
-                          {user.user !== null ? <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit" value={o.review_id}>
+                          {user !== null ? <button name="eliminar" onClick={onDelete} className={Style.bottton} type="submit" value={o.review_id}>
                             Eliminar comentario
               </button> : null}
                         </div>
-                        <p className={Style.opinionsDate}>{o.updatedAt.slice(0, 10)}</p>
+                        {/*<p className={Style.opinionsDate}>{o.updatedAt.slice(0, 10)}</p>
                         <p className={Style.opinionsTitle}>{o.user.name}</p>
-                        <p className={Style.opinionsDescription}>{o.description}</p>
+                        <p className={Style.opinionsDescription}>{o.description}</p>*/}
                       </div>
 
                     )
@@ -134,7 +136,7 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
                 </p>
                 <input className={Style.inputt} type="text" name="description" placeholder="Cuentanos mas sobre el producto"
                   onChange={handleChange} />
-                {user.user !== null ? <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
+                {user !== null ? <button name="enviar" onClick={onSend} className={Style.bottton} type="submit">
                   Enviar comentario
               </button> : <p>Debes estar logueado</p>}
               </form>
@@ -148,7 +150,7 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
 }
 const mapStateToProps = state => {
   return {
-    user: state.auth,
+    user: state.auth.user,
     reviews: state.reducer.reviews,
     numbers: state.reducer.numbers
   }
@@ -156,7 +158,7 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers }, dispatch)
+    ...bindActionCreators({ getAllReviewsRequest, postReviewRequest, deleteReviewRequest, putReviewRequest, getNumbers, getMe }, dispatch)
   }
 }
 export default connect(
