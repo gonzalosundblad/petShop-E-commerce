@@ -7,4 +7,5 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const HACER_ADMIN = "HACER_ADMIN";
 export const GET_GOOGLE = "GET_GOOGLE"
 export const GET_GIT = "GET_GIT"
+export const SET_DATOS_ENVIOS = "SET_DATOS_ENVIOS"
 

@@ -13,9 +13,9 @@ export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
   return (dispatch) => {
     axios.post('http://localhost:3001/auth/login', usuario)
       .then(response => {
-          dispatch(postLog(response.data),
-          localStorage.setItem("user", JSON.stringify(response.data.user))
-        )}
+        dispatch(postLog(response.data)
+        )
+      }
       )
       .catch(error => { console.log(error) })
   }

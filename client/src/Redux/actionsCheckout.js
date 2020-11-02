@@ -1,8 +1,8 @@
 
 export function datosEnvio(payload) {
   return {
-      type: 'SET_DATOS_ENVIO',
-      payload
+    type: 'SET_DATOS_ENVIO',
+    payload
   }
 };
 

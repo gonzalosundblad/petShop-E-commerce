@@ -7,9 +7,12 @@ import { bindActionCreators } from 'redux';
 
 function OrdenAdmin({ id, user, getProdOrder, order }) {
 
-  var id2 = id - 1
+  var id2 = 0
 
-  var idUser = user.user.user.user_id
+  var idUser = user.user.user_id
+
+
+  console.log(idUser);
 
   var ordenes = order
 

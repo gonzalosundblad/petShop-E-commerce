@@ -31,25 +31,15 @@ server.use(session({
 server.use(morgan('dev'));
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  // res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  // res.header('Access-Control-Allow-Origin', 'https://github.com');
-  res.header('Access-Control-Allow-Origin', 'https://accounts.google.com');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true
-}
-server.use(cors(corsOptions));
 
-// const corsOptions = {
-//   origin: 'https://accounts.google.com',
-//   credentials: true
-// }
-// server.use(cors(corsOptions));
+
+
 
 //Configuracion de passport
 server.use(passport.initialize());
@@ -165,6 +155,7 @@ passport.use(new GitHubStrategy({
   callbackURL: process.env.CALLBACK_URL_GITHUB
 },
   function (accessToken, refreshToken, profile, done) {
+    console.log(profile)
     User.findOne({
       where: {
         email: profile.emails[0].value,

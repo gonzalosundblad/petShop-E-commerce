@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd,postCarrito } from '../Redux/actionsCarrito';
+import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd, postCarrito } from '../Redux/actionsCarrito';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import ProductoCarrito from '../Components/ProductoCarrito';
 import { connect } from 'react-redux';
@@ -19,22 +19,22 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
 
     if (logged) {
       var local = loadState()
-  if (local.length > 0) {
-      local.map(prod => {
-      const { product_id, quantity, price } = prod
-      postCarrito(user.user_id, {
-        product_id,
-        quantity,
-        price
-      })
-    })
+      if (local.length > 0) {
+        local.map(prod => {
+          const { product_id, quantity, price } = prod
+          postCarrito(user.user_id, {
+            product_id,
+            quantity,
+            price
+          })
+        })
 
-  }
-  setTimeout(() => {
-    getCarritoRequest(user.user_id)
-    clearState()
+      }
+      setTimeout(() => {
+        getCarritoRequest(user.user_id)
+        clearState()
 
-  }, 500);
+      }, 500);
 
     }
     else {
@@ -65,7 +65,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   //   reload
   // }
 
-
+  console.log(carrito, "hola");
 
 
   //---------------------------------Vaciar Carrito
@@ -113,7 +113,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.LineaDeOrden.price}
                 image={e.image}
-                quantity={e.quantity}
+                quantity={e.LineaDeOrden.quantity}
               />
             </div>
           )
@@ -171,10 +171,10 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
 
 }
 const mapDispatchToProps = dispatch => {
-    return {
-      dispatch,
-      ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd, postCarrito }, dispatch)
-    }
+  return {
+    dispatch,
+    ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd, postCarrito }, dispatch)
+  }
 
 }
 
