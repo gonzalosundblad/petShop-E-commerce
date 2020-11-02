@@ -13,28 +13,64 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
-
+  
+  // function changeCartProducts(){
+  //   var local = loadState()
+  //   console.log("hoooooooooooooooooooola")
+    
+  //   pr.map(prod => {
+  //     console.log(prod)
+  //     postCarrito(user.user.user_id, {
+  //       product_id: prod.prod_id,
+  //       quantity: prod.quantity,
+  //       price: prod.quantity
+  //     })
+  //   })
+  //   .then(clearState())
+       
+  // } 
 
   useEffect(() => {
+    // si el usuario esta logueado
+    
     if (logged) {
       var local = loadState()
+  //   console.log("hoooooooooo")
   if (local.length > 0) {
       local.map(prod => {
       const { product_id, quantity, price } = prod
-      postCarrito(user.user_id, {
+      console.log(prod)
+      postCarrito(user.user.user_id, {
         product_id,
         quantity,
-        price
+        price 
       })
     })
-
+    
   }
   setTimeout(() => {
     getCarritoRequest(user.user_id)
     clearState()
-
+    
   }, 500);
+  
 
+      // changeCartProducts()
+    //   var local = (loadState())
+    //   console.log(local)
+    //   if (local.length > 0){
+    //     console.log(carrito)
+    //     var nuevoarray = carrito.map((carr => {
+    //       let i = carr.product_id
+    //       console.log(i)
+    //       if (i === localStorage.key(i)){
+    //         console.log("hola")
+    //         return localStorage.getItem(i)
+    //       }
+    //     }))
+    //     console.log(nuevoarray)
+    //   }
+      
     }
     else {
       setProducts(loadState())
@@ -68,7 +104,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   function vaciar() {
 
     if (logged) {
-      deleteCarrito(user.user_id)
+      deleteCarrito(user.user.user_id)
     }
     else {
       localStorage.clear()
@@ -79,9 +115,10 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   //---------------------------------RENDER
 
 
-  var orden = carrito && carrito.map(e => {
+  var orden = carrito.map(e => {
     return e.LineaDeOrden.order_id
   })
+ 
 
   if (carrito.length === 0 && products.length === 0) {
     return (
@@ -92,7 +129,9 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     )
   }
   else if (logged && carrito.length > 0) {
+    console.log(carrito)
     const order_id = carrito.map(id => id.order_id)
+    console.log('hay productos')
 
     return (
       <div>
@@ -112,7 +151,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.LineaDeOrden.price}
                 image={e.image}
-                quantity={e.quantity}
+                quantity={e.LineaDeOrden.quantity}
               />
             </div>
           )
@@ -124,7 +163,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
           <NavLink className={Estilo.botonesFinales} to='/products'>
             <button type="button" class="btn btn-outline-warning" style={{margin: "10px"}}>Seguir Comprando</button>
           </NavLink>
-          <a className={Estilo.botonesFinales} to={`/order/${orden[0]}`} >
+          <a className={Estilo.botonesFinales} href={`/order/${orden[0]}`} >
             <button type="button" class="btn btn-outline-success" style={{margin: "10px"}}>Finalizar Compra</button>
           </a>
         </div>
@@ -146,7 +185,8 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.price}
                 image={e.image}
-                quantity={e.quantity}
+                quantity={e.LineaDeOrden.quantity}
+              // funcionDelete={onDelete}
               />
             </div>
           )
@@ -158,7 +198,6 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
-          {!logged ? <NavLink to="/login" className={Estilo.botoncitos} >Inicie sesion para finalizar compra</NavLink> : null}
           {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
               <span className={Estilo.botoncitos}  >Finalizar Compra</span>
             </a> */}
@@ -174,7 +213,7 @@ const mapDispatchToProps = dispatch => {
       dispatch,
       ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd, postCarrito }, dispatch)
     }
-
+  
 }
 
 const mapStateToProps = state => {

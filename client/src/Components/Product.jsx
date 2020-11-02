@@ -29,7 +29,7 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
   if(!user){
     idUser= 0;
   }
-  else idUser= user.user.user_id;
+  else idUser= user.user_id;
 
 
   function subirCarrito() {

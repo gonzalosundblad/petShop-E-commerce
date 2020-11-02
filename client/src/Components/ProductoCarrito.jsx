@@ -1,4 +1,5 @@
 import React, { useReducer, useRef } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
@@ -7,17 +8,19 @@ import { deleteCarrito, getCarritoRequest, putCantidadOrdenRequest, deleteCarrit
 import Contador from './Contador';
 
 function ProductoCarritocard({user, logged, putCantidadOrdenRequest, id, image, name, price, quantity, deleteCarritoProd, funcionInput}){
-    var total= price * quantity;
+    
+  const [total, setTotal] = useState(price * quantity)
 
   function handleChange(e){
-    var quantity =  e.target.value
+    quantity =  e.target.value
+    var nuevoTotal = e.target.value * price
     putCantidadOrdenRequest(user.user_id, {
       product_id: id,
       quantity: quantity
     })
     .then(resp => {
       console.log(resp)
-
+      setTotal(nuevoTotal)
     })
   }
 
@@ -27,15 +30,12 @@ function ProductoCarritocard({user, logged, putCantidadOrdenRequest, id, image, 
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
     // let id = event.target.value
     if (logged) {
-      deleteCarritoProd(user.user.user_id,id)
+      deleteCarritoProd(user.user_id,id)
     } else {
       localStorage.removeItem(id)
     }
     reload()
   }
-
-
-
 
 function reload(){
   window.location.reload()
