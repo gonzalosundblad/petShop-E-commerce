@@ -1,44 +1,33 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import Basura from '../imagenes/basura.png';
-import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
+import { deleteCarrito, getCarritoRequest, putCantidadOrdenRequest, deleteCarritoProd } from '../Redux/actionsCarrito';
 
-function ProductoCarritocard({user, logged,  id, image, name, price, quantity, funcionDelete, funcionInput}){
+function ProductoCarritocard({user, logged, putCantidadOrdenRequest, id, image, name, price, quantity, deleteCarritoProd, funcionInput}){
     console.log(price + " + " + quantity)
     var total= price * quantity;
 
   function handleChange(e){
     var quantity =  e.target.value
+    putCantidadOrdenRequest(user.user.user_id, {
+      product_id: id,
+      quantity: quantity
+    })
+    .then(resp => {
+      console.log(resp)
+     
+    })
   }
 
 
-  function funcionInput(){
-    // var cambio = {
-    //   product_id: id,
-    //   quantity: quantity
-    // }
-
-    // putCantidadOrden(2, cambio)
-    // .then(resp => {
-    //   console.log(cambio)
-    //   console.log(resp)
-    //  reload()
-    // })
-
-  }
-
-  function onDelete(e) {
-    console.log(e.target.value); 
-    var valor = {
-      product_id: e.target.value
-    }
-
+  function onDelete() {
+    
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
     // let id = event.target.value
     if (logged) {
-      deleteCarritoProd(user.user.user_id, valor)
+      deleteCarritoProd(user.user.user_id,id)
     } else {
       localStorage.removeItem(id)
     }
@@ -67,10 +56,10 @@ function reload(){
                     <h3>Cantidad: </h3>
                     {useReducer.logged}
                     <h4>{quantity} unidades</h4>
-                    <input type="text" onChange={handleChange} className={Estilo.Cambio} />
+                    <input type="text" onChange={handleChange} className={Estilo.Cambio}  />
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
-                    <input type="number" value={quantity} />
+                    <input type="number" defaultValue={quantity} useRef={quantity} />
 
                 </div>
                 <div className={Estilo.botonBorrar}>
@@ -88,7 +77,7 @@ function reload(){
 const mapDispatchToProps =  dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({deleteCarritoProd} , dispatch)
+    ...bindActionCreators({deleteCarritoProd, putCantidadOrdenRequest} , dispatch)
   }
 }
 
