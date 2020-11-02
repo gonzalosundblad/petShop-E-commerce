@@ -5,7 +5,7 @@ import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
 import { ListaDesplegable } from '../Components/ListaDesplegable';
 import Changito from '../imagenes/changuito2.png';
-import { getCarrito } from '../Redux/actionsCarrito';
+import { getCarritoRequest } from '../Redux/actionsCarrito';
 import UsuarioLogeado from '../Components/UsuarioLogeado';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HenryPet from '../imagenes/HenryPet2.png';
@@ -14,15 +14,26 @@ import { loadState } from '../Redux/reducer/localStorage';
 import { bindActionCreators } from 'redux';
 
 
-function NavBar({ user, logged, funcionCatag, onSearch }) {
+function NavBar({ user, getCarritoRequest, carrito, logged, funcionCatag, onSearch }) {
   //console.log(user.user.role);
   const [carro, setCarro] = useState([]);
   const [total, setTotal] = useState(0)
   useEffect(() => {
     var precio = [];
     if (logged) {
-      getCarrito(user.user.user_id)
-
+      setTimeout(() => {
+        precio = carrito.map(e => {
+          console.log(e)
+          return parseInt(e.LineaDeOrden.price) * parseInt(e.LineaDeOrden.quantity)
+        })
+        console.log(precio)
+        setTotal(precio.reduce(function (a, b) {
+          return a + b
+        }, 0))
+        console.log("hola")
+        
+      }, 500);
+        
     } else if (localStorage.length > 0) {
 
       let x = loadState()
@@ -31,15 +42,14 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
       precio = x.map(e => {
         return parseInt(e.price) * parseInt(e.quantity)
       })
+      setTotal(precio.reduce(function (a, b) {
+        return a + b
+      }, 0))
     }
     else {
       console.log("no hay valores en el local storage ni tampoco usuario");
     }
 
-
-    setTotal(precio.reduce(function (a, b) {
-      return a + b
-    }, 0))
   }, [])
 
   function recargar() {
@@ -93,14 +103,15 @@ function mapStateToProps(state) {
   const { user, logged } = state.auth;
   return {
     user,
-    logged
+    logged,
+    carrito: state.reducer.carrito
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getCarrito }, dispatch)
+    ...bindActionCreators({ getCarritoRequest }, dispatch)
   }
 }
 

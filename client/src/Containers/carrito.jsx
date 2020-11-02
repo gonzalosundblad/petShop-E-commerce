@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef } from 'react';
 import { deleteCarrito, getCarritoRequest, putCantidadOrden, deleteCarritoProd,postCarrito } from '../Redux/actionsCarrito';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
@@ -136,6 +137,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     )
   }
   else if (logged && carrito.length > 0) {
+    
     console.log(carrito)
     const order_id = carrito.map(id => id.order_id)
     console.log('hay productos')
@@ -188,7 +190,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.price}
                 image={e.image}
-                quantity={e.LineaDeOrden.quantity}
+                quantity={e.quantity}
               // funcionDelete={onDelete}
               />
             </div>
@@ -231,4 +233,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Carrito)
+)(Carrito)   

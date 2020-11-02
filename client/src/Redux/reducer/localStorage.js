@@ -24,6 +24,7 @@ export const clearState = () => {
     let clave = localStorage.key(i);
     console.log(clave);
     if(clave !== "carrito" && clave !== "user"){
+      console.log(localStorage.getItem(clave))
       localStorage.removeItem(clave)
     }
   }

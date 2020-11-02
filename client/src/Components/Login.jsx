@@ -15,7 +15,7 @@ import { NavLink } from 'react-router-dom';
 import { deleteCarrito, postCarrito, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 import { clearState, loadState } from '../Redux/reducer/localStorage';
 
-function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarritoRequest }) {
+function Login({ user,  logged, loginRequest, users, getGithub, postCarrito }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -49,34 +49,40 @@ function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarri
   }
   
   function addProducts(){
+    console.log("hola")
     var local = loadState()
     if (local.length > 0) {
-      local.map(prod => {
-      const { product_id, quantity, price } = prod
-      console.log(prod)
-      postCarrito(user.user.user_id, {
-        product_id,
-        quantity,
-        price 
+        local.map(prod => {
+        const { product_id, quantity, price } = prod
+        console.log(prod)
+        postCarrito(user.user.user_id, {
+          product_id,
+          quantity,
+          price 
+        })
       })
-    })
+      
+    }
     
-    clearState()
+      clearState() 
+    
   }
-}
 
   function handleLogin(e) {
     e.preventDefault();
   }
    function loginUser() {
-    loginRequest(input)
     setTimeout(() => {
-      console.log(user)
-     if (logged){
-       addProducts()
-     }
+      loginRequest(input)
       
-    }, 500);
+    }, 0);  
+      setTimeout(() => {
+        console.log(logged)
+       if (logged){
+    addProducts()
+  }
+      
+    }, 500);  
   }
 
   function loginGoogle() {
@@ -161,10 +167,10 @@ function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarri
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-  const { user, logged } = state.auth;
+  const { user } = state.auth;
   return {
-    user, logged,
-    carrito: state.reducer.carrito
+    user, 
+    logged: state.auth.logged
   }
 }
 

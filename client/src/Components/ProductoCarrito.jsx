@@ -29,7 +29,8 @@ function ProductoCarritocard({user, logged, putCantidadOrdenRequest, id, image, 
     if (logged) {
       deleteCarritoProd(user.user.user_id,id)
     } else {
-      localStorage.removeItem(id)
+      let clave = localStorage.key(id);
+      localStorage.removeItem(clave)
     }
     reload()
   }
@@ -55,11 +56,11 @@ function reload(){
                 <div className={Estilo.inputBoton}>
                     <h3>Cantidad: </h3>
                     {useReducer.logged}
-                    <h4>{quantity} unidades</h4>
+                    <h4>{quantity} unidades</h4>    
                     <input type="text" onChange={handleChange} className={Estilo.Cambio}  />
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
-                    <input type="number" defaultValue={quantity} useRef={quantity} />
+                    <input type="number" defaultValue={quantity}  />
 
                 </div>
                 <div className={Estilo.botonBorrar}>
