@@ -12,8 +12,11 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
+import { deleteCarrito, postCarrito, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
+import { clearState, loadState } from '../Redux/reducer/localStorage';
 
-function Login({ user, logged, loginRequest, users, getGoogle, getGithub, getMe }) {
+// function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
+function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, users, getGithub, getCarritoRequest, getMe }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -49,11 +52,36 @@ function Login({ user, logged, loginRequest, users, getGoogle, getGithub, getMe 
       [e.target.name]: e.target.value
     }));
   }
+  
+  function addProducts(){
+    var local = loadState()
+    if (local.length > 0) {
+      local.map(prod => {
+      const { product_id, quantity, price } = prod
+      console.log(prod)
+      postCarrito(user.user.user_id, {
+        product_id,
+        quantity,
+        price 
+      })
+    })
+    
+    clearState()
+  }
+}
+
   function handleLogin(e) {
     e.preventDefault();
   }
-  function loginUser() {
+   function loginUser() {
     loginRequest(input)
+    setTimeout(() => {
+      console.log(user)
+     if (logged){
+       addProducts()
+     }
+      
+    }, 500);
   }
 
   function loginGoogle() {
@@ -64,8 +92,9 @@ function Login({ user, logged, loginRequest, users, getGoogle, getGithub, getMe 
     getGithub()
     window.location.replace("http://localhost:3001/auth/github")
 
+   
   }
-
+  
   return (
     <div className={estilo.divOscuro}>
       <div className={estilo.x}>
@@ -140,15 +169,16 @@ function mapStateToProps(state) {
   // console.log(state.auth);
   const { user, logged } = state.auth;
   return {
-    user,
-    logged
+    user, logged,
+    carrito: state.reducer.carrito
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest, getGithub, getGoogle, getMe }, dispatch)
+    // ...bindActionCreators({ loginRequest, getGithub, getGoogle }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, postCarrito, getGoogle, getMe }, dispatch)
   }
 }
 

@@ -207,7 +207,7 @@ export function CrudProduct({ getCategories, postProduct, categories }) {
 };
 
 
-var firebaseConfig = {                                        //agrega productos
+var firebaseConfig = {                                        //agrega productos. esto deberia ir en .env me parece
   apiKey: "AIzaSyBE3Y03cTrnOwM9DkcGpUklWYkjESBaH3A",
   authDomain: "petshopfiles.firebaseapp.com",
   databaseURL: "https://petshopfiles.firebaseio.com",
@@ -217,6 +217,9 @@ var firebaseConfig = {                                        //agrega productos
   appId: "1:332756429714:web:fbfb632f36b580b7682f4b",
   measurementId: "G-Q2NHZVYZ1F"
 };
+
+firebase.initializeApp(firebaseConfig);
+
 const mapStateToProps = state => {
   return {
     categories: state.reducer.categories

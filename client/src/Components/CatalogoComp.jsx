@@ -39,4 +39,7 @@ function proximaPagina (number){
   );
 };
 
+
+
+
 export default Catalogo;
