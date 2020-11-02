@@ -2,14 +2,12 @@ import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PR
 import axios from 'axios';
 
 export function getProducts(allProducts) {//va a REDUCER
-  console.log('allProducts');
   return {
     type: GET_PRODUCTS,
     payload: allProducts
   }
 }
 export function getProductsRequest() {//Va a Catalogo2.jsx
-  console.log('getProductsRequest');
   return (dispatch) => {
     axios.get(`http://localhost:3001/products`)
       .then(response => { dispatch(getProducts(response.data)) })
@@ -19,14 +17,12 @@ export function getProductsRequest() {//Va a Catalogo2.jsx
 //----------------------------------------------------
 
 export function getCateg(categorias) {//va a REDUCER
-  console.log('categorias');
   return {
     type: GET_CATEGORIES,
     payload: categorias
   }
 }
-export function getCategories() {//va a las categorias
-  console.log('getCategories');
+export function getCategories() {//
   return (dispatch) => {
     axios.get('http://localhost:3001/products/category')
       .then(response => { dispatch(getCateg(response.data)) })
@@ -45,7 +41,6 @@ export function getProdCate(prodCateg) {//va a REDUCER
   }
 }
 export function getProductByCategory(name) {//Trae producto por categorias
-  console.log('getProductByCategory');
   return (dispatch) => {
     axios.get(`http://localhost:3001/products/category/${name}`)
       .then(response => { dispatch(getProdCate(response.data)) })
@@ -56,14 +51,12 @@ export function getProductByCategory(name) {//Trae producto por categorias
 //----------------------------------------------------
 
 export function getProdId(producto) {//va a REDUCER
-  console.log('getCateg');
   return {
     type: GET_ID,
     payload: producto
   }
 }
 export function getProductById(id) {//Muestra producto por ID
-  console.log('getProductByCategory');
   return (dispatch) => {
     axios.get(`http://localhost:3001/products/${id}`)
       .then(response => { dispatch(getProdId(response.data)) })
@@ -211,5 +204,3 @@ export function search(producto) {   //busca entre todo FALTA
   const request = axios.get(`http://localhost:3001/search?products=${producto}`)
   return { type: SEARCH, payload: request };
 }
-
-

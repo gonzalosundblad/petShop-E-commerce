@@ -20,10 +20,8 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
     getProductById(id2)
   }, []);
 
-
   function handleChange(e) {
     setQuantity(e.target.value);
-
   }
 
 
@@ -36,19 +34,15 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
 
   function subirCarrito() {
     const { image, name, price } = products.products
-    if (logged) {
+    
       postCarrito(idUser, {
         product_id: id2,
         quantity: quantity,
         price: products.products.price
-      })
       
-    }
-    else if (quantity >= 0) {
-      saveState({ product_id: id2, quantity, price, image, name, })
-      window.location.replace("http://localhost:3000/products")
-    }
-
+      // window.location.replace("http://localhost:3000/products")
+      // .catch(err => "Error al cargar producto")
+    })
   }
 
   if (products.products.stock <= 0) {

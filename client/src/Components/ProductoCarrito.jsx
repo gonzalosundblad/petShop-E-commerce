@@ -7,24 +7,23 @@ import { deleteCarrito, getCarritoRequest, putCantidadOrdenRequest, deleteCarrit
 import Contador from './Contador';
 
 function ProductoCarritocard({user, logged, putCantidadOrdenRequest, id, image, name, price, quantity, deleteCarritoProd, funcionInput}){
-    console.log(price + " + " + quantity)
     var total= price * quantity;
 
   function handleChange(e){
     var quantity =  e.target.value
-    putCantidadOrdenRequest(user.user.user_id, {
+    putCantidadOrdenRequest(user.user_id, {
       product_id: id,
       quantity: quantity
     })
     .then(resp => {
       console.log(resp)
-     
+
     })
   }
 
 
   function onDelete() {
-    
+
     //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
     // let id = event.target.value
     if (logged) {
@@ -36,7 +35,7 @@ function ProductoCarritocard({user, logged, putCantidadOrdenRequest, id, image, 
   }
 
 
-    
+
 
 function reload(){
   window.location.reload()
@@ -94,12 +93,9 @@ const mapStateToProps = state => {
   return {
     user: state.auth.user,
     logged: state.auth.logged
-    // carrito: state.reducer.carrito
   }
 }
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ProductoCarritocard)
-
-// export total;

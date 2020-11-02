@@ -27,7 +27,7 @@ server.post('/', (req, res) => {                                        //S34 : 
 
 });
 
-server.put('/:id', (req, res) => {                     //S35 : Crear Ruta para modificar Usuario segun id
+server.put('/:id', isAuthenticated, (req, res) => {                     //S35 : Crear Ruta para modificar Usuario segun id
   const { id } = req.params;
   const { name, email, password, newPassword, last_name } = req.body;
   console.log(req.body)
@@ -54,7 +54,7 @@ server.put('/:id', (req, res) => {                     //S35 : Crear Ruta para m
   })
 });
 
-server.get('/', (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
+server.get('/', isAdmin, (req, res) => {                                //S36 : Crear Ruta que retorne todos los Usuarios
   User.findAll()
     .then(users => {
       res.json(users);
@@ -106,9 +106,7 @@ server.put('/:id/passwordReset', async (req, res) => {
 
 server.post('/:idUser/cart', (req, res) => {                            //S38 : Crear Ruta para agregar Item al Carrito
   const { idUser } = req.params;
-  console.log(idUser)
   const { product_id, quantity, price } = req.body;
-  console.log(req.body)
 
   Order.findOrCreate({
     where: {
@@ -242,7 +240,7 @@ server.delete('/:idUser/deleteCartProduct/:product_id', (req, res) => {         
 
 //===========================Ordenes================================
 
-server.get('/:id/orders', (req, res) => {               //S45: Crear Ruta que retorne todas las Ordenes de un usuarios
+server.get('/:id/orders', isAuthenticated, (req, res) => {               //S45: Crear Ruta que retorne todas las Ordenes de un usuarios
   Order.findAll({
     where: {
       userId: req.params.id

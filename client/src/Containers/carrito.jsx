@@ -14,66 +14,27 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
-  // function changeCartProducts(){
-  //   var local = loadState()
-  //   console.log("hoooooooooooooooooooola")
-    
-  //   pr.map(prod => {
-  //     console.log(prod)
-  //     postCarrito(user.user.user_id, {
-  //       product_id: prod.prod_id,
-  //       quantity: prod.quantity,
-  //       price: prod.quantity
-  //     })
-  //   })
-  //   .then(clearState())
-       
-  // } 
-
-  
-
 
   useEffect(() => {
-    // si el usuario esta logueado
-    
     if (logged) {
       var local = loadState()
-  //   console.log("hoooooooooo")
   if (local.length > 0) {
       local.map(prod => {
       const { product_id, quantity, price } = prod
-      console.log(prod)
-      postCarrito(user.user.user_id, {
+      postCarrito(user.user_id, {
         product_id,
         quantity,
-        price 
+        price
       })
     })
-    
+
   }
   setTimeout(() => {
-    getCarritoRequest(user.user.user_id)
+    getCarritoRequest(user.user_id)
     clearState()
-    
-  }, 500);
-  
 
-      // changeCartProducts()
-    //   var local = (loadState())
-    //   console.log(local)
-    //   if (local.length > 0){
-    //     console.log(carrito)
-    //     var nuevoarray = carrito.map((carr => {
-    //       let i = carr.product_id
-    //       console.log(i)
-    //       if (i === localStorage.key(i)){
-    //         console.log("hola")
-    //         return localStorage.getItem(i)
-    //       }
-    //     }))
-    //     console.log(nuevoarray)
-    //   }
-      
+  }, 500);
+
     }
     else {
       setProducts(loadState())
@@ -107,7 +68,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   function vaciar() {
 
     if (logged) {
-      deleteCarrito(user.user.user_id)
+      deleteCarrito(user.user_id)
     }
     else {
       localStorage.clear()
@@ -118,10 +79,9 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   //---------------------------------RENDER
 
 
-  var orden = carrito.map(e => {
+  var orden = carrito && carrito.map(e => {
     return e.LineaDeOrden.order_id
   })
-  console.log(orden, "djkwah")
 
   if (carrito.length === 0 && products.length === 0) {
     return (
@@ -132,9 +92,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     )
   }
   else if (logged && carrito.length > 0) {
-    console.log(carrito)
     const order_id = carrito.map(id => id.order_id)
-    console.log('hay productos')
 
     return (
       <div>
@@ -154,7 +112,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.LineaDeOrden.price}
                 image={e.image}
-                quantity={e.LineaDeOrden.quantity}
+                quantity={e.quantity}
               />
             </div>
           )
@@ -188,8 +146,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.price}
                 image={e.image}
-                quantity={e.LineaDeOrden.quantity}
-              // funcionDelete={onDelete}
+                quantity={e.quantity}
               />
             </div>
           )
@@ -201,6 +158,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
+          {!logged ? <NavLink to="/login" className={Estilo.botoncitos} >Inicie sesion para finalizar compra</NavLink> : null}
           {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
               <span className={Estilo.botoncitos}  >Finalizar Compra</span>
             </a> */}
@@ -216,7 +174,7 @@ const mapDispatchToProps = dispatch => {
       dispatch,
       ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd, postCarrito }, dispatch)
     }
-  
+
 }
 
 const mapStateToProps = state => {

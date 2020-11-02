@@ -1,10 +1,7 @@
 import axios from 'axios';
 import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, REGISTER_SUCCESS, REGISTER_FAIL, GET_ME, HACER_ADMIN, GET_GOOGLE, GET_GIT } from './constantsLogin';
 
-var _axios = axios.create({
-  withCredentials: true
-})
-
+axios.defaults.withCredentials = true
 
 export function postLog(user) {//va a REDUCER
   return {
@@ -13,14 +10,13 @@ export function postLog(user) {//va a REDUCER
   }
 }
 export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
-  console.log("hola")
   return (dispatch) => {
-    _axios.post('http://localhost:3001/auth/login', usuario)
+    axios.post('http://localhost:3001/auth/login', usuario)
       .then(response => {
-        dispatch(postLog(response.data),
-          localStorage.setItem("user", JSON.stringify(response.data))
-        );
-      })
+          dispatch(postLog(response.data),
+          localStorage.setItem("user", JSON.stringify(response.data.user))
+        )}
+      )
       .catch(error => { console.log(error) })
   }
 }
@@ -29,7 +25,7 @@ export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
 
 export function logout() {//Crear ruta para crear/agregar Review
   return (dispatch) => {
-    _axios.post('http://localhost:3001/auth/logout')
+    axios.post('http://localhost:3001/auth/logout')
       .then(response => {
         dispatch({
           type: LOGOUT,
@@ -44,17 +40,15 @@ export function logout() {//Crear ruta para crear/agregar Review
 
 
 export function getUserMe(user) {//va a REDUCER
-  console.log('user');
   return {
     type: GET_ME,
     payload: user
   }
 }
-export function getMe() {//va al perfil
+export function getMe() {//Va a Catalogo2.jsx
   return (dispatch) => {
-    _axios.get('http://localhost:3001/auth/me')
-      .then(response => { console.log(response.data.user) 
-        dispatch(getUserMe(response.data)) })
+    axios.get('http://localhost:3001/auth/me')
+      .then(response => { dispatch(getUserMe(response.data), localStorage.setItem("user", JSON.stringify(response.data.user))) })
       .catch(err => { console.log(err) })
   }
 }
@@ -72,7 +66,7 @@ export function postAdm(user) {//va a REDUCER
 export function postAdmin(idUser) {//Crea un Usuario nuevo
   console.log('postAdmin');
   return (dispatch) => {
-    _axios.post(`http://localhost:3001/auth/promote/${idUser}`)
+    axios.post(`http://localhost:3001/auth/promote/${idUser}`)
       .then(response => { dispatch(postAdm(response.data)) })
       .catch(err => { console.log(err) })
   }
@@ -80,20 +74,20 @@ export function postAdmin(idUser) {//Crea un Usuario nuevo
 
 //------------------Google-----
 
-export function getGoo(user) { //Va a Reducer
-  console.log(user)
-  return {
-    type: GET_GOOGLE,
-    payload: user
-  }
-}
+// export function getGoo(user) { //Va a Reducer
+//   console.log(user)
+//   return {
+//     type: GET_GOOGLE,
+//     payload: user
+//   }
+// }
 
 export function getGoogle() {// Te lleva a la pagina de Google
   console.log("hola")
-  return (dispatch) => {
-    axios.get('http://localhost:3001/auth/google')
+  return () => {
+    axios.get('http://localhost:3001/auth/google/callback')
       .then(resp => {
-        dispatch(getGoo(resp.data))
+        console.log(resp.data)
       })
       .catch(err => {
         console.log(err)
@@ -112,7 +106,7 @@ export function getGit(user) { //Va a Reducer
 export function getGithub() {// Te lleva a la pagina de Google
   console.log("hola")
   return (dispatch) => {
-    axios.get('http://localhost:3001/auth/github')
+    axios.get('http://localhost:3001/auth/github/callback')
       .then(resp => {
         dispatch(getGit(resp.data))
       })

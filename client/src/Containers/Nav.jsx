@@ -12,10 +12,11 @@ import HenryPet from '../imagenes/HenryPet2.png';
 import { connect } from 'react-redux'
 import { loadState } from '../Redux/reducer/localStorage';
 import { bindActionCreators } from 'redux';
+import { getMe } from '../Redux/actionsLogin';
 
 
-function NavBar({ user, logged, funcionCatag, onSearch }) {
-  //console.log(user.user.role);
+
+function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
   const [carro, setCarro] = useState([]);
   const [total, setTotal] = useState(0)
 
@@ -27,12 +28,12 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
 }
 
   useEffect(() => {
+    getMe();
     var precio = [];
     if (logged) {
       getCarrito(idUser)
 
     } else if (localStorage.length > 0) {
-
       let x = loadState()
       setCarro(x);
       console.log(x)
@@ -59,11 +60,10 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
     }
     else inicio= <a class="nav-link text-white"> Hola {user.user.name}! </a> //si esta logueado
   
-  console.log(inicio)
-  // let admin;
-  // if (user !== null && user.user.role === 'admin') {
-  //   admin = <ListaDesplegable />
-  // }
+  let admin;
+  if (user !== null && logged && user.role === 'admin') {
+    admin = <ListaDesplegable />
+  }
 
   return (
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top row" style={{ backgroundColor: "orange", height: "100px" }}>
@@ -72,7 +72,7 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
           <NavLink to='/'>
             <img src={HenryPet} className={StyleNav.imagen} />
           </NavLink>
-          <ListaDesplegable />
+          {admin}
         </div>
         <div className={StyleNav.divMedio}>
           <form class="form-inline my-2 my-lg-0">
@@ -85,7 +85,7 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
             <img className={StyleNav.img} src={Changito} />
             <h5>${total}</h5>
           </NavLink>
-          <UsuarioLogeado />
+          {logged ? <UsuarioLogeado /> : null }
           <div className={StyleNav.iniciarSesion}>
 
             {/* Condicional en caso de que el usuario exista para iniciar sesion */}
@@ -107,14 +107,15 @@ function mapStateToProps(state) {
   const { user, logged } = state.auth;
   return {
     user,
-    logged
+    logged,
+    carrito: state.reducer.carrito
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getCarrito }, dispatch)
+    ...bindActionCreators({ getCarrito, getMe }, dispatch)
   }
 }
 

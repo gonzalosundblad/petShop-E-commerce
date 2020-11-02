@@ -11,7 +11,7 @@ const session = require('express-session');
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
-// const cors = require('cors')
+const cors = require('cors')
 
 
 require('./db.js');
@@ -31,13 +31,19 @@ server.use(session({
 server.use(morgan('dev'));
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  // res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   // res.header('Access-Control-Allow-Origin', 'https://github.com');
-  // res.header('Access-Control-Allow-Origin', 'https://accounts.google.com');
+  res.header('Access-Control-Allow-Origin', 'https://accounts.google.com');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+}
+server.use(cors(corsOptions));
 
 // const corsOptions = {
 //   origin: 'https://accounts.google.com',
@@ -50,38 +56,36 @@ server.use(passport.initialize());
 server.use(passport.session());
 
 const authenticateUser = (email, password, done) => {
-  User.findOne({
-    where: {
-      email
-    }
-  }).then(user => {
-    if (!user) {
-      return done(null, false, {
-        message: 'El correo electrónico no existe.',
-      });
-    }
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err) {
-        console.log(err);
-      }
-      if (isMatch) {
-        return done(null, {
-          user_id: user.user_id,
-          name: user.name,
-          last_name: user.last_name,
-          role: user.role,
-          email: user.email
+  User.findOne({ where: { email: email } })
+    .then(user => {
+      if (!user) {
+        return done(null, false, {
+          message: 'El correo electrónico no existe.',
         });
-      } else {
-        return done(null, false, { message: "Contraseña Incorrecta" });
+      }
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) {
+          console.log(err);
+        }
+        if (isMatch) {
+          return done(null, {
+            user_id: user.user_id,
+            name: user.name,
+            last_name: user.last_name,
+            role: user.role,
+            email: user.email
+          });
+        } else {
+          return done(null, false, { message: "Contraseña Incorrecta" });
+        }
+      });
+    })
+    .catch(err => {
+      if (err) {
+        console.log('error en Servidor');
+        return done(err);
       }
     });
-  }).catch(err => {
-    if (err) {
-      console.log('Error en el Servidor');
-      return done(err);
-    }
-  });
 }
 
 passport.use(new LocalStrategy(
@@ -101,7 +105,9 @@ passport.deserializeUser((user_id, done) => {
   }).then((user) => {
     if (user) {
       return done(null, {
+        name: user.name,
         user_id: user.user_id,
+        last_name: user.last_name,
         email: user.email,
         role: user.role,
       });

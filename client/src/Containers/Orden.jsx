@@ -29,7 +29,7 @@ function Ordenes({ getOrder, order }) {
                 order.map(n => {
                   if (n.orderState !== 'Sin Ordenes') {
                     return (
-                      <NavLink class="dropdown-item" height='30px' to={`/admin/ordenes/${n.orderState}`}>{n.orderState}</NavLink>)
+                      <NavLink class="dropdown-item" height='30px' to={`/admin/${n.orderState}`}>{n.orderState}</NavLink>)
                   }
                 })
               }

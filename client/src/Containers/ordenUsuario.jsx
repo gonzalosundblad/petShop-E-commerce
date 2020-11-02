@@ -10,13 +10,9 @@ import { NavLink } from 'react-router-dom';
 
 function OrdenUsuario({ id2, user, order, carrito, putOrder, getCarritoRequest }) {
   const [productOrder, setproductOrder] = useState([])
-  console.log('hhhhhhhhhhhhhhhhhh');
-  // console.log(user.user.user_id);
-  // console.log(id2);
-
 
   useEffect(() => {
-    getCarritoRequest(user.user.user_id)
+    getCarritoRequest(user.user_id)
   }, [])
 
   // var total = 0

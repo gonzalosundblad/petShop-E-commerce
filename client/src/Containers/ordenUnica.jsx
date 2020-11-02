@@ -1,15 +1,20 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { getProdOrder } from '../Redux/actionsCarrito'
-import Estilo from '../Estilos/ordenesUsuario.module.css'
-import { connect } from 'react-redux'
+import { putOrder, getOrder } from '../Redux/actionsOrden'
+import StyleOrden from '../Estilos/ordenesUsuario.module.css'
+import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom'
+import Estilo from '../Estilos/forms.module.css'
 
-function OrdenAdmin({ id, user, getProdOrder, order }) {
+
+function OrdenCreada({ id, user, order, getProdOrder }) {
 
   var id2 = id - 1
+  console.log(order, "chau")
 
-  var idUser = user.user.user.user_id
+  var idUser = user.user.user_id
 
   var ordenes = order
 
@@ -23,6 +28,10 @@ function OrdenAdmin({ id, user, getProdOrder, order }) {
   var total = precio.reduce(function (a, b) {
     return a + b
   }, 0)
+
+  var ordenId = ordenes.map(o => o.id)
+
+
 
 
   return (
@@ -55,9 +64,12 @@ function OrdenAdmin({ id, user, getProdOrder, order }) {
   )
 }
 
+
 function mapStateToProps(state) {
+  const { user, logged } = state.auth
   return {
-    user: state.auth,
+    user,
+    logged,
     order: state.reducer.order
   };
 }
@@ -65,8 +77,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getProdOrder }, dispatch)
+    ...bindActionCreators({ putOrder, getProdOrder, getOrder }, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrdenAdmin);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OrdenCreada)

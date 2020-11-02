@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../Redux/actionsLogin';
 
-function Perfil({ putUser, deleteUser, getMe, user, logout }) {
+function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
   const [state, setState] = useState({
     name: "",
     last_name: "",
@@ -17,7 +17,7 @@ function Perfil({ putUser, deleteUser, getMe, user, logout }) {
   });
 
   useEffect(() => {
-    getMe()
+    getMe();
   }, [])
 
 
@@ -63,8 +63,6 @@ function Perfil({ putUser, deleteUser, getMe, user, logout }) {
     putUser(userN.user_id, cambios)
 
   }
-
-
 
   function onDelete() {
     const id = userN.user_id
@@ -166,7 +164,8 @@ function Perfil({ putUser, deleteUser, getMe, user, logout }) {
 
 function mapStateToProps(state) {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    users: state.reducer.users
   };
 }
 

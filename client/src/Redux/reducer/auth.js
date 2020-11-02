@@ -23,24 +23,12 @@ const initialState = {
 }
 
 export default function (state = initialState, action) {
-  console.log(action.payload)
 
   switch (action.type) {
-    // case 'SET_EDIT_DATA': 
-    //   return {
-    //     ...state,
-    //     user: {
-    //       ...user,
-    //       user: {
-    //         ...user,
-    //         // [Object.keys(action.payload)[0]]: action.payload[Object.keys(action.payload)[0]]
-    //         name: 'carlos'
-    //       }}
-    //   }    
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.user,
         logged: true
       };
     case LOGIN_FAIL:
@@ -58,12 +46,14 @@ export default function (state = initialState, action) {
     case GET_ME:
       return {
         ...state,
-        user: action.payload
+        user: action.payload.user,
+        logged: true
       }
     case HACER_ADMIN:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
+        logged: true,
       }
     case GET_GOOGLE:
       return {

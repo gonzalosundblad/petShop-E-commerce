@@ -6,7 +6,7 @@ import email from '../imagenes/email.png';
 import google from '../imagenes/google.png';
 import GitHub from '../imagenes/gitHub.png';
 import HenryPet from '../imagenes/HenryPet2.png';
-import { loginRequest, getGoogle, getGithub } from '../Redux/actionsLogin';
+import { loginRequest, getGoogle, getGithub, getMe } from '../Redux/actionsLogin';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { deleteCarrito, postCarrito, putCantidadOrden, deleteCarritoProd } from 
 import { clearState, loadState } from '../Redux/reducer/localStorage';
 
 // function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
-function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, users, getGithub, getCarritoRequest }) {
+function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, users, getGithub, getCarritoRequest, getMe }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -47,7 +47,7 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
       [e.target.name]: e.target.value
     }));
   }
-  
+
   function addProducts(){
     var local = loadState()
     if (local.length > 0) {
@@ -57,10 +57,10 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
       postCarrito(user.user.user_id, {
         product_id,
         quantity,
-        price 
+        price
       })
     })
-    
+
     clearState()
   }
 }
@@ -71,35 +71,38 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
    function loginUser() {
     loginRequest(input)
     setTimeout(() => {
-      console.log(user)
      if (logged){
        addProducts()
      }
-      
+
     }, 500);
   }
 
   function loginGoogle() {
     getGoogle()
+    window.location.replace("http://localhost:3001/auth/google")
   }
   function loginGithub() {
     getGithub()
-   
+    window.location.replace("http://localhost:3001/auth/github")
+
+
   }
-  
+
   return (
     <div className={estilo.divOscuro}>
-      <div className={estilo.x}>
-        <NavLink to='/'>
-          X
-        </NavLink>
-      </div>
+
       <div className={estilo.divTodo}>
         <div>
           <img src={imagen} className={estilo.imagen} />
         </div>
         <div className={estilo.henryPet}>
           <img src={HenryPet} className={estilo.imgHenryPet} />
+            <NavLink to="/">
+              <button type="button" style={{marginRight: "10px"}} class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </NavLink>
         </div>
         <div className={estilo.divCuadro}>
           <div className={estilo.divIzquierda}>
@@ -120,9 +123,13 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
                     </svg>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
                   </div>
-                  <NavLink to="/"><button type="button" onClick={loginUser} class="btn btn-outline-danger"  style={{ margin: "10px" }}>Iniciar</button></NavLink>
-                  <NavLink to='/register' class="btn btn-outline-danger" style={{ margin: "10px" }}>Registrarme</NavLink>
-                  <NavLink to='/forgot' class="btn btn-outline-danger" style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>
+                  {!logged ? <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> : <Redirect to="/perfil" />}
+                  {/* <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> */}
+                  <div style={{display: "flex", alignItems:"center", justifyContent:"center"}}>
+                    <a>¿No tiene cuenta?</a>
+                    <NavLink to='/register'  style={{ margin: "10px" }}>Registrarse</NavLink>
+                  </div>
+                  <NavLink to='/forgot'  style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>
                 </fieldset>
               </form>
             </div>
@@ -136,7 +143,7 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
               <button type="button" onClick={loginGoogle} class="btn btn-danger" style={{ margin: "10px" }}>
                 <div style={{ display: "flex", width: "90px", justifyContent: "space-around", alignItems: "center" }}>
                   <img src={google} className={estilo.imgGoogle} />
-                  <h6>Google</h6>
+                  <a>Google</a>
                 </div>
               </button>
 
@@ -145,7 +152,7 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
               <button type="button" onClick={loginGithub} class="btn btn-secondary" style={{ margin: "10px" }}>
                 <div style={{ display: "flex", width: "90px", justifyContent: "space-around", alignItems: "center" }}>
                   <img src={GitHub} className={estilo.imgGoogle} />
-                  <h6>GitHub</h6>
+                  <a>GitHub</a>
                 </div>
               </button>
             </div>
@@ -169,7 +176,7 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch,
     // ...bindActionCreators({ loginRequest, getGithub, getGoogle }, dispatch)
-    ...bindActionCreators({ loginRequest, getGithub, postCarrito, getGoogle }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, postCarrito, getGoogle, getMe }, dispatch)
   }
 }
 
