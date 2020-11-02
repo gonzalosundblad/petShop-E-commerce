@@ -74,7 +74,7 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
 
             {/* Condicional en caso de que el usuario exista para iniciar sesion */}
 
-            {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <a class="nav-link text-white" href='/login' > {user.user.email} </a>}
+            {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <span> {user.user.email} </span>}
 
             {/* ---------------------------------------------------------------- */}
 

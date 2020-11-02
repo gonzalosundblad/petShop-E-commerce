@@ -12,8 +12,11 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
+import { deleteCarrito, postCarrito, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
+import { clearState, loadState } from '../Redux/reducer/localStorage';
 
-function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
+// function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
+function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, users, getGithub, getCarritoRequest }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -45,11 +48,36 @@ function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) 
       [e.target.name]: e.target.value
     }));
   }
+  
+  function addProducts(){
+    var local = loadState()
+    if (local.length > 0) {
+      local.map(prod => {
+      const { product_id, quantity, price } = prod
+      console.log(prod)
+      postCarrito(user.user.user_id, {
+        product_id,
+        quantity,
+        price 
+      })
+    })
+    
+    clearState()
+  }
+}
+
   function handleLogin(e) {
     e.preventDefault();
   }
-  function loginUser() {
+   function loginUser() {
     loginRequest(input)
+    setTimeout(() => {
+      console.log(user)
+     if (logged){
+       addProducts()
+     }
+      
+    }, 500);
   }
 
   function loginGoogle() {
@@ -57,9 +85,9 @@ function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) 
   }
   function loginGithub() {
     getGithub()
-
+   
   }
-
+  
   return (
     <div className={estilo.divOscuro}>
       <div className={estilo.x}>
@@ -131,16 +159,18 @@ function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) 
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-  const { user, isLoggedIn } = state.auth;
+  const { user, logged } = state.auth;
   return {
-    user
+    user, logged,
+    carrito: state.reducer.carrito
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest, getGithub, getGoogle }, dispatch)
+    // ...bindActionCreators({ loginRequest, getGithub, getGoogle }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, postCarrito, getGoogle }, dispatch)
   }
 }
 
