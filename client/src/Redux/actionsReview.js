@@ -38,7 +38,6 @@ export function deleteReviewRequest(id, idReview) {//Crear Ruta para eliminar
 }
 //---------------------------------------------------------------------------
 export function getAllReviews(reviews) {//va a REDUCER
-  console.log("llego");
   return {
     type: GET_ALL_REVIEW,
     payload: reviews

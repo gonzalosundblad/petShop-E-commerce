@@ -1,14 +1,12 @@
 import { GET_PRODUCTS, GET_CATEGORIES, GET_CATEGORIES_NOMBRECAT, GET_ID, POST_PRODUCT, POST_IDPROD_CAT_IDCATEG, POST_CATEGORY, PUT_ID, PUT_CATEGORY_ID, DELETE_IDPROD_CAT_IDCATEG, DELETE_ID, DELETE_CATEGORY_ID, SEARCH, POST_USER, GET_USERS, PUT_USER, DELETE_USER, POST_PASSWORD } from './constants';
 import axios from 'axios';
 export function getProducts(allProducts) {//va a REDUCER
-  console.log('allProducts');
   return {
     type: GET_PRODUCTS,
     payload: allProducts
   }
 }
 export function getProductsRequest() {//Va a Catalogo2.jsx
-  console.log('getProductsRequest');
   return (dispatch) => {
     axios.get(`http://localhost:3001/products`)
       .then(response => { dispatch(getProducts(response.data)) })
@@ -24,7 +22,6 @@ export function getCateg(categorias) {//va a REDUCER
   }
 }
 export function getCategories() {//Va a Catalogo2.jsx
-  console.log('getCategories');
   return (dispatch) => {
     axios.get('http://localhost:3001/products/category')
       .then(response => { dispatch(getCateg(response.data)) })
@@ -43,7 +40,6 @@ export function getProdCate(prodCateg) {//va a REDUCER
   }
 }
 export function getProductByCategory(name) {//Trae producto por categorias
-  console.log('getProductByCategory');
   return (dispatch) => {
     axios.get(`http://localhost:3001/products/category/${name}`)
       .then(response => { dispatch(getProdCate(response.data)) })
@@ -54,7 +50,6 @@ export function getProductByCategory(name) {//Trae producto por categorias
 //----------------------------------------------------
 
 export function getProdId(producto) {//va a REDUCER
-  console.log('getCateg');
   return {
     type: GET_ID,
     payload: producto

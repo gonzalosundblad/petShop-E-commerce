@@ -8,7 +8,6 @@ export function getOrders(ordenes) {//va a REDUCER
   }
 }
 export function getOrder() {//Trae todas las ordenes
-  console.log('getOrder');
   return (dispatch) => {
     axios.get('http://localhost:3001/orders/')
       .then(response => { dispatch(getOrders(response.data)) })

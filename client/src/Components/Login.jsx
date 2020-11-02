@@ -72,7 +72,6 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
    function loginUser() {
     loginRequest(input)
     setTimeout(() => {
-      console.log(user)
      if (logged){
        addProducts()
      }
@@ -124,7 +123,7 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
                     </svg>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" id="description" name="password" value={input.password} onChange={handleInputChange} />
                   </div>
-                  {!logged ? <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> : <NavLink to="/perfil">Mi Perfil</NavLink>}
+                  {!logged ? <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> : <Redirect to="/perfil" />}
                   {/* <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> */}
                   <NavLink to='/register' class="btn btn-outline-danger" style={{ margin: "10px" }}>Registrarme</NavLink>
                   <NavLink to='/forgot' class="btn btn-outline-danger" style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>

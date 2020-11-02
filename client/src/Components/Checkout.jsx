@@ -21,9 +21,9 @@ var logueado = false// HAY Q PREGUNTARLE AL STORE SI EL USUARIO ESTA LOGUEADO PA
 function Checkout({ user, logged, carrito, datosEnvio }) {
 
   const [envio, setEnvio] = useState();
-  const [email, setEmail] = useState(user? user.user.email : null);
-  const [name, setName] = useState(user? user.user.name : null);
-  const [lastname, setLastname] = useState(user? user.user.last_name : null);
+  const [email, setEmail] = useState(user? user.email : null);
+  const [name, setName] = useState(user? user.name : null);
+  const [lastname, setLastname] = useState(user? user.last_name : null);
   const [adress, setAdress] = useState();
   const [city, setCity] = useState();
   const [prov, setProv] = useState();
@@ -69,13 +69,13 @@ datosEnvio({
 })
 
 }
-  
+
   // console.log(prohibir)
 
 
   if(user && logged) {
     logueado = true
-  } 
+  }
 
 
   return (
@@ -116,15 +116,15 @@ datosEnvio({
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Email</label>
-              <input type="email" class="form-control" name='email' id="inputPassword4" placeholder={user.user.email} readOnly />
+              <input type="email" class="form-control" name='email' id="inputPassword4" placeholder={user.email} readOnly />
             </div>
             <div class="form-group col-md-6">
               <label for="inputEmail4">Nombre</label>
-              <input type="text" class="form-control" id="inputEmail4" placeholder={user.user.name} readOnly />
+              <input type="text" class="form-control" id="inputEmail4" placeholder={user.name} readOnly />
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Apellido</label>
-              <input type="text" class="form-control" id="inputPassword4" placeholder={user.user.last_name} readOnly />  
+              <input type="text" class="form-control" id="inputPassword4" placeholder={user.last_name} readOnly />
             </div>
           </div>
         )}
@@ -227,7 +227,7 @@ datosEnvio({
         }
         )
         } */}
-        
+
       {/* {prohibir && (
         <div><p>campos requeridos</p></div>
       )} */}

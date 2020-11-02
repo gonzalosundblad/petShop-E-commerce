@@ -27,7 +27,6 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
       getCarrito(user.user_id)
 
     } else if (localStorage.length > 0) {
-
       let x = loadState()
       setCarro(x);
       console.log(x)

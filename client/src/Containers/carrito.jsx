@@ -22,7 +22,6 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   if (local.length > 0) {
       local.map(prod => {
       const { product_id, quantity, price } = prod
-      console.log(prod)
       postCarrito(user.user_id, {
         product_id,
         quantity,
@@ -36,23 +35,6 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     clearState()
 
   }, 500);
-
-
-      // changeCartProducts()
-    //   var local = (loadState())
-    //   console.log(local)
-    //   if (local.length > 0){
-    //     console.log(carrito)
-    //     var nuevoarray = carrito.map((carr => {
-    //       let i = carr.product_id
-    //       console.log(i)
-    //       if (i === localStorage.key(i)){
-    //         console.log("hola")
-    //         return localStorage.getItem(i)
-    //       }
-    //     }))
-    //     console.log(nuevoarray)
-    //   }
 
     }
     else {
@@ -91,7 +73,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   function vaciar() {
 
     if (logged) {
-      deleteCarrito(user.user.user_id)
+      deleteCarrito(user.user_id)
     }
     else {
       localStorage.clear()
@@ -102,7 +84,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   //---------------------------------RENDER
 
 
-  var orden = carrito.map(e => {
+  var orden = carrito && carrito.map(e => {
     return e.LineaDeOrden.order_id
   })
 
@@ -115,7 +97,6 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     )
   }
   else if (logged && carrito.length > 0) {
-    console.log(carrito)
     const order_id = carrito.map(id => id.order_id)
     console.log('hay productos')
 
@@ -133,7 +114,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.LineaDeOrden.price}
                 image={e.image}
-                quantity={e.LineaDeOrden.quantity}
+                quantity={e.quantity}
               />
             </div>
           )
@@ -167,8 +148,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.price}
                 image={e.image}
-                quantity={e.LineaDeOrden.quantity}
-              // funcionDelete={onDelete}
+                quantity={e.quantity}
               />
             </div>
           )

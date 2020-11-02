@@ -46,10 +46,9 @@ export function getUserMe(user) {//va a REDUCER
   }
 }
 export function getMe() {//Va a Catalogo2.jsx
-  console.log('getMe');
   return (dispatch) => {
     axios.get('http://localhost:3001/auth/me')
-      .then(response => { dispatch(getUserMe(response.data), localStorage.setItem("user", JSON.stringify(response.data))) })
+      .then(response => { dispatch(getUserMe(response.data), localStorage.setItem("user", JSON.stringify(response.data.user))) })
       .catch(err => { console.log(err) })
   }
 }
