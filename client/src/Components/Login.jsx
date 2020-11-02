@@ -14,7 +14,8 @@ import { NavLink } from 'react-router-dom';
 import { deleteCarrito, postCarrito, putCantidadOrden, deleteCarritoProd } from '../Redux/actionsCarrito';
 import { clearState, loadState } from '../Redux/reducer/localStorage';
 
-function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarritoRequest, postCarrito }) {
+// function Login({ user, isLoggedIn, loginRequest, users, getGoogle, getGithub }) {
+function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, users, getGithub, getCarritoRequest }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -69,10 +70,13 @@ function Login({ user, carrito, logged, loginRequest, users, getGithub, getCarri
   }
    function loginUser() {
     loginRequest(input)
-     console.log(user)
-    if (logged){
-      addProducts()
-    }
+    setTimeout(() => {
+      console.log(user)
+     if (logged){
+       addProducts()
+     }
+      
+    }, 500);
   }
 
   function loginGoogle() {
@@ -164,7 +168,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    ...bindActionCreators({ loginRequest, getGithub, postCarrito }, dispatch)
+    // ...bindActionCreators({ loginRequest, getGithub, getGoogle }, dispatch)
+    ...bindActionCreators({ loginRequest, getGithub, postCarrito, getGoogle }, dispatch)
   }
 }
 

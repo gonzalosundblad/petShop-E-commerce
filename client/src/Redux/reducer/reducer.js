@@ -11,12 +11,20 @@ export const initialState = {
   carrito: [],
   order: [],
   reviews: [],
+  datosEnvio: []
 
 };
 
 export default (state = initialState, action) => {
-  console.log(action)
+  console.log(action.payload)
   switch (action.type) {
+
+    
+    case 'SET_DATOS_ENVIO': 
+      return {
+        ...state,
+        datosEnvio: action.payload,
+      }
     case GET_PRODUCTS: //obtener todos los productos
       return {
         ...state,

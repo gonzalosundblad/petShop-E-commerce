@@ -116,14 +116,11 @@ export function delProductCart(resp) {//va a REDUCER
 
 export function deleteCarritoProd(idUser, valor) {   //borra un producto segun del carrito del usuario
   console.log('deleteProductOfUserCart');
-  console.log(idUser + "------" + valor)
+  console.log(JSON.stringify(valor))
   return (dispatch) => {
-    console.log("hola")
-    axios.delete(`http://localhost:3001/users/${idUser}/deleteCartProduct`, valor)
-      .then(response => { dispatch(delProductCart(response)) })
+    axios.delete(`http://localhost:3001/users/${idUser}/deleteCartProduct/${valor}`)
+      .then(response => { 
+        dispatch(delProductCart(response)) })
       .catch(err => { console.log(err) })
   }
 }
-
-
-

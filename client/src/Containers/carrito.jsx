@@ -30,6 +30,9 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
        
   // } 
 
+  
+
+
   useEffect(() => {
     // si el usuario esta logueado
     
@@ -47,9 +50,12 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
       })
     })
     
-    clearState()
   }
-  getCarritoRequest(user.user.user_id)
+  setTimeout(() => {
+    getCarritoRequest(user.user.user_id)
+    clearState()
+    
+  }, 500);
   
 
       // changeCartProducts()
@@ -81,19 +87,20 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
 
   //------------------------------Funcion Borrar por unidad del carrito
 
-  function onDelete(product_id) {
-    var valor = {
-      product_id: product_id
-    }
+  // function onDelete(product_id) {
+  //   var valor = {
+  //     product_id: product_id
+  //   }
 
-    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
-    // let id = event.target.value
-    if (logged) {
-      deleteCarritoProd(user.user.user_id, valor)
-    } else {
-      localStorage.removeItem(product_id)
-    }
-  }
+  //   //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+  //   // let id = event.target.value
+  //   if (logged) {
+  //     deleteCarritoProd(user.user.user_id, valor)
+  //   } else {
+  //     localStorage.removeItem(product_id)
+  //   }
+  //   reload
+  // }
 
   //---------------------------------Vaciar Carrito
 
@@ -105,6 +112,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     else {
       localStorage.clear()
     }
+    reload();
   }
 
   //---------------------------------RENDER
@@ -125,7 +133,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   }
   else if (logged && carrito.length > 0) {
     console.log(carrito)
-    const order_id = carrito.map(id => id.LineaDeOrden.order_id)
+    const order_id = carrito.map(id => id.order_id)
     console.log('hay productos')
 
     return (
@@ -144,9 +152,9 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 key={e.id}
                 id={e.id}
                 name={e.name}
-                price={e.price}
+                price={e.LineaDeOrden.price}
                 image={e.image}
-                LineaDeOrden={e.LineaDeOrden.quantity}
+                quantity={e.LineaDeOrden.quantity}
               />
             </div>
           )
@@ -180,7 +188,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
                 name={e.name}
                 price={e.price}
                 image={e.image}
-                LineaDeOrden={e.quantity}
+                quantity={e.LineaDeOrden.quantity}
               // funcionDelete={onDelete}
               />
             </div>

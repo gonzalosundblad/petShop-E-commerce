@@ -49,7 +49,7 @@ server.get('/:id', (req, res) => {											//TRAE EL PRODUCTO DEL CORRESPONDIE
   })
 })
 
-server.post('/', isAdmin, (req, res) => {									//AGREGA NUEVOS PRODUCTOS
+server.post('/', (req, res) => {									//AGREGA NUEVOS PRODUCTOS
   const { name, description, price, stock, categoryId, image } = req.body;
   console.log(req.body)
   if (!name || !description) {

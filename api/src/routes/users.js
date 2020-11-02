@@ -217,9 +217,10 @@ server.put('/:idUser/cart', function (req, res) {                       //S41 : 
   })
 })
 
-server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
-  const idUser = req.params.idUser;                                   // S111: INVENTO DE ERIC
-  const { product_id } = req.body;
+server.delete('/:idUser/deleteCartProduct/:product_id', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
+  const {idUser, product_id} = req.params;                                   // S111: INVENTO DE ERIC
+  
+  console.log(req.params)
   Order.findOne({
     where: {
       userId: idUser,
