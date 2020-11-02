@@ -153,7 +153,6 @@ export function getOrderIdUser(idUser) {//Trae una orden segun id usuario
 // }
 
 export function putOrden(order) {//va a REDUCER
-  console.log('Orden Modificada');
   return {
     type: PUT_ORDER,
     payload: order

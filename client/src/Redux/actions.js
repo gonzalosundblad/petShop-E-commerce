@@ -56,7 +56,6 @@ export function getProdId(producto) {//va a REDUCER
   }
 }
 export function getProductById(id) {//Muestra producto por ID
-  console.log('getProductByCategory');
   return (dispatch) => {
     axios.get(`http://localhost:3001/products/${id}`)
       .then(response => { dispatch(getProdId(response.data)) })

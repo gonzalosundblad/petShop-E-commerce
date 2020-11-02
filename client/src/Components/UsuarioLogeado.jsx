@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StyleUsuarioLogeado from '../Estilos/UsuarioLogeado.module.css';
 import userLogo from '../imagenes/userLogo.png'
 import { logout } from '../Redux/actionsLogin'
 import { connect } from 'react-redux'
+import { getMe } from '../Redux/actionsLogin'
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 
-function UsuarioLogeado({ user, logout, logged }) {
-  //console.log(user);
+function UsuarioLogeado({ user, logout, logged, getMe }) {
+
+  useEffect(() => {
+    getMe();
+  }, [])
 
   function cerrarSesion() {
     logout();
@@ -53,7 +57,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ logout }, dispatch)
+    ...bindActionCreators({ logout, getMe }, dispatch)
   }
 }
 
