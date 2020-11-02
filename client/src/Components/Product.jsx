@@ -42,6 +42,7 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
         quantity: quantity,
         price: products.products.price
       })
+      
     }
     else if (quantity >= 0) {
       saveState({ product_id: id2, quantity, price, image, name, })
@@ -99,8 +100,8 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
             <div>
               <div style={{display: "flex", flexDirection: "column", marginTop: "40px"}}>
                 <h6 style={{display: "flex", justifyContent: "end"}}>Seleccione Cantidad:</h6>
-                <Contador funcion={handleChange}/>
-                {/* <input classname={Style.input} type="number" min='0' max={products.products.stock} placeholder='Nº' onChange={handleChange} /> */}
+                <Contador funcion={handleChange} valor={1}/>
+                <input style={{width: "150px"}} type="number" min='0' max={products.products.stock} placeholder='Nº' onChange={handleChange} />
                 <button class="btn btn-success" onClick={subirCarrito} style={{width: "150px", marginTop: "10px"}}>
                   Agregar
                   <img className={Style.changuito} src={Changuito} />

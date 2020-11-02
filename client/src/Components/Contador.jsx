@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
+import estilo from '../Estilos/Contador.module.css';
 
-export default function Contador ({funcion}){
-    const [contador, setContador]= useState (0);
+export default function Contador ({funcion,  valor}){
+    const [contador, setContador]= useState (valor)
+
 
     function sumar(){
         setContador(contador + 1)
@@ -12,10 +14,10 @@ export default function Contador ({funcion}){
     }
 
     return(
-    <div class="btn-group" role="group" aria-label="Basic example" style={{width: "150px"}}>
-        <button type="button" class="btn btn-primary" onClick={() => restar()}> - </button>
-        <button type="button" class="btn btn-outline-primary" onChange={funcion}>{contador}</button>
-        <button type="button" class="btn btn-primary" onClick={() => sumar()}> + </button>
+    <div style={{width: "150px", display: "flex", alignItems: "center", justifyContent: "center"}}>
+        <button type="button" className={estilo.boton} onClick={() => restar()}> - </button>
+        <input className={estilo.input} onChange={funcion} value={contador}/>
+        <button type="button" className={estilo.boton} onClick={() => sumar()}> + </button>
     </div>
     )
 }

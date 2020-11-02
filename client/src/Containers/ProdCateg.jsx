@@ -11,8 +11,7 @@ function ProductosPorCategoria({ name, getProductByCategory, categories }) {    
   useEffect(() => {
     getProductByCategory(name)
   }, []);
-  console.log(categories);
-
+  
   return (
     <div >
       <Catalogo productos={categories} />

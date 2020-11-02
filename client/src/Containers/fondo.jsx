@@ -2,7 +2,6 @@ import React from 'react';
 import fondo from '../imagenes/fondoColores.png';
 import perrito from '../imagenes/perritoo.png';
 import estilo from '../Estilos/fondo.module.css';
-import perroBlanco from '../imagenes/perroBlanco.png';
 import PerroIcono from '../imagenes/perritoIcono.png';
 import GatoIcono from '../imagenes/gatitoIcono.png';
 import AveIcono from '../imagenes/aveIcono.png';

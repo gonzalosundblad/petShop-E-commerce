@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import '../Estilos/SearchBar.module.css';
 import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
@@ -52,12 +52,12 @@ function NavBar({ user, logged, funcionCatag, onSearch }) {
 
   var inicio;
     if(!user){
-      inicio= <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> 
+      inicio= <a class="nav-link text-white" href='/login' >Iniciar Sesión</a>  //si no hay usuario
     }
     else if(user && !logged){
-      inicio = <a class="nav-link text-white" href='/login' >Iniciar Sesión</a>
+      inicio = <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> //si hay usuario pero no esta logueado
     }
-    else inicio= <a class="nav-link text-white"> Hola {user.user.name}! </a>
+    else inicio= <a class="nav-link text-white"> Hola {user.user.name}! </a> //si esta logueado
   
   console.log(inicio)
   // let admin;

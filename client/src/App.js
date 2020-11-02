@@ -37,6 +37,7 @@ import Checkout from './Components/Checkout';
 import CheckoutNoLog from './Components/CheckoutNoLog';
 import Pagos from './Components/Pagos';
 import EliminarCuenta from './Components/EliminaCuenta';
+import ListaCategoria from './Components/ListaCategoria';
 
 function App() {
   const [resultados, setResultados] = useState([]);
@@ -63,7 +64,7 @@ function App() {
           <Route exact path="/" component={PieDePagina} />
           <Route exact path="/login" render={() => <User />} />
           <Route exact path="/register" render={() => <AgregarUsuario />} />
-          <Route path="/products" component={listaCategorias} />
+          <Route path="/products" component={ListaCategoria} />
           <Route exact path="/products" component={MostrarCatalogo} />
           <Route exact path="/products/search" render={() => <Catalogo productos={resultados} />} />
           <Route exact path={`/products/category/:Categoria`} render={({ match }) => <ProductosPorCategoria name={match.params.Categoria} />} />

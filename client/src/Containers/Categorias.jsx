@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Catalogo from '../Components/CatalogoComp';
 import { getProductByCategory, getCategories } from '../Redux/actions.js';
 import { deleteCategory } from '../Redux/actions';
 import { postCategory } from '../Redux/actions';
@@ -10,8 +9,7 @@ import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 
 
-export function MostrarCategorias({ getCategories, categories }) {                  //Muestra las categorias en el home
-  const [categorias, setCategoria] = useState([]);
+function MostrarCategorias({ getCategories, categories }) {                  //Muestra las categorias en el home
 
   useEffect(() => {
     getCategories()
@@ -90,25 +88,25 @@ function AgregarCategoria({ postCategory }) {                  //agrega categori
 
 
 
-export function ListaCategorias({ getCategories, categories }) {                     //lista de categorias en el catalogo
-  const [categorias, setCategoria] = useState([]);
+function ListaCategorias({ getCategories, categories }) {                     //lista de categorias en el catalogo
+  
 
   useEffect(() => {
     getCategories()
-    setCategoria(categories)
+    
   }, []);
 
   return (
     <div style={{ position: "absolute" }}>
       <div className={estilo.listaCategorias}>
         <div class="list-group" style={{ width: "150px" }}>
-          <NavLink to="#" class="list-group-item list-group-item-action bg-white border-warning text-warning" >CATEGORIAS</NavLink>
-          <NavLink to='/products' class="list-group-item list-group-item-action">Todas</NavLink>
+          <a  class="list-group-item list-group-item-action active">CATEGORIAS</a>
+          <a href="/products" class="list-group-item list-group-item-action">Todas</a>
           {
-            categorias.map(n => {
-              if (n.name !== 'Sin Categoria') {
+            categories.map(c => {
+              if (c.name !== 'Sin Categoria') {
                 return (
-                  <NavLink to={`/products/category/${n.name}`} class="list-group-item list-group-item-action">{n.name}</NavLink>
+                  <a href={`/products/category/${c.name}`} class="list-group-item list-group-item-action">{c.name}</a>
                 )
               }
             })}
@@ -117,6 +115,7 @@ export function ListaCategorias({ getCategories, categories }) {                
     </div>
   )
 }
+
 const mapStateToProps = state => {
   return {
     categories: state.reducer.categories

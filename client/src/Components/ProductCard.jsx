@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import estilo from '../Estilos/ProductCard.module.css';
-import img from '../imagenes/comida.jpg'
-import Carrito from '../Containers/carrito';
 import Changuito from '../imagenes/carrito+.png';
 
 export default function ProductCard({ id, name, price, image, stock }) {

@@ -25,7 +25,7 @@ export function getCateg(categorias) {//va a REDUCER
     payload: categorias
   }
 }
-export function getCategories() {//Va a Catalogo2.jsx
+export function getCategories() {//va a las categorias
   console.log('getCategories');
   return (dispatch) => {
     axios.get('http://localhost:3001/products/category')
