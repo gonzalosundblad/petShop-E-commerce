@@ -33,8 +33,8 @@ class ForgotPassword extends Component {
     e.preventDefault();
     const { email } = this.state;
     this.setState({
-        waiting: true,
-        showError: false
+      waiting: true,
+      showError: false
     });
     if (email === '') {
       this.setState({
@@ -76,14 +76,14 @@ class ForgotPassword extends Component {
 
   render() {
     const {
- email, messageFromServer, showNullError, showError, waiting
-} = this.state;
+      email, messageFromServer, showNullError, showError, waiting
+    } = this.state;
 
     return (
       <div>
         <h1 title={title} />
         <form className="profile-form" onSubmit={this.sendEmail}>
-            <p>Le enviaremos un mail a su correo. Abralo y vaya al link que contiene</p>
+          <p>Le enviaremos un mail a su correo. Abralo y vaya al link que contiene</p>
           <input
             id="email"
             label="email"
@@ -102,8 +102,8 @@ class ForgotPassword extends Component {
           <div>
             <p>Esta direccion de mail no corresponde a un usuario.</p>
             <p>Intente de nuevo o registrese con una nueva cuenta.</p>
-            
-        <NavLink to='/register' className="nav-link">Registrarme</NavLink>
+
+            <NavLink to='/register' className="nav-link">Registrarme</NavLink>
 
           </div>
         )}

@@ -31,7 +31,7 @@ export default class ResetPassword extends Component {
 
   async componentDidMount() {
     // console.log(window.location.href)
-      console.log(this.props)
+    console.log(this.props)
     // const {
     //   match: {
     //     params: { token },
@@ -40,8 +40,8 @@ export default class ResetPassword extends Component {
     try {
       const response = await axios.get('http://localhost:3001/reset', {
         params: {
-        //   resetPasswordToken: '81d317b6d7b766e41c99c78158bcd5ba6ec948cf',
-            resetPasswordToken: window.location.href.slice(36)
+          //   resetPasswordToken: '81d317b6d7b766e41c99c78158bcd5ba6ec948cf',
+          resetPasswordToken: window.location.href.slice(36)
         },
       });
       // console.log(response);
@@ -67,29 +67,29 @@ export default class ResetPassword extends Component {
     const { password, empty } = this.state;
     this.setState({
       [name]: event.target.value,
-       empty: event.target.value
+      empty: event.target.value
     });
     console.log(empty)
     console.log(password.length)
-    if(password !== '') {
+    if (password !== '') {
+      this.setState({
+        empty: false
+      })
+      if (password.length < 3) {
         this.setState({
-            empty: false
+          empty: true
         })
-    if(password.length < 3) {
-        this.setState({
-            empty: true
-        })
-    }
+      }
     }
   };
 
   updatePassword = async (e) => {
     e.preventDefault();
     const { name, password, empty } = this.state;
-    if(empty === true || empty === '') {
-         return this.setState({
-            empty: true
-        })
+    if (empty === true || empty === '') {
+      return this.setState({
+        empty: true
+      })
     }
     // const {
     //   match: {
@@ -102,8 +102,8 @@ export default class ResetPassword extends Component {
         {
           name,
           password,
-        //   resetPasswordToken: token,
-        //   resetPasswordToken: '81d317b6d7b766e41c99c78158bcd5ba6ec948cf',
+          //   resetPasswordToken: token,
+          //   resetPasswordToken: '81d317b6d7b766e41c99c78158bcd5ba6ec948cf',
           resetPasswordToken: window.location.href.slice(36)
 
 
@@ -128,9 +128,9 @@ export default class ResetPassword extends Component {
 
   render() {
     const {
- password, error, isLoading, updated, empty
-} = this.state;
-console.log(this.state);
+      password, error, isLoading, updated, empty
+    } = this.state;
+    console.log(this.state);
     if (error) {
       return (
         <div>
@@ -144,37 +144,38 @@ console.log(this.state);
       );
     }
     if (isLoading) {
-        return (
-            <div>
+      return (
+        <div>
           <h1 title={title} />
           <div style={loading}>Cargando datos de usuario...</div>
         </div>
       );
     }
-    
-//     if(empty === 'damn its empty') {
-//         return (
-//           <div>
-//         <p>Debe ingresar una contraseña valida</p>
-//           </div>
-//        )
-//    }
-    if(updated) {
-        return (
+
+    //     if(empty === 'damn its empty') {
+    //         return (
+    //           <div>
+    //         <p>Debe ingresar una contraseña valida</p>
+    //           </div>
+    //        )
+    //    }
+    if (updated) {
+      return (
         <div>
-        <p>
+          <p>
             Su contraseña se actualizo exitosamente :) Intente iniciar sesion de nuevo
         </p>
-        <div><NavLink to='/login'>Iniciar sesion</NavLink></div>
-        <div><NavLink to='/'>Ir al inicio</NavLink></div>
+          <div><NavLink to='/login'>Iniciar sesion</NavLink></div>
+          <div><NavLink to='/'>Ir al inicio</NavLink></div>
         </div>
-    )}
-   
+      )
+    }
+
     return (
       <div>
         <h1 title={title} />
         <form onSubmit={this.updatePassword}>
-            <p>Ingrese su nueva contraseña</p>
+          <p>Ingrese su nueva contraseña</p>
           <input
             id="password"
             label="password"
@@ -186,14 +187,14 @@ console.log(this.state);
         </form>
 
         {empty && (
-                <div>
+          <div>
             <p>Debe ingresar una contraseña valida</p>
-                 </div>
+          </div>
         )}
       </div>
     );
- 
-        
+
+
   }
 }
 

@@ -159,7 +159,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
           <a className={Estilo.botonesFinales} href='/products'>
             <span className={Estilo.botoncitos} >Seguir Comprando</span>
           </a>
-          {!logged ? <NavLink to="/login" className={Estilo.botoncitos} >Inicie sesion para finalizar compra</NavLink> : null}
+          {!logged ? <NavLink to="/login" className={Estilo.botoncitos2} >Inicie sesion para finalizar compra</NavLink> : null}
           {/* <a className={Estilo.botonesFinales} href={`/order/${order_id[0]}`} >
               <span className={Estilo.botoncitos}  >Finalizar Compra</span>
             </a> */}

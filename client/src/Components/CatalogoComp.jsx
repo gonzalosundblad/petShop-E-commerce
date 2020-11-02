@@ -6,20 +6,20 @@ import { useState } from 'react';
 
 function Catalogo({ productos }) {
 
-const [pagina, setPagina] = useState(1)  //el numero de las paginas, empieza en 1
-const products = 3;                      // productos q van a ver por pagina
+  const [pagina, setPagina] = useState(1)  //el numero de las paginas, empieza en 1
+  const products = 3;                      // productos q van a ver por pagina
 
-const final = pagina * products;
-const principio = final - products;
-const arrayProductos = productos.slice(principio, final);
+  const final = pagina * products;
+  const principio = final - products;
+  const arrayProductos = productos.slice(principio, final);
 
-function proximaPagina (number){ 
-   setPagina(number)
-}
+  function proximaPagina(number) {
+    setPagina(number)
+  }
 
   return (
     <div >
-        <div className={StyleCatalogo.display}>
+      <div className={StyleCatalogo.display}>
         {arrayProductos.map(p =>
           <ProductCard
             key={p.id}
@@ -30,11 +30,11 @@ function proximaPagina (number){
             stock={p.stock}
           />
         )}
-        </div>
-        <div style={{ margin: "30px"}}>
-          <Pagination totalProductos={productos} paginas={proximaPagina} productPorPagina={products}/>
-        </div>
-    
+      </div>
+      <div style={{ margin: "30px" }}>
+        <Pagination totalProductos={productos} paginas={proximaPagina} productPorPagina={products} />
+      </div>
+
     </div>
   );
 };

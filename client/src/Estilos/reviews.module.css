@@ -1,143 +1,143 @@
 .box{
-    margin-left: 70px;
-    display: flex;
-    justify-content:  flex-start;
+  margin-left: 70px;
+  display: flex;
+  justify-content:  flex-start;
 }
 
 .titulo{
-    background-color: rgb(252, 225, 118);
-    height: 40px;
-    width: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin-top: 25px;
-    border: gray;
-    box-shadow: 3px 3px 3px gray;
+  background-color: rgb(252, 225, 118);
+  height: 40px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-top: 25px;
+  border: gray;
+  box-shadow: 3px 3px 3px gray;
 }
 
 .hr{
-    width: 900px;
-    height: 2px;
-    color: gray;
+  width: 900px;
+  height: 2px;
+  color: gray;
 }
 .subtitulo{
-    margin-top: 25px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    font-size: 20px;
-    color: rgb(107, 107, 107);
-}
-.p{
-  color: DarkSlateBlue;
-}
-.opiniones{
-    margin-top: 25px;
-    display: block;
-    font-size: 20px;
-    color: rgb(107, 107, 107);
-}
-.opinionsTitle{
+  margin-top: 25px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   font-size: 20px;
-  font-weight: bold;
+  color: rgb(107, 107, 107);
+}
+.p{
+color: DarkSlateBlue;
+}
+.opiniones{
+  margin-top: 25px;
+  display: block;
+  font-size: 20px;
+  color: rgb(107, 107, 107);
+}
+.opinionsTitle{
+display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+font-size: 20px;
+font-weight: bold;
 
 }
 .opinionsDescription{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  font-size: 20px;
+display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+font-size: 20px;
 }
 .opinionsDate{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  font-size: 15px;
+display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+font-size: 15px;
 }
 .reviews p{
-    margin-top: 15px;
-    margin-left: 5px;
-    font-size: 20px;
-    color: rgb(107, 107, 107);
+  margin-top: 15px;
+  margin-left: 5px;
+  font-size: 20px;
+  color: rgb(107, 107, 107);
 }
 .numPromedio{
 
-  color: darkcyan;
-  font-size: 100px
+color: darkcyan;
+font-size: 100px
 }
 .title{
-  color: grey;
-  font-size: 70px
+color: grey;
+font-size: 70px
 }
 .description{
-  color: grey;
-  font-size: 50px
+color: grey;
+font-size: 50px
 }
 .logo{
-  width: 200px;
-  height: 60px;
+width: 200px;
+height: 60px;
 }
 .logochico{
-  width: 100px;
-  height: 30px;
-  margin-top: 25px;
+width: 100px;
+height: 30px;
+margin-top: 25px;
 }
 input[type="radio"] {
-  display: none;
+display: none;
 }
 .inputt[type="text"] {
-  width: 300px;
-  height: 80px;
-  color: grey;
+width: 300px;
+height: 80px;
+color: grey;
 }
 .estrellas {
-  color: grey;
-  font-size: 50px;
+color: grey;
+font-size: 50px;
 }
 .estrellasnaranja{
-  color: orange;
-  font-size: 30px;
-  }
+color: orange;
+font-size: 30px;
+}
 
 .estrellas:hover,
 .estrellas:hover ~ label {
-  color: orange;
+color: orange;
 }
 /*table{
-  table-layout: fixed;
-  width: 900px;
+table-layout: fixed;
+width: 900px;
 }*/
 .cajon1{
-  width: 250px;
+width: 250px;
 float:left;
 }
 .cajon2{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 250px;
-  height: 200px;
-  float:left;
-  font-size: 20px;
-  color: darkcyan;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+width: 250px;
+height: 200px;
+float:left;
+font-size: 20px;
+color: darkcyan;
 }
 
 input[type="radio"]:checked ~ label {
-  color: orange;
+color: orange;
 }
 .bottton{
-  height: 50px;
-  border-radius: 5px;
-  width: 100px;
-  background-color: darkcyan;
-  color: white;
+height: 50px;
+border-radius: 5px;
+width: 100px;
+background-color: darkcyan;
+color: white;
 }
 .boton:hover{
-    background-color: rgb(35, 180, 185);
-    box-shadow: 3px 3px 3px rgb(97, 97, 97);
+  background-color: rgb(35, 180, 185);
+  box-shadow: 3px 3px 3px rgb(97, 97, 97);
 }
