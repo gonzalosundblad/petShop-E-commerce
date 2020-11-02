@@ -107,6 +107,7 @@ passport.deserializeUser((user_id, done) => {
       return done(null, {
         name: user.name,
         user_id: user.user_id,
+        last_name: user.last_name,
         email: user.email,
         role: user.role,
       });
