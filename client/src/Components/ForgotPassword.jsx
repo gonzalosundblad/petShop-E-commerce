@@ -134,7 +134,7 @@ class ForgotPassword extends Component {
         )}
         {messageFromServer === 'recovery email sent' && (
           <div>
-            <h3>Su mail ha sido enviado! Revise en su casilla</h3>
+            <p>Su mail ha sido enviado! Revise en su casilla</p>
           </div>
         )}
         <NavLink to='/' className="nav-link">Volver al inicio</NavLink>

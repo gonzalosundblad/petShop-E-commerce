@@ -58,7 +58,7 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
     else if(user && !logged){
       inicio = <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> //si hay usuario pero no esta logueado
     }
-    else inicio= <a class="nav-link text-white"> Hola {user.user.name}! </a> //si esta logueado
+    else inicio= <a class="nav-link text-white"> Hola {user.name}! </a> //si esta logueado
   
   let admin;
   if (user !== null && logged && user.role === 'admin') {

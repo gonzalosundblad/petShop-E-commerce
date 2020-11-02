@@ -21,10 +21,10 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
   }, [])
 
 
-  var userN;
-  if(user){
-    userN = user.user
-  }
+  // var userN;
+  // if(user){
+  //   userN = user.user
+  // }
 
   function handle() {
     // users.map((user) => {
@@ -56,16 +56,16 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
       newPassword: state.password,
       password: state.oldPassword
     }
-    if (cambios.name.length === 0) { cambios.name = userN.name }
-    if (cambios.email.length === 0) { cambios.email = userN.email }
-    if (cambios.last_name.length === 0) { cambios.last_name = userN.last_name }
+    if (cambios.name.length === 0) { cambios.name = user.name }
+    if (cambios.email.length === 0) { cambios.email = user.email }
+    if (cambios.last_name.length === 0) { cambios.last_name = user.last_name }
 
-    putUser(userN.user_id, cambios)
+    putUser(user.user_id, cambios)
 
   }
 
   function onDelete() {
-    const id = userN.user_id
+    const id = user.user_id
     deleteUser(id)
   }
 
@@ -80,7 +80,7 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
   } else {
     return (
       <div>
-        <h1 style={{margin: "40px", display: "flex"}}>Bienvenido {userN.name} ! </h1>
+        <h1 style={{margin: "40px", display: "flex"}}>Bienvenido {user.name} ! </h1>
         <div class="row" style={{margin: "40px"}}>
           <div class="col-3" >
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style={{width: "180px"}}>
@@ -98,15 +98,15 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
                 <tbody>
                   <tr class="table-default">
                     <th scope="row">Nombre:</th>
-                    <td>{userN.name}</td>
+                    <td>{user.name}</td>
                   </tr>
                   <tr class="table-default">
                     <th scope="row">Apellido:</th>
-                    <td>{userN.last_name}</td>
+                    <td>{user.last_name}</td>
                   </tr>
                   <tr class="table-default">
                     <th scope="row">Tu email:</th>
-                    <td>{userN.email}</td>
+                    <td>{user.email}</td>
                   </tr>
                 </tbody>
               </table>

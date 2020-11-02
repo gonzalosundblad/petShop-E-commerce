@@ -90,32 +90,29 @@ export function AgregarUsuario({ postUser }) {                  //agrega usuario
               <div className={estilo.inputsRegister}>
                 <label>Nombre: </label>
                 <input id="nombre" class="form-control" style={{width: "200px", height: "35px"}} type="text" name="nombre" onChange={handleChange} />
-                {errors.nombre && (
-                  <h4 className="danger">{errors.nombre}</h4>
-                )}
               </div>
+                {/* {errors.nombre && (<p className="danger">{errors.nombre}</p>)} */}
+              
               <div className={estilo.inputsRegister}>
                 <label>Apellido: </label>
                 <input id="apellido" class="form-control" style={{width: "200px", height: "35px"}} type="text" name="apellido" onChange={handleChange4} />
-                {errors.apellido && (
-                  <h4 className="danger">{errors.apellido}</h4>
-                )}
               </div>
+                {/* {errors.apellido && (<p className="danger">{errors.apellido}</p>)} */}
+              
               <div className={estilo.inputsRegister}>
                 <label>Email: </label>
                 <input id="email" class="form-control" style={{width: "200px", height: "35px"}} type="email" description="email" onChange={handleChange2} />
-                {errors.email && (
-                  <h4 className="danger">{errors.email}</h4>
-                )}
-              </div>
+                </div>
+                {/* {errors.email && (<p className="danger">{errors.email}</p>)} */}
+              
               <div className={estilo.inputsRegister}>
                 <label>Contraseña: </label>
                 <input id="password" class="form-control" style={{width: "200px", height: "35px"}} type="password" description="password" onChange={handleChange3} />
-                {errors.contraseña && (
-                  <h4 className="danger">{errors.contraseña}</h4>
-                )}
               </div>
-              <button class="btn btn-outline-danger"onClick={handleSubmit} >Agregar</button>
+                {/* {errors.contraseña && (<p className="danger">{errors.contraseña}</p>)} */}
+              <a href="/login">
+                <button class="btn btn-outline-danger"onClick={handleSubmit} >Agregar</button>
+              </a>
             </form>
           </div>  
         </div>

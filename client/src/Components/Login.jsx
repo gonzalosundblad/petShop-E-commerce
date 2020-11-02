@@ -125,11 +125,11 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
                   </div>
                   {!logged ? <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> : <Redirect to="/perfil" />}
                   {/* <button type="button" onClick={loginUser} class="btn btn-outline-danger" style={{ margin: "10px" }}>Iniciar</button> */}
-                  <div style={{display: "flex", alignItems:"center", justifyContent:"center"}}>
+                  <div style={{display: "flex", alignItems:"center", justifyContent:"center", margin: "-10px"}}>
                     <a>¿No tiene cuenta?</a>
                     <NavLink to='/register'  style={{ margin: "10px" }}>Registrarse</NavLink>
                   </div>
-                  <NavLink to='/forgot'  style={{ margin: "10px" }}>¿Olvidó su contraseña?</NavLink>
+                  <NavLink to='/forgot'  style={{ fontSize: "15px"}}>¿Olvidó su contraseña?</NavLink>
                 </fieldset>
               </form>
             </div>
