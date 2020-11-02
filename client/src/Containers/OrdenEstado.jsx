@@ -13,14 +13,7 @@ function OrdenState({ orderStates, order, getOrder }) {
     getOrder()
   }, [])
 
-  console.log(orderStates, "hola")
-  console.log(order, "chau")
-
   var state = order.filter(o => o.orderState === orderStates)
-
-  console.log(state, "state");
-
-
 
   return (
     <div>

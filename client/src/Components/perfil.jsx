@@ -16,14 +16,10 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
     oldPassword: ""
   });
 
-  console.log(users, "hola")
-
   useEffect(() => {
     getMe();
   }, [])
 
-
-  var user = user.user
 
   function handle() {
     // users.map((user) => {
@@ -58,8 +54,6 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
     putUser(user.user_id, cambios)
 
   }
-
-  console.log(user.user_id)
 
   function onDelete() {
     const id = user.user_id

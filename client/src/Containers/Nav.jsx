@@ -17,22 +17,14 @@ import { getMe } from '../Redux/actionsLogin';
 
 
 function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
-  //console.log(user.user.role);
   const [carro, setCarro] = useState([]);
   const [total, setTotal] = useState(0)
-
-  console.log(carrito)
-
-
 
   useEffect(() => {
     getMe();
     var precio = [];
     if (logged) {
-      getCarrito(user.user.user_id)
-      // var precio2 = carrito.map(e => {
-      //   return e.price * e.LineaDeOrden.quantity
-      // })
+      getCarrito(user.user_id)
 
     } else if (localStorage.length > 0) {
 
@@ -54,10 +46,10 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
   }, [])
 
 
-  // let admin;
-  // if (user !== null && user.user.role === 'admin') {
-  //   admin = <ListaDesplegable />
-  // }
+  let admin;
+  if (user !== null && logged && user.role === 'admin') {
+    admin = <ListaDesplegable />
+  }
 
   return (
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top row" style={{ backgroundColor: "orange", height: "100px" }}>
@@ -66,7 +58,7 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
           <NavLink to='/'>
             <img src={HenryPet} className={StyleNav.imagen} />
           </NavLink>
-          <ListaDesplegable />
+          {admin}
         </div>
         <div className={StyleNav.divMedio}>
           <form class="form-inline my-2 my-lg-0">
@@ -79,12 +71,12 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
             <img className={StyleNav.img} src={Changito} />
             <h5>${total}</h5>
           </NavLink>
-          <UsuarioLogeado />
+          {logged ? <UsuarioLogeado /> : null }
           <div className={StyleNav.iniciarSesion}>
 
             {/* Condicional en caso de que el usuario exista para iniciar sesion */}
 
-            {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <span> {user.user.email} </span>}
+            {!logged ? <a class="nav-link text-white" href='/login' >Iniciar Sesión</a> : <span> {user.email} </span>}
 
             {/* ---------------------------------------------------------------- */}
 

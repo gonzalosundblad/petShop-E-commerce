@@ -18,7 +18,6 @@ export function getProductsRequest() {//Va a Catalogo2.jsx
 //----------------------------------------------------
 
 export function getCateg(categorias) {//va a REDUCER
-  console.log('categorias');
   return {
     type: GET_CATEGORIES,
     payload: categorias
@@ -210,5 +209,3 @@ export function search(producto) {   //busca entre todo FALTA
   const request = axios.get(`http://localhost:3001/search?products=${producto}`)
   return { type: SEARCH, payload: request };
 }
-
-

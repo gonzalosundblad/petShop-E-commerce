@@ -24,10 +24,6 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
   const [errors, setErrors] = useState({});
   var x = false;
 
-
-
-  console.log(user, "holisdts");
-
   function validate(input) {
     let errors = {};
     if (!input.email) {
@@ -52,7 +48,7 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
       [e.target.name]: e.target.value
     }));
   }
-  
+
   function addProducts(){
     var local = loadState()
     if (local.length > 0) {
@@ -62,10 +58,10 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
       postCarrito(user.user.user_id, {
         product_id,
         quantity,
-        price 
+        price
       })
     })
-    
+
     clearState()
   }
 }
@@ -80,7 +76,7 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
      if (logged){
        addProducts()
      }
-      
+
     }, 500);
   }
 
@@ -92,9 +88,9 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
     getGithub()
     window.location.replace("http://localhost:3001/auth/github")
 
-   
+
   }
-  
+
   return (
     <div className={estilo.divOscuro}>
       <div className={estilo.x}>

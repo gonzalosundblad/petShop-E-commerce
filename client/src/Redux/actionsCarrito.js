@@ -5,7 +5,6 @@ import axios from 'axios';
 //--------------OBTENER CARRITO DE UN USUARIO--------------------------------------
 
 export function getCarrito(datos) {//va a REDUCER
-  console.log('Datos Carrito');
   return {
     type: GET_CARRO,
     payload: datos
@@ -14,7 +13,6 @@ export function getCarrito(datos) {//va a REDUCER
 }
 
 export function getCarritoRequest(usuario) { //obtener todos los productos del carrito
-  console.log(usuario)
   return (dispatch) => {
     axios.get(`http://localhost:3001/users/${usuario}/cart`)
       .then(response => { dispatch(getCarrito(response.data[0].products)) })
@@ -119,7 +117,7 @@ export function deleteCarritoProd(idUser, valor) {   //borra un producto segun d
   console.log(JSON.stringify(valor))
   return (dispatch) => {
     axios.delete(`http://localhost:3001/users/${idUser}/deleteCartProduct/${valor}`)
-      .then(response => { 
+      .then(response => {
         dispatch(delProductCart(response)) })
       .catch(err => { console.log(err) })
   }

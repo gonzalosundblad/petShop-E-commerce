@@ -14,54 +14,29 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   const [total, setTotal] = useState()
   const [borrado, setBorrado] = useState([])
 
-  // function changeCartProducts(){
-  //   var local = loadState()
-  //   console.log("hoooooooooooooooooooola")
-    
-  //   pr.map(prod => {
-  //     console.log(prod)
-  //     postCarrito(user.user.user_id, {
-  //       product_id: prod.prod_id,
-  //       quantity: prod.quantity,
-  //       price: prod.quantity
-  //     })
-  //   })
-  //   .then(clearState())
-       
-  // } 
-
-  
-
 
   useEffect(() => {
-    // si el usuario esta logueado
-    
-   
-  
-  
 
-    
     if (logged) {
       var local = loadState()
-  //   console.log("hoooooooooo")
   if (local.length > 0) {
       local.map(prod => {
       const { product_id, quantity, price } = prod
       console.log(prod)
-      postCarrito(user.user.user_id, {
+      postCarrito(user.user_id, {
         product_id,
         quantity,
-        price 
+        price
       })
     })
-    
+
   }
   setTimeout(() => {
     getCarritoRequest(user.user.user_id)
     clearState()
-    
+
   }, 500);
-  
+
 
       // changeCartProducts()
     //   var local = (loadState())
@@ -78,7 +53,7 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
     //     }))
     //     console.log(nuevoarray)
     //   }
-      
+
     }
     else {
       setProducts(loadState())
@@ -130,7 +105,6 @@ function Carrito({ logged, user, carrito, getCarritoRequest, deleteCarrito, dele
   var orden = carrito.map(e => {
     return e.LineaDeOrden.order_id
   })
-  console.log(orden, "djkwah")
 
   if (carrito.length === 0 && products.length === 0) {
     return (
@@ -221,7 +195,7 @@ const mapDispatchToProps = dispatch => {
       dispatch,
       ...bindActionCreators({ getCarritoRequest, deleteCarrito, deleteCarritoProd, postCarrito }, dispatch)
     }
-  
+
 }
 
 const mapStateToProps = state => {

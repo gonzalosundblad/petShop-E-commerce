@@ -1,8 +1,6 @@
 import { POST_REVIEW, PUT_REVIEW, DELETE_REVIEW, GET_ALL_REVIEW, NUMBERS } from './constantsReview';
 import axios from 'axios';
-var _axios = axios.create({
-  withCredentials: true
-})
+
 export function postReview(review) {//va a REDUCER
   return {
     type: POST_REVIEW,

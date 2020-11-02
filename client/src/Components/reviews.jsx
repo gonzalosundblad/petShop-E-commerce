@@ -32,7 +32,6 @@ function Reviews({ numbers, user, id, reviews, getAllReviewsRequest, postReviewR
   }
   function onDelete(e) { //borra una publicacion
     var idReview = e.target.value
-    console.log(idReview);
     deleteReviewRequest(id, idReview)
   }
 

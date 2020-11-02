@@ -10,18 +10,13 @@ export function postLog(user) {//va a REDUCER
   }
 }
 export function loginRequest(usuario) {//Crear ruta para crear/agregar Review
-  console.log("hola")
   return (dispatch) => {
     axios.post('http://localhost:3001/auth/login', usuario)
       .then(response => {
-        if (response.data.message) {
-          console.log(response.data.message);
-        }
-        else {
-          dispatch(postLog(response.data)
-          )
-        }
-      })
+          dispatch(postLog(response.data),
+          localStorage.setItem("user", JSON.stringify(response.data.user))
+        )}
+      )
       .catch(error => { console.log(error) })
   }
 }
@@ -45,7 +40,6 @@ export function logout() {//Crear ruta para crear/agregar Review
 
 
 export function getUserMe(user) {//va a REDUCER
-  console.log('user');
   return {
     type: GET_ME,
     payload: user
