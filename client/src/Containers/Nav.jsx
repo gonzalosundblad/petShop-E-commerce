@@ -5,7 +5,7 @@ import StyleNav from '../Estilos/Nav.module.css';
 import Search from '../Components/SearchComp';
 import { ListaDesplegable } from '../Components/ListaDesplegable';
 import Changito from '../imagenes/changuito2.png';
-import { getCarrito } from '../Redux/actionsCarrito';
+import { getCarritoRequest } from '../Redux/actionsCarrito';
 import UsuarioLogeado from '../Components/UsuarioLogeado';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HenryPet from '../imagenes/HenryPet2.png';
@@ -16,41 +16,56 @@ import { getMe } from '../Redux/actionsLogin';
 
 
 
-function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
+function NavBar({ user, logged, getCarritoRequest  , carrito, onSearch, getMe }) {
   const [carro, setCarro] = useState([]);
   const [total, setTotal] = useState(0)
-
+  const [precio, setPrecio] = useState([])
   useEffect(() => {
     getMe();
-    var precio = [];
     if (logged) {
-      getCarrito(user.user_id)
-
+      getCarritoRequest(user.user_id)    
     } else if (localStorage.length > 0) {
       let x = loadState()
-      setCarro(x);
       console.log(x)
-      precio = x.map(e => {
+      setCarro(x);
+      
+      let prec = x.map(e => {
+        console.log(parseInt(e.price) * parseInt(e.quantity))
         return parseInt(e.price) * parseInt(e.quantity)
       })
+      setTotal(prec.reduce(function (a, b) {
+        return a + b
+      }, 0))
+      console.log(precio)
     }
     else {
       console.log("no hay valores en el local storage ni tampoco usuario");
     }
+    
 
-
-    setTotal(precio.reduce(function (a, b) {
-      return a + b
-    }, 0))
   }, [])
-
+  
+  
 
   let admin;
   if (user !== null && logged && user.role === 'admin') {
     admin = <ListaDesplegable />
   }
 
+  function funcTotal(){
+    if (logged){
+      console.log(carrito)
+      var prec = carrito.map(e => parseInt(e.LineaDeOrden.price) * parseInt(e.LineaDeOrden.quantity), 0)
+      // console.log(prec)
+      var tot = prec.reduce((a, b) =>
+        a + b
+      , 0)
+      console.log(tot)
+     return tot
+  }
+  }
   return (
+    
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top row" style={{ backgroundColor: "orange", height: "100px" }}>
       <div className={StyleNav.nav}>
         <div className={StyleNav.divIzquierda}>
@@ -68,7 +83,7 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
         <div className={StyleNav.divDerecho}>
           <NavLink className={StyleNav.botonCarrito} to='/carrito' style={{ textDecoration: 'none' }}>
             <img className={StyleNav.img} src={Changito} />
-            <h5>${total}</h5>
+            {!logged ? <h5>${total}</h5> : <h5>${funcTotal()  }</h5>}
           </NavLink>
           {logged ? <UsuarioLogeado /> : null }
           <div className={StyleNav.iniciarSesion}>
@@ -89,9 +104,9 @@ function NavBar({ user, logged, funcionCatag, carrito, onSearch, getMe }) {
 
 function mapStateToProps(state) {
   // console.log(state.auth);
-  const { user, logged } = state.auth;
+  const { logged } = state.auth;
   return {
-    user,
+    user: state.auth.user,
     logged,
     carrito: state.reducer.carrito
   };
@@ -100,7 +115,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ getCarrito, getMe }, dispatch)
+    ...bindActionCreators({ getCarritoRequest, getMe }, dispatch)
   }
 }
 

@@ -49,34 +49,15 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
     }));
   }
 
-  function addProducts(){
-    var local = loadState()
-    if (local.length > 0) {
-      local.map(prod => {
-      const { product_id, quantity, price } = prod
-      console.log(prod)
-      postCarrito(user.user.user_id, {
-        product_id,
-        quantity,
-        price
-      })
-    })
 
-    clearState()
-  }
-}
 
   function handleLogin(e) {
     e.preventDefault();
   }
    function loginUser() {
     loginRequest(input)
-    setTimeout(() => {
-     if (logged){
-       addProducts()
-     }
-
-    }, 500);
+    
+     
   }
 
   function loginGoogle() {
@@ -90,8 +71,10 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
 
   }
 
-  return (
-    <div className={estilo.divOscuro}>
+  
+    
+    return (
+      <div className={estilo.divOscuro}>
       <div className={estilo.x}>
         <NavLink to='/'>
           X
@@ -158,6 +141,7 @@ function Login({ user, carrito, isLoggedIn, logged, loginRequest, getGoogle, use
       </div>
     </div>
   )
+
 }
 
 function mapStateToProps(state) {

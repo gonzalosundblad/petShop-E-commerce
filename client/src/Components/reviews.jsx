@@ -108,9 +108,9 @@ function Reviews({ numbers, user, id, reviews, getMe, getAllReviewsRequest, post
                             Eliminar comentario
               </button> : null}
                         </div>
-                        {/*<p className={Style.opinionsDate}>{o.updatedAt.slice(0, 10)}</p>
+                        <p className={Style.opinionsDate}>{o.updatedAt.slice(0, 10)}</p>
                         <p className={Style.opinionsTitle}>{o.user.name}</p>
-                        <p className={Style.opinionsDescription}>{o.description}</p>*/}
+                        <p className={Style.opinionsDescription}>{o.description}</p>
                       </div>
 
                     )

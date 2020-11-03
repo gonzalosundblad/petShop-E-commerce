@@ -6,6 +6,7 @@ export const loadState = () => {
       let clave = localStorage.key(i);
       if(clave !== "carrito" && clave !== "user"){
         let prod = JSON.parse(localStorage.getItem(clave));
+        console.log(clave)
         request.push(prod);
       }
     }
@@ -23,6 +24,7 @@ export const clearState = () => {
   for(var i = 0; i < localStorage.length; i++){
     let clave = localStorage.key(i);
     if(clave !== "carrito" && clave !== "user"){
+      console.log(clave)
       localStorage.removeItem(clave)
     }
   }

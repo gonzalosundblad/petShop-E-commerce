@@ -1,26 +1,31 @@
 import React, { useReducer, useRef } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import Basura from '../imagenes/basura.png';
 import { deleteCarrito, getCarritoRequest, putCantidadOrdenRequest, deleteCarritoProd } from '../Redux/actionsCarrito';
+import { saveState } from '../Redux/reducer/localStorage';
 
 function ProductoCarritocard({ user, logged, putCantidadOrdenRequest, id, image, name, price, quantity, deleteCarritoProd, funcionInput }) {
-  var total = price * quantity;
-
-  console.log(quantity);
-  console.log(id);
-  console.log(name);
-  console.log(price);
-
+  const [quantit, setQuantit] = useState(quantity)
+  const [ total, setTotal ]= useState(quantity * price)
 
   function handleChange(e) {
-    var quantity2 = e.target.value
-    putCantidadOrdenRequest(user.user_id, {
-      product_id: id,
-      quantity: quantity2
-    })
-    reload()
+    var quantity2 = e.target.value;
+    console.log(quantity2)
+    if(logged){
+      putCantidadOrdenRequest(user.user_id, {
+        product_id: id,
+        quantity: quantity2
+      })    
+    }else{
+      saveState({ product_id: id, quantity: quantity2, price, image, name })
+    }
+    console.log(id)
+    setQuantit(quantity2);
+    setTotal(price * quantit)
+
   }
 
 
@@ -35,7 +40,6 @@ function ProductoCarritocard({ user, logged, putCantidadOrdenRequest, id, image,
       let clave = localStorage.key(id);
       localStorage.removeItem(clave)
     }
-    reload()
   }
 
 
@@ -59,11 +63,11 @@ function ProductoCarritocard({ user, logged, putCantidadOrdenRequest, id, image,
       <div className={Estilo.inputBoton}>
         <h3>Cantidad: </h3>
         {useReducer.logged}
-        <h4>{quantity} unidades</h4>
-        <input type="text" onChange={handleChange} className={Estilo.Cambio} />
+        <h4>{quantit} unidades</h4>
+        {/* <input type="text" onChange={handleChange} className={Estilo.Cambio} /> */}
         <label>Unidades</label>
-        <h5>Total: ${total} </h5>
-        <input type="number" defaultValue={quantity} useRef={quantity} />
+        <input type="number" defaultValue={quantit} value={quantit} onChange={handleChange} />
+        <h5>Total: ${quantit*price} </h5>
 
       </div>
       <div className={Estilo.botonBorrar}>

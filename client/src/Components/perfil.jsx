@@ -6,8 +6,10 @@ import { getMe } from '../Redux/actionsLogin'
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../Redux/actionsLogin';
+import { postCarrito } from '../Redux/actionsCarrito';
+import { clearState, loadState } from '../Redux/reducer/localStorage';
 
-function Perfil({ putUser, deleteUser, getMe, user, users, getUser, }) {
+function Perfil({ putUser, deleteUser, getMe, user, users, getUser, postCarrito, logged}) {
   const [state, setState] = useState({
     name: "",
     last_name: "",
@@ -15,10 +17,31 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser, }) {
     password: "",
     oldPassword: ""
   });
+  
+  function addProducts(){
+    var local = loadState()
+    if (local.length > 0) {
+      local.map(prod => {
+      const { product_id, quantity, price } = prod
+      console.log(user)
+      if(user){
+         postCarrito(user.user_id, {
+          product_id,
+          quantity,
+          price
+        })
 
+      }
+      clearState()  
+    })
+
+  }
+}
   useEffect(() => {
     getMe();
+    addProducts();
   }, [])
+
 
 
   // var userN;
@@ -161,14 +184,15 @@ function Perfil({ putUser, deleteUser, getMe, user, users, getUser, }) {
 function mapStateToProps(state) {
   return {
     user: state.auth.user,
-    users: state.reducer.users
+    users: state.reducer.users,
+    logged: state.reducer.logged
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({ putUser, deleteUser, getMe }, dispatch)
+    ...bindActionCreators({ putUser, deleteUser, getMe, postCarrito }, dispatch)
   }
 }
 

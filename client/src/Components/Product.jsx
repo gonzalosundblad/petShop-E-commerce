@@ -35,7 +35,7 @@ function Product({ logged, user, id2, products, postCarrito, getProductById }) {
         .catch(err => "Error al cargar producto")
     }
     else if (quantity >= 0) {
-      saveState({ product_id: id2, quantity, price, image, name, })
+      saveState({ product_id: id2, quantity, price, image, name })
       window.location.replace("http://localhost:3000/products")
     }
 
