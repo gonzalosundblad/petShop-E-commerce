@@ -2,31 +2,22 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { getProdOrder } from '../Redux/actionsCarrito'
 import Estilo from '../Estilos/ordenesUsuario.module.css'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-export default function OrdenAdmin(id, idUser) {
-  const [orderUser, setOrderUser] = useState([])
+function OrdenAdmin({ id, user, getProdOrder, order }) {
 
-  const id2 = id.id - 1
+  var id2 = id - 1
 
-  console.log(id2)
+  var idUser = user.user.user.user_id
 
-  if (!idUser.id) {
-    idUser = 1
-  }
+  var ordenes = order
 
   useEffect(() => {
-    getProdOrder(idUser).payload
-      .then(res => {
-        if (!res.data[0]) {
-          alert('No hay Ordenes')
-        } else {
-          console.log(res.data)
-          setOrderUser(res.data[id2].products)
-        }
-      })
+    getProdOrder(idUser, id2)
   }, [])
 
-  var precio = orderUser.map(e => e.price * e.LineaDeOrden.quantity)
+  var precio = ordenes.map(e => e.price * e.LineaDeOrden.quantity)
 
   // console.log(precio)
   var total = precio.reduce(function (a, b) {
@@ -37,7 +28,7 @@ export default function OrdenAdmin(id, idUser) {
   return (
     <div>
       <div  >
-        {orderUser && orderUser.map(encontrado => {
+        {ordenes && ordenes.map(encontrado => {
           return (
             <form key={encontrado.id} className={Estilo.producto} >
               <label>Id Producto:</label>
@@ -63,3 +54,19 @@ export default function OrdenAdmin(id, idUser) {
     </div>
   )
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.auth,
+    order: state.reducer.order
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ getProdOrder }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrdenAdmin);

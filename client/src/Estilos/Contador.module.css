@@ -1,0 +1,17 @@
+.boton{
+    width: 40px;
+    height: 40px;
+    border-radius: 60%;
+    background-color: none;
+    border: 2px solid gray;
+    font-size: 20px;
+}
+
+.input{
+    border: 0;
+    font-Size: 25px;
+    margin: 10px;
+    width: 25px;
+    margin-Left: 18px;
+    color: gray;
+}

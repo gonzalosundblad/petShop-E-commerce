@@ -2,21 +2,21 @@
 //==============AUTENTICACIONES=====================
 
 function isAuthenticated(req, res, next) {
-  if(req.isAuthenticated())
+  if (req.isAuthenticated())
     return next();
   else
-    return res.status(401).send({message: 'Necesita loguearse primero'});
+    return res.status(401).send({ message: 'Necesita loguearse primero' });
 }
-  
+
 function isNotAuthenticated(req, res, next) {
-  if(req.isAuthenticated()) return res.send({message: "Ya estas logueado flac@"});
-  if(!req.isAuthenticated()) return next();
+  if (req.isAuthenticated()) return res.send({ message: "Ya estas logueado flac@" });
+  if (!req.isAuthenticated()) return next();
   else
     return res.status(401).send('No estas Logueado');
 }
 
 function isAdmin(req, res, next) {
-  if(req.user && req.user.role === "admin") { 
+  if (req.user && req.user.role === "admin") {
     return next();
   } else {
     return res.status(401).send('No tienes permiso para ejecutar esta accion :(');
@@ -24,7 +24,7 @@ function isAdmin(req, res, next) {
 }
 
 function isNotAdmin(req, res, next) {
-  if(!!req.user === false || req.user.role !== "admin") {
+  if (!!req.user === false || req.user.role !== "admin") {
     return next;
   } else {
     return res.status(401).send('Necesitas ser un administrador');
@@ -32,10 +32,9 @@ function isNotAdmin(req, res, next) {
 }
 
 module.exports = {
-    isAuthenticated,
-    isNotAuthenticated,
-    isAdmin,
-    isNotAdmin
+  isAuthenticated,
+  isNotAuthenticated,
+  isAdmin,
+  isNotAdmin
 }
-
 

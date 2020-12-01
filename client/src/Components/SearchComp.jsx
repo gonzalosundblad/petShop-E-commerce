@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
-import {Link } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import StyleSearchComp from '../Estilos/SearchBar.module.css';
-  
+
 
 export default function Search ({funcion}){
     const[producto, setProduct]= useState([]);
+    const history= useHistory();
     return (
         <form onSubmit={(e) => {
             e.preventDefault(); 
-            funcion(producto); }}>
+            funcion(producto); 
+            history.push('/products/search');
+            }}>
             <div className={StyleSearchComp.inputs}>
                 <input className={StyleSearchComp.barra} type="search"
                     placeholder="Buscar productos..."
                     value={producto} 
                     onChange={e => setProduct(e.target.value)}>
                 </input>
-                {/* <a href='/products/search'> */}
-                    <input className={StyleSearchComp.boton} type="submit" value="." />
-               {/* </a> */}
+                <input className={StyleSearchComp.boton} type="submit" value="." />
+
             </div>
         </form>
     )

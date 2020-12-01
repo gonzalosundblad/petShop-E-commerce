@@ -6,21 +6,24 @@
     height: 100%;
     background-color: black;
     z-index:1000;
-    -moz-opacity: 0.8;
+    /* -moz-opacity: 0.8; */
     opacity:.80;
-    filter: alpha(opacity=80);
+    /* filter: alpha(opacity=80); */
     position: fixed;
     display: block;
     align-items: center;
     justify-content: center;
 }
 .divTodo{
-    margin-top: 9%;
+    margin-top: 170px;
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
+    opacity: 100%;
+}
+.divTodo:hover{
+    opacity: 100%;
 }
 .divCuadro{
     width: 500px;
@@ -185,4 +188,23 @@
 
 .x a{
     text-decoration: none;
+}
+
+.cuadroRegister{
+    width: 500px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: honeydew;
+    opacity: 100%;
+}
+
+.inputsRegister{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 300px;
+    margin: 10px;
 }

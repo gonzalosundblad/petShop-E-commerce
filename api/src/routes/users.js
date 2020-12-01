@@ -30,6 +30,7 @@ server.post('/', (req, res) => {                                        //S34 : 
 server.put('/:id', isAuthenticated, (req, res) => {                     //S35 : Crear Ruta para modificar Usuario segun id
   const { id } = req.params;
   const { name, email, password, newPassword, last_name } = req.body;
+  console.log(req.body)
   User.update({
     name,
     last_name,
@@ -38,8 +39,7 @@ server.put('/:id', isAuthenticated, (req, res) => {                     //S35 : 
   }, {
     returning: true,
     where: {
-      user_id: id,
-      password
+      user_id: id
     }
   }).then(function (user) {
     console.log(user)
@@ -67,7 +67,7 @@ server.get('/', isAdmin, (req, res) => {                                //S36 : 
 server.delete('/:id', isAuthenticated, (req, res) => {                  //S37 : Crear Ruta para eliminar Usuario
   var userId = req.params.id;
   if (!userId) {
-    res.status(404).send('Debes ingresar un ID')
+    res.status(404).send('No existe este usuario')
   } else {
     User.findByPk(userId)
       .then(value => {
@@ -121,12 +121,11 @@ server.post('/:idUser/cart', (req, res) => {                            //S38 : 
       quantity,
       price
     });
-  }).then((l) => {
-    console.log(l);
-    res.status(200).send(l)
+  }).then((data) => {
+    res.status(200).send(data);
   }).catch(err => {
-    res.status(400)
-    console.log('Error: ', err)
+    console.log('Error: ', err);
+    res.status(400);
   })
 
 });
@@ -150,7 +149,7 @@ server.get('/:idUser/cart', (req, res) => {                             //S39 : 
   })
 });
 
-server.get('/:idUser/cart/orders', isAuthenticated, (req, res) => {     //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
+server.get('/:idUser/cart/orders', (req, res) => {     //SCREADA : Crear Ruta que retorne todos los items de la orden creada      
   const { idUser } = req.params;
   Order.findAll({
     where: {
@@ -161,6 +160,7 @@ server.get('/:idUser/cart/orders', isAuthenticated, (req, res) => {     //SCREAD
       as: 'products'
     }
   }).then((items) => {
+    console.log(items)
     res.status(200).send(items)
   }).catch((err) => {
     res.status(404).send('Error')
@@ -215,9 +215,10 @@ server.put('/:idUser/cart', function (req, res) {                       //S41 : 
   })
 })
 
-server.delete('/:idUser/deleteCartProduct', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
-  const idUser = req.params.idUser;                                   // S111: INVENTO DE ERIC
-  const { product_id } = req.body;
+server.delete('/:idUser/deleteCartProduct/:product_id', (req, res) => {             //ELIMINA UN PRODUCTO DE LA LINEA DE ORDEN invento de eric para eliminar de a 1 en vez de vaciar todo de un saque
+  const {idUser, product_id} = req.params;                                   // S111: INVENTO DE ERIC
+  
+  console.log(req.params)
   Order.findOne({
     where: {
       userId: idUser,

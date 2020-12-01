@@ -1,28 +1,38 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import OrdenUsuario from '../Containers/ordenUsuario';
-import { getMe } from '../Redux/actionsLog'
-import { putUser, deleteUser } from '../Redux/actionsOrden'
-import Estilo from '../Estilos/Perfil.module.css'
+import { getUser, deleteUser, putUser } from '../Redux/actionsOrden'
+import { connect } from 'react-redux'
+import { getMe } from '../Redux/actionsLogin'
+import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
+import { logout } from '../Redux/actionsLogin';
 
-export default function Perfil() {
+function Perfil({ putUser, deleteUser, getMe, user, users, getUser }) {
   const [state, setState] = useState({
-    id: "",
     name: "",
+    last_name: "",
     email: "",
-    newPassword: "",
     password: "",
-    last_name: ""
+    oldPassword: ""
   });
-  const [users, setUsers] = useState([])
-
 
   useEffect(() => {
-    getMe().payload
-      .then(resp =>
-        setUsers(resp.data.user))
+    getMe();
   }, [])
 
+
+  // var userN;
+  // if(user){
+  //   userN = user.user
+  // }
+
+  function handle() {
+    // users.map((user) => {
+    //   if(user.id === id2){
+    //     datos = user;
+    //   }});
+  }
+  handle()
 
   function handleChange(e) {
     setState({
@@ -32,83 +42,138 @@ export default function Perfil() {
   }
   //name, email, password, newPassword, last_name
 
-  function handleChange(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+  function cerrarSesion() {
+    logout();
+    localStorage.removeItem("user")
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     const cambios = {
       name: state.name,
+      last_name: state.last_name,
       email: state.email,
-      password: state.password,
-      newPassword: state.newPassword
+      newPassword: state.password,
+      password: state.oldPassword
     }
-    if (cambios.name.length === 0) { cambios.name = users.name }
-    if (cambios.email.length === 0) { cambios.email = users.email }
-    if (cambios.password.length === 0) { cambios.password = users.password }
-    putUser(users.user_id, cambios).payload
-      .then(resp => {
-        console.log(resp)
-        reload()
-      })
+    if (cambios.name.length === 0) { cambios.name = user.name }
+    if (cambios.email.length === 0) { cambios.email = user.email }
+    if (cambios.last_name.length === 0) { cambios.last_name = user.last_name }
+
+    putUser(user.user_id, cambios)
+
   }
-  function reload() {
-    window.location.reload()
-  }
+
   function onDelete() {
-    const id = users.user_id
+    const id = user.user_id
     deleteUser(id)
-      .then(resp => {
-        console.log(resp)
-        reload()
-      })
   }
 
-
-
-  return (
-    <div className={Estilo.productoGrande} >
-      <h1 className={Estilo.bienvenido} >Bienvenido {users.name}  </h1>
-      <h2 className={Estilo.producto} >Tu email : {users.email}  </h2>
+  if (!user) {
+    return (
       <div>
-        <form>
-          <div>
-            <div className={Estilo.nombre}>
-              <label >Nombre:</label>
-              <input type="text" name="name" className={Estilo.nombre2} placeholder={users.name} onChange={handleChange} />
-            </div>
-            <div className={Estilo.nombre}>
-              <label >Apellido:</label>
-              <input type="text" name="name" className={Estilo.nombre2} placeholder={users.last_name} onChange={handleChange} />
-            </div>
-            <div className={Estilo.email}>
-              <label>Email:</label>
-              <input type="email" name="email" className={Estilo.email2} placeholder={users.email} onChange={handleChange} />
-            </div>
-            <div className={Estilo.password}>
-              <label>Contraseña:</label>
-              <input type="password" placeholder="Ingrese antigua contraseña" name="oldPassword" className={Estilo.password2} placeholder="*******" onChange={handleChange} />
-            </div>
-            <div>
-              <label>Nueva Contraseña:</label>
-              <input type="password" placeholder="Ingrese nueva contraseña" name="password" className={Estilo.password2} placeholder="*******" onChange={handleChange} />
-            </div>
-
-            <div className={Estilo.botonesFinales} >
-              <button type="submit" value="Actualizar" className={Estilo.botoncitos} onClick={handleSubmit} >
-                Modificar datos
-                      </button>
-              <button type="submit" className={Estilo.botoncitos2} onClick={onDelete} >
-                Eliminar Cuenta
-                      </button>
+        <h1>Debes iniciar sesión o registrarte para ver tu perfil</h1>
+        <NavLink href="/register">Registrarme</NavLink>
+        <NavLink href="/login">Iniciar Sesión</NavLink>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <h1 style={{margin: "40px", display: "flex"}}>Bienvenido {user.name} ! </h1>
+        <div class="row" style={{margin: "40px"}}>
+          <div class="col-3" >
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style={{width: "180px"}}>
+              <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Perfil</a>
+              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Modificar Datos</a>
+              <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Cambiar Contraseña</a>
+              <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Salir</a>
             </div>
           </div>
-        </form>
+          <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+
+              <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+              <table class="table table-hover" style={{width: "500px", border: "1px solid gray"}}>
+                <tbody>
+                  <tr class="table-default">
+                    <th scope="row">Nombre:</th>
+                    <td>{user.name}</td>
+                  </tr>
+                  <tr class="table-default">
+                    <th scope="row">Apellido:</th>
+                    <td>{user.last_name}</td>
+                  </tr>
+                  <tr class="table-default">
+                    <th scope="row">Tu email:</th>
+                    <td>{user.email}</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+
+              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <form style={{width: "500px"}}>
+                  <fieldset>
+                    <legend>Modifica tus datos:</legend>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Nombre</label>
+                      <input type="text" class="form-control" name="name" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nuevo Nombre"/>
+                    </div>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Apellido</label>
+                      <input type="text" class="form-control" name="lastName" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nuevo Apellido"/>
+                    </div>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Email</label>
+                      <input type="email" class="form-control" name="email" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nuevo email"/>
+                    </div>
+                    <button onClick={handleSubmit} class="btn btn-success"> Modificar datos </button>
+                  </fieldset>
+                </form>
+              </div>
+
+              <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <form style={{width: "500px"}}>
+                  <fieldset>
+                    <legend>Cambiar Contraseña:</legend>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Contraseña:</label>
+                      <input type="password" class="form-control" name="oldPassword" onChange={handleChange} aria-describedby="emailHelp" placeholder="Contraseña Actual"/>
+                    </div>
+                    <div class="form-group" style={{ display: "flex", flexDirection: "column", alignItems: "end"}}>
+                      <label for="exampleInputEmail1">Nueva Contraseña:</label>
+                      <input type="password" class="form-control" name="password" onChange={handleChange} aria-describedby="emailHelp" placeholder="Nueva Contraseña"/>
+                    </div>
+                    <button onClick={handleSubmit} class="btn btn-success"> Cambiar Contraseña </button>
+                  </fieldset>
+                </form>
+              </div>
+
+              <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" style={{width: "500px"}}>
+                <button onClick={cerrarSesion} class="btn btn-warning" style={{margin: "30px"}} > Cerrar Sesión </button>
+                <button onClick={onDelete} class="btn btn-danger" style={{margin: "30px"}} > Eliminar Cuenta </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div >
-  )
+    )
+  }
 }
 
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+    users: state.reducer.users
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ putUser, deleteUser, getMe, logout }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Perfil);

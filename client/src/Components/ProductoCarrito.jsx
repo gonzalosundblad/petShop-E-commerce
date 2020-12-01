@@ -1,62 +1,101 @@
-import React from 'react';
+import React, { useReducer, useRef } from 'react';
+import { useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Estilo from '../Estilos/ProductoCarrito.module.css';
 import Basura from '../imagenes/basura.png';
-import { putCantidadOrden } from '../Redux/actionsCarrito';
+import { deleteCarrito, getCarritoRequest, putCantidadOrdenRequest, deleteCarritoProd } from '../Redux/actionsCarrito';
+import Contador from './Contador';
 
-export default function ProductoCarritocard({id, image, name, price, LineaDeOrden, funcionDelete, funcionInput}){
-
-    var total= price * LineaDeOrden;
+function ProductoCarritocard({user, logged, putCantidadOrdenRequest, id, image, name, price, quantity, deleteCarritoProd, funcionInput}){
+    
+  const [total, setTotal] = useState(price * quantity)
 
   function handleChange(e){
-    var quantity =  e.target.value
-    console.log(quantity)
-
-    var cambio = {
+    quantity =  e.target.value
+    var nuevoTotal = e.target.value * price
+    putCantidadOrdenRequest(user.user_id, {
       product_id: id,
       quantity: quantity
-    }
-    function reload(){
-      window.location.reload()
-    }
-
-    putCantidadOrden(2, cambio)
-    .then(resp => {
-      console.log(cambio)
-      console.log(resp)
-     reload()
     })
-
+    .then(resp => {
+      console.log(resp)
+      setTotal(nuevoTotal)
+    })
   }
 
+
+  function onDelete() {
+
+    //Hasta aca, capturo el id del producto pero cuando lo envio no me hace el delete.
+    // let id = event.target.value
+    if (logged) {
+      deleteCarritoProd(user.user_id,id)
+    } else {
+      localStorage.removeItem(id)
+    }
+    reload()
+  }
+
+function reload(){
+  window.location.reload()
+}
+
+
     return(
-        <div className={Estilo.producto}>
-            {/* <div key={id}> */}
-                <div>
-                    <img className={Estilo.img} src={image} alt=""/>
+        <div className={Estilo.todo}>
+          <div class="row">
+                <div class="col-3">
+                    <img width="140px" src={image} alt=""/>
                 </div>
-                <div>
-                    <h1>{name} </h1>
+                <div class="col-3" style={{display: "flex", flexDirection: "column", alignItems: "end", marginTop: "15px"}}>
+                    <h3>{name} </h3>
                     <h2>${price} </h2>
                 </div>
-                <div className={Estilo.inputBoton}>
-                    <h3>Cantidad: </h3>
-                    <h4>{LineaDeOrden} unidades</h4>
-                    <input type="text" onChange={handleChange} className={Estilo.Cambio} />
+                <div class="col-3" style={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
+                    <h6>Cantidad: </h6>
+                    {useReducer.logged}
+                    <Contador funcion={handleChange}  valor={quantity}/>
+                    {/* <input type="text" onChange={handleChange} className={Estilo.Cambio} /> */}
+                    
+                    {/* <input type="number" value={LineaDeOrden} /> */}
+                </div>
+                <div class= "col-2" style={{display: "flex", alignItems: "center"}}>
+          
+                    <h3>${total}</h3>
+                    {/* <h4>{quantity} unidades</h4>
+                    <input type="text" onChange={handleChange} className={Estilo.Cambio}  />
                     <label>Unidades</label>
                     <h5>Total: ${total} </h5>
-                    {/* <input type="number" value={LineaDeOrden} onChange={funcionInput} /> */}
+                    <input type="number" defaultValue={quantity} useRef={quantity} /> */}
 
                 </div>
-                <div className={Estilo.botonBorrar}>
-                    
-
-                    <   button onClick={funcionDelete} value={id} >
-                        <img className={Estilo.basura} src={Basura} alt=""/>
-                    </button>
+                <div class= "col-1" style={{display: "flex", alignItems: "flex-end"}}>
+                      <button onClick={onDelete} value={id} style={{border: "0"}}>
+                        <svg width="25px"  viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                        </svg>
+                      </button>
                 </div>
-            {/* </div> */}
+            </div>
         </div>
         )
 }
 
-// export total;
+const mapDispatchToProps =  dispatch => {
+  return {
+    dispatch,
+    ...bindActionCreators({deleteCarritoProd, putCantidadOrdenRequest} , dispatch)
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    logged: state.auth.logged
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductoCarritocard)

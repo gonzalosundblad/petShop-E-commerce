@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Button } from '@material-ui/core';
-import axios from 'axios';
 import postIdProdCatId from '../Redux/actions'
 
 

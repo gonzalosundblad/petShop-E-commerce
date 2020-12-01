@@ -1,4 +1,17 @@
-.producto{
+.todo{
+    width: 80%;
+    margin-left: 7%;
+    
+    height: 150px;
+    border: 1px solid rgba(128, 128, 128, 0.397);
+    margin-bottom: 2%;
+}
+.todo:hover{
+    box-Shadow: 3px 3px 5px rgba(128, 128, 128, 0.637);
+}
+
+
+/* .producto{
     align-items: center;
     justify-content: center;
     background-color: honeydew;
@@ -17,7 +30,6 @@
 
 .inputBoton{
     display: block;
-    /* width: 149px; */
     justify-content: center;
      
 }
@@ -133,4 +145,4 @@
     margin-left: 42%;
     margin-bottom: -7px;
     margin-top: 20px;
-}
+} */

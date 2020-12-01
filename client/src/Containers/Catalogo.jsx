@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import Catalogo from '../Components/CatalogoComp'
 import { getProductsRequest } from '../Redux/actions';
 import { connect } from 'react-redux'
+import ProductCard from '../Components/ProductCard';
+import StyleCatalogo from '../Estilos/CatalogoComp.module.css'
 
-function MostrarCatalogo() {
-  const [state, setState] = useState([])
+
+
+
+function MostrarCatalogo({ products, getProductsRequest }) {
 
   useEffect(() => {
-    getProductsRequest().payload
-      .then(resp => {
-        setState(resp.data)
-      })
+    getProductsRequest()
   }, []);
 
+
   return (
-    <div >
-      <Catalogo productos={state} />
+    <div className={StyleCatalogo.display}>
+      {products && products.map(p =>
+        <ProductCard
+          key={p.id}
+          id={p.id}
+          image={p.image}
+          name={p.name}
+          price={p.price}
+          stock={p.stock}
+        />
+      )}
     </div>
   );
 };

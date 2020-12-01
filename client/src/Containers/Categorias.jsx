@@ -1,50 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import Catalogo from '../Components/CatalogoComp';
-import CategoriaCard from '../Components/CategoriaComp';
 import { getProductByCategory, getCategories } from '../Redux/actions.js';
 import { deleteCategory } from '../Redux/actions';
 import { postCategory } from '../Redux/actions';
 import { putCategoryId } from '../Redux/actions.js';
 import estilo from '../Estilos/forms.module.css';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 
-export function MostrarCategorias() {                  //Muestra las categorias en el home
-  const [categorias, setCategoria] = useState([]);
+
+function MostrarCategorias({ getCategories, categories }) {                  //Muestra las categorias en el home
 
   useEffect(() => {
-    getCategories().payload
-      .then(resp => setCategoria(resp.data))
+    getCategories()
   }, []);
 
   return (
-    <div >
-      {
-        categorias.map(n => {
-          if (n.name !== 'Sin Categoria') {
-            return <CategoriaCard nombre={n.name} id={n.id} />
-          }
-        })
-      }
+    <div class='bg-success'>
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button type="button" class="btn btn-success"><h6 class='text-white'>Todas las Categorias</h6></button>
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop2" >
+            {
+              categories.map(n => {
+                if (n.name !== 'Sin Categoria') {
+                  return (
+                    <NavLink class="dropdown-item" height='30px' to={`/products/category/${n.name}`}>{n.name}</NavLink>)
+                }
+              })
+            }
+          </div>
+        </div>
+      </div>
     </div>
   )
 };
 
-export function ProductosPorCategoria({ name }) {         //Muestra los productos segun la categoria
 
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getProductByCategory(name).payload
-      .then(resp => setProducts(resp.data))
-  }, []);
-
-  return (
-    <div >
-      <Catalogo productos={products} />
-    </div>
-  )
-};
-
-export function AgregarCategoria() {                  //agrega categoria
+function AgregarCategoria({ postCategory }) {                  //agrega categoria
   const [nueva, setNueva] = useState([]);
   const [description, setDescription] = useState([])
 
@@ -59,164 +53,97 @@ export function AgregarCategoria() {                  //agrega categoria
   function handleSubmit(event) {
     event.preventDefault();
 
-    const usuario = {
+    const categoria = {
       name: nueva,
       description: description
     };
 
 
-    postCategory(usuario).payload
-      .then(function (resp) {
-        console.log(resp.data);
-        borrarInput()
-      })
+    postCategory(categoria)
+  }
 
 
-  }
-  function borrarInput() {
-    document.getElementById("name").value = "";
-    document.getElementById("description").value = "";
-  }
 
 
   return (
-    <div className={estilo.formsAgregarCategoria}>
-      <div>
-        <h1>Agregar Categoria:</h1>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className={estilo.labelInput}>
-          <label>Categoría: </label>
-          <input id="name" type="text" name="name" onChange={handleChange} />
-        </div>
-        <div className={estilo.labelInput}>
-          <label>Descripción: </label>
-          <input id="description" type="text" description="description" onChange={handleChange2} />
-        </div>
-        <button type="submit">Agregar</button>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <form onSubmit={handleSubmit} style={{ width: "50%", border: "solid 1px" }}>
+        <fieldset>
+          <legend>Agregar Categoria</legend>
+          <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+            <label style={{ textDecoration: 'none' }} for="exampleInputEmail1">Nombre</label>
+            <input type="texto" class="form-control" aria-describedby="emailHelp" placeholder="Nombre de la categoria" id="name" name="name" onChange={handleChange} />
+          </div>
+          <div class="form-group" style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
+            <label style={{ textDecoration: 'none' }} for="exampleInputPassword1">Description</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese una descripcion" id="description" description="description" onChange={handleChange2} />
+          </div>
+          <button type="submit" class="btn btn-outline-success" style={{ margin: "10px" }}>Agregar</button>
+        </fieldset>
       </form>
     </div>
   )
 };
 
-export function ModificaCategoria() {                   //modifica categoria y borra categoria
-  const [state, setState] = useState({
-    id: "",
-    name: ""
-  });
-  const [CategGuardada, setCategGuardada] = useState([])
+
+
+
+function ListaCategorias({ getCategories, categories }) {                     //lista de categorias en el catalogo
+  
 
   useEffect(() => {
-    getCategories().payload
-      .then(resp => setCategGuardada(resp.data))
+    getCategories()
+    
   }, []);
 
-  function handleChange(e) {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const cambios = {
-      key: state.id,
-      name: state.name
-    }
-    const headers = {
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      }
-    }
-    const id = state.id
-    putCategoryId(id, cambios)
-      .then(resp => {
-        console.log(resp)
-        borrarInput()
-        reload()
-      })
-
-  }
-  function borrarInput() {
-    document.getElementById("id").value = "";
-    document.getElementById("name").value = "";
-  }
-  function reload() {
-    window.location.reload()
-  }
-
-  function delet() {
-    deleteCategory(state.id).then(resp => {
-      console.log(resp)
-      reload()
-    })
-  }
-
   return (
-    <div className={estilo.formsModificarCategoria}>
-      <div>
-        <h3>Categorias disponibles para modificar o eliminar:</h3>
-      </div>
-      <div>
-        {
-          CategGuardada && CategGuardada.map(encontrado => {
-            if (encontrado.id !== 0) {
-              return (
-                <div>
-                  <form key={encontrado.id}>
-                    <div className={estilo.labelInputModificar}>
-                      <div className={estilo.id}>
-                        <label>Id:</label>
-                        <input type="text" value={encontrado.id} />
-                      </div>
-
-                      <div className={estilo.nombre}>
-                        <label>Nombre:</label>
-                        <input type="text" value={encontrado.name} />
-                      </div>
-                    </div>
-                  </form>
-                  <hr />
-                </div>
-              )
-            }
-          })
-        }
-      </div>
-      <hr />
-
-      <div>
-        <h2>Ingrese los datos que desea modificar o eliminar</h2>
-      </div>
-      <div>
-        <form>
-          <div className={estilo.labelInputModificar}>
-            <div className={estilo.id}>
-              <label>Id:</label>
-              <input
-                name="id" id='id'
-                placeholder="Nº"
-                onChange={handleChange}
-              />
-            </div>
-            <div className={estilo.nombre}>
-              <label> Nombre: </label>
-              <input
-                type="text" id="name" name="name"
-                placeholder="Nombre"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-      <div className={estilo.botones}>
-        <button className={estilo.botonModificar} type="submit" value="Actualizar" onClick={handleSubmit} > Modificar </button>
-        <button className={estilo.botonBorrar} onClick={delet} >Eliminar</button>
+    <div style={{ position: "absolute" }}>
+      <div className={estilo.listaCategorias}>
+        <div class="list-group" style={{ width: "150px" }}>
+          <a  class="list-group-item list-group-item-action active">CATEGORIAS</a>
+          <a href="/products" class="list-group-item list-group-item-action">Todas</a>
+          {
+            categories.map(c => {
+              if (c.name !== 'Sin Categoria') {
+                return (
+                  <a href={`/products/category/${c.name}`} class="list-group-item list-group-item-action">{c.name}</a>
+                )
+              }
+            })}
+        </div>
       </div>
     </div>
-
-  );
+  )
 }
+
+const mapStateToProps = state => {
+  return {
+    categories: state.reducer.categories
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({ putCategoryId, postCategory, getCategories, getProductByCategory }, dispatch)
+  }
+}
+
+export const agregarCategoria = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AgregarCategoria)
+
+export const listaCategorias = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListaCategorias)
+
+export const mostrarCategorias = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MostrarCategorias)
+
+
+
+

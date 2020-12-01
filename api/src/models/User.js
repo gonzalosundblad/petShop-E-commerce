@@ -44,19 +44,20 @@ const User = (sequelize) => {
     },
     password: {
       type: DataTypes.TEXT,
-      allowNull: true,
-      // set(value) {
-      //   const hash = bcrypt.hashSync(value, 10); // NO ES RECOMENDADO USAR HASHSYNC PORQUE FRENA EL EVENT LOOP. HAY Q USAR HASH SOLO Q ES ASYNC
-      //   this.setDataValue('password', hash);
-      // }
-    }
+      allowNull: true
+    },
+    googleAccount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    githubAccount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    resetPasswordToken: DataTypes.STRING,
+    resetPasswordExpires: DataTypes.DATE
   });
 };
-
-// User.checkPassword = function (password) {
-//   //Retorna una promesa
-//   return bcrypt.compare(password, this.password);
-// };
 
 module.exports = User;
 
